@@ -1,0 +1,45 @@
+<div class="card" *ngIf="(organizations$ | async) as organizations; else loader">
+    <p-table *ngIf="organizations; else empty" [value]="organizations.results" [scrollable]="true"
+        scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:20%; text-align:center">БИН организации</th>
+                <th style="width:70%; text-align:center">Наименование организации</th>
+                <th style="width:5%; text-align:center">Действия</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-org let-ri="rowIndex" *ngFor="let item of organizations.results| keyvalue">
+            <tr class="cursor-pointer">
+                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                <td style="text-align:center">
+                    {{org.bin}}
+                </td>
+                <td>
+                    {{org.name}}
+                </td>
+                <td style="padding: 0; margin:0;">
+                    <div class="flex align-items-center justify-content-center gap-2">
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template #empty>
+        <div class="center">
+            Нет ни одной организации
+        </div>
+    </ng-template>
+    <div class="flex align-items-center justify-content-end">
+        <span class="mx-1 text-color">Items per page: </span>
+        <p-paginator [first]="first" [rows]="rows" [totalRecords]="organizations.count || 0"
+            (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
+            currentPageReportTemplate="{first} - {last} of {totalRecords}" [showPageLinks]="true"
+            [showFirstLastIcon]="true"></p-paginator>
+    </div>
+</div>
+
+<ng-template #loader>
+    <app-skeleton></app-skeleton>
+</ng-template>
