@@ -85,6 +85,8 @@ export class MainComponent implements OnInit {
   }
 
   removetab() {
+    console.log('sadasdsa');
+
     if (this.tabcount > 0) {
       this.counttabs--
       this.viewContainerRef.detach(this.tabcount)?.destroy;

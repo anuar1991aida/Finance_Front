@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { CategoryIncomeDetailComponent } from '../category-income-detail/category-income-detail.component';
 import { CategoryIncomeService } from '../category_income.service';
-import { category_income_list } from '../interfaces';
+import { category_income_detail, category_income_list } from '../interfaces';
 
 
 
@@ -12,7 +15,13 @@ import { category_income_list } from '../interfaces';
 })
 export class CategoryIncomeComponent implements OnInit {
 
-  constructor(private categoryService: CategoryIncomeService) { }
+  constructor(
+    private categoryService: CategoryIncomeService,
+    private categoryref: DynamicDialogRef,
+    private categoryconfirm: ConfirmationService,
+    private categoryListdialog: DialogService,
+    private categoryListmessage: MessageService,
+  ) { }
 
   category$: Observable<category_income_list>
   first = 0
@@ -38,6 +47,16 @@ export class CategoryIncomeComponent implements OnInit {
     this.fetchCat()
   }
 
+  onRowEdit(cat: category_income_detail) {
+
+    this.categoryref = this.categoryListdialog.open(CategoryIncomeDetailComponent,
+      {
+        header: 'Редактирование категории',
+        width: '60%',
+        height: '40%',
+        data: { category: cat }
+      });
+  }
 
 
 }

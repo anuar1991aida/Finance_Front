@@ -16,12 +16,12 @@ import { OrganizationDetailComponent } from './organization/organization-detail/
 import { CategoryIncomeComponent } from './category-income/category_income-list/category-income.component';
 import { SkeletonComponent } from './loader/skeleton/skeleton.component'
 
-
 import { PrimeModules } from './primeng.module'
 import { MegaMenuModule } from 'primeng/megamenu';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TokenInterceptor } from './classes/token.interceptor';
 import { PodclassListComponent } from './podclass/podclass-list/podclass-list.component';
+import { CategoryIncomeDetailComponent } from './category-income/category-income-detail/category-income-detail.component';
 
 
 @NgModule({
@@ -47,6 +47,8 @@ import { PodclassListComponent } from './podclass/podclass-list/podclass-list.co
     CategoryIncomeComponent,
     SkeletonComponent,
     PodclassListComponent],
+    CategoryIncomeDetailComponent,
+    SkeletonComponent],
   bootstrap: [AppComponent],
   providers: [
     {
@@ -54,7 +56,8 @@ import { PodclassListComponent } from './podclass/podclass-list/podclass-list.co
       multi: true,
       useClass: TokenInterceptor
     },
-    MessageService
+    MessageService,
+    ConfirmationService
   ]
 })
 export class AppModule { }
