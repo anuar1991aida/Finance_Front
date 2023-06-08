@@ -21,6 +21,7 @@ import { PrimeModules } from './primeng.module'
 import { MegaMenuModule } from 'primeng/megamenu';
 import { MessageService } from 'primeng/api';
 import { TokenInterceptor } from './classes/token.interceptor';
+import { PodclassListComponent } from './podclass/podclass-list/podclass-list.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { TokenInterceptor } from './classes/token.interceptor';
     OrganizationComponent,
     OrganizationDetailComponent,
     CategoryIncomeComponent,
-    SkeletonComponent],
+    SkeletonComponent,
+    PodclassListComponent],
   bootstrap: [AppComponent],
   providers: [
     {
