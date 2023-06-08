@@ -11,20 +11,24 @@
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-org let-ri="rowIndex" *ngFor="let item of category.results| keyvalue">
-            <tr class="cursor-pointer">
+        <ng-template pTemplate="body" let-cat let-ri="rowIndex" *ngFor="let item of category.results| keyvalue">
+            <tr class="cursor-pointer" (dblclick)="onRowEdit(cat)">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
-                    {{org.code}}
+                    {{cat.code}}
                 </td>
                 <td>
-                    {{org.name_kaz}}
+                    {{cat.name_kaz}}
                 </td>
                 <td>
-                    {{org.name_rus}}
+                    {{cat.name_rus}}
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                            (click)="onRowEdit(cat)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash"
+                            class="p-button-rounded p-button-text"></button>
                     </div>
                 </td>
             </tr>

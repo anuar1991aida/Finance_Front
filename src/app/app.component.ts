@@ -1,9 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { MessageService } from "primeng/api";
+import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { AuthService } from "./login/auth.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  providers: [MessageService, DialogService, DynamicDialogRef,]
 })
 
 
