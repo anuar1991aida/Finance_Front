@@ -11,8 +11,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
-import { OrganizationComponent } from './organization/organization.component';
+import { OrganizationComponent } from './organization/organization-list/organization.component';
 import { OrganizationDetailComponent } from './organization/organization-detail/organization-detail.component';
+import { CategoryIncomeComponent } from './category-income/category_income-list/category-income.component';
 import { SkeletonComponent } from './loader/skeleton/skeleton.component'
 
 
@@ -20,7 +21,6 @@ import { PrimeModules } from './primeng.module'
 import { MegaMenuModule } from 'primeng/megamenu';
 import { MessageService } from 'primeng/api';
 import { TokenInterceptor } from './classes/token.interceptor';
-
 
 
 @NgModule({
@@ -43,6 +43,7 @@ import { TokenInterceptor } from './classes/token.interceptor';
     MainComponent,
     OrganizationComponent,
     OrganizationDetailComponent,
+    CategoryIncomeComponent,
     SkeletonComponent],
   bootstrap: [AppComponent],
   providers: [

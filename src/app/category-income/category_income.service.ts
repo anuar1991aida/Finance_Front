@@ -1,0 +1,20 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { category_income_list } from "./interfaces";
+
+@Injectable({
+    providedIn: 'root'
+})
+
+
+export class CategoryIncomeService {
+    constructor(private http: HttpClient) {
+    }
+    host = "http://192.168.10.237:8000/"
+
+
+    fetch(params: any): Observable<category_income_list> {
+        return this.http.get<category_income_list>(this.host + 'dirs/categorylist', { params })
+    }
+}

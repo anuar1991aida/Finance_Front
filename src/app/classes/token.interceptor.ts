@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { catchError, Observable, throwError } from "rxjs";
-import { AuthService } from "../services/auth.service";
+import { AuthService } from "../login/auth.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {

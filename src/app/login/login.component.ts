@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-login',

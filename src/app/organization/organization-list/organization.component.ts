@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { listOrg } from '../interfaces';
-import { OrganizationsService } from '../services/organization.service';
+import { organization_list } from '../interfaces';
+import { OrganizationsService } from '../organization.service';
 
 @Component({
   selector: 'app-organization',
@@ -12,7 +12,7 @@ export class OrganizationComponent implements OnInit {
 
   constructor(private orgService: OrganizationsService) { }
 
-  organizations$: Observable<listOrg>
+  organizations$: Observable<organization_list>
   first = 0
   rows = 3
   last = 3

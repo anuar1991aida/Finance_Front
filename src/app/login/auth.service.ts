@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, tap } from "rxjs";
-import { User } from "../interfaces";
+import { User } from "./interfaces";
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,7 @@ export class AuthService {
 
     private auth_token = ''
     // host = "http://127.0.0.1:8000/"
-    host = "http://192.168.10.251:8000/"
+    host = "http://192.168.10.237:8000/"
 
     login(user: User): Observable<{ auth_token: string }> {
         return this.http.post<{ auth_token: string }>

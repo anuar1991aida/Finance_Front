@@ -1,9 +1,7 @@
 import { Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MegaMenuItem, MenuItem } from 'primeng/api';
-import { TabPanel, TabView } from 'primeng/tabview';
-import { AuthService } from '../services/auth.service';
-import { ChildComponent } from '../child/child.component';
+import { AuthService } from '../login/auth.service';
 
 
 
@@ -41,8 +39,8 @@ export class MainComponent implements OnInit {
                 label: 'Организации',
                 command: () => this.openTab('app-organization', 'Организации', '')
               }, {
-                label: 'Дети',
-                command: () => this.openTab('child-list', 'Дети', '')
+                label: 'Категории',
+                command: () => this.openTab('app-category-income', 'Категории', '')
               }, {
                 label: 'Родители',
                 command: () => this.openTab('parent-list', 'Родители', '')
