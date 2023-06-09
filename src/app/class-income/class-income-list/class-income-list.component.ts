@@ -31,7 +31,6 @@ export class ClassIncomeListComponent implements OnInit {
   searchclass = ''
   first = 0
   rows = 3
-  last = 3
 
   ngOnInit(): void {
     this.fetchClass()

@@ -23,6 +23,8 @@ import { TokenInterceptor } from './classes/token.interceptor';
 import { CategoryIncomeDetailComponent } from './category-income/category-income-detail/category-income-detail.component';
 import { ClassIncomeListComponent } from './class-income/class-income-list/class-income-list.component';
 import { ClassIncomeDetailComponent } from './class-income/class-income-detail/class-income-detail.component';
+import { SpecificationIncomeListComponent } from './specification-income/specification-income-list/specification-income-list.component';
+import { SpecificationIncomeDetailComponent } from './specification-income/specification-income-detail/specification-income-detail.component';
 
 
 @NgModule({
@@ -49,6 +51,8 @@ import { ClassIncomeDetailComponent } from './class-income/class-income-detail/c
     CategoryIncomeDetailComponent,
     ClassIncomeListComponent,
     ClassIncomeDetailComponent,
+    SpecificationIncomeListComponent,
+    SpecificationIncomeDetailComponent,
     SkeletonComponent],
   bootstrap: [AppComponent],
   providers: [
