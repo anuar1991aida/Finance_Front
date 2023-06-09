@@ -24,6 +24,13 @@ export class CategoryIncomeComponent implements OnInit {
   ) { }
 
   category$: Observable<category_income_list>
+  NewCat: category_income_detail = {
+    id: '',
+    code: '',
+    name_kaz: '',
+    name_rus: ''
+  }
+  searchcategory = ''
   first = 0
   rows = 3
   last = 3
@@ -55,8 +62,27 @@ export class CategoryIncomeComponent implements OnInit {
         width: '60%',
         height: '40%',
         data: { category: cat }
-      });
+      })
+
+    this.categoryref.onClose.subscribe((save: boolean) => {
+      if (save) {
+
+      }
+    })
   }
 
+  openNew() {
+    this.categoryref = this.categoryListdialog.open(CategoryIncomeDetailComponent,
+      {
+        header: 'Создание категории',
+        width: '60%',
+        height: '40%',
+        data: { category: this.NewCat }
+      })
+  }
+
+  search() {
+
+  }
 
 }

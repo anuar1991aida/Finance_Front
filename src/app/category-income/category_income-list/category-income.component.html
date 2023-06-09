@@ -1,3 +1,22 @@
+<p-toolbar>
+
+    <div class="p-toolbar-group-left">
+        <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="openNew()"></button>
+    </div>
+
+    <div class="p-toolbar-group-right">
+        <span class="p-input-icon-left" style="margin-right: 10px;">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [(ngModel)]="searchcategory" (change)="search()" placeholder="поиск..." />
+        </span>
+        <div style="padding-right: 10px;">
+            <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
+                styleClass="p-button-sm" (click)="fetchCat()"></button>
+        </div>
+    </div>
+</p-toolbar>
+
 <div class="card" *ngIf="(category$ | async) as category; else loader">
     <p-table *ngIf="category.count !== 0; else empty" [value]="category.results" [scrollable]="true"
         scrollHeight="calc(100vh - 200px)" selectionMode="single"
@@ -5,9 +24,9 @@
         <ng-template pTemplate="header">
             <tr>
                 <th style="width:5%; text-align:center">Номер</th>
-                <th style="width:20%; text-align:center">Код категории</th>
-                <th style="width:70%; text-align:center">Наименование каз.</th>
-                <th style="width:70%; text-align:center">Наименование русс.</th>
+                <th style="width:10%; text-align:center">Код категории</th>
+                <th style="width:40%; text-align:center">Наименование каз.</th>
+                <th style="width:40%; text-align:center">Наименование русс.</th>
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
