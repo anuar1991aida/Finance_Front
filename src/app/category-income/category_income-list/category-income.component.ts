@@ -66,7 +66,7 @@ export class CategoryIncomeComponent implements OnInit {
 
     this.categoryref.onClose.subscribe((save: boolean) => {
       if (save) {
-
+        this.fetchCat()
       }
     })
   }
@@ -79,6 +79,32 @@ export class CategoryIncomeComponent implements OnInit {
         height: '40%',
         data: { category: this.NewCat }
       })
+
+    this.categoryref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        this.fetchCat()
+      }
+    })
+
+  }
+
+  onDelete(cat: category_income_detail) {
+    this.categoryconfirm.confirm({
+      message: 'Вы действительно хотите удалить ' + cat.code + '?',
+      header: 'Удаление категории',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.categoryService.deleteCategory(cat.id)
+          .subscribe((data) => (
+            this.categoryListmessage.add({ severity: 'success', summary: 'Успешно', detail: 'Категория удалена!' }),
+            this.fetchCat(), this.categoryconfirm.close()),
+            (error) => (this.categoryListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось удалить категорию!' }))
+          )
+      },
+      reject: () => {
+        this.categoryconfirm.close();
+      }
+    });
   }
 
   search() {

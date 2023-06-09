@@ -42,8 +42,8 @@ export class MainComponent implements OnInit {
                 label: 'Категории',
                 command: () => this.openTab('app-category-income', 'Категории', '')
               }, {
-                label: 'Родители',
-                command: () => this.openTab('parent-list', 'Родители', '')
+                label: 'Классы',
+                command: () => this.openTab('app-class-income-list', 'Классы', '')
               }]
             }
           ]
@@ -82,8 +82,6 @@ export class MainComponent implements OnInit {
   }
 
   removetab() {
-    console.log('sadasdsa');
-
     if (this.tabcount > 0) {
       this.counttabs--
       this.viewContainerRef.detach(this.tabcount)?.destroy;

@@ -25,4 +25,8 @@ export class CategoryIncomeService {
     addCategory(category: category_income_detail) {
         return this.http.post(this.host + 'dirs/categoryadd', category)
     }
+
+    deleteCategory(category_id: string = '') {
+        return this.http.delete(this.host + 'dirs/categorydelete/' + category_id)
+    }
 }
