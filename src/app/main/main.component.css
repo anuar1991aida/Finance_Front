@@ -1,0 +1,6 @@
+.p-megamenu-panel ng-star-inserted {
+    display: none;
+    position: absolute;
+    width: auto;
+    z-index: 99;
+}

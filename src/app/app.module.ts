@@ -23,6 +23,10 @@ import { TokenInterceptor } from './classes/token.interceptor';
 import { PodclassListComponent } from './podclass/podclass-list/podclass-list.component';
 import { CategoryIncomeDetailComponent } from './category-income/category-income-detail/category-income-detail.component';
 import { PodclassDetailComponent } from './podclass/podclass-detail/podclass-detail.component';
+import { ClassIncomeListComponent } from './class-income/class-income-list/class-income-list.component';
+import { ClassIncomeDetailComponent } from './class-income/class-income-detail/class-income-detail.component';
+import { SpecificationIncomeListComponent } from './specification-income/specification-income-list/specification-income-list.component';
+import { SpecificationIncomeDetailComponent } from './specification-income/specification-income-detail/specification-income-detail.component';
 
 
 @NgModule({
@@ -49,8 +53,11 @@ import { PodclassDetailComponent } from './podclass/podclass-detail/podclass-det
     SkeletonComponent,
     PodclassListComponent,
     CategoryIncomeDetailComponent,
-    SkeletonComponent,
-    PodclassDetailComponent],
+    ClassIncomeListComponent,
+    ClassIncomeDetailComponent,
+    SpecificationIncomeListComponent,
+    SpecificationIncomeDetailComponent,
+    SkeletonComponent],
   bootstrap: [AppComponent],
   providers: [
     {

@@ -1,7 +1,7 @@
 <div class=" bg-indigo">
-    <p-megaMenu [model]="items"></p-megaMenu>
+    <p-megaMenu [model]="items" style="z-index: 2;"></p-megaMenu>
     <p-toast></p-toast>
-    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount">
+    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" style="z-index: 0;">
         <ng-template #templateRef let-context='context'>
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -19,13 +19,13 @@
                 <app-category-income *ngIf="context.selector=='app-category-income'">
                 </app-category-income>
 
-                <app-podclass-list *ngIf="context.selector=='app-podclass-list'">
-                </app-podclass-list>
+                <app-class-income-list *ngIf="context.selector=='app-class-income-list'">
+                </app-class-income-list>
 
             </mat-tab>
         </ng-template>
     </mat-tab-group>
 </div>
 
-<div #viewContainerRef>
+<div #viewContainerRef style="z-index: 1;">
 </div>
