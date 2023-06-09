@@ -40,8 +40,8 @@ export class MainComponent implements OnInit {
                 label: 'Категории',
                 command: () => this.openTab('app-category-income', 'Категории', '')
               }, {
-                label: 'Родители',
-                command: () => this.openTab('parent-list', 'Родители', '')
+                label: 'Классы',
+                command: () => this.openTab('app-class-income-list', 'Классы', '')
               }]
             }
           ]
