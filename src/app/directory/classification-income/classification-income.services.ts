@@ -31,6 +31,6 @@ export class ClassificationIncomeService {
     }
 
     deleteClass(classif_inc_id: string = '') {
-        return this.http.delete(this.host + 'dirs/classdelete/' + classif_inc_id)
+        return this.http.delete(this.host + 'dirs/classificationincdelete/' + classif_inc_id)
     }
 }
