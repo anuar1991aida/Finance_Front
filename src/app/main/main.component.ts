@@ -45,6 +45,9 @@ export class MainComponent implements OnInit {
               }, {
                 label: 'Спецификации',
                 command: () => this.openTab('app-specification-income-list', 'Спецификации', '')
+              }, {
+                label: 'Классификации',
+                command: () => this.openTab('app-classification-income-list', 'Классификации', '')
               }]
             }
           ]

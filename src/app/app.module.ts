@@ -25,6 +25,8 @@ import { ClassIncomeListComponent } from './class-income/class-income-list/class
 import { ClassIncomeDetailComponent } from './class-income/class-income-detail/class-income-detail.component';
 import { SpecificationIncomeListComponent } from './specification-income/specification-income-list/specification-income-list.component';
 import { SpecificationIncomeDetailComponent } from './specification-income/specification-income-detail/specification-income-detail.component';
+import { ClassificationIncomeListComponent } from './classification-income/classification-income-list/classification-income-list.component';
+import { ClassificationIncomeDetailComponent } from './classification-income/classification-income-detail/classification-income-detail.component';
 
 
 @NgModule({
@@ -53,6 +55,8 @@ import { SpecificationIncomeDetailComponent } from './specification-income/speci
     ClassIncomeDetailComponent,
     SpecificationIncomeListComponent,
     SpecificationIncomeDetailComponent,
+    ClassificationIncomeListComponent,
+    ClassificationIncomeDetailComponent,
     SkeletonComponent],
   bootstrap: [AppComponent],
   providers: [
