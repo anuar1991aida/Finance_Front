@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
     this.items = [
       {
         label: 'Справочники',
-        icon: 'pi pi-fw pi-video',
+        icon: 'pi pi-fw pi-folder',
         items: [
           [
             {
@@ -40,11 +40,32 @@ export class MainComponent implements OnInit {
                 label: 'Категории',
                 command: () => this.openTab('app-category-income', 'Категории', '')
               }, {
+                label: 'Классы',
+                command: () => this.openTab('app-class-income-list', 'Классы', '')
+              },{
                 label: 'Подклассы',
                 command: () => this.openTab('app-podclass-list', 'Подклассы', '')
-              },{
-                label: 'Родители',
-                command: () => this.openTab('parent-list', 'Родители', '')
+              }, {
+                label: 'Спецификации',
+                command: () => this.openTab('app-specification-income-list', 'Спецификации', '')
+              }, {
+                label: 'Классификации',
+                command: () => this.openTab('app-classification-income-list', 'Классификации', '')
+              }]
+            }
+          ]
+        ]
+      },
+      {
+        label: 'Документы',
+        icon: 'pi pi-fw pi-file',
+        items: [
+          [
+            {
+              label: 'Документы',
+              items: [{
+                label: '',
+                command: () => this.openTab('', '', '')
               }]
             }
           ]
