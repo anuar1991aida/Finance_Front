@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
     this.items = [
       {
         label: 'Справочники',
-        icon: 'pi pi-fw pi-video',
+        icon: 'pi pi-fw pi-folder',
         items: [
           [
             {
@@ -45,6 +45,21 @@ export class MainComponent implements OnInit {
               }, {
                 label: 'Спецификации',
                 command: () => this.openTab('app-specification-income-list', 'Спецификации', '')
+              }]
+            }
+          ]
+        ]
+      },
+      {
+        label: 'Документы',
+        icon: 'pi pi-fw pi-file',
+        items: [
+          [
+            {
+              label: 'Документы',
+              items: [{
+                label: '',
+                command: () => this.openTab('', '', '')
               }]
             }
           ]
