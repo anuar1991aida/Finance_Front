@@ -52,6 +52,7 @@ import { SpecificationIncomeDetailComponent } from './specification-income/speci
     CategoryIncomeComponent,
     SkeletonComponent,
     PodclassListComponent,
+    PodclassDetailComponent,
     CategoryIncomeDetailComponent,
     ClassIncomeListComponent,
     ClassIncomeDetailComponent,
