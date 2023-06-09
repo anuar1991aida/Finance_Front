@@ -16,11 +16,15 @@
                 </ng-template>
                 <app-organization *ngIf="context.selector=='app-organization'">
                 </app-organization>
+
                 <app-category-income *ngIf="context.selector=='app-category-income'">
                 </app-category-income>
 
                 <app-class-income-list *ngIf="context.selector=='app-class-income-list'">
                 </app-class-income-list>
+
+                <app-specification-income-list *ngIf="context.selector=='app-specification-income-list'">
+                </app-specification-income-list>
 
             </mat-tab>
         </ng-template>
