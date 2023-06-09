@@ -51,7 +51,7 @@ export class CategoryIncomeDetailComponent implements OnInit {
 
         )
         .subscribe(
-          (data) => (this.CatDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Категория успешно добавлена!' }), this.CatDetailref.close(true)),
+          (data) => (this.CatDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Подкласс успешно добавлена!' }), this.CatDetailref.close(true)),
           (error) => (this.CatDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
         )
     }
@@ -71,7 +71,7 @@ export class CategoryIncomeDetailComponent implements OnInit {
 
         )
         .subscribe(
-          (data) => (this.CatDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Категория успешно отредактирована!' }), this.CatDetailref.close(true)),
+          (data) => (this.CatDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Подкласс успешно отредактирована!' }), this.CatDetailref.close(true)),
           (error) => (this.CatDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
     }
   }

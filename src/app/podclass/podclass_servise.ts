@@ -17,4 +17,12 @@ export class podclassService {
     fetch(params: any): Observable<podclass_interfaces> {
         return this.http.get<podclass_interfaces>(this.host + 'dirs/podclasslist', { params })
     }
+
+    savepodclass(param: podclass_interfaces_detail) {
+      return this.http.post(this.host + 'dirs/podclassedit', param)
+    }
+
+    addpodclass(param: podclass_interfaces_detail) {
+        return this.http.post(this.host + 'dirs/podclassadd', param)
+    }
 }

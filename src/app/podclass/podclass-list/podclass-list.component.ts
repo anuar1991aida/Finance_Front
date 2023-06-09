@@ -17,6 +17,13 @@ export class PodclassListComponent implements OnInit {
     private podclasslistdialog: DialogService) { }
 
   podclass$: Observable<podclass_interfaces>
+  NewCat: podclass_interfaces_detail = {
+    id: '',
+    code: '',
+    name_kaz: '',
+    name_rus: ''
+  }
+  searchcategory = ''
   first = 0
   rows = 3
   last = 3
@@ -42,16 +49,28 @@ export class PodclassListComponent implements OnInit {
     this.fetchCat()
   }
 
-  onRowEdit(org: podclass_interfaces_detail) {
+  onRowEdit(podclass: podclass_interfaces_detail) {
 
     this.podclassryref = this.podclasslistdialog.open(PodclassDetailComponent,
       {
-        header: 'Редактирование категории',
+        header: 'Редактирование подкласса',
         width: '60%',
         height: '40%',
-        data: { podclass: org }
+        data: { podclass: podclass }
       });
   }
 
+  openNew() {
+    this.podclassryref = this.podclasslistdialog.open(PodclassDetailComponent,
+      {
+        header: 'Создание подкласса',
+        width: '60%',
+        height: '40%',
+        data: { podclass: this.NewCat }
+      })
+  }
 
+  search() {
+
+  }
 }
