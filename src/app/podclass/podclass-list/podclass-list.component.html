@@ -12,7 +12,7 @@
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-org let-ri="rowIndex" *ngFor="let item of category.results| keyvalue">
-          <tr class="cursor-pointer">
+          <tr class="cursor-pointer" (dblclick)="onRowEdit(org)">
               <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
               <td style="text-align:center">
                   {{org.code}}
@@ -24,8 +24,12 @@
                   {{org.name_rus}}
               </td>
               <td style="padding: 0; margin:0;">
-                  <div class="flex align-items-center justify-content-center gap-2">
-                  </div>
+                <div class="flex align-items-center justify-content-center gap-2">
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                    (click)="onRowEdit(org)"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash"
+                        class="p-button-rounded p-button-text"></button>
+                </div>
               </td>
           </tr>
       </ng-template>

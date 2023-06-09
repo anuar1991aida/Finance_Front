@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { podclass_interfaces } from "./podclass_interfaces";
+import { podclass_interfaces , podclass_interfaces_detail} from "./podclass_interfaces";
 
 @Injectable({
     providedIn: 'root'

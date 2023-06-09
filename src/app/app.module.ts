@@ -22,6 +22,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { TokenInterceptor } from './classes/token.interceptor';
 import { PodclassListComponent } from './podclass/podclass-list/podclass-list.component';
 import { CategoryIncomeDetailComponent } from './category-income/category-income-detail/category-income-detail.component';
+import { PodclassDetailComponent } from './podclass/podclass-detail/podclass-detail.component';
 
 
 @NgModule({
@@ -46,9 +47,10 @@ import { CategoryIncomeDetailComponent } from './category-income/category-income
     OrganizationDetailComponent,
     CategoryIncomeComponent,
     SkeletonComponent,
-    PodclassListComponent],
+    PodclassListComponent,
     CategoryIncomeDetailComponent,
-    SkeletonComponent],
+    SkeletonComponent,
+    PodclassDetailComponent],
   bootstrap: [AppComponent],
   providers: [
     {

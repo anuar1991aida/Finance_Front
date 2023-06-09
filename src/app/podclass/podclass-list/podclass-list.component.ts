@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { podclassService} from "../podclass_servise";
-import { podclass_interfaces} from "../podclass_interfaces";
-
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { podclass_interfaces , podclass_interfaces_detail} from "../podclass_interfaces";
+import { PodclassDetailComponent } from "../podclass-detail/podclass-detail.component"
 @Component({
   selector: 'app-podclass-list',
   templateUrl: './podclass-list.component.html',
@@ -10,7 +11,10 @@ import { podclass_interfaces} from "../podclass_interfaces";
 })
 export class PodclassListComponent implements OnInit {
 
-  constructor(private podclassService: podclassService) { }
+  constructor(
+    private podclassService: podclassService,
+    private podclassryref: DynamicDialogRef,
+    private podclasslistdialog: DialogService) { }
 
   podclass$: Observable<podclass_interfaces>
   first = 0
@@ -37,5 +41,17 @@ export class PodclassListComponent implements OnInit {
     this.rows = event.rows
     this.fetchCat()
   }
+
+  onRowEdit(org: podclass_interfaces_detail) {
+
+    this.podclassryref = this.podclasslistdialog.open(PodclassDetailComponent,
+      {
+        header: 'Редактирование категории',
+        width: '60%',
+        height: '40%',
+        data: { podclass: org }
+      });
+  }
+
 
 }
