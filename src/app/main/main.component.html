@@ -1,48 +1,21 @@
 <div class=" bg-indigo">
-    <p-megaMenu [model]="items"></p-megaMenu>
-    <!-- <div>
-    <p-tabView id="closableTabView" [(activeIndex)]="tabcount" (onClose)="handleTabClose()">
-        <p-tabPanel header="Начальная страница">
-            <p>
-                Данные начальной страницы
-            </p>
-        </p-tabPanel>
-        <ng-template #templateRef let-context='context'>
-
-            <p-tabPanel header={{context.title}} *ngIf="context.selector=='parent-list'" [closable]="true">
-            </p-tabPanel>
-            <p-tabPanel header={{context.title}} *ngIf="context.selector=='child-list'" [closable]="true">
-                <child-list></child-list>
-            </p-tabPanel>
-        </ng-template>
-
-    </p-tabView>
-</div> -->
-
-
+    <p-megaMenu [model]="items" style="z-index: 2;"></p-megaMenu>
     <p-toast></p-toast>
-    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount">
+    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" style="z-index: 0;">
         <ng-template #templateRef let-context='context'>
             <mat-tab>
-
-
                 <ng-template mat-tab-label>
-
                     <span>{{context.title}}</span>
-
-                    <i (click)="removetab()">
+                    <i (click)="removetab()" style="margin-left: 10px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-x" viewBox="0 0 16 16">
                             <path
                                 d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                         </svg>
                     </i>
-
                 </ng-template>
-
                 <app-organization *ngIf="context.selector=='app-organization'">
                 </app-organization>
-
                 <app-category-income *ngIf="context.selector=='app-category-income'">
                 </app-category-income>
 
@@ -54,5 +27,5 @@
     </mat-tab-group>
 </div>
 
-<div #viewContainerRef>
+<div #viewContainerRef style="z-index: 1;">
 </div>

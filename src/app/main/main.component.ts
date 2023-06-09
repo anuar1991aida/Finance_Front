@@ -1,9 +1,7 @@
-import { Component, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { MegaMenuItem, MenuItem } from 'primeng/api';
+import { MegaMenuItem } from 'primeng/api';
 import { AuthService } from '../login/auth.service';
-
-
 
 @Component({
   selector: 'app-main',
@@ -86,7 +84,6 @@ export class MainComponent implements OnInit {
       this.counttabs--
       this.viewContainerRef.detach(this.tabcount)?.destroy;
       this.mass_tabs.splice(this.tabcount, 1);
-
     }
 
   }
