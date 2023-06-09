@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { MegaMenuItem } from 'primeng/api';
 import { AuthService } from '../login/auth.service';
 
-
-
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',

@@ -1,7 +1,7 @@
 <div class=" bg-indigo">
-    <p-megaMenu [model]="items"></p-megaMenu>
+    <p-megaMenu [model]="items" style="z-index: 2;"></p-megaMenu>
     <p-toast></p-toast>
-    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount">
+    <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" style="z-index: 0;">
         <ng-template #templateRef let-context='context'>
             <mat-tab>
                 <ng-template mat-tab-label>
@@ -23,5 +23,5 @@
     </mat-tab-group>
 </div>
 
-<div #viewContainerRef>
+<div #viewContainerRef style="z-index: 1;">
 </div>
