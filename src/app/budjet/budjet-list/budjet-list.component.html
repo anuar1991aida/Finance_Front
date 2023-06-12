@@ -33,13 +33,13 @@
 
         </ng-template>
         <ng-template pTemplate="body" let-budjet let-ri="rowIndex" *ngFor="let item of organizations.results| keyvalue">
-            <tr class="cursor-pointer">
+            <tr class="cursor-pointer" (click)="selectBudjet(budjet)">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
-                    {{budjet.code}}
+                  {{budjet.code}}
                 </td>
                 <td>
-                    {{budjet.name_kaz}}
+                  {{budjet.name_kaz}}
                 </td>
                 <td>
                   {{budjet.name_rus}}

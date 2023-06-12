@@ -5,8 +5,7 @@ export interface organization_detail {
     name_kaz: string,
     name_rus: string,
     adress: string,
-    _budjet: string,
-    user?: string
+    _budjet: number
 }
 
 export interface organization_list {

@@ -18,4 +18,8 @@ export class OrganizationsService {
     fetch(params: any): Observable<organization_list> {
         return this.http.get<organization_list>(this.host + 'dirs/organizationlist', { params })
     }
+
+    add(param: organization_detail) {
+      return this.http.post(this.host + 'dirs/organizationadd', param)
+    }
 }

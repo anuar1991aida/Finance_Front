@@ -3,6 +3,9 @@ import { Budjet_list , Budjet_detail} from '../interfaces';
 import { Budjet_Service } from '../budjet.servise';
 import { Observable } from 'rxjs';
 
+import { DialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 @Component({
   selector: 'app-budjet-list',
   templateUrl: './budjet-list.component.html',
@@ -10,7 +13,12 @@ import { Observable } from 'rxjs';
 })
 export class BudjetListComponent implements OnInit {
 
-  constructor( private budjet_Service: Budjet_Service) { }
+  constructor(
+    private budjet_Service: Budjet_Service,
+    private dialog_ref: DynamicDialogRef
+    ) { }
+
+
 
   Budjet$: Observable<Budjet_list>
   first = 0
@@ -38,6 +46,12 @@ export class BudjetListComponent implements OnInit {
     this.fetchbudjet()
   }
 
+  selectBudjet(budjet: any) {
+    // alert(id);
+    this.dialog_ref.close(budjet);
+
+
+  }
 
   // onRowEdit(){
   //   alert("Все нормально");

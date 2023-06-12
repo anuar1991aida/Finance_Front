@@ -29,8 +29,7 @@ export class OrganizationComponent implements OnInit {
     name_kaz: '',
     name_rus: '',
     adress: '',
-    _budjet: '',
-    user: ''
+    _budjet: 0
   }
 
 
