@@ -31,6 +31,8 @@ import { OrganizationDetailComponent } from './directory/organization/organizati
 import { PodclassListComponent } from './directory/podclass/podclass-list/podclass-list.component';
 import { PodclassDetailComponent } from './directory/podclass/podclass-detail/podclass-detail.component';
 import { BudjetListComponent } from './directory/budjet/budjet-list/budjet-list.component';
+import { IzmIncDocDetailComponent } from './documents/izm_inc_doc/izm-inc-doc-detail/izm-inc-doc-detail.component';
+import { IzmIncDocListComponent } from './documents/izm_inc_doc/izm-inc-doc-list/izm-inc-doc-list.component';
 
 @NgModule({
   imports: [
@@ -67,7 +69,10 @@ import { BudjetListComponent } from './directory/budjet/budjet-list/budjet-list.
     BudjetListComponent,
     UtvIncomeListComponent,
     UtvIncomeDetailComponent,
-    SkeletonComponent],
+    SkeletonComponent,
+    IzmIncDocComponent,
+    IzmIncDocDetailComponent,
+    IzmIncDocListComponent],
   bootstrap: [AppComponent],
   providers: [
     {
