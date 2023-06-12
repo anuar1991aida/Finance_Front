@@ -30,7 +30,8 @@ import { SpecificationIncomeDetailComponent } from './directory/specification-in
 import { ClassificationIncomeListComponent } from './directory/classification-income/classification-income-list/classification-income-list.component';
 import { ClassificationIncomeDetailComponent } from './directory/classification-income/classification-income-detail/classification-income-detail.component';
 import { BudjetListComponent } from './budjet/budjet-list/budjet-list.component';
-
+import { UtvIncomeListComponent } from './documents/utv-income/utv-income-list/utv-income-list.component';
+import { UtvIncomeDetailComponent } from './documents/utv-income/utv-income-detail/utv-income-detail.component';
 
 @NgModule({
   imports: [
@@ -64,7 +65,10 @@ import { BudjetListComponent } from './budjet/budjet-list/budjet-list.component'
     ClassificationIncomeListComponent,
     ClassificationIncomeDetailComponent,
     SkeletonComponent,
-    BudjetListComponent],
+    BudjetListComponent,
+    UtvIncomeListComponent,
+    UtvIncomeDetailComponent,
+    SkeletonComponent],
   bootstrap: [AppComponent],
   providers: [
     {
