@@ -1,7 +1,11 @@
 export interface organization_detail {
     id?: string,
+    budjet_name: string,
     bin: string,
-    name: string,
+    name_kaz: string,
+    name_rus: string,
+    adress: string,
+    _budjet: string,
     user?: string
 }
 
