@@ -70,7 +70,6 @@ import { IzmIncDocListComponent } from './documents/izm_inc_doc/izm-inc-doc-list
     UtvIncomeListComponent,
     UtvIncomeDetailComponent,
     SkeletonComponent,
-    IzmIncDocComponent,
     IzmIncDocDetailComponent,
     IzmIncDocListComponent],
   bootstrap: [AppComponent],

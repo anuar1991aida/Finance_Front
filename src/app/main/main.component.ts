@@ -69,6 +69,9 @@ export class MainComponent implements OnInit {
               items: [{
                 label: 'Утвержденный план по поступлениям',
                 command: () => this.openTab('app-utv-income-list', 'Утвержденный план по поступлениям', '')
+              },{
+                label: 'Изменения по поступлению',
+                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения по поступлению', '')
               }]
             }
           ]
