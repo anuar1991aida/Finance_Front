@@ -5,6 +5,12 @@
           (click)="openNew()"></button>
   </div>
 
+  <!-- <div class="p-toolbar-group-right">
+    <p-dropdown [options]="items" [(ngModel)]="selectedItem" (onChange)="onItemSelected()" placeholder="Количество строк"
+    [virtualScroll]="true" [virtualScrollItemSize]="38"></p-dropdown>
+  </div> -->
+
+
   <div class="p-toolbar-group-right">
       <span class="p-input-icon-left" style="margin-right: 10px;">
           <i class="pi pi-search"></i>
@@ -59,12 +65,12 @@
       </div>
   </ng-template>
   <div *ngIf="category.count !== 0" class="flex align-items-center justify-content-center">
-      <span class="mx-1 text-color">Указано</span>
-      <p-paginator [first]="first" [rows]="rows" [totalRecords]="category.count || 0"
-          (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
-          currentPageReportTemplate="{{first+1}} - {{((this.first / this.rows) + 1) * rows}} из {{category.count}} элементов"
-          [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
-  </div>
+    <span class="mx-1 text-color">Указано</span>
+    <p-paginator [first]="first" [rows]="rows" [totalRecords]="category.count || 0"
+        (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
+        currentPageReportTemplate="{{first+1}} - {{(first + rows) > (category.count || 0)  ? category.count : first + rows }} из {{category.count}} элементов"
+        [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
+</div>
 </div>
 
 <ng-template #loader>

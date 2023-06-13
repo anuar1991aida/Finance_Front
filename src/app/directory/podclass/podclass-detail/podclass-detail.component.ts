@@ -32,6 +32,7 @@ export class PodclassDetailComponent implements OnInit {
     })
 
     this.podclass_detail = this.podclassconf.data.podclass
+    console.log(this.podclass_detail)
 
   }
 
