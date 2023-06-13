@@ -29,22 +29,21 @@
 
                 <app-classification-income-list *ngIf="context.selector=='app-classification-income-list'">
                 </app-classification-income-list>
-<<<<<<< Updated upstream
-                <app-budjet-list *ngIf="context.selector=='app-budjet-list'">
-                </app-budjet-list>
-                <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'">
-                </app-izm-inc-doc-list>
-                <app-utv-income-list *ngIf="context.selector=='app-utv-income-list'">
-=======
 
                 <app-utv-income-list *ngIf="context.selector=='app-utv-income-list'"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
->>>>>>> Stashed changes
                 </app-utv-income-list>
 
                 <app-utv-income-detail *ngIf="context.selector=='app-utv-income-detail'" [utv_inc_id]="number"
                     (closeEvent)="removetab()">
                 </app-utv-income-detail>
+
+                <app-budjet-list *ngIf="context.selector=='app-budjet-list'">
+                </app-budjet-list>
+                <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'">
+                </app-izm-inc-doc-list>
+                <app-utv-income-list *ngIf="context.selector=='app-utv-income-list'">
+                </app-utv-income-list>
 
 
 
