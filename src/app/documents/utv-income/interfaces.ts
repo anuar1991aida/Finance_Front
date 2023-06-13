@@ -3,7 +3,7 @@ export interface utv_income_doc {
     org_name: string,
     budjet_name: string,
     nom: string,
-    date: string,
+    _date: string,
     deleted: boolean,
     _organization: number,
     _budjet: number
@@ -25,10 +25,11 @@ export interface utv_income_doc_tab {
     sm10: number,
     sm11: number,
     sm12: number,
-    date: string,
+    _date: string,
     _organization: number,
     _utv_inc: number,
-    _classification: number
+    _classification: number,
+    classification_name: string
 }
 
 export interface utv_income_list {
@@ -39,6 +40,6 @@ export interface utv_income_list {
 }
 
 export interface utv_income_detail {
-    doc: [utv_income_doc],
+    doc: utv_income_doc,
     tbl1: [utv_income_doc_tab]
 }

@@ -1,1 +1,119 @@
-<p>utv-income-detail works!</p>
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <div style="padding-right: 10px;">
+            <button pButton pRipple label="Записать" icon="pi pi-save" class="p-button-success p-mr-2"
+                (click)="saveDoc(false)"></button>
+        </div>
+        <button pButton pRipple label="Записать и закрыть" icon="pi pi-save" class="p-button-success p-mr-2"
+            (click)="saveDoc(true)"></button>
+    </div>
+
+    <div class="p-toolbar-group-right">
+        <p-splitButton appendTo="body" label="Еще" [model]="this.items"
+            styleClass="p-button-outlined p-button-plain p-mr-2"></p-splitButton>
+    </div>
+</p-toolbar>
+
+<div class="card" *ngIf="(utvDetail) as utvDetail; else loader">
+    <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 20px;">
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер <span style="color: red;">*</span></label>
+            <div class="p-inputgroup">
+                <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
+                    formControlName="number_doc" />
+            </div>
+            <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
+                <span *ngIf="form.controls['number_doc'].errors?.required">Номер не должен быть пустым</span>
+            </span>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+
+            <label for="date_doc">Дата <span style="color: red;">*</span></label>
+            <div class="p-inputgroup">
+                <p-calendar appendTo="body" (onSelect)="changedate()" [(ngModel)]="utvDetail.doc._date"
+                    dateFormat="dd.mm.yy" [showIcon]="true" formControlName="date_doc"></p-calendar>
+            </div>
+            <!-- <div class="p-inputgroup">
+                <input id="date_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.date"
+                    formControlName="date_doc" />
+            </div> -->
+            <span class="p-invalid" *ngIf="form.controls['date_doc'].invalid && form.controls['date_doc'].touched">
+                <span *ngIf="form.controls['date_doc'].errors?.required">Дата не должна быть пустой</span>
+            </span>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
+            <div class="p-inputgroup">
+                <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc.org_name"
+                    formControlName="org_name" />
+            </div>
+            <span class="p-invalid" *ngIf="form.controls['org_name'].invalid && form.controls['org_name'].touched">
+                <span *ngIf="form.controls['org_name'].errors?.required">Наименование не должно быть пустым</span>
+            </span>
+        </div>
+
+        <div class="p-field">
+            <label for="budjet_name">Бюджет организации <span style="color: red;">*</span></label>
+            <div class="p-inputgroup">
+                <input id="budjet_name" type="text" pInputText [(ngModel)]="utvDetail.doc.budjet_name"
+                    formControlName="budjet_name" />
+            </div>
+            <span class="p-invalid"
+                *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
+                <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
+            </span>
+        </div>
+    </form>
+
+    <p-table *ngIf="utvDetail.tbl1; else empty" [value]="utvDetail.tbl1" [scrollable]="true"
+        scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="text-align:center">Номер</th>
+                <th style="text-align:center">Код КП</th>
+                <th style="text-align:center">Сумма на год</th>
+                <th style="text-align:center">Январь</th>
+                <th style="text-align:center">Февраль</th>
+                <th style="text-align:center">Март</th>
+                <th style="text-align:center">Апрель</th>
+                <th style="text-align:center">Май</th>
+                <th style="text-align:center">Июнь</th>
+                <th style="text-align:center">Июль</th>
+                <th style="text-align:center">Август</th>
+                <th style="text-align:center">Сентябрь</th>
+                <th style="text-align:center">Октябрь</th>
+                <th style="text-align:center">Ноябрь</th>
+                <th style="text-align:center">Декабрь</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-utv let-ri="rowIndex" *ngFor="let item of utvDetail.tbl1 | keyvalue">
+            <tr class="cursor-pointer">
+                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                <td style="text-align:left">
+                    {{utv.classification_name}}
+                </td>
+                <td style="text-align:right">
+                    {{utv.god}}
+                </td>
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                    <td style="text-align:right;">{{utv['sm' + i]}}</td>
+                </ng-container>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template #empty>
+        <div class="center">
+            Нет ни одной записи
+        </div>
+    </ng-template>
+</div>
+
+
+
+
+<ng-template #loader>
+    <app-skeleton></app-skeleton>
+</ng-template>

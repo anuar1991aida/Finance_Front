@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -20,6 +20,8 @@ export class UtvIncomeListComponent implements OnInit {
     private utvListdialog: DialogService,
     private utvListmessage: MessageService,
   ) { }
+
+  @Output() newItemEvent = new EventEmitter<any>();
 
   utvList$: Observable<utv_income_list>
   searchutvList = ''
@@ -46,16 +48,24 @@ export class UtvIncomeListComponent implements OnInit {
   }
 
   onDelete(utv_inc: utv_income_doc) {
+    let msg = !utv_inc.deleted ? "Пометить " + utv_inc.nom + " на удаление?" : "Снять с " + utv_inc.nom + " пометку на удаление?"
+    let header = !utv_inc.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !utv_inc.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
     this.utvListconfirm.confirm({
-      message: 'Вы действительно хотите удалить ' + utv_inc.nom + '?',
-      header: 'Удаление документа',
+      message: msg,
+      header: header,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.utvListService.deleteUtv(utv_inc.id)
           .subscribe((data) => (
-            this.utvListmessage.add({ severity: 'success', summary: 'Успешно', detail: 'Документ удален!' }),
-            this.fetchUtvList(), this.utvListconfirm.close()),
-            (error) => (this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось удалить документ!' }))
+            this.utvListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetchUtvList(),
+            this.utvListconfirm.close()
+          ),
+            (error) => (
+              this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось выполнить операцию!' })
+            )
           )
       },
       reject: () => {
@@ -68,26 +78,12 @@ export class UtvIncomeListComponent implements OnInit {
 
   }
 
-  onRowEdit(utv_inc_id: string) {
-    let headertext = 'Редактирование классификации'
+  onRowEdit(utv_inc: utv_income_doc) {
+    this.newItemEvent.emit({ params: { selector: 'app-utv-income-detail', nomer: 'Утвержденный план по поступлениям ' + utv_inc.nom, id: utv_inc.id } });
+  }
 
-    if (utv_inc_id !== '') {
-      headertext = 'Создание документа'
-    }
-
-    this.utvListref = this.utvListdialog.open(UtvIncomeDetailComponent,
-      {
-        header: headertext,
-        width: '60%',
-        height: '40%',
-        data: { classif_id: utv_inc_id }
-      })
-
-    this.utvListref.onClose.subscribe((save: boolean) => {
-      if (save) {
-        this.fetchUtvList()
-      }
-    })
+  NewDoc() {
+    this.newItemEvent.emit({ params: { selector: 'app-utv-income-detail', nomer: 'Утвержденный план по поступлениям ', id: '' } });
   }
 
 }

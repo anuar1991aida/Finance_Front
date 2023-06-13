@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { MegaMenuItem } from 'primeng/api';
+import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../login/auth.service';
 
 @Component({
@@ -10,7 +10,10 @@ import { AuthService } from '../login/auth.service';
 })
 export class MainComponent implements OnInit {
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private config: PrimeNGConfig,
+    private router: Router) { }
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
   viewContainerRef: ViewContainerRef;
   @ViewChild('templateRef', { read: TemplateRef, static: true })
@@ -42,7 +45,7 @@ export class MainComponent implements OnInit {
               }, {
                 label: 'Классы',
                 command: () => this.openTab('app-class-income-list', 'Классы', '')
-              },{
+              }, {
                 label: 'Подклассы',
                 command: () => this.openTab('app-podclass-list', 'Подклассы', '')
               }, {
@@ -82,7 +85,15 @@ export class MainComponent implements OnInit {
         icon: 'pi pi-fw pi-power-off',
         command: () => this.logout()
       }
-    ];
+    ]
+
+    this.config.setTranslation({
+      monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+      monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+      dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+      firstDayOfWeek: 1
+    })
+
   }
 
   openTab(nameselector: string, nametitle: string, id: string, data?: any) {

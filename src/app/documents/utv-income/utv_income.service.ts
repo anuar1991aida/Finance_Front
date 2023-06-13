@@ -19,18 +19,14 @@ export class UtvIncomeService {
     }
 
     fetch_detail(utv_inc_id: string): Observable<utv_income_detail> {
-        return this.http.get<utv_income_detail>(this.host + 'dirs/utvincitem/' + utv_inc_id)
+        return this.http.get<utv_income_detail>(this.host + 'docs/utvincitem/' + utv_inc_id)
     }
 
-    saveSpec(utv_inc: utv_income_detail) {
-        return this.http.post(this.host + 'dirs/specincedit', utv_inc)
-    }
-
-    addSpec(utv_inc: utv_income_detail) {
-        return this.http.post(this.host + 'dirs/specincadd', utv_inc)
+    saveUtv(utv_inc: utv_income_detail) {
+        return this.http.post(this.host + 'docs/utvincsave', utv_inc)
     }
 
     deleteUtv(utv_inc_id: string = '') {
-        return this.http.delete(this.host + 'dirs/specincdelete/' + utv_inc_id)
+        return this.http.delete(this.host + `docs/utvincdelete/${utv_inc_id}`)
     }
 }
