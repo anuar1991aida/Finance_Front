@@ -31,7 +31,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-class_inc let-ri="rowIndex"
             *ngFor="let item of classif_inc.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowEdit(class_inc)">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(class_inc)">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     {{class_inc.code}}
@@ -45,7 +45,7 @@
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                            (click)="onRowEdit(class_inc)"></button>
+                            (click)="onRowEdit(class_inc.id)"></button>
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
                             (click)="onDelete(class_inc)"></button>
                     </div>

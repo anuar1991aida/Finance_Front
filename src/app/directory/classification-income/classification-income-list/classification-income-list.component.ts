@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -21,17 +21,9 @@ export class ClassificationIncomeListComponent implements OnInit {
     private classifListmessage: MessageService,
   ) { }
 
+  @Input() data = false; // это форма списка??
+
   classif$: Observable<classsification_income_list>
-  NewClassif: classsification_income_detail = {
-    id: '',
-    code: '',
-    name_kaz: '',
-    name_rus: '',
-    category: '',
-    classs: '',
-    podclass: '',
-    spec: ''
-  }
   searchclassif = ''
   first = 0
   rows = 3
@@ -56,10 +48,10 @@ export class ClassificationIncomeListComponent implements OnInit {
   }
 
   onRowEdit(classif_inc_id: string) {
-    let headertext = 'Редактирование классификации'
+    let headertext = 'Создание классификации'
 
     if (classif_inc_id !== '') {
-      headertext = 'Создание классификации'
+      headertext = 'Редактирование классификации'
     }
 
     this.classifref = this.classifListdialog.open(ClassificationIncomeDetailComponent,
@@ -75,6 +67,15 @@ export class ClassificationIncomeListComponent implements OnInit {
         this.fetchClassif()
       }
     })
+  }
+
+  onRowClick(classif_inc: classsification_income_detail) {
+    if (this.data) {
+      this.onRowEdit(classif_inc.id)
+    }
+    else {
+      this.classifref.close(classif_inc)
+    }
   }
 
   onDelete(classif_inc: classsification_income) {

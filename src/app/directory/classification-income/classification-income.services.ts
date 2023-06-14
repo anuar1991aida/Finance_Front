@@ -19,7 +19,7 @@ export class ClassificationIncomeService {
     }
 
     fetch_detail(classif_inc_id: string): Observable<classsification_income_detail> {
-        return this.http.get<classsification_income_detail>(this.host + 'dirs/classlist/' + classif_inc_id)
+        return this.http.get<classsification_income_detail>(this.host + `dirs/classificationincitem/${classif_inc_id}`)
     }
 
     saveClass(classif_inc: classsification_income_detail) {

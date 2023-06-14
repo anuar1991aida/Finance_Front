@@ -56,7 +56,7 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('app-budjet-list', 'Бюджет', '')
               }, {
                 label: 'Классификации',
-                command: () => this.openTab('app-classification-income-list', 'Классификации', '')
+                command: () => this.openTab('app-classification-income-list', 'Классификации', '', true)
               }]
             }
           ]

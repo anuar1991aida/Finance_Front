@@ -10,7 +10,7 @@ export interface utv_income_doc {
 }
 
 export interface utv_income_doc_tab {
-    id?: string,
+    id?: number,
     deleted: boolean,
     god: number,
     sm1: number,
@@ -29,7 +29,8 @@ export interface utv_income_doc_tab {
     _organization: number,
     _utv_inc: number,
     _classification: number,
-    classification_name: string
+    classification_name: string,
+    classification_code: string
 }
 
 export interface utv_income_list {

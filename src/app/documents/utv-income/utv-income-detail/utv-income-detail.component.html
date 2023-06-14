@@ -1,11 +1,11 @@
 <p-toolbar>
     <div class="p-toolbar-group-left">
         <div style="padding-right: 10px;">
-            <button pButton pRipple label="Записать" icon="pi pi-save" class="p-button-success p-mr-2"
-                (click)="saveDoc(false)"></button>
+            <button [disabled]="form.invalid" pButton pRipple label="Записать" icon="pi pi-save"
+                class="p-button-secondary p-mr-2" (click)="saveDoc(false)"></button>
         </div>
-        <button pButton pRipple label="Записать и закрыть" icon="pi pi-save" class="p-button-success p-mr-2"
-            (click)="saveDoc(true)"></button>
+        <button [disabled]="form.invalid" pButton pRipple label="Записать и закрыть" icon="pi pi-save"
+            class="p-button-info p-mr-2" (click)="saveDoc(true)"></button>
     </div>
 
     <div class="p-toolbar-group-right">
@@ -15,7 +15,7 @@
 </p-toolbar>
 
 <div class="card" *ngIf="(utvDetail) as utvDetail; else loader">
-    <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 20px;">
+    <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
         <div class="p-field" style="padding-right: 10px;">
             <label for="number_doc">Номер <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
@@ -34,10 +34,6 @@
                 <p-calendar appendTo="body" (onSelect)="changedate()" [(ngModel)]="utvDetail.doc._date"
                     dateFormat="dd.mm.yy" [showIcon]="true" formControlName="date_doc"></p-calendar>
             </div>
-            <!-- <div class="p-inputgroup">
-                <input id="date_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.date"
-                    formControlName="date_doc" />
-            </div> -->
             <span class="p-invalid" *ngIf="form.controls['date_doc'].invalid && form.controls['date_doc'].touched">
                 <span *ngIf="form.controls['date_doc'].errors?.required">Дата не должна быть пустой</span>
             </span>
@@ -67,6 +63,11 @@
         </div>
     </form>
 
+    <div style="padding: 0 0 10px 10px;">
+        <button [disabled]="form.invalid" pButton pRipple label="добавить" icon="pi pi-plus"
+            class="p-button-success p-mr-2" (click)="addClassification()"></button>
+    </div>
+
     <p-table *ngIf="utvDetail.tbl1; else empty" [value]="utvDetail.tbl1" [scrollable]="true"
         scrollHeight="calc(100vh - 200px)" selectionMode="single"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
@@ -92,8 +93,19 @@
         <ng-template pTemplate="body" let-utv let-ri="rowIndex" *ngFor="let item of utvDetail.tbl1 | keyvalue">
             <tr class="cursor-pointer">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
-                <td style="text-align:left">
-                    {{utv.classification_name}}
+                <td>
+                    <div class="p-inputgroup w-full">
+                        <input pInputText [readOnly]="true"
+                            [ngModel]="utv.classification_code + ' ' + utv.classification_name" />
+                        <span class="p-inputgroup-addon" (click)="viewClassification(utv._classification)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-files" viewBox="0 0 16 16">
+                                <path
+                                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                            </svg>
+                        </span>
+                        <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
+                    </div>
                 </td>
                 <td style="text-align:right">
                     {{utv.god}}
@@ -111,8 +123,8 @@
     </ng-template>
 </div>
 
-
-
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>
 
 <ng-template #loader>
     <app-skeleton></app-skeleton>

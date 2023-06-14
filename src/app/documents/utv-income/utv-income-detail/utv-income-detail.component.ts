@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { catchError, Observable, switchAll, switchMap, take, throwError, timeout } from 'rxjs';
+import { ClassificationIncomeDetailComponent } from 'src/app/directory/classification-income/classification-income-detail/classification-income-detail.component';
+import { ClassificationIncomeListComponent } from 'src/app/directory/classification-income/classification-income-list/classification-income-list.component';
 import { utv_income_detail } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
 
@@ -14,26 +17,26 @@ export class UtvIncomeDetailComponent implements OnInit {
 
   constructor(
     private utvDetailService: UtvIncomeService,
-    private utvDetailmsg: MessageService
+    private utvDetailmsg: MessageService,
+    private utvDetailref: DynamicDialogRef,
+    private utvDetaildialog: DialogService,
+    private utvDetailconfirm: ConfirmationService,
   ) {
     this.items = [
       {
-        label: 'Update',
-        icon: 'pi pi-refresh',
+        label: 'Записать',
+        icon: 'pi pi-save',
         command: () => {
-          // this.saveDoc();
+          this.saveDoc(false);
         }
       },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times',
-        command: () => {
-          // this.saveDoc();
-        }
-      },
-      { label: 'Angular.io', icon: 'pi pi-info', url: 'http://angular.io' },
-      { separator: true },
-      { label: 'Setup', icon: 'pi pi-cog', routerLink: ['/setup'] }
+      // {
+      //   label: 'Пометка на удаление',
+      //   icon: 'pi pi-times',
+      //   command: () => {
+      //     this.onDelete();
+      //   }
+      // }
     ]
   }
 
@@ -53,30 +56,140 @@ export class UtvIncomeDetailComponent implements OnInit {
       budjet_name: new FormControl(null, [Validators.required])
     })
 
-    this.utvDetailService.fetch_detail(this.utv_inc_id)
-      .subscribe(
-        (detail) => {
-          this.utvDetail = detail
-        }
-      )
+    if (this.utv_inc_id !== '') {
+      this.utvDetailService.fetch_detail(this.utv_inc_id)
+        .subscribe(
+          (detail) => {
+            this.utvDetail = detail
+          }
+        )
+    }
+    else {
+      this.utvDetail = {
+        doc: {
+          org_name: '',
+          budjet_name: '',
+          nom: '',
+          _date: '',
+          deleted: false,
+          _organization: 0,
+          _budjet: 0
+        },
+        tbl1: [{
+          id: 0,
+          deleted: false,
+          god: 0,
+          sm1: 0,
+          sm2: 0,
+          sm3: 0,
+          sm4: 0,
+          sm5: 0,
+          sm6: 0,
+          sm7: 0,
+          sm8: 0,
+          sm9: 0,
+          sm10: 0,
+          sm11: 0,
+          sm12: 0,
+          _date: '',
+          _organization: 0,
+          _utv_inc: 0,
+          _classification: 0,
+          classification_name: '',
+          classification_code: ''
+        }]
+      }
+    }
+  }
 
+  addClassification() {
+    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeListComponent,
+      {
+        header: 'Выбор классификации',
+        width: '60%',
+        height: '80%'
+      })
 
+    this.utvDetailref.onClose.subscribe((classific: any) => {
+      if (classific) {
+        this.utvDetail.tbl1.push(
+          {
+            _classification: classific.id,
+            classification_name: classific.name_rus,
+            classification_code: classific.code,
+            id: 0,
+            god: 0,
+            sm1: 0,
+            sm2: 0,
+            sm3: 0,
+            sm4: 0,
+            sm5: 0,
+            sm6: 0,
+            sm7: 0,
+            sm8: 0,
+            sm9: 0,
+            sm10: 0,
+            sm11: 0,
+            sm12: 0,
+            deleted: false,
+            _organization: 0,
+            _utv_inc: 0,
+            _date: this.utvDetail.doc._date
+          })
+      }
+    })
+  }
 
-    // this.utvDetail$ = this.utvDetailService.fetch_detail(this.utv_inc_id)
+  viewClassification(classif_inc_id: number) {
+    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeDetailComponent,
+      {
+        header: 'Редактирование классификации',
+        width: '60%',
+        height: '40%',
+        data: { classif_id: classif_inc_id }
+      })
+
   }
 
   saveDoc(close: boolean): void {
+    let responce: any
 
     this.utvDetailService.saveUtv(this.utvDetail)
       .subscribe(
-        () => (
+        (data) => (
           this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          responce = data, this.utvDetail = responce,
           this.closeform(close)
         ),
         (error) => (
           this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
         )
       )
+  }
+
+  onDelete() {
+    let msg = !this.utvDetail.doc.deleted ? "Пометить " + this.utvDetail.doc.nom + " на удаление?" : "Снять с " + this.utvDetail.doc.nom + " пометку на удаление?"
+    let header = !this.utvDetail.doc.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !this.utvDetail.doc.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
+    this.utvDetailconfirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.utvDetailService.deleteUtv(this.utvDetail.doc.id)
+          .subscribe((data) => (
+            this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess })
+          ),
+            (error) => (
+              this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+            )
+          )
+      },
+      reject: () => {
+        this.utvDetailconfirm.close();
+      }
+    });
   }
 
   changedate() {

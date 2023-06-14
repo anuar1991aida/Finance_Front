@@ -13,12 +13,20 @@ export interface classsification_income_list {
 }
 
 export interface classsification_income_detail {
-    id?: string,
+    id: string,
     code: string,
     name_kaz: string,
     name_rus: string,
-    category: string,
-    classs: string,
-    podclass: string,
-    spec: string
+    _category_id: number,
+    category_code: string,
+    category_name: string,
+    _classs_id: number,
+    classs_code: string,
+    classs_name: string,
+    _podclass_id: number,
+    podclass_code: string,
+    podclass_name: string,
+    _spec_id: number,
+    spec_code: string,
+    spec_name: string
 }

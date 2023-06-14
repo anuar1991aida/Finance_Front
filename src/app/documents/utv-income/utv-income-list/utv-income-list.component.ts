@@ -3,7 +3,6 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { utv_income_doc, utv_income_list } from '../interfaces';
-import { UtvIncomeDetailComponent } from '../utv-income-detail/utv-income-detail.component';
 import { UtvIncomeService } from '../utv_income.service';
 
 @Component({

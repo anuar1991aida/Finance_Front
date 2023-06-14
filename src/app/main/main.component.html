@@ -27,7 +27,8 @@
                 <app-specification-income-list *ngIf="context.selector=='app-specification-income-list'">
                 </app-specification-income-list>
 
-                <app-classification-income-list *ngIf="context.selector=='app-classification-income-list'">
+                <app-classification-income-list *ngIf="context.selector=='app-classification-income-list'"
+                    [data]="true">
                 </app-classification-income-list>
 
                 <app-utv-income-list *ngIf="context.selector=='app-utv-income-list'"
@@ -42,11 +43,6 @@
                 </app-budjet-list>
                 <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'">
                 </app-izm-inc-doc-list>
-                <app-utv-income-list *ngIf="context.selector=='app-utv-income-list'">
-                </app-utv-income-list>
-
-
-
             </mat-tab>
         </ng-template>
     </mat-tab-group>
