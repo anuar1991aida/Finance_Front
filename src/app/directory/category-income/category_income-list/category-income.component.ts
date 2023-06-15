@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -22,7 +22,7 @@ export class CategoryIncomeComponent implements OnInit {
     private categoryListdialog: DialogService,
     private categoryListmessage: MessageService,
   ) { }
-
+  @Input() data = false;
   category$: Observable<category_income_list>
   NewCat: category_income_detail = {
     id: '',
@@ -71,6 +71,14 @@ export class CategoryIncomeComponent implements OnInit {
     })
   }
 
+  onRowClick(category_inc: category_income_detail) {
+    if (this.data) {
+      this.onRowEdit(category_inc)
+    }
+    else {
+      this.categoryref.close(category_inc)
+    }
+  }
   openNew() {
     this.categoryref = this.categoryListdialog.open(CategoryIncomeDetailComponent,
       {

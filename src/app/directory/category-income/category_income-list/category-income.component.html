@@ -31,7 +31,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-cat let-ri="rowIndex" *ngFor="let item of category.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowEdit(cat)">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(cat)">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     {{cat.code}}

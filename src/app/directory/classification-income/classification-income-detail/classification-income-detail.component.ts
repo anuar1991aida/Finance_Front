@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { ClassificationIncomeService } from '../classification-income.services';
 import { classsification_income_detail } from '../interfaces';
+import { CategoryIncomeComponent } from '../../category-income/category_income-list/category-income.component';
 
 @Component({
   selector: 'app-classification-income-detail',
@@ -18,6 +19,8 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     private ClassifDetailmsg: MessageService,
     private ClassifDetailconfig: DynamicDialogConfig,
     private ClassifDetailconfirm: ConfirmationService,
+    private Select_dialog: DialogService,
+    private Select_dialog_ref: DynamicDialogRef
   ) { }
 
   form: FormGroup
@@ -67,7 +70,22 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   }
 
   addClassification() {
+    this.Select_dialog_ref = this.Select_dialog.open(CategoryIncomeComponent,
+      {
+        header: 'vybor category',
+        width: '70%',
+        height: '30%'
+      }
+    )
 
+    this.Select_dialog_ref.onClose.subscribe((category: any) => {
+      if (category) {
+        console.log(category);
+        this.classifDetail._category_id = category.id;
+        this.classifDetail.category_name = category.name_rus;
+        this.classifDetail.category_code = category.code;
+      }
+    })
   }
 
   viewClassification() {
