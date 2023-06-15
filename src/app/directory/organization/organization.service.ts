@@ -20,6 +20,6 @@ export class OrganizationsService {
     }
 
     add(param: organization_detail) {
-      return this.http.post(this.host + 'dirs/organizationadd', param)
+      return this.http.post(this.host + 'dirs/organizationsave', param)
     }
 }

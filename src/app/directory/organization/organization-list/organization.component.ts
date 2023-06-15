@@ -23,7 +23,7 @@ export class OrganizationComponent implements OnInit {
   last = 3
 
   Pusti_dannye: organization_detail = {
-    id: '',
+    id: 0,
     bin: '',
     budjet_name: '',
     name_kaz: '',
@@ -54,8 +54,15 @@ export class OrganizationComponent implements OnInit {
     this.fetchOrg()
   }
 
-  onRowEdit(){
-    alert("Все нормально");
+  onRowEdit(org: any){
+
+    this.org_dialog_ref = this.org_dialog_servis.open(OrganizationDetailComponent,
+      {
+        header: 'Редактирование организации',
+        width: '60%',
+        height: '50%',
+        data: { organizations: org }
+      });
   }
 
   fetchCat(){
@@ -71,10 +78,19 @@ export class OrganizationComponent implements OnInit {
   }
 
   openNew(){
+    this.Pusti_dannye  ={
+      id: 0,
+      bin: '',
+      budjet_name: '',
+      name_kaz: '',
+      name_rus: '',
+      adress: '',
+      _budjet: 0
+    }
     this.org_dialog_ref = this.org_dialog_servis.open(OrganizationDetailComponent,
       {
         header: 'Создание организации',
-        width: '50%',
+        width: '60%',
         height: '50%',
         data: { organizations: this.Pusti_dannye }
       })
