@@ -39,18 +39,26 @@
             </span>
         </div>
 
-        <div class="p-field" style="padding-right: 10px;">
+        <div class="p-field" style="padding-right: 10px; min-width: 20rem;">
             <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc.org_name"
                     formControlName="org_name" />
+                <span class="p-inputgroup-addon cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-files" viewBox="0 0 16 16">
+                        <path
+                            d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                    </svg>
+                </span>
+                <span class="p-inputgroup-addon cursor-pointer">...</span>
             </div>
             <span class="p-invalid" *ngIf="form.controls['org_name'].invalid && form.controls['org_name'].touched">
                 <span *ngIf="form.controls['org_name'].errors?.required">Наименование не должно быть пустым</span>
             </span>
         </div>
 
-        <div class="p-field">
+        <div class="p-field" style="min-width: 20rem;">
             <label for="budjet_name">Бюджет организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <input id="budjet_name" type="text" pInputText [(ngModel)]="utvDetail.doc.budjet_name"
@@ -64,8 +72,8 @@
     </form>
 
     <div style="padding: 0 0 10px 10px;">
-        <button [disabled]="form.invalid" pButton pRipple label="добавить" icon="pi pi-plus"
-            class="p-button-success p-mr-2" (click)="addClassification()"></button>
+        <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="addClassification()"></button>
     </div>
 
     <p-table *ngIf="utvDetail.tbl1; else empty" [value]="utvDetail.tbl1" [scrollable]="true"
@@ -104,14 +112,18 @@
                                     d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
                             </svg>
                         </span>
-                        <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
+                        <span class="p-inputgroup-addon" (click)="editClassification(utv.id)">...</span>
                     </div>
                 </td>
-                <td style="text-align:right">
-                    {{utv.god}}
+                <td style="text-align:center">
+                    {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
+                    utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                    <td style="text-align:right;">{{utv['sm' + i]}}</td>
+                    <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
+                        <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]"
+                            style="text-align:center; width: 100%;">
+                    </td>
                 </ng-container>
             </tr>
         </ng-template>

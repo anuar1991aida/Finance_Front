@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { DialogService } from 'primeng/dynamicdialog';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { izm_inc_doc_tab , izm_inc_doc , izm_inc_doc_detail ,izm_inc_doc_list} from '../interfaces';
-import { Doc_izm_Servis } from '../izm_servise';
+import { izm_inc_doc, izm_inc_doc_list } from '../interfaces';
+import { IzmIncomeService } from '../izm_income.service';
 
 @Component({
   selector: 'app-izm-inc-doc-list',
@@ -13,14 +13,18 @@ import { Doc_izm_Servis } from '../izm_servise';
 export class IzmIncDocListComponent implements OnInit {
 
   constructor(
-    private doc_izm_Servis: Doc_izm_Servis
+    private IzmListService: IzmIncomeService,
+    private IzmListref: DynamicDialogRef,
+    private IzmListconfirm: ConfirmationService,
+    private IzmListdialog: DialogService,
+    private IzmListmessage: MessageService,
   ) { }
 
+  @Output() newItemEvent = new EventEmitter<any>()
   doc_izm$: Observable<izm_inc_doc_list>
   first = 0
   rows = 3
-  last = 3
-  searchcategory = ''
+  searchIzmInc = ''
 
 
   ngOnInit(): void {
@@ -35,7 +39,7 @@ export class IzmIncDocListComponent implements OnInit {
       offset: this.first.toString()
     }
 
-    this.doc_izm$ = this.doc_izm_Servis.fetch(params)
+    this.doc_izm$ = this.IzmListService.fetch(params)
 
   }
 
@@ -45,19 +49,43 @@ export class IzmIncDocListComponent implements OnInit {
     this.fetch_doc_izm()
   }
 
-  openNew(){
+  onDelete(izm_inc: izm_inc_doc) {
+    let msg = !izm_inc.deleted ? "Пометить " + izm_inc.nom + " на удаление?" : "Снять с " + izm_inc.nom + " пометку на удаление?"
+    let header = !izm_inc.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !izm_inc.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
+    this.IzmListconfirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.IzmListService.deleteIzm(izm_inc.id)
+          .subscribe((data) => (
+            this.IzmListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetch_doc_izm(),
+            this.IzmListconfirm.close()
+          ),
+            (error) => (
+              this.IzmListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось выполнить операцию!' })
+            )
+          )
+      },
+      reject: () => {
+        this.IzmListconfirm.close();
+      }
+    });
+  }
+
+  onRowEdit(izm_inc: izm_inc_doc) {
+    this.newItemEvent.emit({ params: { selector: 'app-izm-inc-doc-detail', nomer: 'Изменения плана финансирования по поступлениям ' + izm_inc.nom, id: izm_inc.id } });
+  }
+
+  NewDoc() {
+    this.newItemEvent.emit({ params: { selector: 'app-izm-inc-doc-detail', nomer: 'Изменения плана финансирования по поступлениям ', id: '' } });
+  }
+
+  search() {
 
   }
 
-  search(){
-
-  }
-
-  fetchCat(){
-
-  }
-
-  onRowEdit(org:string){
-
-  }
 }

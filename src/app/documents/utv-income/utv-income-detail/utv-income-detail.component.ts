@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { catchError, Observable, switchAll, switchMap, take, throwError, timeout } from 'rxjs';
 import { ClassificationIncomeDetailComponent } from 'src/app/directory/classification-income/classification-income-detail/classification-income-detail.component';
 import { ClassificationIncomeListComponent } from 'src/app/directory/classification-income/classification-income-list/classification-income-list.component';
 import { utv_income_detail } from '../interfaces';
@@ -99,6 +98,8 @@ export class UtvIncomeDetailComponent implements OnInit {
           classification_code: ''
         }]
       }
+
+      this.utvDetail.tbl1.splice(0, this.utvDetail.tbl1.length)
     }
   }
 
@@ -136,6 +137,26 @@ export class UtvIncomeDetailComponent implements OnInit {
             _utv_inc: 0,
             _date: this.utvDetail.doc._date
           })
+      }
+    })
+  }
+
+  editClassification(id: number) {
+    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeListComponent,
+      {
+        header: 'Выбор классификации',
+        width: '60%',
+        height: '80%'
+      })
+
+    this.utvDetailref.onClose.subscribe((classific: any) => {
+      if (classific) {
+        let targetRow = this.utvDetail.tbl1.find((row) => row.id = id)
+        if (targetRow) {
+          targetRow._classification = classific.id
+          targetRow.classification_name = classific.name_rus
+          targetRow.classification_code = classific.code
+        }
       }
     })
   }
