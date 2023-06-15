@@ -19,8 +19,10 @@
 
                 <app-category-income *ngIf="context.selector=='app-category-income'">
                 </app-category-income>
+
                 <app-podclass-list *ngIf="context.selector=='app-podclass-list'">
                 </app-podclass-list>
+
                 <app-class-income-list *ngIf="context.selector=='app-class-income-list'">
                 </app-class-income-list>
 
@@ -41,8 +43,15 @@
 
                 <app-budjet-list *ngIf="context.selector=='app-budjet-list'">
                 </app-budjet-list>
-                <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'">
+
+                <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'"
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
                 </app-izm-inc-doc-list>
+
+                <app-izm-inc-doc-detail *ngIf="context.selector=='app-izm-inc-doc-detail'" [izm_inc_id]="number"
+                    (closeEvent)="removetab()">
+                </app-izm-inc-doc-detail>
+
             </mat-tab>
         </ng-template>
     </mat-tab-group>
