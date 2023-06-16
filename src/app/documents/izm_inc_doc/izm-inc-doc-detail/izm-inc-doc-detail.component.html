@@ -76,7 +76,7 @@
             (click)="addClassification()"></button>
     </div>
 
-    <p-table *ngIf="utvDetail.tbl1; else empty" [value]="utvDetail.tbl1" [scrollable]="true"
+    <p-table *ngIf="utvDetail.tbl1 && old" [value]="utvDetail.tbl1" [scrollable]="true"
         scrollHeight="calc(100vh - 200px)" selectionMode="single" styleClass="p-datatable-sm p-datatable-gridlines"
         rowGroupMode="rowspan" groupRowsBy="classification_name">
         <ng-template pTemplate="header">
@@ -144,7 +144,7 @@
                                     d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
                             </svg>
                         </span>
-                        <span class="p-inputgroup-addon" (click)="editClassification(izm.id)">...</span>
+                        <span class="p-inputgroup-addon" (click)="editClassification(izm._classification)">...</span>
                     </div>
                 </td>
                 <td style="text-align:center; font-weight: 700;">
@@ -152,9 +152,11 @@
                     izm.sm7 + izm.sm8 + izm.sm9 + izm.sm10 + izm.sm11 + izm.sm12}}
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                    <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
-                        <input type="number" [min]="0" [(ngModel)]="izm['sm' + i]"
-                            style="text-align:right; width: 100%;">
+                    <td *ngIf="izm.tip !== 'sm'" style="text-align:center; max-width: 7em; min-width: 7em">
+                        {{izm['sm' + i]}}</td>
+                    <td *ngIf="izm.tip === 'sm'" style="text-align:right; max-width: 7em; min-width: 7em">
+                        <input type="number" (change)="sumColumn('sm' + i, izm._classification)"
+                            [(ngModel)]="izm['sm' + i]" style="text-align:right; width: 100%;">
                     </td>
                 </ng-container>
                 <td *ngIf="rowgroup" [attr.rowspan]="rowspan" style="padding: 0; margin:0;">
@@ -166,7 +168,102 @@
             </tr>
         </ng-template>
     </p-table>
-    <ng-template #empty>
+
+    <p-table *ngIf="utvDetail.tbl1 && new" [value]="utvDetail.tbl1" [scrollable]="true"
+        scrollHeight="calc(100vh - 200px)" selectionMode="single" styleClass="p-datatable-sm p-datatable-gridlines"
+        rowGroupMode="rowspan" groupRowsBy="classification_name">
+        <ng-template pTemplate="header">
+            <tr>
+                <th rowspan="3" style="text-align:center">Номер</th>
+                <th rowspan="3" style="text-align:center">Код КП</th>
+                <th style="text-align:center">Утв сумма на год</th>
+                <th style="text-align:center">Утв январь</th>
+                <th style="text-align:center">Утв февраль</th>
+                <th style="text-align:center">Утв март</th>
+                <th style="text-align:center">Утв апрель</th>
+                <th style="text-align:center">Утв май</th>
+                <th style="text-align:center">Утв июнь</th>
+                <th style="text-align:center">Утв июль</th>
+                <th style="text-align:center">Утв август</th>
+                <th style="text-align:center">Утв сентябрь</th>
+                <th style="text-align:center">Утв октябрь</th>
+                <th style="text-align:center">Утв ноябрь</th>
+                <th style="text-align:center">Утв декабрь</th>
+                <th rowspan="3" style="text-align:center">Действия</th>
+            </tr>
+            <tr>
+                <th style="text-align:center">Сумма на год</th>
+                <th style="text-align:center">Январь</th>
+                <th style="text-align:center">Февраль</th>
+                <th style="text-align:center">Март</th>
+                <th style="text-align:center">Апрель</th>
+                <th style="text-align:center">Май</th>
+                <th style="text-align:center">Июнь</th>
+                <th style="text-align:center">Июль</th>
+                <th style="text-align:center">Август</th>
+                <th style="text-align:center">Сентябрь</th>
+                <th style="text-align:center">Октябрь</th>
+                <th style="text-align:center">Ноябрь</th>
+                <th style="text-align:center">Декабрь</th>
+            </tr>
+            <tr>
+                <th style="text-align:center">Итог сумма на год</th>
+                <th style="text-align:center">Итог январь</th>
+                <th style="text-align:center">Итог февраль</th>
+                <th style="text-align:center">Итог март</th>
+                <th style="text-align:center">Итог апрель</th>
+                <th style="text-align:center">Итог май</th>
+                <th style="text-align:center">Итог июнь</th>
+                <th style="text-align:center">Итог июль</th>
+                <th style="text-align:center">Итог август</th>
+                <th style="text-align:center">Итог сентябрь</th>
+                <th style="text-align:center">Итог октябрь</th>
+                <th style="text-align:center">Итог ноябрь</th>
+                <th style="text-align:center">Итог декабрь</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-izm let-ri="rowIndex" *ngFor="let item of utvDetail.tbl1 | keyvalue"
+            let-rowgroup="rowgroup" let-rowspan="rowspan">
+            <tr class="cursor-pointer">
+                <td *ngIf="rowgroup" [attr.rowspan]="rowspan" style="text-align: center; font-weight: 700;">{{ri + 1}}
+                </td>
+                <td *ngIf="rowgroup" [attr.rowspan]="rowspan">
+                    <div class="p-inputgroup w-full">
+                        <input pInputText [readOnly]="true" [ngModel]="izm.classification_name" />
+                        <span class="p-inputgroup-addon" (click)="viewClassification(izm._classification)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-files" viewBox="0 0 16 16">
+                                <path
+                                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                            </svg>
+                        </span>
+                        <span class="p-inputgroup-addon" (click)="editClassification(izm._classification)">...</span>
+                    </div>
+                </td>
+                <td style="text-align:center; font-weight: 700;">
+                    {{izm.sm1 + izm.sm2 + izm.sm3 + izm.sm4 + izm.sm5 + izm.sm6 +
+                    izm.sm7 + izm.sm8 + izm.sm9 + izm.sm10 + izm.sm11 + izm.sm12}}
+                </td>
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                    <td *ngIf="izm.tip !== 'sm'" style="text-align:center; max-width: 7em; min-width: 7em">
+                        {{izm['sm' + i]}}</td>
+                    <td *ngIf="izm.tip === 'sm'" style="text-align:right; max-width: 7em; min-width: 7em">
+                        <input type="number" [(ngModel)]="izm['sm' + i]"
+                            (change)="sumColumn('sm' + i, izm._classification)" style="text-align:right; width: 100%;">
+                    </td>
+                </ng-container>
+                <td *ngIf="rowgroup" [attr.rowspan]="rowspan" style="padding: 0; margin:0;">
+                    <div class="flex align-items-center justify-content-center gap-2">
+                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
+                            (click)="onDelete(izm._classification, izm.classification_name)"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+
+    <ng-template *ngIf="!utvDetail.tbl1">
         <div class="center">
             Нет ни одной записи
         </div>

@@ -29,6 +29,8 @@ export class IzmIncDocDetailComponent implements OnInit {
   form: FormGroup
   izmDetail: izm_inc_doc_detail
   responce: any
+  old = true
+  new = false
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -84,7 +86,20 @@ export class IzmIncDocDetailComponent implements OnInit {
 
   }
 
-  editClassification(id: number) {
+  sumColumn(column: string, _classification: number) {
+    this.calcTotal(this.izmDetail.tbl1, column, _classification)
+  }
+
+  calcTotal(data: any[], column: string, _classification: number) {
+
+    let itog = data.filter(item => item['tip'] == 'itog' && item['_classification'] == _classification)
+    let sm = data.filter(item => item['tip'] == 'sm' && item['_classification'] == _classification)
+    let utv = data.filter(item => item['tip'] == 'utv' && item['_classification'] == _classification)
+    itog[0][column] = sm[0][column] + utv[0][column]
+
+  }
+
+  editClassification(_classification_id: number) {
     this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeListComponent,
       {
         header: 'Выбор классификации',
@@ -94,11 +109,8 @@ export class IzmIncDocDetailComponent implements OnInit {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        let targetRow = this.izmDetail.tbl1.find((row) => row.id = id)
-        if (targetRow) {
-          targetRow._classification = classific.id
-          targetRow.classification_name = classific.code + ' ' + classific.name_rus
-        }
+        this.deleteRow(_classification_id)
+        this.addClassificationRow(classific.id)
       }
     })
   }
@@ -115,7 +127,6 @@ export class IzmIncDocDetailComponent implements OnInit {
   }
 
   addClassification() {
-
     this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeListComponent,
       {
         header: 'Выбор классификации',
@@ -125,28 +136,31 @@ export class IzmIncDocDetailComponent implements OnInit {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        this.izmDetail.tbl1.push(
-          {
-            _classification: classific.id,
-            classification_name: classific.code + ' ' + classific.name_rus,
-            id: 0,
-            tip: '',
-            sm1: 0,
-            sm2: 0,
-            sm3: 0,
-            sm4: 0,
-            sm5: 0,
-            sm6: 0,
-            sm7: 0,
-            sm8: 0,
-            sm9: 0,
-            sm10: 0,
-            sm11: 0,
-            sm12: 0
-          })
+        this.old = !this.old
+        this.new = !this.new
+        this.addClassificationRow(classific.id)
       }
     })
 
+  }
+
+  addClassificationRow(classific_id: number) {
+    let params = {
+      _organization: this.izmDetail.doc._organization,
+      date: this.izmDetail.doc._date,
+      _classification: classific_id
+    }
+
+    this.izmDetailService.getOstatok(params)
+      .subscribe(
+        (data) => (
+          this.old = !this.old,
+          this.new = !this.new,
+          data.forEach((item: any) => {
+            this.izmDetail.tbl1.push(item)
+          })
+        )
+      )
   }
 
   saveDoc(close: boolean): void {
@@ -165,22 +179,31 @@ export class IzmIncDocDetailComponent implements OnInit {
       )
   }
 
-  onDelete(classification_id: number, classification_name: string) {
+  onDelete(_classification_id: number, classification_name: string) {
     this.izmDetailconfirm.confirm({
       message: 'Вы действительно хотите удалить ' + classification_name + '?',
       header: 'Удаление классификации',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        for (let i = 0; i < this.izmDetail.tbl1.length; ++i) {
-          if (this.izmDetail.tbl1[i]._classification === classification_id) {
-            this.izmDetail.tbl1.splice(i, 1);
-          }
-        }
+        this.old = !this.old
+        this.new = !this.new
+        this.deleteRow(_classification_id)
+        this.izmDetailconfirm.close()
       },
       reject: () => {
         this.izmDetailconfirm.close();
       }
-    });
+    })
+  }
+
+  deleteRow(_classification_id: number) {
+    for (let i = this.izmDetail.tbl1.length - 1; i >= 0; i--) {
+      let index = this.izmDetail.tbl1.findIndex(item => _classification_id === item._classification)
+
+      if (index !== -1) {
+        this.izmDetail.tbl1.splice(index, 1)
+      }
+    }
   }
 
   changedate() {
