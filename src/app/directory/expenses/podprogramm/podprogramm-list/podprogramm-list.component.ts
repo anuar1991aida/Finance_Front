@@ -24,7 +24,7 @@ export class PodprogrammListComponent implements OnInit {
   podProg$: Observable<podprogramm_list>
   searchfuncPr = ''
   first = 0
-  rows = 3
+  rows = 25
 
   ngOnInit(): void {
     this.fetchpodPr()

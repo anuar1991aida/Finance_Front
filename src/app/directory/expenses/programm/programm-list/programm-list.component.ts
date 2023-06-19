@@ -24,7 +24,7 @@ export class ProgrammListComponent implements OnInit {
   Prog$: Observable<programm_list>
   searchfuncPr = ''
   first = 0
-  rows = 3
+  rows = 25
 
   ngOnInit(): void {
     this.fetchPr()

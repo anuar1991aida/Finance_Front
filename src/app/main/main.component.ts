@@ -58,13 +58,13 @@ export class MainComponent implements OnInit {
               },
               {
                 label: 'Программы',
-                command: () => this.openTab('app-programm-list', 'Программы', '')
+                command: () => this.openTab('app-programm-list', 'Программы', '', true)
               }, {
                 label: 'Подпрограммы',
-                command: () => this.openTab('app-podprogramm-list', 'Подпрограммы', '')
+                command: () => this.openTab('app-podprogramm-list', 'Подпрограммы', '', true)
               }, {
-                label: 'Бюджет',
-                command: () => this.openTab('app-budjet-list', 'Бюджет', '')
+                label: 'ФКР',
+                command: () => this.openTab('app-fkr-list', 'ФКР', '', true)
               }, {
                 label: 'Классификации',
                 command: () => this.openTab('app-classification-income-list', 'Классификации', '', true)
