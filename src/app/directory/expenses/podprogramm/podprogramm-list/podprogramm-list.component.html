@@ -7,17 +7,17 @@
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-left" style="margin-right: 10px;">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [(ngModel)]="searchfuncpodGr" (change)="search()" placeholder="поиск..." />
+            <input pInputText type="text" [(ngModel)]="searchfuncPr" (change)="search()" placeholder="поиск..." />
         </span>
         <div style="padding-right: 10px;">
             <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
-                styleClass="p-button-sm" (click)="fetchGr()"></button>
+                styleClass="p-button-sm" (click)="fetchpodPr()"></button>
         </div>
     </div>
 </p-toolbar>
 
-<div class="card" *ngIf="(funcpodGr$ | async) as funcpodGr; else loader">
-    <p-table *ngIf="funcpodGr.count !== 0; else empty" [value]="funcpodGr.results" [scrollable]="true"
+<div class="card" *ngIf="(podProg$ | async) as podProg; else loader">
+    <p-table *ngIf="podProg.count !== 0; else empty" [value]="podProg.results" [scrollable]="true"
         scrollHeight="calc(100vh - 200px)" selectionMode="single"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
@@ -29,17 +29,17 @@
                 <!-- <th style="width:5%; text-align:center">Действия</th> -->
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-funcGr let-ri="rowIndex" *ngFor="let item of funcpodGr.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowClick(funcGr)">
+        <ng-template pTemplate="body" let-podProg let-ri="rowIndex" *ngFor="let item of podProg.results| keyvalue">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(podProg)">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
-                    {{funcGr.code}}
+                    {{podProg.code}}
                 </td>
                 <td>
-                    {{funcGr.name_kaz}}
+                    {{podProg.name_kaz}}
                 </td>
                 <td>
-                    {{funcGr.name_rus}}
+                    {{podProg.name_rus}}
                 </td>
                 <!-- <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
@@ -54,14 +54,14 @@
     </p-table>
     <ng-template #empty>
         <div class="center">
-            Нет ни одной подгруппы
+            Нет ни одной подпрограммы
         </div>
     </ng-template>
-    <div *ngIf="funcpodGr.count !== 0" class="flex align-items-center justify-content-center">
+    <div *ngIf="podProg.count !== 0" class="flex align-items-center justify-content-center">
         <span class="mx-1 text-color">Указано</span>
-        <p-paginator [first]="first" [rows]="rows" [totalRecords]="funcpodGr.count || 0"
+        <p-paginator [first]="first" [rows]="rows" [totalRecords]="podProg.count || 0"
             (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
-            currentPageReportTemplate="{{first+1}} - {{(first + rows) > (funcpodGr.count || 0)  ? funcpodGr.count : first + rows }} из {{funcpodGr.count}} элементов"
+            currentPageReportTemplate="{{first+1}} - {{(first + rows) > (podProg.count || 0)  ? podProg.count : first + rows }} из {{podProg.count}} элементов"
             [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
     </div>
     <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">

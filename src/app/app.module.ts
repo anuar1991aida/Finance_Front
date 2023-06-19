@@ -41,6 +41,12 @@ import { FunctionalGroupDetailComponent } from './directory/expenses/functional-
 import { FunctionalGroupListComponent } from './directory/expenses/functional-group/functional-group-list/functional-group-list.component';
 import { FunctionalPodgroupDetailComponent } from './directory/expenses/functional-podgroup/functional-podgroup-detail/functional-podgroup-detail.component';
 import { FunctionalPodgroupListComponent } from './directory/expenses/functional-podgroup/functional-podgroup-list/functional-podgroup-list.component';
+import { ABPListComponent } from './directory/expenses/ABP/abp-list/abp-list.component';
+import { ABPDetailComponent } from './directory/expenses/ABP/abp-detail/abp-detail.component';
+import { ProgrammListComponent } from './directory/expenses/programm/programm-list/programm-list.component';
+import { ProgrammDetailComponent } from './directory/expenses/programm/programm-detail/programm-detail.component';
+import { PodprogrammDetailComponent } from './directory/expenses/podprogramm/podprogramm-detail/podprogramm-detail.component';
+import { PodprogrammListComponent } from './directory/expenses/podprogramm/podprogramm-list/podprogramm-list.component';
 
 @NgModule({
   imports: [
@@ -79,6 +85,12 @@ import { FunctionalPodgroupListComponent } from './directory/expenses/functional
     FunctionalGroupDetailComponent,
     FunctionalPodgroupListComponent,
     FunctionalPodgroupDetailComponent,
+    ABPListComponent,
+    ABPDetailComponent,
+    ProgrammListComponent,
+    ProgrammDetailComponent,
+    PodprogrammListComponent,
+    PodprogrammDetailComponent,
     UtvIncomeListComponent,
     UtvIncomeDetailComponent,
     SkeletonComponent,

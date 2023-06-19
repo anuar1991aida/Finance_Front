@@ -58,7 +58,14 @@
                 <app-functional-podgroup-list *ngIf="context.selector=='app-functional-podgroup-list'" [data]="true">
                 </app-functional-podgroup-list>
 
+                <app-abp-list *ngIf="context.selector=='app-abp-list'" [data]="true">
+                </app-abp-list>
 
+                <app-programm-list *ngIf="context.selector=='app-programm-list'" [data]="true">
+                </app-programm-list>
+
+                <app-podprogramm-list *ngIf="context.selector=='app-podprogramm-list'" [data]="true">
+                </app-podprogramm-list>
 
             </mat-tab>
         </ng-template>

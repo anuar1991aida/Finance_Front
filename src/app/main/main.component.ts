@@ -54,14 +54,14 @@ export class MainComponent implements OnInit {
               },
               {
                 label: 'АБП',
-                command: () => this.openTab('app-podclass-list', 'АБП', '')
+                command: () => this.openTab('app-abp-list', 'АБП', '', true)
               },
               {
                 label: 'Программы',
-                command: () => this.openTab('app-podclass-list', 'Программы', '')
+                command: () => this.openTab('app-programm-list', 'Программы', '')
               }, {
                 label: 'Подпрограммы',
-                command: () => this.openTab('app-specification-income-list', 'Подпрограммы', '')
+                command: () => this.openTab('app-podprogramm-list', 'Подпрограммы', '')
               }, {
                 label: 'Бюджет',
                 command: () => this.openTab('app-budjet-list', 'Бюджет', '')

@@ -23,7 +23,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th style="width:5%; text-align:center">Номер</th>
-                <th style="width:10%; text-align:center">Код класса</th>
+                <th style="width:10%; text-align:center">Код</th>
                 <th style="width:40%; text-align:center">Наименование каз.</th>
                 <th style="width:40%; text-align:center">Наименование русс.</th>
                 <!-- <th style="width:5%; text-align:center">Действия</th> -->
@@ -54,7 +54,7 @@
     </p-table>
     <ng-template #empty>
         <div class="center">
-            Нет ни одного класса
+            Нет ни одной группы
         </div>
     </ng-template>
     <div *ngIf="funcGr.count !== 0" class="flex align-items-center justify-content-center">
