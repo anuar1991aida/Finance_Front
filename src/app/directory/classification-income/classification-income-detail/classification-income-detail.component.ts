@@ -5,7 +5,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
 import { Observable } from 'rxjs';
 import { ClassificationIncomeService } from '../classification-income.services';
 import { classsification_income_detail } from '../interfaces';
-import { CategoryIncomeComponent } from '../../category-income/category_income-list/category-income.component';
+import { CategoryIncomeComponent } from '../../income/category-income/category_income-list/category-income.component';
 
 @Component({
   selector: 'app-classification-income-detail',

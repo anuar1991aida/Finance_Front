@@ -31,6 +31,16 @@ export class IzmIncDocListComponent implements OnInit {
     this.fetch_doc_izm()
   }
 
+  setClass(deleted: boolean) {
+    let classs = ''
+
+    if (deleted) {
+      classs = 'class-deleted'
+    }
+
+    return classs
+
+  }
 
   fetch_doc_izm() {
 

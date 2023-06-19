@@ -1,5 +1,5 @@
 <div class=" bg-indigo">
-    <p-megaMenu [model]="items"></p-megaMenu>
+    <p-megaMenu [model]="items" styleClass="flex"></p-megaMenu>
     <p-toast></p-toast>
     <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" style="z-index: 0;">
         <ng-template #templateRef let-context='context'>
@@ -51,6 +51,14 @@
                 <app-izm-inc-doc-detail *ngIf="context.selector=='app-izm-inc-doc-detail'" [izm_inc_id]="number"
                     (closeEvent)="removetab()">
                 </app-izm-inc-doc-detail>
+
+                <app-functional-group-list *ngIf="context.selector=='app-functional-group-list'" [data]="true">
+                </app-functional-group-list>
+
+                <app-functional-podgroup-list *ngIf="context.selector=='app-functional-podgroup-list'" [data]="true">
+                </app-functional-podgroup-list>
+
+
 
             </mat-tab>
         </ng-template>

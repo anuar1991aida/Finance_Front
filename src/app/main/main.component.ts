@@ -35,11 +35,46 @@ export class MainComponent implements OnInit {
         items: [
           [
             {
-              label: 'Справочники',
+              label: 'Организация',
               items: [{
                 label: 'Организации',
                 command: () => this.openTab('app-organization', 'Организации', '')
+              }]
+            }
+          ],
+          [
+            {
+              label: 'Расходы',
+              items: [{
+                label: 'Функциональные группы',
+                command: () => this.openTab('app-functional-group-list', 'Функциональные группы', '', true)
               }, {
+                label: 'Функциональные подгруппы',
+                command: () => this.openTab('app-functional-podgroup-list', 'Функциональные подгруппы', '', true)
+              },
+              {
+                label: 'АБП',
+                command: () => this.openTab('app-podclass-list', 'АБП', '')
+              },
+              {
+                label: 'Программы',
+                command: () => this.openTab('app-podclass-list', 'Программы', '')
+              }, {
+                label: 'Подпрограммы',
+                command: () => this.openTab('app-specification-income-list', 'Подпрограммы', '')
+              }, {
+                label: 'Бюджет',
+                command: () => this.openTab('app-budjet-list', 'Бюджет', '')
+              }, {
+                label: 'Классификации',
+                command: () => this.openTab('app-classification-income-list', 'Классификации', '', true)
+              }]
+            }
+          ],
+          [
+            {
+              label: 'Доходы',
+              items: [{
                 label: 'Категории',
                 command: () => this.openTab('app-category-income', 'Категории', '')
               }, {
