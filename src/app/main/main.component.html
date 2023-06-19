@@ -14,7 +14,7 @@
                         </svg>
                     </i>
                 </ng-template>
-                <app-organization *ngIf="context.selector=='app-organization'">
+                <app-organization *ngIf="context.selector=='app-organization'" [data]="true">
                 </app-organization>
 
                 <app-category-income *ngIf="context.selector=='app-category-income'" [data]="true">

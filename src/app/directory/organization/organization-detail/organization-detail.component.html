@@ -1,98 +1,70 @@
 <form class="card" [formGroup]="form">
   <div class="p-field" style="padding-bottom: 10px;">
-      <label for="bin">Бин организации<span style="color: red;">*</span></label>
-      <div class="p-inputgroup">
-          <input id="bin" [readOnly]="org_detail.id !== 0" type="text" pInputText
-              [(ngModel)]="org_detail.bin" formControlName="bin" />
-      </div>
-      <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
-          <span *ngIf="form.controls['bin'].errors?.required">Бин не должен быть пустым</span>
-      </span>
+    <label for="bin">Бин организации<span style="color: red;">*</span></label>
+    <div class="p-inputgroup">
+      <input id="bin" [readOnly]="org_detail.id !== 0" type="text" pInputText [(ngModel)]="org_detail.bin"
+        formControlName="bin" />
+    </div>
+    <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
+      <span *ngIf="form.controls['bin'].errors?.required">Бин не должен быть пустым</span>
+    </span>
 
   </div>
 
   <div class="p-field" style="padding-bottom: 10px;">
     <label for="budjet_name">Бюджет наименовании<span style="color: red;">*</span></label>
-      <div class="p-inputgroup">
-        <input id="budjet_name"  [readOnly]="org_detail.id !== 0" type="text" pInputText
-          [(ngModel)]="org_detail.budjet_name" formControlName="budjet_name" />
-        <!-- <span class="p-inputgroup-addon" (click)="viewClassification()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-files" viewBox="0 0 16 16">
-                <path
-                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-            </svg>
-        </span> -->
+    <div class="p-inputgroup">
+      <input id="budjet_name" [readOnly]="org_detail.id !== 0" type="text" pInputText
+        [(ngModel)]="org_detail.budjet_name" formControlName="budjet_name" />
       <div class="cursor-pointer">
         <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
       </div>
-      </div>
-      <!-- <span class="p-invalid" *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
-        <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
-      </span> -->
-  </div>
-
-  <!-- <div class="p-field" style="padding-bottom: 10px;">
-
-      <label for="budjet_name">Бюджет наименовании<span style="color: red;">*</span></label>
-
-      <div class="p-inputgroup">
-      <input id="budjet_name" type="text" pInputText [ngModel]="org_detail.budjet_name" [readOnly]="org_detail.id !== ''"   />
-        <span class="p-inputgroup-addon" (click)="viewClassification()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                class="bi bi-files" viewBox="0 0 16 16">
-                <path
-                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-            </svg>
-        </span>
-      <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
     </div>
-  </div> -->
+    <span class="p-invalid" *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
+      <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
+    </span>
+  </div>
 
 
 
   <div class="p-field" style="padding-bottom: 10px;">
-      <label for="name_kaz">Наименование на каз. языке <span style="color: red;">*</span></label>
-      <div class="p-inputgroup">
-          <input id="name_kaz" type="text" pInputText [(ngModel)]="org_detail.name_kaz"
-              formControlName="name_kaz" />
-      </div>
-      <span class="p-invalid" *ngIf="form.controls['name_kaz'].invalid && form.controls['name_kaz'].touched">
-          <span *ngIf="form.controls['name_kaz'].errors?.required">Наименование не должен быть пустым</span>
-      </span>
+    <label for="name_kaz">Наименование на каз. языке <span style="color: red;">*</span></label>
+    <div class="p-inputgroup">
+      <input id="name_kaz" type="text" pInputText [(ngModel)]="org_detail.name_kaz" formControlName="name_kaz" />
+    </div>
+    <span class="p-invalid" *ngIf="form.controls['name_kaz'].invalid && form.controls['name_kaz'].touched">
+      <span *ngIf="form.controls['name_kaz'].errors?.required">Наименование не должно быть пустым</span>
+    </span>
   </div>
 
   <div class="p-field" style="padding-bottom: 10px;">
-      <label for="name_rus">Наименование на рус. языке <span style="color: red;">*</span></label>
-      <div class="p-inputgroup">
-          <input id="name_rus" type="text" pInputText [(ngModel)]="org_detail.name_rus"
-              formControlName="name_rus" />
-      </div>
-      <span class="p-invalid" *ngIf="form.controls['name_rus'].invalid && form.controls['name_rus'].touched">
-          <span *ngIf="form.controls['name_rus'].errors?.required">Наименование не должен быть пустым</span>
-      </span>
+    <label for="name_rus">Наименование на рус. языке <span style="color: red;">*</span></label>
+    <div class="p-inputgroup">
+      <input id="name_rus" type="text" pInputText [(ngModel)]="org_detail.name_rus" formControlName="name_rus" />
+    </div>
+    <span class="p-invalid" *ngIf="form.controls['name_rus'].invalid && form.controls['name_rus'].touched">
+      <span *ngIf="form.controls['name_rus'].errors?.required">Наименование не должно быть пустым</span>
+    </span>
   </div>
 
   <div class="p-field" style="padding-bottom: 10px;">
     <label for="adress">Адрес <span style="color: red;">*</span></label>
     <div class="p-inputgroup">
-        <input id="adress" type="text" pInputText [(ngModel)]="org_detail.adress"
-            formControlName="adress" />
+      <input id="adress" type="text" pInputText [(ngModel)]="org_detail.adress" formControlName="adress" />
     </div>
     <span class="p-invalid" *ngIf="form.controls['adress'].invalid && form.controls['adress'].touched">
-        <span *ngIf="form.controls['adress'].errors?.required">Наименование не должен быть пустым</span>
+      <span *ngIf="form.controls['adress'].errors?.required">Адрес не должен быть пустым</span>
     </span>
   </div>
 
   <div style="width:100%; padding: 10px 0;">
-      <label style="color: red;">* - обязательные поля</label>
+    <label style="color: red;">* - обязательные поля</label>
   </div>
 </form>
 
 <div class="flex align-items-center justify-content-center gap-2">
-  <button pButton pRipple label="Сохранить" (click)="saveCategory()" icon="pi pi-check"
-      [disabled]="form.invalid || form.disabled" class="p-button-outlined p-button-success"></button>
-  <button pButton pRipple label="Отмена" icon="pi pi-times" (click)="closeCat()"
-      class="p-button-outlined p-button-warning"></button>
+  <button pButton pRipple label="Сохранить" (click)="saveOrg()" icon="pi pi-check"
+    [disabled]="form.invalid || form.disabled" class="p-button-outlined p-button-success"></button>
+  <button pButton pRipple label="Отмена" icon="pi pi-times" (click)="closeOrg()"
+    class="p-button-outlined p-button-warning"></button>
 </div>
-

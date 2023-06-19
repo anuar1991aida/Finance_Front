@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OrganizationsService } from '../organization.service';
-import { organization_list , organization_detail} from '../interfaces';
+import { organization_list, organization_detail } from '../interfaces';
 import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BudjetListComponent } from '../../budjet/budjet-list/budjet-list.component';
@@ -22,9 +22,10 @@ export class OrganizationDetailComponent implements OnInit {
     public org_dialog_config: DynamicDialogConfig,
     private org_dialog_servis: DialogService) { }
 
-    form: FormGroup
-    org_detail: organization_detail
-    classification = ""
+  form: FormGroup
+  org_detail: organization_detail
+
+
   ngOnInit(): void {
     this.form = new FormGroup({
       bin: new FormControl(null, [Validators.required]),
@@ -39,9 +40,8 @@ export class OrganizationDetailComponent implements OnInit {
   }
 
 
-  saveCategory() {
+  saveOrg() {
     if (this.org_detail.id == 0) {
-
       this.orgService.add(this.org_detail)
         .pipe(
           timeout(5000), // установка таймаута на 5 секунд
@@ -60,7 +60,8 @@ export class OrganizationDetailComponent implements OnInit {
           (data) => (this.org_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Организация успешно добавлена!' }), this.org_dialog_ref.close(true)),
           (error) => (this.org_massage.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
         )
-   }else {
+    }
+    else {
       this.orgService.add(this.org_detail)
         .pipe(
           timeout(5000), // установка таймаута на 5 секунд
@@ -76,18 +77,14 @@ export class OrganizationDetailComponent implements OnInit {
 
         )
         .subscribe(
-          (data) => (this.org_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Категория успешно отредактирована!' }), this.org_dialog_ref.close(true)),
+          (data) => (this.org_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Организация сохранена!' }),
+            this.org_dialog_ref.close(true)),
           (error) => (this.org_massage.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
     }
 
   }
 
-  closeCat(){
-
-  }
-
-
-  addClassification(){
+  addClassification() {
     this.org_dialog_ref = this.org_dialog_servis.open(BudjetListComponent,
       {
         header: 'Выбрать бюджет',
@@ -96,17 +93,11 @@ export class OrganizationDetailComponent implements OnInit {
       })
 
     this.org_dialog_ref.onClose.subscribe((budjet: any) => {
-        if (budjet) {
-          console.log(budjet)
-          this.org_detail.budjet_name = budjet.name_kaz,
+      if (budjet) {
+        this.org_detail.budjet_name = budjet.name_kaz,
           this.org_detail._budjet = budjet.id
-        }
-    })
-  }
-
-  viewClassification(){
-
-
+      }
+    })
   }
 
   handleClick() {
@@ -118,11 +109,15 @@ export class OrganizationDetailComponent implements OnInit {
       })
 
     this.org_dialog_ref.onClose.subscribe((budjet: any) => {
-        if (budjet) {
-          this.org_detail.budjet_name = budjet.name_kaz,
+      if (budjet) {
+        this.org_detail.budjet_name = budjet.name_kaz,
           this.org_detail._budjet = budjet.id
-        }
-    })
+      }
+    })
+
+  }
+
+  closeOrg() {
 
   }
 }

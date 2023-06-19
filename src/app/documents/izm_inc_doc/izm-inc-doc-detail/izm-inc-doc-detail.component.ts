@@ -164,13 +164,10 @@ export class IzmIncDocDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean): void {
-    let responce: any
-
     this.izmDetailService.saveIzm(this.izmDetail)
       .subscribe(
         (data) => (
           this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          responce = data, this.izmDetail = responce,
           this.closeform(close)
         ),
         (error) => (
