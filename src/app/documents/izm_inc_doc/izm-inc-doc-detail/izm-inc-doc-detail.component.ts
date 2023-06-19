@@ -4,6 +4,9 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ClassificationIncomeDetailComponent } from 'src/app/directory/classification-income/classification-income-detail/classification-income-detail.component';
 import { ClassificationIncomeListComponent } from 'src/app/directory/classification-income/classification-income-list/classification-income-list.component';
+import { organization_detail } from 'src/app/directory/organization/interfaces';
+import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
+import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
 import { izm_inc_doc_detail } from '../interfaces';
 import { IzmIncomeService } from '../izm_income.service';
 
@@ -174,6 +177,39 @@ export class IzmIncDocDetailComponent implements OnInit {
           this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
         )
       )
+  }
+
+  selectOrg() {
+    this.izmDetailref = this.izmDetaildialog.open(OrganizationComponent,
+      {
+        header: 'Выбор организации',
+        width: '60%',
+        height: '80%'
+      })
+
+    this.izmDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.izmDetail.doc._organization = org.id,
+          this.izmDetail.doc.org_name = org.name_rus
+      }
+    })
+  }
+
+  viewOrg() {
+    this.izmDetailref = this.izmDetaildialog.open(OrganizationDetailComponent,
+      {
+        header: 'Редактирование организации',
+        width: '60%',
+        height: '80%',
+        data: { org_id: this.izmDetail.doc._organization }
+      })
+
+    this.izmDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.izmDetail.doc._organization = org.id,
+          this.izmDetail.doc.org_name = org.name_rus
+      }
+    })
   }
 
   onDelete(_classification_id: number, classification_name: string) {

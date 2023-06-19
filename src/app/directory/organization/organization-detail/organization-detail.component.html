@@ -2,8 +2,7 @@
   <div class="p-field" style="padding-bottom: 10px;">
     <label for="bin">Бин организации<span style="color: red;">*</span></label>
     <div class="p-inputgroup">
-      <input id="bin" [readOnly]="org_detail.id !== 0" type="text" pInputText [(ngModel)]="org_detail.bin"
-        formControlName="bin" />
+      <input id="bin" type="text" pInputText [(ngModel)]="org_detail.bin" formControlName="bin" />
     </div>
     <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
       <span *ngIf="form.controls['bin'].errors?.required">Бин не должен быть пустым</span>
@@ -14,8 +13,8 @@
   <div class="p-field" style="padding-bottom: 10px;">
     <label for="budjet_name">Бюджет наименовании<span style="color: red;">*</span></label>
     <div class="p-inputgroup">
-      <input id="budjet_name" [readOnly]="org_detail.id !== 0" type="text" pInputText
-        [(ngModel)]="org_detail.budjet_name" formControlName="budjet_name" />
+      <input id="budjet_name" type="text" pInputText [(ngModel)]="org_detail.budjet_name"
+        formControlName="budjet_name" />
       <div class="cursor-pointer">
         <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
       </div>
@@ -65,6 +64,10 @@
 <div class="flex align-items-center justify-content-center gap-2">
   <button pButton pRipple label="Сохранить" (click)="saveOrg()" icon="pi pi-check"
     [disabled]="form.invalid || form.disabled" class="p-button-outlined p-button-success"></button>
-  <button pButton pRipple label="Отмена" icon="pi pi-times" (click)="closeOrg()"
+  <button pButton pRipple label="Отмена" icon="pi pi-times" (click)="closeOrg(false)"
     class="p-button-outlined p-button-warning"></button>
 </div>
+
+<ng-template #loader>
+  <app-skeleton></app-skeleton>
+</ng-template>

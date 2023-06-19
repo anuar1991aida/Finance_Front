@@ -23,17 +23,6 @@ export class OrganizationComponent implements OnInit {
   rows = 3
   searchorg = ''
 
-  Pusti_dannye: organization_detail = {
-    id: 0,
-    bin: '',
-    budjet_name: '',
-    name_kaz: '',
-    name_rus: '',
-    adress: '',
-    _budjet: 0
-  }
-
-
   ngOnInit() {
     this.fetchOrg()
   }
@@ -55,14 +44,14 @@ export class OrganizationComponent implements OnInit {
     this.fetchOrg()
   }
 
-  onRowEdit(org: any) {
+  onRowEdit(org: organization_detail) {
 
     this.org_dialog_ref = this.org_dialog_servis.open(OrganizationDetailComponent,
       {
         header: 'Редактирование организации',
         width: '60%',
-        height: '50%',
-        data: { organizations: org }
+        height: '60%',
+        data: { org_id: org.id }
       })
 
     this.org_dialog_ref.onClose.subscribe((save: boolean) => {
@@ -87,22 +76,20 @@ export class OrganizationComponent implements OnInit {
   }
 
   openNew() {
-    this.Pusti_dannye = {
-      id: 0,
-      bin: '',
-      budjet_name: '',
-      name_kaz: '',
-      name_rus: '',
-      adress: '',
-      _budjet: 0
-    }
     this.org_dialog_ref = this.org_dialog_servis.open(OrganizationDetailComponent,
       {
         header: 'Создание организации',
         width: '60%',
-        height: '50%',
-        data: { organizations: this.Pusti_dannye }
+        height: '60%',
+        data: { org_id: 0 }
       })
+
+    this.org_dialog_ref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        this.fetchOrg()
+      }
+    })
+
   }
 
 }

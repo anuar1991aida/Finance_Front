@@ -1,5 +1,5 @@
 export interface organization_detail {
-    id?: number,
+    id: number,
     budjet_name: string,
     bin: string,
     name_kaz: string,
