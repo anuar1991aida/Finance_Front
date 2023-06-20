@@ -188,24 +188,19 @@ export class UtvIncomeDetailComponent implements OnInit {
       )
   }
 
-  onDelete() {
-    let msg = !this.utvDetail.doc.deleted ? "Пометить " + this.utvDetail.doc.nom + " на удаление?" : "Снять с " + this.utvDetail.doc.nom + " пометку на удаление?"
-    let header = !this.utvDetail.doc.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
-    let msgsuccess = !this.utvDetail.doc.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
-
+  onDelete(classification_id: number, classification_name: string) {
     this.utvDetailconfirm.confirm({
-      message: msg,
-      header: header,
+      message: 'Вы действительно хотите удалить ' + classification_name + '?',
+      header: 'Удаление классификации',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.utvDetailService.deleteUtv(this.utvDetail.doc.id)
-          .subscribe((data) => (
-            this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess })
-          ),
-            (error) => (
-              this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-            )
-          )
+        for (let i = this.utvDetail.tbl1.length - 1; i >= 0; i--) {
+          let index = this.utvDetail.tbl1.findIndex(item => classification_id === item._classification)
+          if (index !== -1) {
+            this.utvDetail.tbl1.splice(index, 1)
+          }
+        }
+        this.utvDetailconfirm.close()
       },
       reject: () => {
         this.utvDetailconfirm.close();

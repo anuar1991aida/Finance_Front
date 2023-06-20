@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { organization_list , organization_detail} from '../interfaces';
+import { organization_list, organization_detail } from '../interfaces';
 import { OrganizationsService } from '../organization.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import {OrganizationDetailComponent} from '../organization-detail/organization-detail.component'
+import { OrganizationDetailComponent } from '../organization-detail/organization-detail.component'
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
@@ -14,24 +15,16 @@ export class OrganizationComponent implements OnInit {
   constructor(
     private orgService: OrganizationsService,
     private org_dialog_ref: DynamicDialogRef,
+    private messageServicedelSelect: MessageService,
     private org_dialog_servis: DialogService,
-    ) { }
+  ) { }
 
+  @Input() data = false
   organizations$: Observable<organization_list>
   first = 0
   rows = 3
-  last = 3
-
-  Pusti_dannye: organization_detail = {
-    id: 0,
-    bin: '',
-    budjet_name: '',
-    name_kaz: '',
-    name_rus: '',
-    adress: '',
-    _budjet: 0
-  }
-
+  searchorg = ''
+  selected: any
 
   ngOnInit() {
     this.fetchOrg()
@@ -54,46 +47,60 @@ export class OrganizationComponent implements OnInit {
     this.fetchOrg()
   }
 
-  onRowEdit(org: any){
+  onRowEdit(org: organization_detail) {
 
     this.org_dialog_ref = this.org_dialog_servis.open(OrganizationDetailComponent,
       {
         header: 'Редактирование организации',
         width: '60%',
-        height: '50%',
-        data: { organizations: org }
-      });
-  }
+        height: '60%',
+        data: { org_id: org.id }
+      })
 
-  fetchCat(){
-
-  }
-
-  searchcategory(){
-
-  }
-
-  search(){
+    this.org_dialog_ref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        this.fetchOrg()
+      }
+    })
 
   }
 
-  openNew(){
-    this.Pusti_dannye  ={
-      id: 0,
-      bin: '',
-      budjet_name: '',
-      name_kaz: '',
-      name_rus: '',
-      adress: '',
-      _budjet: 0
+  onRowClick(org: organization_detail) {
+    if (this.data) {
+      this.onRowEdit(org)
     }
+    else {
+      this.org_dialog_ref.close(org)
+    }
+  }
+
+  onSelected(org: organization_detail) {
+    if (!this.selected) {
+      this.messageServicedelSelect.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
+      return
+    }
+    this.org_dialog_ref.close(org)
+  }
+
+  search() {
+
+  }
+
+  openNew() {
     this.org_dialog_ref = this.org_dialog_servis.open(OrganizationDetailComponent,
       {
         header: 'Создание организации',
         width: '60%',
-        height: '50%',
-        data: { organizations: this.Pusti_dannye }
+        height: '60%',
+        data: { org_id: 0 }
       })
+
+    this.org_dialog_ref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        this.fetchOrg()
+      }
+    })
+
   }
 
 }

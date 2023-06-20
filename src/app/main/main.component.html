@@ -25,10 +25,10 @@
                         </svg>
                     </i>
                 </ng-template>
-                <app-organization *ngIf="context.selector=='app-organization'">
+                <app-organization *ngIf="context.selector=='app-organization'" [data]="true">
                 </app-organization>
 
-                <app-category-income *ngIf="context.selector=='app-category-income'">
+                <app-category-income *ngIf="context.selector=='app-category-income'" [data]="true">
                 </app-category-income>
 
                 <app-podclass-list *ngIf="context.selector=='app-podclass-list'">
@@ -62,6 +62,24 @@
                 <app-izm-inc-doc-detail *ngIf="context.selector=='app-izm-inc-doc-detail'" [izm_inc_id]="number"
                     (closeEvent)="removetab()">
                 </app-izm-inc-doc-detail>
+
+                <app-functional-group-list *ngIf="context.selector=='app-functional-group-list'" [data]="true">
+                </app-functional-group-list>
+
+                <app-functional-podgroup-list *ngIf="context.selector=='app-functional-podgroup-list'" [data]="true">
+                </app-functional-podgroup-list>
+
+                <app-abp-list *ngIf="context.selector=='app-abp-list'" [data]="true">
+                </app-abp-list>
+
+                <app-programm-list *ngIf="context.selector=='app-programm-list'" [data]="true">
+                </app-programm-list>
+
+                <app-podprogramm-list *ngIf="context.selector=='app-podprogramm-list'" [data]="true">
+                </app-podprogramm-list>
+
+                <app-fkr-list *ngIf="context.selector=='app-fkr-list'" [data]="true">
+                </app-fkr-list>
 
             </mat-tab>
         </ng-template>

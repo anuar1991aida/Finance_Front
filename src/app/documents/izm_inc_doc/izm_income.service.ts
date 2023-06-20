@@ -28,6 +28,10 @@ export class IzmIncomeService {
     return this.http.post(this.host + 'docs/izmincsave', izm_inc)
   }
 
+  getOstatok(params: any): Observable<any> {
+    return this.http.get<any>(this.host + 'docs/incgetplanbyclassif', { params })
+  }
+
   deleteIzm(izm_inc_id: string = '') {
     return this.http.delete(this.host + `docs/izmincdelete/${izm_inc_id}`)
   }
