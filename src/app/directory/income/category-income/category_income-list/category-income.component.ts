@@ -34,6 +34,7 @@ export class CategoryIncomeComponent implements OnInit {
   first = 0
   rows = 3
   last = 3
+  selected: any
 
   ngOnInit(): void {
     this.fetchCat()
@@ -69,6 +70,14 @@ export class CategoryIncomeComponent implements OnInit {
         this.fetchCat()
       }
     })
+  }
+
+  onSelected(cat: category_income_detail) {
+    if (!this.selected) {
+      this.categoryListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите категорию!' })
+      return
+    }
+    this.categoryref.close(cat)
   }
 
   onRowClick(category_inc: category_income_detail) {

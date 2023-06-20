@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { ClassificationIncomeService } from '../classification-income.services';
 import { classsification_income_detail } from '../interfaces';
 import { CategoryIncomeComponent } from '../../income/category-income/category_income-list/category-income.component';
+import { ClassIncomeListComponent } from '../../income/class-income/class-income-list/class-income-list.component';
+import { PodclassListComponent } from '../../podclass/podclass-list/podclass-list.component';
 
 @Component({
   selector: 'app-classification-income-detail',
@@ -69,12 +71,12 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     }
   }
 
-  addClassification() {
+  addCategory() {
     this.Select_dialog_ref = this.Select_dialog.open(CategoryIncomeComponent,
       {
-        header: 'vybor category',
+        header: 'Выбор категории',
         width: '70%',
-        height: '30%'
+        height: '50%'
       }
     )
 
@@ -84,6 +86,43 @@ export class ClassificationIncomeDetailComponent implements OnInit {
         this.classifDetail._category_id = category.id;
         this.classifDetail.category_name = category.name_rus;
         this.classifDetail.category_code = category.code;
+      }
+    })
+  }
+
+  addClass() {
+    this.Select_dialog_ref = this.Select_dialog.open(ClassIncomeListComponent,
+      {
+        header: 'Выбор класс',
+        width: '70%',
+        height: '50%'
+      }
+    )
+
+    this.Select_dialog_ref.onClose.subscribe((classs: any) => {
+      if (classs) {
+        console.log(classs);
+        this.classifDetail._classs_id = classs.id;
+        this.classifDetail.classs_name = classs.name_rus;
+        this.classifDetail.classs_code = classs.code;
+      }
+    })
+  }
+  addPodclass() {
+    this.Select_dialog_ref = this.Select_dialog.open(PodclassListComponent,
+      {
+        header: 'Выбор подкласс',
+        width: '70%',
+        height: '50%'
+      }
+    )
+
+    this.Select_dialog_ref.onClose.subscribe((podcl: any) => {
+      if (podcl) {
+        console.log(podcl);
+        this.classifDetail._podclass_id = podcl.id;
+        this.classifDetail.podclass_name = podcl.name_rus;
+        this.classifDetail.podclass_code = podcl.code;
       }
     })
   }

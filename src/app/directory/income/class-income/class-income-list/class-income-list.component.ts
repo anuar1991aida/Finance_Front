@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ export class ClassIncomeListComponent implements OnInit {
     private classListdialog: DialogService,
     private classListmessage: MessageService,
   ) { }
-
+  
   class$: Observable<class_income_list>
   NewClass: class_income_detail = {
     id: '',
@@ -28,9 +28,12 @@ export class ClassIncomeListComponent implements OnInit {
     name_kaz: '',
     name_rus: ''
   }
+
+  @Input() data = false
   searchclass = ''
   first = 0
   rows = 3
+  selected: any
 
   ngOnInit(): void {
     this.fetchClass()
@@ -66,6 +69,22 @@ export class ClassIncomeListComponent implements OnInit {
         this.fetchClass()
       }
     })
+  }
+
+  onRowClick(class_inc: class_income_detail) {
+    if (this.data) {
+      this.onRowEdit(class_inc)
+    }
+    else {
+      this.classref.close(class_inc)
+    }
+  }
+  onSelected(class_income: class_income_detail) {
+    if (!this.selected) {
+      this.classListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите класс!' })
+      return
+    }
+    this.classref.close(class_income)
   }
 
   openNew() {

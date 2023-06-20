@@ -1,8 +1,12 @@
 <p-toolbar>
 
-    <div class="p-toolbar-group-left">
+    <div class="p-toolbar-group-left" *ngIf="data!==false">
         <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
             (click)="openNew()"></button>
+    </div>
+    <div class="p-toolbar-group-left" *ngIf="data!==true">
+        <button pButton pRipple label="выбрать"  icon="pi pi-check" class="p-button-success p-mr-2"
+            (click)="onSelected(selected)"></button>
     </div>
 
     <div class="p-toolbar-group-right">
@@ -19,7 +23,7 @@
 
 <div class="card" *ngIf="(category$ | async) as category; else loader">
     <p-table *ngIf="category.count !== 0; else empty" [value]="category.results" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        scrollHeight="calc(100vh - 200px)" selectionMode="single"  [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
@@ -31,7 +35,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-cat let-ri="rowIndex" *ngFor="let item of category.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowClick(cat)">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(cat)"  [pSelectableRow]="cat">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     {{cat.code}}
