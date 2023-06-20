@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AvatarModule } from 'primeng/avatar';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,6 +47,7 @@ import { IzmIncDocListComponent } from './documents/izm_inc_doc/izm-inc-doc-list
     MatIconModule,
     PrimeModules,
     MegaMenuModule,
+    AvatarModule,
     RouterModule.forRoot([{ path: 'login', component: LoginComponent }])
   ],
   declarations: [

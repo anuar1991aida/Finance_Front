@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@an
 import { Router } from '@angular/router';
 import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../login/auth.service';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-main',
@@ -24,10 +25,15 @@ export class MainComponent implements OnInit {
   tabcount = 0;
   number = '';
   counttabs = 0;
+  User: MenuModule[];
 
 
   ngOnInit(): void {
+    this.User = [
 
+        { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
+        { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
+    ]
     this.items = [
       {
         label: 'Справочники',
@@ -93,6 +99,8 @@ export class MainComponent implements OnInit {
       dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
       firstDayOfWeek: 1
     })
+
+
 
   }
 

@@ -1,5 +1,16 @@
 <div class=" bg-indigo">
-    <p-megaMenu [model]="items"></p-megaMenu>
+
+
+
+    <p-megaMenu [model]="items" class="menu">
+      <!-- <div style="">
+      <p-menu #menu [model]="User" [popup]="true"></p-menu>
+      <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle"></p-avatar>
+      </div> -->
+    </p-megaMenu>
+
+
+
     <p-toast></p-toast>
     <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" style="z-index: 0;">
         <ng-template #templateRef let-context='context'>
@@ -55,6 +66,7 @@
             </mat-tab>
         </ng-template>
     </mat-tab-group>
+
 </div>
 
 <div #viewContainerRef>
