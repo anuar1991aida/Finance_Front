@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -27,9 +27,11 @@ export class SpecificationIncomeListComponent implements OnInit {
     name_kaz: '',
     name_rus: ''
   }
+  @Input() data = false
   searchspec = ''
   first = 0
   rows = 3
+  selected: any
 
   ngOnInit(): void {
     this.fetchSpec()
@@ -65,6 +67,23 @@ export class SpecificationIncomeListComponent implements OnInit {
         this.fetchSpec()
       }
     })
+  }
+
+  onRowClick(spec_inc: specification_income_detail) {
+    if (this.data) {
+      this.onRowEdit(spec_inc)
+    }
+    else {
+      this.specref.close(spec_inc)
+    }
+  }
+
+  onSelected(spec_inc: specification_income_detail) {
+    if (!this.selected) {
+      this.specListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите специфику!' })
+      return
+    }
+    this.specref.close(spec_inc)
   }
 
   openNew() {

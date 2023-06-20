@@ -8,6 +8,7 @@ import { classsification_income_detail } from '../interfaces';
 import { CategoryIncomeComponent } from '../../income/category-income/category_income-list/category-income.component';
 import { ClassIncomeListComponent } from '../../income/class-income/class-income-list/class-income-list.component';
 import { PodclassListComponent } from '../../podclass/podclass-list/podclass-list.component';
+import { SpecificationIncomeListComponent } from '../../specification-income/specification-income-list/specification-income-list.component';
 
 @Component({
   selector: 'app-classification-income-detail',
@@ -127,7 +128,38 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     })
   }
 
-  viewClassification() {
+  addSpec() {
+    this.Select_dialog_ref = this.Select_dialog.open(SpecificationIncomeListComponent,
+      {
+        header: 'Выбор подкласс',
+        width: '70%',
+        height: '50%'
+      }
+    )
+
+    this.Select_dialog_ref.onClose.subscribe((specif: any) => {
+      if (specif) {
+        console.log(specif);
+        this.classifDetail._spec_id = specif.id;
+        this.classifDetail.spec_name = specif.name_rus;
+        this.classifDetail.spec_code = specif.code;
+      }
+    })
+  }
+
+  viewCategory() {
+
+  }
+
+  viewClass() {
+
+  }
+
+  viewPodclass() {
+
+  }
+  
+  viewSpec() {
 
   }
 
