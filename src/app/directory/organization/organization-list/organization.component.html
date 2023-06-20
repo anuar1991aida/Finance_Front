@@ -1,10 +1,13 @@
 <p-toolbar>
 
-    <div class="p-toolbar-group-left">
+    <div class="p-toolbar-group-left" *ngIf="data!==false">
         <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
             (click)="openNew()"></button>
     </div>
-
+    <div class="p-toolbar-group-left" *ngIf="data!==true">
+        <button pButton pRipple label="выбрать"  icon="pi pi-check" class="p-button-success p-mr-2"
+            (click)="onSelected(selected)"></button>
+    </div>
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-left" style="margin-right: 10px;">
             <i class="pi pi-search"></i>
@@ -19,7 +22,7 @@
 
 <div class="card" *ngIf="(organizations$ | async) as organizations; else loader">
     <p-table *ngIf="organizations.count !== 0; else empty" [value]="organizations.results" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        scrollHeight="calc(100vh - 200px)" selectionMode="single" [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
 
         <ng-template pTemplate="header">
@@ -34,7 +37,7 @@
 
         </ng-template>
         <ng-template pTemplate="body" let-org let-ri="rowIndex" *ngFor="let item of organizations.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowClick(org)">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(org)" [pSelectableRow]="org">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     {{org.bin}}

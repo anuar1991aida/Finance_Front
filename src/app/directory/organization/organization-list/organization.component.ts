@@ -4,6 +4,7 @@ import { organization_list, organization_detail } from '../interfaces';
 import { OrganizationsService } from '../organization.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OrganizationDetailComponent } from '../organization-detail/organization-detail.component'
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
@@ -14,6 +15,7 @@ export class OrganizationComponent implements OnInit {
   constructor(
     private orgService: OrganizationsService,
     private org_dialog_ref: DynamicDialogRef,
+    private messageServicedelSelect: MessageService,
     private org_dialog_servis: DialogService,
   ) { }
 
@@ -22,6 +24,7 @@ export class OrganizationComponent implements OnInit {
   first = 0
   rows = 3
   searchorg = ''
+  selected: any
 
   ngOnInit() {
     this.fetchOrg()
@@ -69,6 +72,14 @@ export class OrganizationComponent implements OnInit {
     else {
       this.org_dialog_ref.close(org)
     }
+  }
+
+  onSelected(org: organization_detail) {
+    if (!this.selected) {
+      this.messageServicedelSelect.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
+      return
+    }
+    this.org_dialog_ref.close(org)
   }
 
   search() {
