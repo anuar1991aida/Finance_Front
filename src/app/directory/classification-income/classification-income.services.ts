@@ -11,7 +11,7 @@ import { classsification_income_detail, classsification_income_list, classsifica
 export class ClassificationIncomeService {
     constructor(private http: HttpClient) {
     }
-    host = "http://192.168.10.237:8000/"
+    host = "http://192.168.5.27:8000/"
 
 
     fetch(params: any): Observable<classsification_income_list> {
@@ -30,7 +30,7 @@ export class ClassificationIncomeService {
         return this.http.post(this.host + 'dirs/classadd', classif_inc)
     }
 
-    deleteClass(classif_inc_id: string = '') {
-        return this.http.delete(this.host + 'dirs/classificationincdelete/' + classif_inc_id)
+    deleteClass(classif_inc_id: number) {
+        return this.http.delete(this.host + `dirs/classificationincdelete/${classif_inc_id}`)
     }
 }

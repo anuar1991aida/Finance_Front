@@ -50,7 +50,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     if (this.classif_id == '') {
       this.classifDetail = {
-        id: '',
+        id: 0,
         code: '',
         name_kaz: '',
         name_rus: '',
@@ -87,7 +87,6 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((category: any) => {
       if (category) {
-        console.log(category);
         this.classifDetail._category_id = category.id;
         this.classifDetail.category_name = category.name_rus;
         this.classifDetail.category_code = category.code;
@@ -106,7 +105,6 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((classs: any) => {
       if (classs) {
-        console.log(classs);
         this.classifDetail._classs_id = classs.id;
         this.classifDetail.classs_name = classs.name_rus;
         this.classifDetail.classs_code = classs.code;
@@ -124,7 +122,6 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((podcl: any) => {
       if (podcl) {
-        console.log(podcl);
         this.classifDetail._podclass_id = podcl.id;
         this.classifDetail.podclass_name = podcl.name_rus;
         this.classifDetail.podclass_code = podcl.code;
@@ -143,7 +140,6 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((specif: any) => {
       if (specif) {
-        console.log(specif);
         this.classifDetail._spec_id = specif.id;
         this.classifDetail.spec_name = specif.name_rus;
         this.classifDetail.spec_code = specif.code;
@@ -152,10 +148,10 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   }
 
   viewCategory(cat_inc_id: number) {
-    let headertext = 'Создание классификации'
+    let headertext = 'Создание категории'
 
     if (cat_inc_id !== 0) {
-      headertext = 'Редактирование классификации'
+      headertext = 'Редактирование категории'
     }
 
     this.Select_dialog_ref = this.Select_dialog.open(CategoryIncomeDetailComponent,
@@ -174,8 +170,27 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     })
   }
 
-  viewClass() {
+  viewClass(class_inc_id: number) {
+    let headertext = 'Создание класс'
+    
+    if (class_inc_id !== 0) {
+      headertext = 'Редактирование класс'
+    }
 
+    this.Select_dialog_ref = this.Select_dialog.open(ClassIncomeDetailComponent,
+      {
+        header: headertext,
+        width: '60%',
+        height: '40%',
+        data: { cat_id: class_inc_id }
+      })
+
+    this.Select_dialog_ref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        console.log(save);
+        
+      }
+    })
   }
 
   viewPodclass() {
@@ -188,6 +203,29 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
   saveClassif() {
 
+    if (this.classifDetail.id !== 0) 
+    {
+      this.ClassifDetailService.saveClass(this.classifDetail)
+      .subscribe(
+        (data) => {
+          console.log(data)
+        },
+        (error) => {
+          this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+        }
+      )  
+    }
+    else {
+      this.ClassifDetailService.addClass(this.classifDetail)
+      .subscribe((data)=> 
+      {
+        console.log(data);
+      },
+      (error)=> {
+        this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status });
+      })
+    }
+    
   }
 
   closeClassif() {

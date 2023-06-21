@@ -3,7 +3,7 @@
         <div class="p-field" style="padding-right: 10px;">
             <label for="code">Код классификации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
-                <input id="code" [readOnly]="true" type="text" pInputText [ngModel]="classifDetail.code"
+                <input id="code" [readOnly]="false" type="text" pInputText [ngModel]="classifDetail.code"
                     formControlName="code" />
             </div>
             <span class="p-invalid" *ngIf="form.controls['code'].invalid && form.controls['code'].touched">
@@ -62,7 +62,7 @@
                 <input id="classs_name" [readOnly]="true" type="text" pInputText
                     [ngModel]="classifDetail.classs_code + ' ' + classifDetail.classs_name"
                     formControlName="classs_name" />
-                <span class="p-inputgroup-addon" (click)="viewClass()">
+                <span class="p-inputgroup-addon" (click)="viewClass(classifDetail._classs_id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-files" viewBox="0 0 16 16">
                         <path

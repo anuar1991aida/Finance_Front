@@ -1,7 +1,7 @@
 <p-toolbar>
     <div class="p-toolbar-group-left">
         <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
-            (click)="onRowEdit('')"></button>
+            (click)="onRowEdit(0)"></button>
     </div>
 
     <div class="p-toolbar-group-right">
@@ -31,7 +31,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-class_inc let-ri="rowIndex"
             *ngFor="let item of classif_inc.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowClick(class_inc)">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(class_inc.id)">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     {{class_inc.code}}

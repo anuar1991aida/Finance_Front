@@ -47,10 +47,10 @@ export class ClassificationIncomeListComponent implements OnInit {
     this.fetchClassif()
   }
 
-  onRowEdit(classif_inc_id: string) {
+  onRowEdit(classif_inc_id: number) {
     let headertext = 'Создание классификации'
 
-    if (classif_inc_id !== '') {
+    if (classif_inc_id !== 0) {
       headertext = 'Редактирование классификации'
     }
 
@@ -69,9 +69,9 @@ export class ClassificationIncomeListComponent implements OnInit {
     })
   }
 
-  onRowClick(classif_inc: classsification_income_detail) {
+  onRowClick(classif_inc: number) {
     if (this.data) {
-      this.onRowEdit(classif_inc.id)
+      this.onRowEdit(classif_inc)
     }
     else {
       this.classifref.close(classif_inc)

@@ -1,5 +1,5 @@
 export interface classsification_income {
-    id?: string,
+    id: number,
     code: string,
     name_kaz: string,
     name_rus: string
@@ -13,7 +13,7 @@ export interface classsification_income_list {
 }
 
 export interface classsification_income_detail {
-    id: string,
+    id: number,
     code: string,
     name_kaz: string,
     name_rus: string,
