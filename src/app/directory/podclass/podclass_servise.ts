@@ -11,7 +11,7 @@ import { podclass_interfaces , podclass_interfaces_detail} from "./podclass_inte
 export class podclassService {
     constructor(private http: HttpClient) {
     }
-    host = "http://192.168.10.237:8000/"
+    host = "http://192.168.5.27:8000/"
 
 
     fetch(params: any): Observable<podclass_interfaces> {

@@ -11,7 +11,7 @@ import { func_group_detail, func_group_list } from "./interfaces";
 export class FuncGroupService {
     constructor(private http: HttpClient) {
     }
-    host = "http://192.168.10.237:8000/"
+    host = "http://192.168.5.27:8000/"
 
 
     fetch(params: any): Observable<func_group_list> {
