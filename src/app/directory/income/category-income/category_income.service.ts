@@ -18,6 +18,10 @@ export class CategoryIncomeService {
         return this.http.get<category_income_list>(this.host + 'dirs/categorylist', { params })
     }
 
+    fetch_detail(category_id: number): Observable<category_income_detail> {
+        return this.http.get<category_income_detail>(this.host + `dirs/categoryitem/${category_id}`)
+    }
+
     saveCategory(category: category_income_detail) {
         return this.http.post(this.host + 'dirs/categoryedit', category)
     }
@@ -26,7 +30,7 @@ export class CategoryIncomeService {
         return this.http.post(this.host + 'dirs/categoryadd', category)
     }
 
-    deleteCategory(category_id: string = '') {
-        return this.http.delete(this.host + 'dirs/categorydelete/' + category_id)
+    deleteCategory(category_id: number = 0) {
+        return this.http.delete(this.host + `dirs/categorydelete/${category_id}`)
     }
 }

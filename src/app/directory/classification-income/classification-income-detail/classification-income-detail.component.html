@@ -41,7 +41,7 @@
                 <input id="category_name" [readOnly]="true" type="text" pInputText
                     [ngModel]="classifDetail.category_code + ' ' + classifDetail.category_name"
                     formControlName="category_name" />
-                <span class="p-inputgroup-addon" (click)="viewCategory()">
+                <span class="p-inputgroup-addon" (click)="viewCategory(classifDetail._category_id)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-files" viewBox="0 0 16 16">
                         <path

@@ -25,7 +25,7 @@ export class CategoryIncomeComponent implements OnInit {
   @Input() data = false;
   category$: Observable<category_income_list>
   NewCat: category_income_detail = {
-    id: '',
+    id: 0,
     code: '',
     name_kaz: '',
     name_rus: ''
@@ -62,7 +62,7 @@ export class CategoryIncomeComponent implements OnInit {
         header: 'Редактирование категории',
         width: '60%',
         height: '40%',
-        data: { category: cat }
+        data: { cat_id: cat.id }
       })
 
     this.categoryref.onClose.subscribe((save: boolean) => {

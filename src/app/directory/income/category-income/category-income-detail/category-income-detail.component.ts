@@ -22,7 +22,13 @@ export class CategoryIncomeDetailComponent implements OnInit {
   ) { }
 
   form: FormGroup
-  category_detail: category_income_detail
+  category_detail: category_income_detail = {
+    id: 0,
+    code: '',
+    name_kaz: '',
+    name_rus: ''
+  }
+  category_id= 0
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -31,11 +37,18 @@ export class CategoryIncomeDetailComponent implements OnInit {
       name_rus: new FormControl(null, [Validators.required])
     })
 
-    this.category_detail = this.CatDetailconfig.data.category
+    this.category_id = this.CatDetailconfig.data.cat_id
+
+    if (this.category_id !== 0) {
+      this.CatService.fetch_detail(this.category_id).subscribe((data)=> {
+        this.category_detail = data
+      })
+    }
+
   }
 
   saveCategory() {
-    if (this.category_detail.id == '') {
+    if (this.category_detail.id == 0) {
       this.CatService.addCategory(this.category_detail)
         .pipe(
           timeout(5000), // установка таймаута на 5 секунд

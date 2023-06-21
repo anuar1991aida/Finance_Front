@@ -9,6 +9,10 @@ import { CategoryIncomeComponent } from '../../income/category-income/category_i
 import { ClassIncomeListComponent } from '../../income/class-income/class-income-list/class-income-list.component';
 import { PodclassListComponent } from '../../podclass/podclass-list/podclass-list.component';
 import { SpecificationIncomeListComponent } from '../../specification-income/specification-income-list/specification-income-list.component';
+import { CategoryIncomeDetailComponent } from '../../income/category-income/category-income-detail/category-income-detail.component';
+import { ClassIncomeDetailComponent } from '../../income/class-income/class-income-detail/class-income-detail.component';
+import { PodclassDetailComponent } from '../../podclass/podclass-detail/podclass-detail.component';
+import { SpecificationIncomeDetailComponent } from '../../specification-income/specification-income-detail/specification-income-detail.component';
 
 @Component({
   selector: 'app-classification-income-detail',
@@ -147,8 +151,27 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     })
   }
 
-  viewCategory() {
+  viewCategory(cat_inc_id: number) {
+    let headertext = 'Создание классификации'
 
+    if (cat_inc_id !== 0) {
+      headertext = 'Редактирование классификации'
+    }
+
+    this.Select_dialog_ref = this.Select_dialog.open(CategoryIncomeDetailComponent,
+      {
+        header: headertext,
+        width: '60%',
+        height: '40%',
+        data: { cat_id: cat_inc_id }
+      })
+
+    this.Select_dialog_ref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        console.log(save);
+        
+      }
+    })
   }
 
   viewClass() {
