@@ -18,4 +18,9 @@ export class FuncPodgroupService {
         return this.http.get<func_podgroup_list>(this.host + 'dirs/funcpodgrouplist', { params })
     }
 
+    add(params: any): Observable<func_podgroup_list> {
+      return this.http.get<func_podgroup_list>(this.host + 'dirs/funcpodgrouplist', { params })
+    }
+
+
 }

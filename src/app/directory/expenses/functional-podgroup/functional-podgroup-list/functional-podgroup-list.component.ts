@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { FuncPodgroupService } from '../func-podgroup.services';
 import { func_podgroup_detail, func_podgroup_list } from '../interfaces';
+import { FunctionalPodgroupDetailComponent } from '../functional-podgroup-detail/functional-podgroup-detail.component';
 
 @Component({
   selector: 'app-functional-podgroup-list',
@@ -46,7 +47,13 @@ export class FunctionalPodgroupListComponent implements OnInit {
   }
 
   onRowClick(func_detail: func_podgroup_detail) {
-
+    this.funcpodGrref = this.funcpodGrListdialog.open(FunctionalPodgroupDetailComponent,
+      {
+        header: 'Редактирование функциональной подгруппы',
+        width: '60%',
+        height: '40%',
+        data: { func_detail: func_detail }
+      });
   }
 
   search() {
