@@ -4,7 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { FuncGroupService } from '../func-group.services';
 import { func_group_detail, func_group_list } from '../interfaces';
-
+import { FunctionalGroupDetailComponent } from "../functional-group-detail/functional-group-detail.component"
 @Component({
   selector: 'app-functional-group-list',
   templateUrl: './functional-group-list.component.html',
@@ -46,6 +46,14 @@ export class FunctionalGroupListComponent implements OnInit {
   }
 
   onRowClick(func_detail: func_group_detail) {
+
+    this.funcGrref = this.funcGrListdialog.open(FunctionalGroupDetailComponent,
+      {
+        header: 'Редактирование функциональной группы',
+        width: '60%',
+        height: '40%',
+        data: { func_detail: func_detail }
+      });
 
   }
 

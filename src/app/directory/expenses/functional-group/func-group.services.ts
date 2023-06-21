@@ -18,4 +18,7 @@ export class FuncGroupService {
         return this.http.get<func_group_list>(this.host + 'dirs/funcgrouplist', { params })
     }
 
+    add(param: func_group_detail) {
+      return this.http.post(this.host + 'dirs/funcgrouplist', param)
+    }
 }
