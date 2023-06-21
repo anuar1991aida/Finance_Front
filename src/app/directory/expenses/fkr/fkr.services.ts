@@ -11,7 +11,7 @@ import { fkr_detail, fkr_list } from "./interfaces";
 export class fkrService {
     constructor(private http: HttpClient) {
     }
-    host = "http://192.168.10.237:8000/"
+    host = "http://192.168.5.27:8000/"
 
 
     fetch(params: any): Observable<fkr_list> {
