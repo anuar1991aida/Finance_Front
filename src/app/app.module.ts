@@ -33,8 +33,8 @@ import { UtvIncomeDetailComponent } from './documents/utv-income/utv-income-deta
 //Dastan
 import { OrganizationComponent } from './directory/organization/organization-list/organization.component';
 import { OrganizationDetailComponent } from './directory/organization/organization-detail/organization-detail.component';
-import { PodclassListComponent } from './directory/podclass/podclass-list/podclass-list.component';
-import { PodclassDetailComponent } from './directory/podclass/podclass-detail/podclass-detail.component';
+import { PodclassListComponent } from './directory/income/podclass/podclass-list/podclass-list.component';
+import { PodclassDetailComponent } from './directory/income/podclass/podclass-detail/podclass-detail.component';
 import { BudjetListComponent } from './directory/budjet/budjet-list/budjet-list.component';
 import { IzmIncDocDetailComponent } from './documents/izm_inc_doc/izm-inc-doc-detail/izm-inc-doc-detail.component';
 import { IzmIncDocListComponent } from './documents/izm_inc_doc/izm-inc-doc-list/izm-inc-doc-list.component';

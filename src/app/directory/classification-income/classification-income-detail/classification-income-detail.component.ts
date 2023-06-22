@@ -7,11 +7,11 @@ import { ClassificationIncomeService } from '../classification-income.services';
 import { classsification_income_detail } from '../interfaces';
 import { CategoryIncomeComponent } from '../../income/category-income/category_income-list/category-income.component';
 import { ClassIncomeListComponent } from '../../income/class-income/class-income-list/class-income-list.component';
-import { PodclassListComponent } from '../../podclass/podclass-list/podclass-list.component';
+import { PodclassListComponent } from '../../income/podclass/podclass-list/podclass-list.component';
 import { SpecificationIncomeListComponent } from '../../specification-income/specification-income-list/specification-income-list.component';
 import { CategoryIncomeDetailComponent } from '../../income/category-income/category-income-detail/category-income-detail.component';
 import { ClassIncomeDetailComponent } from '../../income/class-income/class-income-detail/class-income-detail.component';
-import { PodclassDetailComponent } from '../../podclass/podclass-detail/podclass-detail.component';
+import { PodclassDetailComponent } from '../../income/podclass/podclass-detail/podclass-detail.component';
 import { SpecificationIncomeDetailComponent } from '../../specification-income/specification-income-detail/specification-income-detail.component';
 
 @Component({
@@ -165,14 +165,14 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     this.Select_dialog_ref.onClose.subscribe((save: boolean) => {
       if (save) {
         console.log(save);
-        
+
       }
     })
   }
 
   viewClass(class_inc_id: number) {
     let headertext = 'Создание класс'
-    
+
     if (class_inc_id !== 0) {
       headertext = 'Редактирование класс'
     }
@@ -188,7 +188,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     this.Select_dialog_ref.onClose.subscribe((save: boolean) => {
       if (save) {
         console.log(save);
-        
+
       }
     })
   }
@@ -196,36 +196,34 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   viewPodclass() {
 
   }
-  
+
   viewSpec() {
 
   }
 
   saveClassif() {
 
-    if (this.classifDetail.id !== 0) 
-    {
+    if (this.classifDetail.id !== 0) {
       this.ClassifDetailService.saveClass(this.classifDetail)
-      .subscribe(
-        (data) => {
-          console.log(data)
-        },
-        (error) => {
-          this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-        }
-      )  
+        .subscribe(
+          (data) => {
+            console.log(data)
+          },
+          (error) => {
+            this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+          }
+        )
     }
     else {
       this.ClassifDetailService.addClass(this.classifDetail)
-      .subscribe((data)=> 
-      {
-        console.log(data);
-      },
-      (error)=> {
-        this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status });
-      })
+        .subscribe((data) => {
+          console.log(data);
+        },
+          (error) => {
+            this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status });
+          })
     }
-    
+
   }
 
   closeClassif() {
