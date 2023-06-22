@@ -27,6 +27,7 @@ export class ClassificationIncomeListComponent implements OnInit {
   searchclassif = ''
   first = 0
   rows = 3
+  selected: any
 
   ngOnInit(): void {
     this.fetchClassif()
@@ -76,6 +77,16 @@ export class ClassificationIncomeListComponent implements OnInit {
     else {
       this.classifref.close(classif_inc)
     }
+  }
+
+  onSelected(classif_inc: number) {
+    if (!this.selected) {
+      this.classifListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите классификацию!' })
+      return
+    }
+    console.log(classif_inc);
+    
+    this.classifref.close(classif_inc)
   }
 
   onDelete(classif_inc: classsification_income) {

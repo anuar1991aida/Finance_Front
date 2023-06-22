@@ -4,11 +4,11 @@ import { OrganizationsService } from '../organization.service';
 import { organization_list, organization_detail } from '../interfaces';
 import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BudjetListComponent } from '../../budjet/budjet-list/budjet-list.component';
+import { BudjetListComponent } from '../../income/budjet/budjet-list/budjet-list.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { catchError, timeout } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import { Budjet_detail } from '../../budjet/interfaces';
+import { Budjet_detail } from '../../income/budjet/interfaces';
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',

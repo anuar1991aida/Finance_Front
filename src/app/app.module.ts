@@ -35,7 +35,7 @@ import { OrganizationComponent } from './directory/organization/organization-lis
 import { OrganizationDetailComponent } from './directory/organization/organization-detail/organization-detail.component';
 import { PodclassListComponent } from './directory/income/podclass/podclass-list/podclass-list.component';
 import { PodclassDetailComponent } from './directory/income/podclass/podclass-detail/podclass-detail.component';
-import { BudjetListComponent } from './directory/budjet/budjet-list/budjet-list.component';
+import { BudjetListComponent } from './directory/income/budjet/budjet-list/budjet-list.component';
 import { IzmIncDocDetailComponent } from './documents/izm_inc_doc/izm-inc-doc-detail/izm-inc-doc-detail.component';
 import { IzmIncDocListComponent } from './documents/izm_inc_doc/izm-inc-doc-list/izm-inc-doc-list.component';
 import { FunctionalGroupDetailComponent } from './directory/expenses/functional-group/functional-group-detail/functional-group-detail.component';

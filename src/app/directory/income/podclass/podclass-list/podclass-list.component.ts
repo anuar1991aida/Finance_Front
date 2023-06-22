@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { podclassService} from "../podclass_servise";
+import { podclassService } from "../podclass_servise";
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { podclass_interfaces , podclass_interfaces_detail} from "../podclass_interfaces";
+import { podclass_interfaces, podclass_interfaces_detail } from "../podclass_interfaces";
 import { PodclassDetailComponent } from "../podclass-detail/podclass-detail.component"
-import { DropdownModule } from 'primeng/dropdown';
 import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-podclass-list',
@@ -17,8 +16,7 @@ export class PodclassListComponent implements OnInit {
     private podclassService: podclassService,
     private podclassryref: DynamicDialogRef,
     private messageServicedelSelect: MessageService,
-    private podclasslistdialog: DialogService,
-    private DropdownModul: DropdownModule) { }
+    private podclasslistdialog: DialogService) { }
 
   podclass$: Observable<podclass_interfaces>
   NewCat: podclass_interfaces_detail = {
