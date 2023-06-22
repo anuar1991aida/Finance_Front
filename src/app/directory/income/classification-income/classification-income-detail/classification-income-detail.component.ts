@@ -3,15 +3,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { CategoryIncomeComponent } from '../../category-income/category_income-list/category-income.component';
 import { ClassificationIncomeService } from '../classification-income.services';
 import { classsification_income_detail } from '../interfaces';
-import { CategoryIncomeComponent } from '../../income/category-income/category_income-list/category-income.component';
-import { ClassIncomeListComponent } from '../../income/class-income/class-income-list/class-income-list.component';
-import { PodclassListComponent } from '../../income/podclass/podclass-list/podclass-list.component';
+import { ClassIncomeListComponent } from '../../class-income/class-income-list/class-income-list.component';
+import { PodclassListComponent } from '../../podclass/podclass-list/podclass-list.component';
 import { SpecificationIncomeListComponent } from '../../specification-income/specification-income-list/specification-income-list.component';
-import { CategoryIncomeDetailComponent } from '../../income/category-income/category-income-detail/category-income-detail.component';
-import { ClassIncomeDetailComponent } from '../../income/class-income/class-income-detail/class-income-detail.component';
-import { PodclassDetailComponent } from '../../income/podclass/podclass-detail/podclass-detail.component';
+import { CategoryIncomeDetailComponent } from '../../category-income/category-income-detail/category-income-detail.component';
+import { ClassIncomeDetailComponent } from '../../class-income/class-income-detail/class-income-detail.component';
+import { PodclassDetailComponent } from '../../podclass/podclass-detail/podclass-detail.component';
 import { SpecificationIncomeDetailComponent } from '../../specification-income/specification-income-detail/specification-income-detail.component';
 
 @Component({

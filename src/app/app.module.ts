@@ -21,10 +21,8 @@ import { CategoryIncomeDetailComponent } from './directory/income/category-incom
 import { CategoryIncomeComponent } from './directory/income/category-income/category_income-list/category-income.component';
 import { ClassIncomeListComponent } from './directory/income/class-income/class-income-list/class-income-list.component';
 import { ClassIncomeDetailComponent } from './directory/income/class-income/class-income-detail/class-income-detail.component';
-import { SpecificationIncomeListComponent } from './directory/specification-income/specification-income-list/specification-income-list.component';
-import { SpecificationIncomeDetailComponent } from './directory/specification-income/specification-income-detail/specification-income-detail.component';
-import { ClassificationIncomeListComponent } from './directory/classification-income/classification-income-list/classification-income-list.component';
-import { ClassificationIncomeDetailComponent } from './directory/classification-income/classification-income-detail/classification-income-detail.component';
+import { ClassificationIncomeListComponent } from './directory/income/classification-income/classification-income-list/classification-income-list.component';
+import { ClassificationIncomeDetailComponent } from './directory/income/classification-income/classification-income-detail/classification-income-detail.component';
 import { UtvIncomeListComponent } from './documents/utv-income/utv-income-list/utv-income-list.component';
 import { UtvIncomeDetailComponent } from './documents/utv-income/utv-income-detail/utv-income-detail.component';
 
@@ -50,6 +48,8 @@ import { PodprogrammDetailComponent } from './directory/expenses/podprogramm/pod
 import { PodprogrammListComponent } from './directory/expenses/podprogramm/podprogramm-list/podprogramm-list.component';
 import { FkrDetailComponent } from './directory/expenses/fkr/fkr-detail/fkr-detail.component';
 import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.component';
+import { SpecificationIncomeListComponent } from './directory/income/specification-income/specification-income-list/specification-income-list.component';
+import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
 
 @NgModule({
   imports: [
