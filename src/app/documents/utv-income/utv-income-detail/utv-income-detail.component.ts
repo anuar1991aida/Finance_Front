@@ -4,6 +4,7 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ClassificationIncomeDetailComponent } from 'src/app/directory/income/classification-income/classification-income-detail/classification-income-detail.component';
 import { ClassificationIncomeListComponent } from 'src/app/directory/income/classification-income/classification-income-list/classification-income-list.component';
+import { classsification_income } from 'src/app/directory/income/classification-income/interfaces';
 import { utv_income_detail } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
 
@@ -46,6 +47,8 @@ export class UtvIncomeDetailComponent implements OnInit {
   form: FormGroup
   utvDetail: utv_income_detail
   responce: any
+  old = true
+  new = false
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -111,32 +114,34 @@ export class UtvIncomeDetailComponent implements OnInit {
         height: '80%'
       })
 
-    this.utvDetailref.onClose.subscribe((classific: any) => {
+    this.utvDetailref.onClose.subscribe((classific: classsification_income) => {
       if (classific) {
-        this.utvDetail.tbl1.push(
-          {
-            _classification: classific.id,
-            classification_name: classific.name_rus,
-            classification_code: classific.code,
-            id: 0,
-            god: 0,
-            sm1: 0,
-            sm2: 0,
-            sm3: 0,
-            sm4: 0,
-            sm5: 0,
-            sm6: 0,
-            sm7: 0,
-            sm8: 0,
-            sm9: 0,
-            sm10: 0,
-            sm11: 0,
-            sm12: 0,
-            deleted: false,
-            _organization: 0,
-            _utv_inc: 0,
-            _date: this.utvDetail.doc._date
-          })
+        this.old = !this.old,
+          this.new = !this.new,
+          this.utvDetail.tbl1.push(
+            {
+              _classification: classific.id,
+              classification_name: classific.name_rus,
+              classification_code: classific.code,
+              id: 0,
+              god: 0,
+              sm1: 0,
+              sm2: 0,
+              sm3: 0,
+              sm4: 0,
+              sm5: 0,
+              sm6: 0,
+              sm7: 0,
+              sm8: 0,
+              sm9: 0,
+              sm10: 0,
+              sm11: 0,
+              sm12: 0,
+              deleted: false,
+              _organization: 0,
+              _utv_inc: 0,
+              _date: this.utvDetail.doc._date
+            })
       }
     })
   }

@@ -139,6 +139,8 @@ export class IzmIncDocDetailComponent implements OnInit {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
+        console.log(classific);
+
         this.old = !this.old
         this.new = !this.new
         this.addClassificationRow(classific.id)

@@ -26,7 +26,7 @@ export class ClassificationIncomeListComponent implements OnInit {
   classif$: Observable<classsification_income_list>
   searchclassif = ''
   first = 0
-  rows = 3
+  rows = 25
   selected: any
 
   ngOnInit(): void {
@@ -70,22 +70,20 @@ export class ClassificationIncomeListComponent implements OnInit {
     })
   }
 
-  onRowClick(classif_inc: number) {
+  onRowClick(classif_inc: classsification_income) {
     if (this.data) {
-      this.onRowEdit(classif_inc)
+      this.onRowEdit(classif_inc.id)
     }
     else {
       this.classifref.close(classif_inc)
     }
   }
 
-  onSelected(classif_inc: number) {
+  onSelected(classif_inc: classsification_income) {
     if (!this.selected) {
       this.classifListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите классификацию!' })
       return
     }
-    console.log(classif_inc);
-    
     this.classifref.close(classif_inc)
   }
 
