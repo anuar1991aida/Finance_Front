@@ -37,7 +37,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      code: new FormControl(null, [Validators.required]),
+      code: new FormControl(null, []),
       name_kaz: new FormControl(null, [Validators.required]),
       name_rus: new FormControl(null, [Validators.required]),
       category_name: new FormControl(null, [Validators.required]),
@@ -202,13 +202,13 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   }
 
   saveClassif() {
-
     if (this.classifDetail.id !== 0) 
     {
       this.ClassifDetailService.saveClass(this.classifDetail)
       .subscribe(
         (data) => {
-          console.log(data)
+          this.ClassifDetailmsg.add({ severity: 'success', summary: 'Успещно', detail: 'Классификация отредактирована' }),
+          this.closeClassif(true)
         },
         (error) => {
           this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
@@ -217,9 +217,9 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     }
     else {
       this.ClassifDetailService.addClass(this.classifDetail)
-      .subscribe((data)=> 
-      {
-        console.log(data);
+      .subscribe(
+        (data) => {
+        this.ClassifDetailmsg.add({ severity: 'success', summary: 'Успещно', detail: 'Классификация сохранена' })
       },
       (error)=> {
         this.ClassifDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status });
@@ -228,7 +228,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     
   }
 
-  closeClassif() {
-
+  closeClassif(saved:boolean) {
+      this.Select_dialog_ref.close(saved)
   }
 }

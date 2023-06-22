@@ -23,11 +23,11 @@ export class ClassificationIncomeService {
     }
 
     saveClass(classif_inc: classsification_income_detail) {
-        return this.http.post(this.host + 'dirs/classedit', classif_inc)
+        return this.http.post(this.host + 'dirs/classificationincedit', classif_inc)
     }
 
     addClass(classif_inc: classsification_income_detail) {
-        return this.http.post(this.host + 'dirs/classadd', classif_inc)
+        return this.http.post(this.host + 'dirs/classificationincadd', classif_inc)
     }
 
     deleteClass(classif_inc_id: number) {
