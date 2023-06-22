@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { abpService } from '../abp.services';
 import { abp_detail, abp_list } from '../interfaces';
+import { ABPDetailComponent } from "../abp-detail/abp-detail.component"
 
 @Component({
   selector: 'app-abp-list',
@@ -46,11 +47,19 @@ export class ABPListComponent implements OnInit {
   }
 
   onRowClick(abp_detail: abp_detail) {
-
+    this.abpListref = this.abpListdialog.open(ABPDetailComponent,
+      {
+        header: 'Редактирование функциональной группы',
+        width: '60%',
+        height: '40%',
+        data: { abp_list: abp_detail }
+      });
   }
 
   search() {
 
   }
+
+
 
 }
