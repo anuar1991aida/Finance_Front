@@ -24,7 +24,7 @@ export class FunctionalGroupListComponent implements OnInit {
   funcGr$: Observable<func_group_list>
   searchfuncGr = ''
   first = 0
-  rows = 3
+  rows = 25
 
   ngOnInit(): void {
     this.fetchGr()

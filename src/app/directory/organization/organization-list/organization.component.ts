@@ -22,7 +22,7 @@ export class OrganizationComponent implements OnInit {
   @Input() data = false
   organizations$: Observable<organization_list>
   first = 0
-  rows = 3
+  rows = 25
   searchorg = ''
   selected: any
 

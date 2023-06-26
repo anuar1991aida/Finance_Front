@@ -25,7 +25,7 @@ export class FunctionalPodgroupListComponent implements OnInit {
   funcpodGr$: Observable<func_podgroup_list>
   searchfuncpodGr = ''
   first = 0
-  rows = 3
+  rows = 25
 
   ngOnInit(): void {
     this.fetchGr()

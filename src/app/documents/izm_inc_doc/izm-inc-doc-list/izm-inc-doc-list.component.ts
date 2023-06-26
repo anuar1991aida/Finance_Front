@@ -23,7 +23,7 @@ export class IzmIncDocListComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<any>()
   doc_izm$: Observable<izm_inc_doc_list>
   first = 0
-  rows = 3
+  rows = 25
   searchIzmInc = ''
 
 

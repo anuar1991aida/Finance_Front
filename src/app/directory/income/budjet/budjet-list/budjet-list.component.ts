@@ -22,7 +22,7 @@ export class BudjetListComponent implements OnInit {
 
   Budjet$: Observable<Budjet_list>
   first = 0
-  rows = 3
+  rows = 25
   last = 3
 
   ngOnInit(): void {

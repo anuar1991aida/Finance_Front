@@ -32,7 +32,7 @@ export class ClassIncomeListComponent implements OnInit {
   @Input() data = false
   searchclass = ''
   first = 0
-  rows = 3
+  rows = 25
   selected: any
 
   ngOnInit(): void {

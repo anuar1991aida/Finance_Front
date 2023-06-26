@@ -33,30 +33,10 @@ export class FunctionalGroupDetailComponent implements OnInit {
 
 
   saveFungroup(){
-    if (this.func_detail.id > 0) {
-      this.FuncGroupService.add(this.func_detail)
-        .pipe(
-          timeout(5000), // установка таймаута на 5 секунд
-          catchError(error => {
-            if (error.name === 'TimeoutError') {
-              this.FuncGroup_Detailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Время ожидания истекло. Попробуйте позднее!' });
-            }
-            else {
-              this.FuncGroup_Detailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' });
-            }
-            return throwError('Произошла ошибка: ' + error.message);
-          })
-
-        )
-        .subscribe(
-          (data) => (this.FuncGroup_Detailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Категория успешно добавлена!' }), this.FuncGroup_Detailref.close(true)),
-          (error) => (this.FuncGroup_Detailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
-        )
-    }
-
+    this.FuncGroup_Detailref.close()
   }
 
   closeCat(boll: boolean){
-
+    this.FuncGroup_Detailref.close()
   }
 }

@@ -25,7 +25,7 @@ export class ABPListComponent implements OnInit {
   abp_list$: Observable<abp_list>
   searchfuncGr = ''
   first = 0
-  rows = 3
+  rows = 25
 
   ngOnInit(): void {
     this.fetchABP()

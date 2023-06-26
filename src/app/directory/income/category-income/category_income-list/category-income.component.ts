@@ -32,7 +32,7 @@ export class CategoryIncomeComponent implements OnInit {
   }
   searchcategory = ''
   first = 0
-  rows = 3
+  rows = 25
   last = 3
   selected: any
 
