@@ -49,7 +49,7 @@ export class ABPListComponent implements OnInit {
   onRowClick(abp_detail: abp_detail) {
     this.abpListref = this.abpListdialog.open(ABPDetailComponent,
       {
-        header: 'Редактирование функциональной группы',
+        header: 'Редактирование АБП',
         width: '60%',
         height: '40%',
         data: { abp_list: abp_detail }
