@@ -35,6 +35,20 @@ export class IzmIncDocDetailComponent implements OnInit {
   old = true
   new = false
 
+  mass_save: {
+    doc_save: {
+      _id: number
+      _organization: number
+      _type_izm_doc: number
+    }
+    tbl: [{
+      _id: number,
+      utv1: number,
+      sm1: number,
+      itog1: number
+    }]
+  }
+
   ngOnInit(): void {
     this.form = new FormGroup({
       number_doc: new FormControl(null, [Validators.required]),
@@ -54,6 +68,7 @@ export class IzmIncDocDetailComponent implements OnInit {
     else {
       this.izmDetail = {
         doc: {
+          id: 0,
           nom: '',
           _date: '',
           deleted: false,
@@ -79,6 +94,30 @@ export class IzmIncDocDetailComponent implements OnInit {
           sm10: 0,
           sm11: 0,
           sm12: 0,
+          utv1: 0,
+          utv2: 0,
+          utv3: 0,
+          utv4: 0,
+          utv5: 0,
+          utv6: 0,
+          utv7: 0,
+          utv8: 0,
+          utv9: 0,
+          utv10: 0,
+          utv11: 0,
+          utv12: 0,
+          itog1: 0,
+          itog2: 0,
+          itog3: 0,
+          itog4: 0,
+          itog5: 0,
+          itog6: 0,
+          itog7: 0,
+          itog8: 0,
+          itog9: 0,
+          itog10: 0,
+          itog11: 0,
+          itog12: 0,
           _classification: 0,
           classification_name: ''
         }]
@@ -87,22 +126,28 @@ export class IzmIncDocDetailComponent implements OnInit {
       this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)
     }
 
+    this.mass_save = {
+      doc_save: {
+        _id: 0,
+        _organization: 0,
+        _type_izm_doc: 0
+      },
+      tbl: [{
+        _id: 0,
+        utv1: 0,
+        sm1: 0,
+        itog1: 0
+      }]
+    }
   }
 
-  sumColumn(column: string, _classification: number) {
-    this.calcTotal(this.izmDetail.tbl1, column, _classification)
-  }
+  sumColumn(izm: any, i: number) {
 
-  calcTotal(data: any[], column: string, _classification: number) {
-
-    let itog = data.filter(item => item['tip'] == 'itog' && item['_classification'] == _classification)
-    let sm = data.filter(item => item['tip'] == 'sm' && item['_classification'] == _classification)
-    let utv = data.filter(item => item['tip'] == 'utv' && item['_classification'] == _classification)
-    itog[0][column] = sm[0][column] + utv[0][column]
+    izm["itog" + i] = izm["sm" + i] + izm["utv" + i]
 
   }
 
-  editClassification(_classification_id: number) {
+  editClassification(ri: number) {
     this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeListComponent,
       {
         header: 'Выбор классификации',
@@ -112,7 +157,7 @@ export class IzmIncDocDetailComponent implements OnInit {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        this.deleteRow(_classification_id)
+        this.izmDetail.tbl1.splice(ri, 1)
         this.addClassificationRow(classific.id)
       }
     })
@@ -139,11 +184,8 @@ export class IzmIncDocDetailComponent implements OnInit {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        console.log(classific);
-
-        this.old = !this.old
-        this.new = !this.new
-        this.addClassificationRow(classific.id)
+        console.log(classific),
+          this.addClassificationRow(classific.id)
       }
     })
 
@@ -159,8 +201,6 @@ export class IzmIncDocDetailComponent implements OnInit {
     this.izmDetailService.getOstatok(params)
       .subscribe(
         (data) => (
-          this.old = !this.old,
-          this.new = !this.new,
           data.forEach((item: any) => {
             this.izmDetail.tbl1.push(item)
           })
@@ -169,16 +209,22 @@ export class IzmIncDocDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean): void {
-    this.izmDetailService.saveIzm(this.izmDetail)
-      .subscribe(
-        (data) => (
-          this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          this.closeform(close)
-        ),
-        (error) => (
-          this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-        )
-      )
+    console.log(this.izmDetail)
+
+
+
+
+
+    // this.izmDetailService.saveIzm(this.izmDetail)
+    //   .subscribe(
+    //     (data) => (
+    //       this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+    //       this.closeform(close)
+    //     ),
+    //     (error) => (
+    //       this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+    //     )
+    //   )
   }
 
   selectOrg() {
@@ -214,15 +260,13 @@ export class IzmIncDocDetailComponent implements OnInit {
     })
   }
 
-  onDelete(_classification_id: number, classification_name: string) {
+  onDelete(ri: number, classification_name: string) {
     this.izmDetailconfirm.confirm({
       message: 'Вы действительно хотите удалить ' + classification_name + '?',
       header: 'Удаление классификации',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.old = !this.old
-        this.new = !this.new
-        this.deleteRow(_classification_id)
+        this.izmDetail.tbl1.splice(ri, 1)
         this.izmDetailconfirm.close()
       },
       reject: () => {
@@ -231,15 +275,15 @@ export class IzmIncDocDetailComponent implements OnInit {
     })
   }
 
-  deleteRow(_classification_id: number) {
-    for (let i = this.izmDetail.tbl1.length - 1; i >= 0; i--) {
-      let index = this.izmDetail.tbl1.findIndex(item => _classification_id === item._classification)
+  // deleteRow(_classification_id: number) {
+  //   for (let i = this.izmDetail.tbl1.length - 1; i >= 0; i--) {
+  //     let index = this.izmDetail.tbl1.findIndex(item => _classification_id === item._classification)
 
-      if (index !== -1) {
-        this.izmDetail.tbl1.splice(index, 1)
-      }
-    }
-  }
+  //     if (index !== -1) {
+  //       this.izmDetail.tbl1.splice(index, 1)
+  //     }
+  //   }
+  // }
 
   changedate() {
     this.izmDetail.doc._date = this.toLocaleDate(this.izmDetail.doc._date)
