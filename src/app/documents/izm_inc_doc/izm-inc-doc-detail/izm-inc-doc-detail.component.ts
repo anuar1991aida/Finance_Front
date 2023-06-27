@@ -36,6 +36,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   nochanged = true
   hashBegin = ''
   hashEnd = ''
+  spravkatypes: any = []
 
   closeform(close: boolean) {
 
@@ -63,12 +64,19 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     }
   }
 
+  gettypespr() {
+    this.izmDetailService.gettypespr()
+      .subscribe(
+        (data) => { this.spravkatypes = data }
+      )
+  }
+
   ngOnInit(): void {
     this.form = new FormGroup({
       number_doc: new FormControl(null, [Validators.required]),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required]),
-      budjet_name: new FormControl(null, [Validators.required])
+      type_name: new FormControl(null, [Validators.required])
     })
 
     if (this.izm_inc_id !== '') {
@@ -141,6 +149,8 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
     let objString = JSON.stringify(this.izmDetail)
     this.hashBegin = SHA256(objString).toString()
+
+
   }
 
   ngDoCheck() {
@@ -227,7 +237,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       .subscribe(
         (data) => (
           this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          this.closeform(close)
+          this.closeEvent.emit()
         ),
         (error) => (
           this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })

@@ -21,7 +21,7 @@ export class IzmIncomeService {
   }
 
   fetch_detail(izm_inc_id: string): Observable<izm_inc_doc_detail> {
-    return this.http.get<izm_inc_doc_detail>(this.host + `docs/izmincitem1/${izm_inc_id}`)
+    return this.http.get<izm_inc_doc_detail>(this.host + `docs/izmincitem/${izm_inc_id}`)
   }
 
   saveIzm(izm_inc: izm_inc_doc_detail) {
@@ -34,5 +34,9 @@ export class IzmIncomeService {
 
   deleteIzm(izm_inc_id: number = 0) {
     return this.http.delete(this.host + `docs/izmincdelete/${izm_inc_id}`)
+  }
+
+  gettypespr() {
+    return this.http.get(this.host + 'dirs/typeincdoclist')
   }
 }
