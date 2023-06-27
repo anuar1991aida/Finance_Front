@@ -25,6 +25,7 @@ export class FunctionalGroupListComponent implements OnInit {
   searchfuncGr = ''
   first = 0
   rows = 25
+  selected: any
 
   ngOnInit(): void {
     this.fetchGr()
@@ -55,6 +56,14 @@ export class FunctionalGroupListComponent implements OnInit {
         data: { func_detail: func_detail }
       });
 
+  }
+
+  onSelected(func_detail: func_group_detail) {
+    if (!this.selected) {
+      this.funcGrListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите функциональную группу!' })
+      return
+    }
+    this.funcGrref.close(func_detail)
   }
 
   search() {

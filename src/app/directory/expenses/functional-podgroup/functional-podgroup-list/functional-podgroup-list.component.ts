@@ -26,6 +26,7 @@ export class FunctionalPodgroupListComponent implements OnInit {
   searchfuncpodGr = ''
   first = 0
   rows = 25
+  selected: any
 
   ngOnInit(): void {
     this.fetchGr()
@@ -54,6 +55,14 @@ export class FunctionalPodgroupListComponent implements OnInit {
         height: '40%',
         data: { func_detail: func_detail }
       });
+  }
+
+  onSelected(funcpodGr: func_podgroup_detail) {
+    if (!this.selected) {
+      this.funcpodGrListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
+      return
+    }
+    this.funcpodGrref.close(funcpodGr)
   }
 
   search() {
