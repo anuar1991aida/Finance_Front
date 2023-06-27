@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { podprogrammService } from '../podprogramm.services';
 import { podprogramm_detail, podprogramm_list } from '../interfaces';
+import { PodprogrammDetailComponent } from '../podprogramm-detail/podprogramm-detail.component';
 
 @Component({
   selector: 'app-podprogramm-list',
@@ -46,7 +47,13 @@ export class PodprogrammListComponent implements OnInit {
   }
 
   onRowClick(podprogramm_detail: podprogramm_detail) {
-
+    this.podprListref = this.podprListdialog.open(PodprogrammDetailComponent,
+      {
+        header: 'Редактирование подпрограммы',
+        width: '60%',
+        height: '40%',
+        data: { podpr_detail: podprogramm_detail }
+      });
   }
 
   search() {
