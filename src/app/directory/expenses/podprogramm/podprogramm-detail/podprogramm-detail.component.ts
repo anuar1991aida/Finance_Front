@@ -29,7 +29,7 @@ export class PodprogrammDetailComponent implements OnInit {
       name_kaz: new FormControl(null, [Validators.required]),
       name_rus: new FormControl(null, [Validators.required])
   })
-  console.log(this.PodPr_conf.data)
+  console.log(this.PodPr_conf.data.podpr_detail)
   this.podpr_detail = this.PodPr_conf.data.podpr_detail
 
 }

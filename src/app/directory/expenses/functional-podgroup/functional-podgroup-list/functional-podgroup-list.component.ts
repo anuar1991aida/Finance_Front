@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class FunctionalPodgroupListComponent implements OnInit {
     private funcpodGrListmessage: MessageService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   funcpodGr$: Observable<func_podgroup_list>
   searchfuncpodGr = ''
@@ -63,6 +64,10 @@ export class FunctionalPodgroupListComponent implements OnInit {
       return
     }
     this.funcpodGrref.close(funcpodGr)
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   search() {

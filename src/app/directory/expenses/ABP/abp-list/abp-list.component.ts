@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -21,7 +21,9 @@ export class ABPListComponent implements OnInit {
     private abpListmessage: MessageService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
+  
   abp_list$: Observable<abp_list>
   searchfuncGr = ''
   first = 0
@@ -44,6 +46,10 @@ export class ABPListComponent implements OnInit {
     this.first = event.first
     this.rows = event.rows
     this.fetchABP()
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   onRowClick(abp_detail: abp_detail) {

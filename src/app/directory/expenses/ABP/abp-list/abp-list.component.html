@@ -13,7 +13,13 @@
             <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
                 styleClass="p-button-sm" (click)="fetchABP()"></button>
         </div>
+        <div>
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+              (click)="closeform()"></button>
+        </div>
     </div>
+    
+    
 </p-toolbar>
 
 <div class="card" *ngIf="(abp_list$ | async) as abp_list; else loader">

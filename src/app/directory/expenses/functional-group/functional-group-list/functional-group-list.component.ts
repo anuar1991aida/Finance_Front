@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class FunctionalGroupListComponent implements OnInit {
     private funcGrListmessage: MessageService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   funcGr$: Observable<func_group_list>
   searchfuncGr = ''
@@ -68,6 +69,10 @@ export class FunctionalGroupListComponent implements OnInit {
 
   search() {
 
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
 }
