@@ -21,6 +21,7 @@ export class IzmIncDocListComponent implements OnInit {
   ) { }
 
   @Output() newItemEvent = new EventEmitter<any>()
+  @Output() closeEvent = new EventEmitter<any>()
   doc_izm$: Observable<izm_inc_doc_list>
   first = 0
   rows = 25
@@ -96,6 +97,21 @@ export class IzmIncDocListComponent implements OnInit {
 
   search() {
 
+  }
+
+  closeform() {
+
+
+    // let objString = JSON.stringify(this.izmDetail)
+    // this.hashEnd = SHA256(objString).toString()
+
+
+    this.closeEvent.emit()
+
+    // else {
+    //   console.log('Сохранить?');
+
+    // }
   }
 
 }

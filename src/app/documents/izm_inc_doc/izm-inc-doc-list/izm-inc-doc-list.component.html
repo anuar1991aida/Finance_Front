@@ -14,6 +14,10 @@
       <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined" styleClass="p-button-sm"
         (click)="fetch_doc_izm()"></button>
     </div>
+    <div>
+      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+        (click)="closeform()"></button>
+    </div>
   </div>
 </p-toolbar>
 
@@ -83,8 +87,10 @@
       currentPageReportTemplate="{{first+1}} - {{((this.first / this.rows) + 1) * rows}} из {{izmList.count}} элементов"
       [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
   </div>
+
   <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
   </p-confirmDialog>
+
 </div>
 
 <ng-template #loader>

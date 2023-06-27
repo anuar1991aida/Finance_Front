@@ -3,7 +3,7 @@
 
 
     <p-megaMenu [model]="items" class="menu">
-      <!-- <div style="">
+        <!-- <div style="">
       <p-menu #menu [model]="User" [popup]="true"></p-menu>
       <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle"></p-avatar>
       </div> -->
@@ -17,13 +17,13 @@
             <mat-tab>
                 <ng-template mat-tab-label>
                     <span>{{context.title}}</span>
-                    <i (click)="removetab()" style="margin-left: 10px;">
+                    <!-- <i (click)="removetab()" style="margin-left: 10px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-x" viewBox="0 0 16 16">
                             <path
                                 d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                         </svg>
-                    </i>
+                    </i> -->
                 </ng-template>
                 <app-organization *ngIf="context.selector=='app-organization'" [data]="true">
                 </app-organization>
@@ -56,11 +56,12 @@
                 </app-budjet-list>
 
                 <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'"
-                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
+                    (closeEvent)="removetab()">
                 </app-izm-inc-doc-list>
 
-                <app-izm-inc-doc-detail *ngIf="context.selector=='app-izm-inc-doc-detail'" [izm_inc_id]="number"
-                    (closeEvent)="removetab()">
+                <app-izm-inc-doc-detail #someComp *ngIf="context.selector=='app-izm-inc-doc-detail'"
+                    [izm_inc_id]="number" (closeEvent)="removetab()">
                 </app-izm-inc-doc-detail>
 
                 <app-functional-group-list *ngIf="context.selector=='app-functional-group-list'" [data]="true">

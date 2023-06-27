@@ -1,6 +1,5 @@
 export interface izm_inc_doc_tab {
   id: number,
-  tip: string,
   sm1: number,
   sm2: number,
   sm3: number,

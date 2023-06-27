@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -9,13 +9,14 @@ import { OrganizationDetailComponent } from 'src/app/directory/organization/orga
 import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
 import { izm_inc_doc_detail } from '../interfaces';
 import { IzmIncomeService } from '../izm_income.service';
+import { SHA256 } from 'crypto-js';
 
 @Component({
   selector: 'app-izm-inc-doc-detail',
   templateUrl: './izm-inc-doc-detail.component.html',
   styleUrls: ['./izm-inc-doc-detail.component.css']
 })
-export class IzmIncDocDetailComponent implements OnInit {
+export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
   constructor(
     private izmDetailService: IzmIncomeService,
@@ -27,26 +28,39 @@ export class IzmIncDocDetailComponent implements OnInit {
 
   @Input() izm_inc_id = ''
   @Output() closeEvent = new EventEmitter<any>()
-
+  @Output() closeed = false
   items: MenuItem[];
   form: FormGroup
   izmDetail: izm_inc_doc_detail
   responce: any
-  old = true
-  new = false
+  nochanged = true
+  hashBegin = ''
+  hashEnd = ''
 
-  mass_save: {
-    doc_save: {
-      _id: number
-      _organization: number
-      _type_izm_doc: number
+  closeform(close: boolean) {
+
+    let objString = JSON.stringify(this.izmDetail)
+    this.hashEnd = SHA256(objString).toString()
+
+    if (close) {
+      if (this.hashBegin == this.hashEnd) {
+        this.closeEvent.emit()
+      }
+      else {
+        this.izmDetailconfirm.confirm({
+          message: 'Данные были изменены. Закрыть документ?',
+          header: 'Закрытие',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.closeEvent.emit()
+            this.izmDetailconfirm.close()
+          },
+          reject: () => {
+            this.izmDetailconfirm.close()
+          }
+        })
+      }
     }
-    tbl: [{
-      _id: number,
-      utv1: number,
-      sm1: number,
-      itog1: number
-    }]
   }
 
   ngOnInit(): void {
@@ -81,7 +95,6 @@ export class IzmIncDocDetailComponent implements OnInit {
         },
         tbl1: [{
           id: 0,
-          tip: '',
           sm1: 0,
           sm2: 0,
           sm3: 0,
@@ -126,18 +139,18 @@ export class IzmIncDocDetailComponent implements OnInit {
       this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)
     }
 
-    this.mass_save = {
-      doc_save: {
-        _id: 0,
-        _organization: 0,
-        _type_izm_doc: 0
-      },
-      tbl: [{
-        _id: 0,
-        utv1: 0,
-        sm1: 0,
-        itog1: 0
-      }]
+    let objString = JSON.stringify(this.izmDetail)
+    this.hashBegin = SHA256(objString).toString()
+  }
+
+  ngDoCheck() {
+
+    let objString = JSON.stringify(this.izmDetail)
+    let hashBeg = SHA256(objString).toString()
+
+    if (hashBeg !== this.hashBegin && this.nochanged) {
+      this.nochanged = false
+      this.hashBegin = hashBeg
     }
   }
 
@@ -184,8 +197,7 @@ export class IzmIncDocDetailComponent implements OnInit {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        console.log(classific),
-          this.addClassificationRow(classific.id)
+        this.addClassificationRow(classific.id)
       }
     })
 
@@ -202,6 +214,7 @@ export class IzmIncDocDetailComponent implements OnInit {
       .subscribe(
         (data) => (
           data.forEach((item: any) => {
+            item.id = 0
             this.izmDetail.tbl1.push(item)
           })
         )
@@ -209,22 +222,17 @@ export class IzmIncDocDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean): void {
-    console.log(this.izmDetail)
 
-
-
-
-
-    // this.izmDetailService.saveIzm(this.izmDetail)
-    //   .subscribe(
-    //     (data) => (
-    //       this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-    //       this.closeform(close)
-    //     ),
-    //     (error) => (
-    //       this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-    //     )
-    //   )
+    this.izmDetailService.saveIzm(this.izmDetail)
+      .subscribe(
+        (data) => (
+          this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          this.closeform(close)
+        ),
+        (error) => (
+          this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+        )
+      )
   }
 
   selectOrg() {
@@ -270,7 +278,7 @@ export class IzmIncDocDetailComponent implements OnInit {
         this.izmDetailconfirm.close()
       },
       reject: () => {
-        this.izmDetailconfirm.close();
+        this.izmDetailconfirm.close()
       }
     })
   }
@@ -293,9 +301,5 @@ export class IzmIncDocDetailComponent implements OnInit {
     return new Date(dateForStr).toLocaleDateString();
   }
 
-  closeform(close: boolean) {
-    if (close) {
-      this.closeEvent.emit()
-    }
-  }
+
 }

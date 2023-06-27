@@ -4,6 +4,7 @@ import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../login/auth.service';
 import { MenuModule } from 'primeng/menu';
 
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -15,6 +16,7 @@ export class MainComponent implements OnInit {
     private auth: AuthService,
     private config: PrimeNGConfig,
     private router: Router) { }
+
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
   viewContainerRef: ViewContainerRef;
   @ViewChild('templateRef', { read: TemplateRef, static: true })
@@ -27,12 +29,11 @@ export class MainComponent implements OnInit {
   counttabs = 0;
   User: MenuModule[];
 
-
   ngOnInit(): void {
     this.User = [
 
-        { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
-        { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
+      { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
+      { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
     ]
     this.items = [
       {
@@ -163,15 +164,6 @@ export class MainComponent implements OnInit {
 
   }
 
-  removetab() {
-    if (this.tabcount > 0) {
-      this.counttabs--
-      this.viewContainerRef.detach(this.tabcount)?.destroy;
-      this.mass_tabs.splice(this.tabcount, 1);
-    }
-
-  }
-
   logout() {
     this.auth.logout().subscribe(
       () => this.router.navigate(['login']),
@@ -181,5 +173,12 @@ export class MainComponent implements OnInit {
     )
   }
 
+  removetab() {
+    if (this.tabcount > 0) {
+      this.counttabs--
+      this.viewContainerRef.detach(this.tabcount)?.destroy;
+      this.mass_tabs.splice(this.tabcount, 1);
+    }
+  }
 }
 
