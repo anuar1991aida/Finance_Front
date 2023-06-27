@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -22,6 +22,8 @@ export class CategoryIncomeComponent implements OnInit {
     private categoryListdialog: DialogService,
     private categoryListmessage: MessageService,
   ) { }
+
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false;
   category$: Observable<category_income_list>
   NewCat: category_income_detail = {
@@ -40,6 +42,10 @@ export class CategoryIncomeComponent implements OnInit {
     this.fetchCat()
   }
 
+  closeform() {
+    this.closeEvent.emit()
+  }
+  
   fetchCat() {
     let params = {
       limit: this.rows.toString(),

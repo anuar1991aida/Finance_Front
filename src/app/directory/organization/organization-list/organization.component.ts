@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { organization_list, organization_detail } from '../interfaces';
 import { OrganizationsService } from '../organization.service';
@@ -19,6 +19,7 @@ export class OrganizationComponent implements OnInit {
     private org_dialog_servis: DialogService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   organizations$: Observable<organization_list>
   first = 0
@@ -28,6 +29,10 @@ export class OrganizationComponent implements OnInit {
 
   ngOnInit() {
     this.fetchOrg()
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   fetchOrg() {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -29,6 +29,7 @@ export class ClassIncomeListComponent implements OnInit {
     name_rus: ''
   }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   searchclass = ''
   first = 0
@@ -79,6 +80,11 @@ export class ClassIncomeListComponent implements OnInit {
       this.classref.close(class_inc)
     }
   }
+
+  closeform() {
+    this.closeEvent.emit()
+  }
+
   onSelected(class_income: class_income_detail) {
     if (!this.selected) {
       this.classListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите класс!' })

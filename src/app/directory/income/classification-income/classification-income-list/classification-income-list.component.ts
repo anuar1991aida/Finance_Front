@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class ClassificationIncomeListComponent implements OnInit {
     private classifListmessage: MessageService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false; // это форма списка??
 
   classif$: Observable<classsification_income_list>
@@ -40,6 +41,10 @@ export class ClassificationIncomeListComponent implements OnInit {
     }
 
     this.classif$ = this.classifService.fetch(params)
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   onPageChange(event: any) {

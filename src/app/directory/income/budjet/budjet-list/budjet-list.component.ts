@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Budjet_list , Budjet_detail} from '../interfaces';
 import { Budjet_Service } from '../budjet.servise';
 import { Observable } from 'rxjs';
 
 import { DialogService } from 'primeng/dynamicdialog';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 
 @Component({
   selector: 'app-budjet-list',
@@ -18,7 +19,7 @@ export class BudjetListComponent implements OnInit {
     private dialog_ref: DynamicDialogRef
     ) { }
 
-
+  @Output() closeEvent = new EventEmitter<any>()
 
   Budjet$: Observable<Budjet_list>
   first = 0
@@ -27,6 +28,10 @@ export class BudjetListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchbudjet()
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   fetchbudjet() {
