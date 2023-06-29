@@ -107,13 +107,25 @@ export class MainComponent implements OnInit {
         items: [
           [
             {
-              label: 'Документы',
+              label: 'Поступления',
               items: [{
                 label: 'Утвержденный план по поступлениям',
                 command: () => this.openTab('app-utv-income-list', 'Утвержденный план по поступлениям', '')
               }, {
-                label: 'Изменения плана финансирования по поступлениям',
-                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана финансирования по поступлениям', '')
+                label: 'Изменения плана по поступлениям',
+                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
+              }]
+            }
+          ],
+          [
+            {
+              label: 'Расходы',
+              items: [{
+                label: 'Утвержденный план по расходам',
+                command: () => this.openTab('app-utv-income-list', 'Утвержденный план по поступлениям', '')
+              }, {
+                label: 'Изменения плана по расходам',
+                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
               }]
             }
           ]
