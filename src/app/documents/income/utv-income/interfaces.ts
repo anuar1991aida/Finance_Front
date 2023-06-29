@@ -1,5 +1,5 @@
 export interface utv_income_doc {
-    id?: string,
+    id: number,
     org_name: string,
     budjet_name: string,
     nom: string,

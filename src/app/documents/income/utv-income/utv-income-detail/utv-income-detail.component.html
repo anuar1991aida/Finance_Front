@@ -9,8 +9,14 @@
     </div>
 
     <div class="p-toolbar-group-right">
-        <p-splitButton appendTo="body" label="Еще" [model]="this.items"
-            styleClass="p-button-outlined p-button-plain p-mr-2"></p-splitButton>
+        <div style="padding-right: 10px;">
+            <p-splitButton appendTo="body" label="Еще" [model]="this.items"
+                styleClass="p-button-outlined p-button-plain p-mr-2"></p-splitButton>
+        </div>
+        <div>
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-plain p-mr-2"
+                styleClass="p-button-sm" (click)="beforecloseform(true)"></button>
+        </div>
     </div>
 </p-toolbar>
 
@@ -76,9 +82,8 @@
             (click)="addClassification()"></button>
     </div>
 
-    <p-table *ngIf="utvDetail.tbl1 && old" [value]="utvDetail.tbl1" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single"
-        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+    <p-table *ngIf="utvDetail.tbl1" [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+        selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
                 <th style="text-align:center">Номер</th>
@@ -99,7 +104,7 @@
                 <th style="text-align:center">Действия</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-utv let-ri="rowIndex" *ngFor="let item of utvDetail.tbl1 | keyvalue">
+        <ng-template pTemplate="body" let-utv let-ri="rowIndex">
             <tr class="cursor-pointer">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td>
@@ -134,66 +139,26 @@
                 </td>
             </tr>
         </ng-template>
-    </p-table>
-    <p-table *ngIf="utvDetail.tbl1 && new" [value]="utvDetail.tbl1" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single"
-        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="footer">
             <tr>
-                <th style="text-align:center">Номер</th>
-                <th style="text-align:center">Код КП</th>
-                <th style="text-align:center">Сумма на год</th>
-                <th style="text-align:center">Январь</th>
-                <th style="text-align:center">Февраль</th>
-                <th style="text-align:center">Март</th>
-                <th style="text-align:center">Апрель</th>
-                <th style="text-align:center">Май</th>
-                <th style="text-align:center">Июнь</th>
-                <th style="text-align:center">Июль</th>
-                <th style="text-align:center">Август</th>
-                <th style="text-align:center">Сентябрь</th>
-                <th style="text-align:center">Октябрь</th>
-                <th style="text-align:center">Ноябрь</th>
-                <th style="text-align:center">Декабрь</th>
-                <th style="text-align:center">Действия</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-utv let-ri="rowIndex" *ngFor="let item of utvDetail.tbl1 | keyvalue">
-            <tr class="cursor-pointer">
-                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
-                <td>
-                    <div class="p-inputgroup w-full">
-                        <input pInputText [readOnly]="true"
-                            [ngModel]="utv.classification_code + ' ' + utv.classification_name" />
-                        <span class="p-inputgroup-addon" (click)="viewClassification(utv._classification)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-files" viewBox="0 0 16 16">
-                                <path
-                                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-                            </svg>
-                        </span>
-                        <span class="p-inputgroup-addon" (click)="editClassification(utv.id)">...</span>
-                    </div>
-                </td>
-                <td style="text-align:center">
-                    {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
-                    utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
-                </td>
-                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                    <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
-                        <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]"
-                            style="text-align:center; width: 100%;">
-                    </td>
-                </ng-container>
-                <td>
-                    <div class="flex align-items-center justify-content-center gap-2">
-                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
-                            (click)="onDelete(utv._classification, utv.classification_name)"></button>
-                    </div>
-                </td>
+                <td colspan="2" class="text-right">Итого</td>
+                <td class="text-center">{{totalgod}}</td>
+                <td class="text-center">{{total1}}</td>
+                <td class="text-center">{{total2}}</td>
+                <td class="text-center">{{total3}}</td>
+                <td class="text-center">{{total4}}</td>
+                <td class="text-center">{{total5}}</td>
+                <td class="text-center">{{total6}}</td>
+                <td class="text-center">{{total7}}</td>
+                <td class="text-center">{{total8}}</td>
+                <td class="text-center">{{total9}}</td>
+                <td class="text-center">{{total10}}</td>
+                <td class="text-center">{{total11}}</td>
+                <td class="text-center">{{total12}}</td>
             </tr>
         </ng-template>
     </p-table>
+
     <ng-template #empty>
         <div class="center">
             Нет ни одной записи

@@ -150,7 +150,6 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     let objString = JSON.stringify(this.izmDetail)
     this.hashBegin = SHA256(objString).toString()
 
-
   }
 
   ngDoCheck() {
