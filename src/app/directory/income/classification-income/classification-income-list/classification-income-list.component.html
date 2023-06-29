@@ -10,7 +10,8 @@
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-left" style="margin-right: 10px;">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [(ngModel)]="searchclassif" (change)="search()" placeholder="поиск..." />
+            <input pInputText type="text" [(ngModel)]="searchClassif" (change)="fetchClassif()"
+                placeholder="поиск..." />
         </span>
         <div style="padding-right: 10px;">
             <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
@@ -18,14 +19,14 @@
         </div>
         <div>
             <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
-              (click)="closeform()"></button>
+                (click)="closeform()"></button>
         </div>
     </div>
 </p-toolbar>
 
 <div class="card" *ngIf="(classif$ | async) as classif_inc; else loader">
     <p-table *ngIf="classif_inc.count !== 0; else empty" [value]="classif_inc.results" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single" [(selection)]="selected"
+        scrollHeight="calc(100vh - 210px)" selectionMode="single" [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>

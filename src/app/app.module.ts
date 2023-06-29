@@ -23,8 +23,8 @@ import { ClassIncomeListComponent } from './directory/income/class-income/class-
 import { ClassIncomeDetailComponent } from './directory/income/class-income/class-income-detail/class-income-detail.component';
 import { ClassificationIncomeListComponent } from './directory/income/classification-income/classification-income-list/classification-income-list.component';
 import { ClassificationIncomeDetailComponent } from './directory/income/classification-income/classification-income-detail/classification-income-detail.component';
-import { UtvIncomeListComponent } from './documents/utv-income/utv-income-list/utv-income-list.component';
-import { UtvIncomeDetailComponent } from './documents/utv-income/utv-income-detail/utv-income-detail.component';
+import { UtvIncomeListComponent } from './documents/income/utv-income/utv-income-list/utv-income-list.component';
+import { UtvIncomeDetailComponent } from './documents/income/utv-income/utv-income-detail/utv-income-detail.component';
 
 //dirs/expenses
 
@@ -34,8 +34,8 @@ import { OrganizationDetailComponent } from './directory/organization/organizati
 import { PodclassListComponent } from './directory/income/podclass/podclass-list/podclass-list.component';
 import { PodclassDetailComponent } from './directory/income/podclass/podclass-detail/podclass-detail.component';
 import { BudjetListComponent } from './directory/income/budjet/budjet-list/budjet-list.component';
-import { IzmIncDocDetailComponent } from './documents/izm_inc_doc/izm-inc-doc-detail/izm-inc-doc-detail.component';
-import { IzmIncDocListComponent } from './documents/izm_inc_doc/izm-inc-doc-list/izm-inc-doc-list.component';
+import { IzmIncDocDetailComponent } from './documents/income/izm_inc_doc/izm-inc-doc-detail/izm-inc-doc-detail.component';
+import { IzmIncDocListComponent } from './documents/income/izm_inc_doc/izm-inc-doc-list/izm-inc-doc-list.component';
 import { FunctionalGroupDetailComponent } from './directory/expenses/functional-group/functional-group-detail/functional-group-detail.component';
 import { FunctionalGroupListComponent } from './directory/expenses/functional-group/functional-group-list/functional-group-list.component';
 import { FunctionalPodgroupDetailComponent } from './directory/expenses/functional-podgroup/functional-podgroup-detail/functional-podgroup-detail.component';
