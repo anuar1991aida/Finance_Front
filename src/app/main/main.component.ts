@@ -72,9 +72,6 @@ export class MainComponent implements OnInit {
               }, {
                 label: 'ФКР',
                 command: () => this.openTab('app-fkr-list', 'ФКР', '', true)
-              }, {
-                label: 'Классификации',
-                command: () => this.openTab('app-classification-income-list', 'Классификации', '', true)
               }]
             }
           ],

@@ -25,7 +25,7 @@ export class ClassificationIncomeListComponent implements OnInit {
   @Input() data = false; // это форма списка??
 
   classif$: Observable<classsification_income_list>
-  searchclassif = ''
+  searchClassif = ''
   first = 0
   rows = 25
   selected: any
@@ -37,7 +37,8 @@ export class ClassificationIncomeListComponent implements OnInit {
   fetchClassif() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchClassif.toString()
     }
 
     this.classif$ = this.classifService.fetch(params)
