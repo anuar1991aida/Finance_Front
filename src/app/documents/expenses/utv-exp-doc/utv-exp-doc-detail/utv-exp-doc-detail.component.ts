@@ -149,8 +149,6 @@ export class UtvExpDocDetailComponent implements OnInit {
       this.allrecord = false
     }
 
-
-
     if (!this.allrecord) {
       this.obligats = this.utvDetail.obligats.filter(item => item['_fkr'] === _fkr)
       this.payments = this.utvDetail.payments.filter(item => item['_fkr'] === _fkr)
