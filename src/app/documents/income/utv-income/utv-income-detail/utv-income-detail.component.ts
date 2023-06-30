@@ -330,7 +330,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   }
 
   toLocaleDate(dateForStr: string) {
-    return new Date(dateForStr).toLocaleDateString();
+    return new Date(dateForStr).toLocaleDateString() + ' ' + new Date(dateForStr).toLocaleTimeString()
   }
 
   closeaftersave(close: boolean) {

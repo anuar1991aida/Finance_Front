@@ -34,7 +34,7 @@ export class SpecificationIncomeDetailComponent implements OnInit {
   }
 
   saveCategory() {
-    if (this.spec_detail.id == '') {
+    if (this.spec_detail.id == 0) {
       this.SpecService.addSpec(this.spec_detail)
         .pipe(
           timeout(5000), // установка таймаута на 5 секунд

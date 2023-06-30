@@ -1,5 +1,5 @@
 export interface specification_income_detail {
-    id?: string,
+    id: number,
     code: string,
     name_kaz: string,
     name_rus: string

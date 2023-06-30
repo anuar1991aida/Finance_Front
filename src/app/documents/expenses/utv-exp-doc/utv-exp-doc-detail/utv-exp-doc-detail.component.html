@@ -79,7 +79,8 @@
     </form>
 
     <div style="padding: 0 0 10px 10px;">
-        <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"></button>
+        <button pButton pRipple label="добавить ФКР" icon="pi pi-plus" class="p-button-success p-mr-2"
+            (click)="addFKR()"></button>
     </div>
     <ng-template #empty>
         <div class="center">
@@ -91,14 +92,15 @@
 <div class="card" style="display: flex; width:100%">
     <div style="width: 15%;">
         <p-table [value]="utvDetail.payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-            selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+            selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+            [(selection)]="selected">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="text-align:center">Программа</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-utv let-ri="rowIndex">
-                <tr class="cursor-pointer">
+                <tr class="cursor-pointer" [pSelectableRow]="utv">
                     <td (dblclick)="filterFKR(utv._fkr)">
                         {{utv.fkr_code}}
                     </td>
@@ -109,12 +111,16 @@
     <div style="width: 85%;">
         <p-tabView>
             <p-tabPanel header="Платежи">
+                <div style="padding: 0 0 10px 10px;">
+                    <button pButton pRipple label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
+                        (click)="addSpec(selected)"></button>
+                </div>
                 <p-table [value]="payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
                     selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="text-align:center">Номер</th>
-                            <th style="text-align:center">Код КП</th>
+                            <th style="text-align:center">Код специфики</th>
                             <th style="text-align:center">Сумма на год</th>
                             <th style="text-align:center">Январь</th>
                             <th style="text-align:center">Февраль</th>
@@ -169,12 +175,16 @@
                 </p-table>
             </p-tabPanel>
             <p-tabPanel header="Обязательства">
+                <div style="padding: 0 0 10px 10px;">
+                    <button pButton pRipple label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
+                        (click)="addSpec(selected)"></button>
+                </div>
                 <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
                     selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="text-align:center">Номер</th>
-                            <th style="text-align:center">Код КП</th>
+                            <th style="text-align:center">Код специфики</th>
                             <th style="text-align:center">Сумма на год</th>
                             <th style="text-align:center">Январь</th>
                             <th style="text-align:center">Февраль</th>
@@ -231,6 +241,9 @@
         </p-tabView>
     </div>
 </div>
+
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>
 
 <ng-template #loader>
     <app-skeleton></app-skeleton>

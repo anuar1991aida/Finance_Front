@@ -26,7 +26,7 @@ export class SpecificationIncomeService {
         return this.http.post(this.host + 'dirs/specincadd', spec)
     }
 
-    deleteSpec(spec_id: string = '') {
+    deleteSpec(spec_id: number) {
         return this.http.delete(this.host + 'dirs/specincdelete/' + spec_id)
     }
 }

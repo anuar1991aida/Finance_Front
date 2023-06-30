@@ -47,7 +47,7 @@ export class FkrListComponent implements OnInit {
   }
 
   onRowClick(fkr_detail: fkr_detail) {
-
+    this.fkrListref.close(fkr_detail)
   }
 
   closeform() {
