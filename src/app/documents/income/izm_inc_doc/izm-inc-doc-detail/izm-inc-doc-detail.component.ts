@@ -67,7 +67,9 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   gettypespr() {
     this.izmDetailService.gettypespr()
       .subscribe(
-        (data) => { this.spravkatypes = data }
+        (data) => (
+          this.spravkatypes = data
+        )
       )
   }
 
@@ -78,7 +80,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       org_name: new FormControl(null, [Validators.required]),
       type_name: new FormControl(null, [Validators.required])
     })
-
+    this.gettypespr()
     if (this.izm_inc_id !== '') {
       this.izmDetailService.fetch_detail(this.izm_inc_id)
         .subscribe(
