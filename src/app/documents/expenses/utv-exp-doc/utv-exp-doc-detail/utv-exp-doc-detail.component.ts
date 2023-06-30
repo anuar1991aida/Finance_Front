@@ -1,16 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FkrListComponent } from 'src/app/directory/expenses/fkr/fkr-list/fkr-list.component';
+import { fkr_detail } from 'src/app/directory/expenses/fkr/interfaces';
+import { specification_income_detail } from 'src/app/directory/income/specification-income/interfaces';
+import { SpecificationIncomeListComponent } from 'src/app/directory/income/specification-income/specification-income-list/specification-income-list.component';
 import { utv_expenses_detail } from '../interfaces';
 import { UtvExpensesService } from '../utv_expenses.service';
+import { SHA256 } from 'crypto-js';
 
 @Component({
   selector: 'app-utv-exp-doc-detail',
   templateUrl: './utv-exp-doc-detail.component.html',
   styleUrls: ['./utv-exp-doc-detail.component.css']
 })
-export class UtvExpDocDetailComponent implements OnInit {
+export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
   constructor(
     private utvDetailService: UtvExpensesService,
@@ -47,6 +52,10 @@ export class UtvExpDocDetailComponent implements OnInit {
   allrecord = true
   _lastfkr = 0
   firstclick = true
+  hashBegin = ''
+  hashEnd = ''
+  nochanged = true
+  selected: fkr_detail
 
   utvDetail: utv_expenses_detail = {
     doc: {
@@ -129,11 +138,115 @@ export class UtvExpDocDetailComponent implements OnInit {
         )
     }
 
+    let objString = JSON.stringify(this.utvDetail)
+    this.hashBegin = SHA256(objString).toString()
+
   }
 
+  ngDoCheck() {
+
+    let objString = JSON.stringify(this.utvDetail)
+    let hashBeg = SHA256(objString).toString()
+
+    if (hashBeg !== this.hashBegin && this.nochanged) {
+      this.nochanged = false
+      this.hashBegin = hashBeg
+    }
+  }
+
+  addFKR() {
+    this.utvDetailref = this.utvDetaildialog.open(FkrListComponent,
+      {
+        header: 'Выбор ФКР',
+        width: '60%',
+        height: '80%'
+      })
+
+    this.utvDetailref.onClose.subscribe((fkr_detail: fkr_detail) => {
+      if (fkr_detail) {
+        this.addSpec(fkr_detail)
+      }
+    }
+    )
+  }
+
+  addSpec(fkr_detail: fkr_detail) {
+    console.log(fkr_detail);
+
+    if (fkr_detail) {
+      this.utvDetailref = this.utvDetaildialog.open(SpecificationIncomeListComponent,
+        {
+          header: 'Выбор спецификации',
+          width: '60%',
+          height: '80%'
+        })
+      this.utvDetailref.onClose.subscribe((spec_detail: specification_income_detail) => {
+        if (spec_detail) {
+          this.utvDetail.payments.push(
+            {
+              id: 0,
+              god: 0,
+              sm1: 0,
+              sm2: 0,
+              sm3: 0,
+              sm4: 0,
+              sm5: 0,
+              sm6: 0,
+              sm7: 0,
+              sm8: 0,
+              sm9: 0,
+              sm10: 0,
+              sm11: 0,
+              sm12: 0,
+              fkr_name: fkr_detail.name_rus,
+              fkr_code: fkr_detail.code,
+              spec_name: spec_detail.name_rus,
+              spec_code: spec_detail.code,
+              _date: this.utvDetail.doc._date,
+              _utv_exp: parseInt(this.utv_exp_id),
+              _organization: this.utvDetail.doc._organization,
+              _fkr: fkr_detail.id,
+              _spec: spec_detail.id
+            })
+          this.utvDetail.obligats.push(
+            {
+              id: 0,
+              god: 0,
+              sm1: 0,
+              sm2: 0,
+              sm3: 0,
+              sm4: 0,
+              sm5: 0,
+              sm6: 0,
+              sm7: 0,
+              sm8: 0,
+              sm9: 0,
+              sm10: 0,
+              sm11: 0,
+              sm12: 0,
+              fkr_name: fkr_detail.name_rus,
+              fkr_code: fkr_detail.code,
+              spec_name: spec_detail.name_rus,
+              spec_code: spec_detail.code,
+              _date: this.utvDetail.doc._date,
+              _utv_exp: parseInt(this.utv_exp_id),
+              _organization: this.utvDetail.doc._organization,
+              _fkr: fkr_detail.id,
+              _spec: spec_detail.id
+            })
+        }
+      }
+      )
+    }
+    else {
+      console.log('asdsadassads');
+
+    }
+  }
 
   saveDoc(close: boolean) {
-
+    console.log(this.utvDetail)
+    this.closeaftersave(close)
   }
 
   filterFKR(_fkr: number) {
@@ -170,8 +283,41 @@ export class UtvExpDocDetailComponent implements OnInit {
     return new Date(dateForStr).toLocaleDateString() + ' ' + new Date(dateForStr).toLocaleTimeString();
   }
 
+  closeaftersave(close: boolean) {
+    let objString = JSON.stringify(this.utvDetail)
+    this.hashEnd = SHA256(objString).toString()
+
+    this.hashBegin = this.hashEnd
+
+    if (close) {
+      this.closeEvent.emit()
+    }
+  }
+
   closeform(close: boolean) {
 
+    let objString = JSON.stringify(this.utvDetail)
+    this.hashEnd = SHA256(objString).toString()
+
+    if (close) {
+      if (this.hashBegin == this.hashEnd) {
+        this.closeEvent.emit()
+      }
+      else {
+        this.utvDetailconfirm.confirm({
+          message: 'Данные были изменены. Закрыть документ?',
+          header: 'Закрытие',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.closeEvent.emit()
+            this.utvDetailconfirm.close()
+          },
+          reject: () => {
+            this.utvDetailconfirm.close()
+          }
+        })
+      }
+    }
   }
 
 }

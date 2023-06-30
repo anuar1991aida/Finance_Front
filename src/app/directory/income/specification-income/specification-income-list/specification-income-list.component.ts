@@ -22,7 +22,7 @@ export class SpecificationIncomeListComponent implements OnInit {
 
   spec$: Observable<specification_income_list>
   NewSpec: specification_income_detail = {
-    id: '',
+    id: 0,
     code: '',
     name_kaz: '',
     name_rus: ''
