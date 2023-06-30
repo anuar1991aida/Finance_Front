@@ -21,7 +21,7 @@ export class UtvIncomeListComponent implements OnInit {
   ) { }
 
   @Output() newItemEvent = new EventEmitter<any>();
-
+  @Output() closeEvent = new EventEmitter<any>()
   utvList$: Observable<utv_income_list>
   searchutvList = ''
   first = 0
@@ -31,6 +31,10 @@ export class UtvIncomeListComponent implements OnInit {
     this.fetchUtvList()
   }
 
+  closeform() {
+    this.closeEvent.emit()
+  }
+  
   fetchUtvList() {
     let params = {
       limit: this.rows.toString(),

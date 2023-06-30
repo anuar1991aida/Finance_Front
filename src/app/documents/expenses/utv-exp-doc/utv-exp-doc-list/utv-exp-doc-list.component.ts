@@ -21,6 +21,7 @@ export class UtvExpDocListComponent implements OnInit {
   ) { }
 
   @Output() newItemEvent = new EventEmitter<any>();
+  @Output() closeEvent = new EventEmitter<any>()
 
   utvList$: Observable<utv_expenses_list>
   searchutvList = ''
@@ -29,6 +30,10 @@ export class UtvExpDocListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUtvList()
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   fetchUtvList() {
