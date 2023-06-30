@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.form.disable()
     this.auth.login(this.form.value).subscribe(
       () => {
+        sessionStorage.setItem("username", this.form.value.username)
         this.router.navigate([''])
       },
       error => {

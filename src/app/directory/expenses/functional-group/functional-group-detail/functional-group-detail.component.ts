@@ -27,7 +27,7 @@ export class FunctionalGroupDetailComponent implements OnInit {
       name_kaz: new FormControl(null, [Validators.required]),
       name_rus: new FormControl(null, [Validators.required])
     })
-    console.log(this.FuncGroup_conf.data.func_detail)
+
     this.func_detail = this.FuncGroup_conf.data.func_detail
   }
 
