@@ -93,7 +93,7 @@
     </div>
 
     <p-table [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
-        styleClass="p-datatable-sm p-datatable-gridlines">
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
                 <th rowspan="3" style="text-align:center">Номер</th>
@@ -220,6 +220,7 @@
                 <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv10}}</th>
                 <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv11}}</th>
                 <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv12}}</th>
+                <th rowspan="3" style="text-align:center"></th>
             </tr>
             <tr>
                 <th style="text-align:center">{{TotalIzmGod}}</th>
