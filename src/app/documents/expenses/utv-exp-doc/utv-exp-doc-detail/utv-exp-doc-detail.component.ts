@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FkrListComponent } from 'src/app/directory/expenses/fkr/fkr-list/fkr-list.component';
+import { FkrSelectComponent } from 'src/app/directory/expenses/fkr/fkr-select/fkr-select.component';
 import { fkr_detail } from 'src/app/directory/expenses/fkr/interfaces';
 import { specification_income_detail } from 'src/app/directory/income/specification-income/interfaces';
 import { SpecificationIncomeListComponent } from 'src/app/directory/income/specification-income/specification-income-list/specification-income-list.component';
@@ -155,7 +156,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   addFKR() {
-    this.utvDetailref = this.utvDetaildialog.open(FkrListComponent,
+    this.utvDetailref = this.utvDetaildialog.open(FkrSelectComponent,
       {
         header: 'Выбор ФКР',
         width: '60%',
