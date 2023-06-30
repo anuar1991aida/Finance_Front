@@ -3,7 +3,7 @@
 
 
     <p-megaMenu [model]="items" styleClass="flex">
-      <!-- <ng-template pTemplate="end">
+        <!-- <ng-template pTemplate="end">
           {{username}}
           <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle"></p-avatar>
           <p-menu #menu [model]="User" [popup]="true"></p-menu>
@@ -27,28 +27,24 @@
                         </svg>
                     </i> -->
                 </ng-template>
-                <app-organization *ngIf="context.selector=='app-organization'" [data]="true"
-                    (closeEvent)="removetab()">
+                <app-organization *ngIf="context.selector=='app-organization'" [data]="true" (closeEvent)="removetab()">
                 </app-organization>
 
                 <app-category-income *ngIf="context.selector=='app-category-income'" [data]="true"
                     (closeEvent)="removetab()">
                 </app-category-income>
 
-                <app-podclass-list *ngIf="context.selector=='app-podclass-list'"
-                    (closeEvent)="removetab()">
+                <app-podclass-list *ngIf="context.selector=='app-podclass-list'" (closeEvent)="removetab()">
                 </app-podclass-list>
 
-                <app-class-income-list *ngIf="context.selector=='app-class-income-list'"
-                    (closeEvent)="removetab()">
+                <app-class-income-list *ngIf="context.selector=='app-class-income-list'" (closeEvent)="removetab()">
                 </app-class-income-list>
 
                 <app-specification-income-list *ngIf="context.selector=='app-specification-income-list'"
                     (closeEvent)="removetab()">
                 </app-specification-income-list>
 
-                <app-classification-income-list *ngIf="context.selector=='app-classification-income-list'"
-                    [data]="true"
+                <app-classification-income-list *ngIf="context.selector=='app-classification-income-list'" [data]="true"
                     (closeEvent)="removetab()">
                 </app-classification-income-list>
 
@@ -61,8 +57,7 @@
                     (closeEvent)="removetab()">
                 </app-utv-income-detail>
 
-                <app-budjet-list *ngIf="context.selector=='app-budjet-list'"
-                    (closeEvent)="removetab()">
+                <app-budjet-list *ngIf="context.selector=='app-budjet-list'" (closeEvent)="removetab()">
                 </app-budjet-list>
 
                 <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'"
@@ -82,8 +77,7 @@
                     (closeEvent)="removetab()">
                 </app-functional-podgroup-list>
 
-                <app-abp-list *ngIf="context.selector=='app-abp-list'" [data]="true"
-                    (closeEvent)="removetab()">
+                <app-abp-list *ngIf="context.selector=='app-abp-list'" [data]="true" (closeEvent)="removetab()">
                 </app-abp-list>
 
                 <app-programm-list *ngIf="context.selector=='app-programm-list'" [data]="true"
@@ -94,9 +88,17 @@
                     (closeEvent)="removetab()">
                 </app-podprogramm-list>
 
-                <app-fkr-list *ngIf="context.selector=='app-fkr-list'" [data]="true"
-                    (closeEvent)="removetab()">
+                <app-fkr-list *ngIf="context.selector=='app-fkr-list'" [data]="true" (closeEvent)="removetab()">
                 </app-fkr-list>
+
+                <app-utv-exp-doc-list *ngIf="context.selector=='app-utv-exp-doc-list'"
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
+                    (closeEvent)="removetab()">
+                </app-utv-exp-doc-list>
+
+                <app-utv-exp-doc-detail *ngIf="context.selector=='app-utv-exp-doc-detail'" [utv_exp_id]="number"
+                    (closeEvent)="removetab()">
+                </app-utv-exp-doc-detail>
 
 
             </mat-tab>

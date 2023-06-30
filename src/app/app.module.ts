@@ -51,6 +51,8 @@ import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.com
 import { SpecificationIncomeListComponent } from './directory/income/specification-income/specification-income-list/specification-income-list.component';
 import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
 import { UserComponent } from './user/user.component';
+import { UtvExpDocListComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-list/utv-exp-doc-list.component';
+import { UtvExpDocDetailComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-detail/utv-exp-doc-detail.component';
 
 @NgModule({
   imports: [
@@ -100,6 +102,8 @@ import { UserComponent } from './user/user.component';
     FkrDetailComponent,
     UtvIncomeListComponent,
     UtvIncomeDetailComponent,
+    UtvExpDocListComponent,
+    UtvExpDocDetailComponent,
     SkeletonComponent,
     IzmIncDocDetailComponent,
     IzmIncDocListComponent,
