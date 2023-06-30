@@ -205,8 +205,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         tot.sm7 + tot.sm8 + tot.sm9 + tot.sm10 + tot.sm11 + tot.sm12
     }
 
-    this.totalgod = total1
-
+    this.totalgod = totalgod
     this.total1 = total1
     this.total2 = total2
     this.total3 = total3
