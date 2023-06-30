@@ -1,18 +1,4 @@
 <div class=" bg-indigo">
-
-
-
-    <p-megaMenu [model]="items" styleClass="flex">
-        <!-- <ng-template pTemplate="end">
-          {{username}}
-          <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle"></p-avatar>
-          <p-menu #menu [model]="User" [popup]="true"></p-menu>
-      </ng-template> -->
-    </p-megaMenu>
-
-
-
-
     <p-toast></p-toast>
     <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="tabcount" style="z-index: 0;">
         <ng-template #templateRef let-context='context'>
@@ -104,6 +90,19 @@
             </mat-tab>
         </ng-template>
     </mat-tab-group>
+    <p-toolbar>
+        <div class="p-toolbar-group-left">
+            <p-megaMenu [model]="items" styleClass="flex" style="width: 100%;">
+            </p-megaMenu>
+        </div>
+
+        <div class="p-toolbar-group-right">
+            {{username}}
+            <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle">
+            </p-avatar>
+            <p-menu #menu [model]="User" [popup]="true"></p-menu>
+        </div>
+    </p-toolbar>
 
 </div>
 
