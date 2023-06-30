@@ -10,7 +10,7 @@ export interface utv_income_doc {
 }
 
 export interface utv_income_doc_tab {
-    id?: number,
+    id: number,
     deleted: boolean,
     god: number,
     sm1: number,

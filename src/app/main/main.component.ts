@@ -37,8 +37,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.User = [
 
-        { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
-        { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
+      { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
+      { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
     ]
     const username = sessionStorage.getItem("username");
     this.username = username !== null ? username : '';
@@ -130,7 +130,7 @@ export class MainComponent implements OnInit {
               label: 'Расходы',
               items: [{
                 label: 'Утвержденный план по расходам',
-                command: () => this.openTab('app-utv-income-list', 'Утвержденный план по поступлениям', '')
+                command: () => this.openTab('app-utv-exp-doc-list', 'Утвержденный план по расходам', '')
               }, {
                 label: 'Изменения плана по расходам',
                 command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
