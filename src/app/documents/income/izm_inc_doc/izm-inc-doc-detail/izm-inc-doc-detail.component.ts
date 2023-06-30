@@ -236,12 +236,23 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       .subscribe(
         (data) => (
           this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          this.closeEvent.emit()
+          this.closeaftersave(close)
         ),
         (error) => (
           this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
         )
       )
+  }
+
+  closeaftersave(close: boolean) {
+    let objString = JSON.stringify(this.izmDetail)
+    this.hashEnd = SHA256(objString).toString()
+
+    this.hashBegin = this.hashEnd
+
+    if (close) {
+      this.closeEvent.emit()
+    }
   }
 
   selectOrg() {

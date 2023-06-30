@@ -298,9 +298,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       .subscribe(
         (data) => (
           this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          responce = data, this.utvDetail = responce,
-          this.hashEnd = this.hashBegin,
-          this.closeform(close)
+          responce = data, this.utvDetail = responce, this.closeaftersave(close)
         ),
         (error) => (
           this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
@@ -336,13 +334,21 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     return new Date(dateForStr).toLocaleDateString();
   }
 
-  beforecloseform(close: boolean) {
+  closeaftersave(close: boolean) {
     let objString = JSON.stringify(this.utvDetail)
     this.hashEnd = SHA256(objString).toString()
-    this.closeform(close)
+
+    this.hashBegin = this.hashEnd
+
+    if (close) {
+      this.closeEvent.emit()
+    }
   }
 
   closeform(close: boolean) {
+
+    let objString = JSON.stringify(this.utvDetail)
+    this.hashEnd = SHA256(objString).toString()
 
     if (close) {
       if (this.hashBegin == this.hashEnd) {
