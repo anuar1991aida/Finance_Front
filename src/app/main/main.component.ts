@@ -20,6 +20,7 @@ export class MainComponent implements OnInit {
     private user_massage: MessageService,
     private user_ref: DynamicDialogRef,
     private router: Router) { }
+
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
   viewContainerRef: ViewContainerRef;
   @ViewChild('templateRef', { read: TemplateRef, static: true })
@@ -31,13 +32,13 @@ export class MainComponent implements OnInit {
   number = '';
   counttabs = 0;
   User: MenuModule[];
-  username: string = '';
+
 
   ngOnInit(): void {
     this.User = [
 
-        { label: 'Изменить пароль', icon: 'pi pi-home', command: () => this.changepass() },
-        { label: 'Выход', icon: 'pi pi-fw pi-power-off',command: () => this.logout() }
+        { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
+        { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
     ]
     const username = sessionStorage.getItem("username");
     this.username = username !== null ? username : '';
@@ -79,9 +80,6 @@ export class MainComponent implements OnInit {
               }, {
                 label: 'ФКР',
                 command: () => this.openTab('app-fkr-list', 'ФКР', '', true)
-              }, {
-                label: 'Классификации',
-                command: () => this.openTab('app-classification-income-list', 'Классификации', '', true)
               }]
             }
           ],
@@ -117,13 +115,25 @@ export class MainComponent implements OnInit {
         items: [
           [
             {
-              label: 'Документы',
+              label: 'Поступления',
               items: [{
                 label: 'Утвержденный план по поступлениям',
                 command: () => this.openTab('app-utv-income-list', 'Утвержденный план по поступлениям', '')
               }, {
-                label: 'Изменения плана финансирования по поступлениям',
-                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана финансирования по поступлениям', '')
+                label: 'Изменения плана по поступлениям',
+                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
+              }]
+            }
+          ],
+          [
+            {
+              label: 'Расходы',
+              items: [{
+                label: 'Утвержденный план по расходам',
+                command: () => this.openTab('app-utv-income-list', 'Утвержденный план по поступлениям', '')
+              }, {
+                label: 'Изменения плана по расходам',
+                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
               }]
             }
           ]
@@ -171,15 +181,6 @@ export class MainComponent implements OnInit {
 
   }
 
-  removetab() {
-    if (this.tabcount > 0) {
-      this.counttabs--
-      this.viewContainerRef.detach(this.tabcount)?.destroy;
-      this.mass_tabs.splice(this.tabcount, 1);
-    }
-
-  }
-
   changepass() {
     this.user_ref = this.dialog_form.open(UserComponent,
       {
@@ -206,5 +207,12 @@ export class MainComponent implements OnInit {
     )
   }
 
+  removetab() {
+    if (this.tabcount > 0) {
+      this.counttabs--
+      this.viewContainerRef.detach(this.tabcount)?.destroy;
+      this.mass_tabs.splice(this.tabcount, 1);
+    }
+  }
 }
 

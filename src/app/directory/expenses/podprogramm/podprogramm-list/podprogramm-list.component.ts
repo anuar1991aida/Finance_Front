@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { podprogrammService } from '../podprogramm.services';
 import { podprogramm_detail, podprogramm_list } from '../interfaces';
+import { PodprogrammDetailComponent } from '../podprogramm-detail/podprogramm-detail.component';
 
 @Component({
   selector: 'app-podprogramm-list',
@@ -19,7 +20,8 @@ export class PodprogrammListComponent implements OnInit {
     private podprListdialog: DialogService,
     private podprListmessage: MessageService,
   ) { }
-
+  
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   podProg$: Observable<podprogramm_list>
   searchfuncPr = ''
@@ -46,7 +48,17 @@ export class PodprogrammListComponent implements OnInit {
   }
 
   onRowClick(podprogramm_detail: podprogramm_detail) {
+    this.podprListref = this.podprListdialog.open(PodprogrammDetailComponent,
+      {
+        header: 'Редактирование подпрограммы',
+        width: '60%',
+        height: '40%',
+        data: { podpr_detail: podprogramm_detail }
+      });
+  }
 
+  closeform() {
+    this.closeEvent.emit()
   }
 
   search() {

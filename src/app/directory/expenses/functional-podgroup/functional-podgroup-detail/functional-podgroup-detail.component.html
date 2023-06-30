@@ -1,6 +1,6 @@
 <form class="card" [formGroup]="form">
   <div class="p-field" style="padding-bottom: 10px;">
-      <label for="code">Код подкласса <span style="color: red;">*</span></label>
+      <label for="code">Код функциональной подгруппы<span style="color: red;">*</span></label>
       <div class="p-inputgroup">
           <input id="code" [readOnly]="func_detail.id > 0" type="text" pInputText
               [(ngModel)]="func_detail.code" formControlName="code" />

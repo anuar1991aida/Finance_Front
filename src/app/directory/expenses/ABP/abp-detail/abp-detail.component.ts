@@ -34,10 +34,12 @@ export class ABPDetailComponent implements OnInit {
 
   saveabp(){
 
+    this.Abp_Detailref.close()
+
   }
 
-  closeCat(boll: boolean){
-
+  closeabp(){
+    this.Abp_Detailref.close()
   }
 
 }

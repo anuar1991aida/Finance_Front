@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { podclassService } from "../podclass_servise";
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -26,10 +26,11 @@ export class PodclassListComponent implements OnInit {
     name_rus: ''
   }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   searchcategory = ''
   first = 0
-  rows = 3
+  rows = 25
   last = 3
   selected: any
   // items = ["5","10","20","30","50"]
@@ -38,7 +39,9 @@ export class PodclassListComponent implements OnInit {
     this.fetchCat()
   }
 
-
+  closeform() {
+    this.closeEvent.emit()
+  }
 
   fetchCat() {
     let params = {

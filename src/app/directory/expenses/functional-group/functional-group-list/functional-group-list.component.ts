@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -20,11 +20,13 @@ export class FunctionalGroupListComponent implements OnInit {
     private funcGrListmessage: MessageService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   funcGr$: Observable<func_group_list>
   searchfuncGr = ''
   first = 0
-  rows = 3
+  rows = 25
+  selected: any
 
   ngOnInit(): void {
     this.fetchGr()
@@ -57,8 +59,20 @@ export class FunctionalGroupListComponent implements OnInit {
 
   }
 
+  onSelected(func_detail: func_group_detail) {
+    if (!this.selected) {
+      this.funcGrListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите функциональную группу!' })
+      return
+    }
+    this.funcGrref.close(func_detail)
+  }
+
   search() {
 
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
 }

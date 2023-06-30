@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -20,6 +20,7 @@ export class ProgrammListComponent implements OnInit {
     private programmListmessage: MessageService,
   ) { }
 
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   Prog$: Observable<programm_list>
   searchfuncPr = ''
@@ -43,6 +44,10 @@ export class ProgrammListComponent implements OnInit {
     this.first = event.first
     this.rows = event.rows
     this.fetchPr()
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   onRowClick(programm_detail: programm_detail) {

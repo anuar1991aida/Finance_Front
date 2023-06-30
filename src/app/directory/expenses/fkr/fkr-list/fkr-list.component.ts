@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -19,7 +19,7 @@ export class FkrListComponent implements OnInit {
     private fkrListdialog: DialogService,
     private fkrListmessage: MessageService,
   ) { }
-
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   fkr$: Observable<fkr_list>
   searchfkr = ''
@@ -33,7 +33,8 @@ export class FkrListComponent implements OnInit {
   fetchPr() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchfkr.toString()
     }
 
     this.fkr$ = this.fkrListService.fetch(params)
@@ -47,6 +48,10 @@ export class FkrListComponent implements OnInit {
 
   onRowClick(fkr_detail: fkr_detail) {
 
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   search() {

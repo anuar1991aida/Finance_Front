@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -27,14 +27,19 @@ export class SpecificationIncomeListComponent implements OnInit {
     name_kaz: '',
     name_rus: ''
   }
+  @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   searchspec = ''
   first = 0
-  rows = 3
+  rows = 25
   selected: any
 
   ngOnInit(): void {
     this.fetchSpec()
+  }
+
+  closeform() {
+    this.closeEvent.emit()
   }
 
   fetchSpec() {
