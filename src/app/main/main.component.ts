@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
   number = '';
   counttabs = 0;
   User: MenuModule[];
-
+  username = ''
 
   ngOnInit(): void {
     this.User = [
