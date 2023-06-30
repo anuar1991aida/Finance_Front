@@ -11,3 +11,10 @@ export interface fkr_list {
     previous?: string,
     results: [fkr_detail]
 }
+
+export interface fkr_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [fkr_detail]
+}

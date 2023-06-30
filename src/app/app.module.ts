@@ -48,6 +48,7 @@ import { PodprogrammDetailComponent } from './directory/expenses/podprogramm/pod
 import { PodprogrammListComponent } from './directory/expenses/podprogramm/podprogramm-list/podprogramm-list.component';
 import { FkrDetailComponent } from './directory/expenses/fkr/fkr-detail/fkr-detail.component';
 import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.component';
+import { FkrSelectComponent } from './directory/expenses/fkr/fkr-select/fkr-select.component';
 import { SpecificationIncomeListComponent } from './directory/income/specification-income/specification-income-list/specification-income-list.component';
 import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
 import { UserComponent } from './user/user.component';
@@ -99,6 +100,7 @@ import { UtvExpDocDetailComponent } from './documents/expenses/utv-exp-doc/utv-e
     PodprogrammListComponent,
     PodprogrammDetailComponent,
     FkrListComponent,
+    FkrSelectComponent,
     FkrDetailComponent,
     UtvIncomeListComponent,
     UtvIncomeDetailComponent,
