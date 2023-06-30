@@ -50,6 +50,7 @@ import { FkrDetailComponent } from './directory/expenses/fkr/fkr-detail/fkr-deta
 import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.component';
 import { SpecificationIncomeListComponent } from './directory/income/specification-income/specification-income-list/specification-income-list.component';
 import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   imports: [
@@ -101,7 +102,8 @@ import { SpecificationIncomeDetailComponent } from './directory/income/specifica
     UtvIncomeDetailComponent,
     SkeletonComponent,
     IzmIncDocDetailComponent,
-    IzmIncDocListComponent],
+    IzmIncDocListComponent,
+    UserComponent],
   bootstrap: [AppComponent],
   providers: [
     {

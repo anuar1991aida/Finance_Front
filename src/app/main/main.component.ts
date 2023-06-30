@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../login/auth.service';
 import { MenuModule } from 'primeng/menu';
-
-
+import { UserComponent } from '../user/user.component';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -15,6 +16,9 @@ export class MainComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private config: PrimeNGConfig,
+    private dialog_form: DialogService,
+    private user_massage: MessageService,
+    private user_ref: DynamicDialogRef,
     private router: Router) { }
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
@@ -28,13 +32,17 @@ export class MainComponent implements OnInit {
   number = '';
   counttabs = 0;
   User: MenuModule[];
+  username = ''
 
   ngOnInit(): void {
     this.User = [
 
-      { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
-      { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
+        { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
+        { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
     ]
+    const username = sessionStorage.getItem("username");
+    this.username = username !== null ? username : '';
+
     this.items = [
       {
         label: 'Справочники',
@@ -171,6 +179,23 @@ export class MainComponent implements OnInit {
       this.tabcount = this.counttabs - 1;
     }
 
+  }
+
+  changepass() {
+    this.user_ref = this.dialog_form.open(UserComponent,
+      {
+        header: 'Изменение пароля пользователя',
+        width: 'calc(40%)',
+        height: 'calc(30%)',
+        closable: true
+      });
+
+    this.user_ref.onClose.subscribe((save: boolean) => {
+      if (save) {
+        this.user_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Пароль изменен! Войдите, пожалуйста, в систему!' }),
+          this.router.navigate(['login'])
+      }
+    });
   }
 
   logout() {

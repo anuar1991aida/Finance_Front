@@ -2,12 +2,14 @@
 
 
 
-    <p-megaMenu [model]="items" class="menu">
-        <!-- <div style="">
-      <p-menu #menu [model]="User" [popup]="true"></p-menu>
-      <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle"></p-avatar>
-      </div> -->
+    <p-megaMenu [model]="items" styleClass="flex">
+      <!-- <ng-template pTemplate="end">
+          {{username}}
+          <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle"></p-avatar>
+          <p-menu #menu [model]="User" [popup]="true"></p-menu>
+      </ng-template> -->
     </p-megaMenu>
+
 
 
 
@@ -95,6 +97,7 @@
                 <app-fkr-list *ngIf="context.selector=='app-fkr-list'" [data]="true"
                     (closeEvent)="removetab()">
                 </app-fkr-list>
+
 
             </mat-tab>
         </ng-template>
