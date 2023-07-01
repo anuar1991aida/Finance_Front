@@ -37,8 +37,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.User = [
 
-      { label: 'Главная', icon: 'pi pi-home', routerLink: '/home' },
-      { label: 'О нас', icon: 'pi pi-info-circle', routerLink: '/about' }
+      { label: 'Изменить пароль', icon: 'pi pi-fw pi-lock', command: this.changepass },
+      { label: 'Выйти из системы', icon: 'pi pi-fw pi-power-off', command: this.logout }
     ]
     const username = sessionStorage.getItem("username");
     this.username = username !== null ? username : '';
