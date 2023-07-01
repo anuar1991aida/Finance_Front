@@ -105,6 +105,10 @@
                     (closeEvent)="removetab()">
                 </app-utv-exp-doc-detail>
 
+                <app-specification-exp-list *ngIf="context.selector=='app-specification-exp-list'" [data]="true"
+                    (closeEvent)="removetab()">
+                </app-specification-exp-list>
+
 
             </mat-tab>
         </ng-template>

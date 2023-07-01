@@ -1,12 +1,13 @@
+import { fkr_detail } from '../../../directory/expenses/fkr/interfaces'
+import { specification_income_detail } from '../../../directory/income/specification-income/interfaces'
+import { organization_detail } from '../../../directory/organization/interfaces'
+
 export interface utv_expenses_doc {
     id: number,
-    org_name: string,
-    budjet_name: string,
     nom: string,
     _date: string,
     deleted: boolean,
-    _organization: number,
-    _budjet: number
+    _organization: organization_detail
 }
 
 export interface utv_expenses_payments {
@@ -24,15 +25,11 @@ export interface utv_expenses_payments {
     sm10: number,
     sm11: number,
     sm12: number,
-    fkr_name: string,
-    fkr_code: string,
-    spec_name: string,
-    spec_code: string,
     _date: string,
     _utv_exp: number,
     _organization: number,
-    _fkr: number,
-    _spec: number
+    _fkr: fkr_detail,
+    _spec: specification_income_detail
 }
 
 export interface utv_expenses_obligats {
@@ -50,15 +47,11 @@ export interface utv_expenses_obligats {
     sm10: number,
     sm11: number,
     sm12: number,
-    fkr_name: string,
-    fkr_code: string,
-    spec_name: string,
-    spec_code: string,
     _date: string,
     _utv_exp: number,
     _organization: number,
-    _fkr: number,
-    _spec: number
+    _fkr: fkr_detail,
+    _spec: specification_income_detail
 }
 
 export interface utv_expenses_list {

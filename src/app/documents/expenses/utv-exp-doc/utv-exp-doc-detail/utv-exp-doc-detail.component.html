@@ -49,7 +49,7 @@
         <div class="p-field" style="padding-right: 10px; min-width: 20rem;">
             <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
-                <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc.org_name"
+                <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc._organization.name_rus"
                     formControlName="org_name" />
                 <span class="p-inputgroup-addon cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -65,7 +65,7 @@
             </span>
         </div>
 
-        <div class="p-field" style="min-width: 20rem;">
+        <!-- <div class="p-field" style="min-width: 20rem;">
             <label for="budjet_name">Бюджет организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <input id="budjet_name" type="text" pInputText [(ngModel)]="utvDetail.doc.budjet_name"
@@ -75,7 +75,7 @@
                 *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
                 <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
             </span>
-        </div>
+        </div> -->
     </form>
 
     <div style="padding: 0 0 10px 10px;">
@@ -91,18 +91,17 @@
 
 <div class="card" style="display: flex; width:100%">
     <div style="width: 15%;">
-        <p-table [value]="utvDetail.payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-            selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
-            [(selection)]="selected">
+        <p-table [value]="fkr_array" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
+            styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
             <ng-template pTemplate="header">
                 <tr>
                     <th style="text-align:center">Программа</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-utv let-ri="rowIndex">
-                <tr class="cursor-pointer" [pSelectableRow]="utv">
-                    <td (dblclick)="filterFKR(utv._fkr)">
-                        {{utv.fkr_code}}
+                <tr class="cursor-pointer">
+                    <td (dblclick)="filterFKR(utv)">
+                        {{utv.code}}
                     </td>
                 </tr>
             </ng-template>
@@ -112,11 +111,12 @@
         <p-tabView>
             <p-tabPanel header="Платежи">
                 <div style="padding: 0 0 10px 10px;">
-                    <button pButton pRipple label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
-                        (click)="addSpec(selected)"></button>
+                    <button [disabled]="fkr == undefined || fkr.id == 0" pButton pRipple label="добавить специфику"
+                        icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addSpec(fkr)"></button>
                 </div>
                 <p-table [value]="payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-                    selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+                    selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+                    [resizableColumns]="true" columnResizeMode="expand">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="text-align:center">Номер</th>
@@ -143,7 +143,7 @@
                             <td>
                                 <div class="p-inputgroup w-full">
                                     <input pInputText [readOnly]="true"
-                                        [ngModel]="utv.spec_code + '. ' + utv.spec_name" />
+                                        [ngModel]="utv._spec.code + '. ' + utv._spec.name_rus" />
                                     <span class="p-inputgroup-addon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
@@ -177,10 +177,11 @@
             <p-tabPanel header="Обязательства">
                 <div style="padding: 0 0 10px 10px;">
                     <button pButton pRipple label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
-                        (click)="addSpec(selected)"></button>
+                        (click)="addSpec(fkr)"></button>
                 </div>
                 <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-                    selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+                    selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+                    [resizableColumns]="true" columnResizeMode="expand">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="text-align:center">Номер</th>

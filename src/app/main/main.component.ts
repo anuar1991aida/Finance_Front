@@ -80,6 +80,9 @@ export class MainComponent implements OnInit {
               }, {
                 label: 'ФКР',
                 command: () => this.openTab('app-fkr-list', 'ФКР', '', true)
+              }, {
+                label: 'Спецификации',
+                command: () => this.openTab('app-specification-exp-list', 'Спецификации', '')
               }]
             }
           ],
