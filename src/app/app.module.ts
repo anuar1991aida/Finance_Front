@@ -28,7 +28,6 @@ import { UtvIncomeDetailComponent } from './documents/income/utv-income/utv-inco
 
 //dirs/expenses
 
-//Dastan
 import { OrganizationComponent } from './directory/organization/organization-list/organization.component';
 import { OrganizationDetailComponent } from './directory/organization/organization-detail/organization-detail.component';
 import { PodclassListComponent } from './directory/income/podclass/podclass-list/podclass-list.component';
@@ -51,6 +50,9 @@ import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.com
 import { SpecificationIncomeListComponent } from './directory/income/specification-income/specification-income-list/specification-income-list.component';
 import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
 import { UserComponent } from './user/user.component';
+import { Import219ListComponent } from './documents/import_document/import219/import219-list/import219-list.component';
+import { Import219DeteailComponent } from './documents/import_document/import219/import219-deteail/import219-deteail.component';
+import { UploadComponent } from './documents/import_document/import219/upload/upload.component';
 
 @NgModule({
   imports: [
@@ -103,7 +105,10 @@ import { UserComponent } from './user/user.component';
     SkeletonComponent,
     IzmIncDocDetailComponent,
     IzmIncDocListComponent,
-    UserComponent],
+    UserComponent,
+    Import219ListComponent,
+    Import219DeteailComponent,
+    UploadComponent],
   bootstrap: [AppComponent],
   providers: [
     {

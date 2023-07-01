@@ -70,6 +70,10 @@
                     (closeEvent)="removetab()">
                 </app-izm-inc-doc-list>
 
+                <app-import219-deteail *ngIf="context.selector=='app-import219-deteail'"
+                    (closeEvent)="removetab()">
+                </app-import219-deteail>
+
                 <app-izm-inc-doc-detail #someComp *ngIf="context.selector=='app-izm-inc-doc-detail'"
                     [izm_inc_id]="number" (closeEvent)="removetab()">
                 </app-izm-inc-doc-detail>
@@ -93,6 +97,7 @@
                 <app-podprogramm-list *ngIf="context.selector=='app-podprogramm-list'" [data]="true"
                     (closeEvent)="removetab()">
                 </app-podprogramm-list>
+
 
                 <app-fkr-list *ngIf="context.selector=='app-fkr-list'" [data]="true"
                     (closeEvent)="removetab()">

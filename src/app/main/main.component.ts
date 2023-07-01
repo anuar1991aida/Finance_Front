@@ -136,6 +136,15 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
               }]
             }
+          ],
+          [
+            {
+              label: 'Импорт данных',
+              items: [{
+                label: 'Импорт формы 2-19',
+                command: () => this.openTab('app-import219-deteail', 'Импорт формы 2-19', '')
+              }]
+            }
           ]
         ]
       },
