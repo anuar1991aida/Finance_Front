@@ -25,6 +25,7 @@ export class FkrSelectComponent implements OnInit {
   searchfkr = ''
   first = 0
   rows = 25
+  selected: any
 
   ngOnInit(): void {
     this.fetchPr()
@@ -40,6 +41,14 @@ export class FkrSelectComponent implements OnInit {
     this.fkr$ = this.fkrSelectService.fetch(params)
   }
 
+  onSelected(fkrr: fkr_detail) {
+    if (!this.selected) {
+      this.fkrSelectmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите категорию!' })
+      return
+    }
+    this.fkrSelectref.close(fkrr)
+  }
+
   onPageChange(event: any) {
     this.first = event.first
     this.rows = event.rows
@@ -47,7 +56,7 @@ export class FkrSelectComponent implements OnInit {
   }
 
   onRowClick(fkr_detail: fkr_detail) {
-
+    this.fkrSelectref.close(fkr_detail)
   }
 
   closeform() {
