@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { import219_detail } from '../../interfaces';
-import { import219Servise } from '../../import219.servise';
+import { import219_detail } from '../interfaces';
+import { import219Servise } from '../import219.servise';
 import { FileUploadModule } from 'primeng/fileupload';
 import { UploadComponent } from '../upload/upload.component';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
-import { import219Servise } from '../../import219.servise';
+import { import219Servise } from '../import219.servise';
 
 @Component({
   selector: 'app-upload',

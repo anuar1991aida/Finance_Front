@@ -1,12 +1,14 @@
 <div class=" bg-indigo">
     <p-toolbar>
         <div class="p-toolbar-group-left">
-            <p-megaMenu [model]="items" styleClass="flex" style="width: 100%;">
+            <p-megaMenu [model]="items" styleClass="flex">
             </p-megaMenu>
         </div>
 
         <div class="p-toolbar-group-right">
-            {{username}}
+            <div style="margin-right: 10px;">
+              {{username}}
+            </div>
             <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle">
             </p-avatar>
             <p-menu #menu [model]="User" [popup]="true"></p-menu>
