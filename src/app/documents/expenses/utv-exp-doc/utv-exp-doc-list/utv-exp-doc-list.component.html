@@ -15,8 +15,8 @@
                 styleClass="p-button-sm" (click)="fetchUtvList()"></button>
         </div>
         <div>
-          <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
-            (click)="closeform()"></button>
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+                (click)="closeform()"></button>
         </div>
     </div>
 </p-toolbar>
@@ -29,8 +29,7 @@
             <tr>
                 <th style="width:10%; text-align:center">Номер</th>
                 <th style="width:10%; text-align:center">Дата</th>
-                <th style="width:40%; text-align:center">Организация</th>
-                <th style="width:35%; text-align:center">Бюджет</th>
+                <th style="width:75%; text-align:center">Организация</th>
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
@@ -43,10 +42,7 @@
                     <span [ngClass]="setClass(utvList.deleted)">{{utvList._date}}</span>
                 </td>
                 <td>
-                    <span [ngClass]="setClass(utvList.deleted)">{{utvList.org_name}}</span>
-                </td>
-                <td>
-                    <span [ngClass]="setClass(utvList.deleted)">{{utvList.budjet_name}}</span>
+                    <span [ngClass]="setClass(utvList.deleted)">{{utvList._organization.name_rus}}</span>
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">

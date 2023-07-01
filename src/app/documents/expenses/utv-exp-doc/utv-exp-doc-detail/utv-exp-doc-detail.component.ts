@@ -50,13 +50,16 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   form: FormGroup
   obligats: any = []
   payments: any = []
-  fkr_array: any = []
+
+  fkr_array: fkr_detail[] = []
+
   allrecord = true
   _lastfkr = 0
   firstclick = true
   hashBegin = ''
   hashEnd = ''
   nochanged = true
+  selectedrow = false
   fkr: fkr_detail = {
     id: 0,
     code: '',
@@ -148,8 +151,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     this.form = new FormGroup({
       number_doc: new FormControl(null, [Validators.required]),
       date_doc: new FormControl(null, [Validators.required]),
-      org_name: new FormControl(null, [Validators.required]),
-      // budjet_name: new FormControl(null, [Validators.required])
+      org_name: new FormControl(null, [Validators.required])
     })
     if (this.utv_exp_id !== '') {
       this.utvDetailService.fetch_detail(parseInt(this.utv_exp_id))
@@ -169,7 +171,16 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   addFKRtoArray() {
+    this.fkr_array = []
+
     for (let i = 0; i < this.utvDetail.payments.length; i++) {
+
+      let index = this.fkr_array.findIndex(item => this.utvDetail.payments[i]._fkr.id === item.id)
+
+      if (index !== -1) {
+        continue
+      }
+
       this.fkr_array.push({
         id: this.utvDetail.payments[i]._fkr.id,
         code: this.utvDetail.payments[i]._fkr.code,
@@ -223,6 +234,8 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
       this.utvDetailref.onClose.subscribe((spec_detail: specification_income_detail) => {
         if (spec_detail) {
           this.pushArray(fkr_detail, spec_detail)
+          this.obligats = this.utvDetail.obligats.filter(item => item['_fkr'].id == fkr_detail.id)
+          this.payments = this.utvDetail.payments.filter(item => item['_fkr'].id == fkr_detail.id)
         }
       }
       )
@@ -232,6 +245,37 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
       return
 
     }
+  }
+
+  delSpec(utv: any) {
+
+    for (let i = this.utvDetail.obligats.length - 1; i >= 0; i--) {
+      let index = this.utvDetail.obligats.findIndex(item => utv.id === item.id)
+      if (index !== -1) {
+        this.utvDetail.obligats.splice(index, 1)
+      }
+    }
+    for (let i = this.utvDetail.payments.length - 1; i >= 0; i--) {
+      let index = this.utvDetail.payments.findIndex(item => utv.id === item.id)
+      if (index !== -1) {
+        this.utvDetail.payments.splice(index, 1)
+      }
+    }
+
+    this.obligats = this.utvDetail.obligats.filter(item => item['_fkr'].id == utv._fkr.id)
+    this.payments = this.utvDetail.payments.filter(item => item['_fkr'].id == utv._fkr.id)
+
+    this.addFKRtoArray()
+  }
+
+  getColorClass(): string {
+    if (this.selectedrow) {
+      return 'red-row'
+    }
+    else {
+      return ''
+    }
+
   }
 
   pushArray(fkr_detail: fkr_detail, spec_detail: specification_income_detail) {
@@ -302,10 +346,20 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   saveDoc(close: boolean) {
-    this.closeaftersave(close)
+    this.utvDetailService.saveUtv(this.utvDetail)
+      .subscribe(
+        (data) => (this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          this.closeaftersave(close)
+        ),
+        (error) => (
+          this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+        )
+      )
+
   }
 
   filterFKR(_fkr: fkr_detail) {
+
     if (this.firstclick) {
       this._lastfkr = _fkr.id
       this.firstclick = false
