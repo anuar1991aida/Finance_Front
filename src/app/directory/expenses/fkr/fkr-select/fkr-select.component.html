@@ -16,8 +16,9 @@
 </p-toolbar>
 
 <div class="card" *ngIf="(fkr$ | async) as fkr; else loader">
+    <form style="display: flex;"></form>
     <p-table *ngIf="fkr.count !== 0; else empty" [value]="fkr.results" [scrollable]="true"
-        scrollHeight="calc(100% - 10%)" selectionMode="single"  [(selection)]="selected"
+        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"  [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
@@ -41,7 +42,9 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="footer"></ng-template>
+        <ng-template pTemplate="footer">
+            <tr></tr>
+        </ng-template>
     </p-table>
     <ng-template #empty>
         <div class="center">

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -8,7 +8,8 @@ import { fkr_detail, fkr_select } from '../interfaces';
 @Component({
   selector: 'app-fkr-select',
   templateUrl: './fkr-select.component.html',
-  styleUrls: ['./fkr-select.component.css']
+  styleUrls: ['./fkr-select.component.css'],
+  template: `<p>Height: {{windowHeight}}px</p>`
 })
 export class FkrSelectComponent implements OnInit {
 
@@ -26,9 +27,20 @@ export class FkrSelectComponent implements OnInit {
   first = 0
   rows = 25
   selected: any
+  windowHeight: number
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
 
   ngOnInit(): void {
-    this.fetchPr()
+    this.fetchPr(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight * 0.8;
   }
 
   fetchPr() {
