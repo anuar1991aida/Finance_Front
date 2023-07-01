@@ -3,25 +3,25 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { fkrService } from '../fkr.services';
-import { fkr_detail, fkr_list } from '../interfaces';
+import { fkr_detail, fkr_select } from '../interfaces';
 
 @Component({
-  selector: 'app-fkr-list',
-  templateUrl: './fkr-list.component.html',
-  styleUrls: ['./fkr-list.component.css']
+  selector: 'app-fkr-select',
+  templateUrl: './fkr-select.component.html',
+  styleUrls: ['./fkr-select.component.css']
 })
-export class FkrListComponent implements OnInit {
+export class FkrSelectComponent implements OnInit {
 
   constructor(
-    private fkrListService: fkrService,
-    private fkrListref: DynamicDialogRef,
-    private fkrListconfirm: ConfirmationService,
-    private fkrListdialog: DialogService,
-    private fkrListmessage: MessageService,
+    private fkrSelectService: fkrService,
+    private fkrSelectref: DynamicDialogRef,
+    private fkrSelectconfirm: ConfirmationService,
+    private fkrSelectdialog: DialogService,
+    private fkrSelectmessage: MessageService,
   ) { }
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
-  fkr$: Observable<fkr_list>
+  fkr$: Observable<fkr_select>
   searchfkr = ''
   first = 0
   rows = 25
@@ -37,7 +37,7 @@ export class FkrListComponent implements OnInit {
       search: this.searchfkr.toString()
     }
 
-    this.fkr$ = this.fkrListService.fetch(params)
+    this.fkr$ = this.fkrSelectService.fetch(params)
   }
 
   onPageChange(event: any) {
@@ -47,7 +47,7 @@ export class FkrListComponent implements OnInit {
   }
 
   onRowClick(fkr_detail: fkr_detail) {
-    this.fkrListref.close(fkr_detail)
+
   }
 
   closeform() {

@@ -100,18 +100,7 @@ export class IzmIncDocListComponent implements OnInit {
   }
 
   closeform() {
-
-
-    // let objString = JSON.stringify(this.izmDetail)
-    // this.hashEnd = SHA256(objString).toString()
-
-
     this.closeEvent.emit()
-
-    // else {
-    //   console.log('Сохранить?');
-
-    // }
   }
 
 }

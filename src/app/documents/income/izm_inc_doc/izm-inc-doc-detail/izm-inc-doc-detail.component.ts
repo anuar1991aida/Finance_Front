@@ -37,6 +37,45 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   hashBegin = ''
   hashEnd = ''
   spravkatypes: any = []
+  TotalUtvGod = 0
+  TotalUtv1 = 0
+  TotalUtv2 = 0
+  TotalUtv3 = 0
+  TotalUtv4 = 0
+  TotalUtv5 = 0
+  TotalUtv6 = 0
+  TotalUtv7 = 0
+  TotalUtv8 = 0
+  TotalUtv9 = 0
+  TotalUtv10 = 0
+  TotalUtv11 = 0
+  TotalUtv12 = 0
+  TotalIzmGod = 0
+  TotalIzm1 = 0
+  TotalIzm2 = 0
+  TotalIzm3 = 0
+  TotalIzm4 = 0
+  TotalIzm5 = 0
+  TotalIzm6 = 0
+  TotalIzm7 = 0
+  TotalIzm8 = 0
+  TotalIzm9 = 0
+  TotalIzm10 = 0
+  TotalIzm11 = 0
+  TotalIzm12 = 0
+  TotalGod = 0
+  Total1 = 0
+  Total2 = 0
+  Total3 = 0
+  Total4 = 0
+  Total5 = 0
+  Total6 = 0
+  Total7 = 0
+  Total8 = 0
+  Total9 = 0
+  Total10 = 0
+  Total11 = 0
+  Total12 = 0
 
   closeform(close: boolean) {
 
@@ -67,7 +106,9 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   gettypespr() {
     this.izmDetailService.gettypespr()
       .subscribe(
-        (data) => { this.spravkatypes = data }
+        (data) => (
+          this.spravkatypes = data
+        )
       )
   }
 
@@ -78,12 +119,13 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       org_name: new FormControl(null, [Validators.required]),
       type_name: new FormControl(null, [Validators.required])
     })
-
+    this.gettypespr()
     if (this.izm_inc_id !== '') {
       this.izmDetailService.fetch_detail(this.izm_inc_id)
         .subscribe(
           (detail) => {
-            this.izmDetail = detail
+            this.izmDetail = detail,
+            this.calculatetot()
           }
         )
     }
@@ -152,6 +194,37 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
   }
 
+  calculatetot() {
+    let asd:any;
+    let self:any;
+    console.log(this.izmDetail.tbl1)
+    self = this
+    asd = self.izmDetail.tbl1
+    let TotUtvGod = 0
+    let TotUtv = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    let TotIzmGod = 0
+    let TotIzm = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    let TotGod = 0
+    let Tot = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    for (let str of asd) {
+      for (let i of [1,2,3,4,5,6,7,8,9,10,11,12]) {
+        TotUtv[i] += str['utv'+i],
+        TotIzm[i] += str['sm'+i],
+        Tot[i] += str['itog'+i]
+      }
+    }
+    for (let i of [1,2,3,4,5,6,7,8,9,10,11,12]) {
+      self['TotalUtv'+i]  = TotUtv[i],
+      self['TotalIzm'+i]  = TotIzm[i],
+      self['Total'+i]     = Tot[i],
+      TotUtvGod           += TotUtv[i],
+      TotIzmGod           += TotIzm[i],
+      TotGod              += Tot[i]
+    }
+    this.TotalIzmGod  = TotIzmGod,
+    this.TotalUtvGod  = TotUtvGod,
+    this.TotalGod     = TotGod
+  }
   ngDoCheck() {
 
     let objString = JSON.stringify(this.izmDetail)
@@ -318,7 +391,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   toLocaleDate(dateForStr: string) {
-    return new Date(dateForStr).toLocaleDateString();
+    return new Date(dateForStr).toLocaleDateString() + ' ' + new Date(dateForStr).toLocaleTimeString();
   }
 
 

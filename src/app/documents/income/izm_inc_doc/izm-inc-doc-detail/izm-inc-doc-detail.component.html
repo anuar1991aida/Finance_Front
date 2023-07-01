@@ -37,8 +37,9 @@
 
             <label for="date_doc">Дата <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
-                <p-calendar appendTo="body" (onSelect)="changedate()" [(ngModel)]="utvDetail.doc._date"
-                    dateFormat="dd.mm.yy" [showIcon]="true" formControlName="date_doc"></p-calendar>
+                <p-calendar [showTime]="true" [showSeconds]="true" appendTo="body" (onSelect)="changedate()"
+                    [(ngModel)]="utvDetail.doc._date" dateFormat="dd.mm.yy" [showIcon]="true"
+                    formControlName="date_doc"></p-calendar>
             </div>
             <span class="p-invalid" *ngIf="form.controls['date_doc'].invalid && form.controls['date_doc'].touched">
                 <span *ngIf="form.controls['date_doc'].errors?.required">Дата не должна быть пустой</span>
@@ -93,7 +94,7 @@
     </div>
 
     <p-table [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
-        styleClass="p-datatable-sm p-datatable-gridlines">
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
                 <th rowspan="3" style="text-align:center">Номер</th>
@@ -201,6 +202,56 @@
                     <td style="text-align:center; max-width: 7em; min-width: 7em">
                         {{izm['itog' + i]}}</td>
                 </ng-container>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <tr>
+                <th rowspan="3" style="text-align:center"></th>
+                <th rowspan="3" style="text-align:center; width: 30%;">Итого</th>
+                <th style="text-align:center">{{TotalUtvGod}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv1}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv2}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv3}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv4}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv5}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv6}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv7}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv8}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv9}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv10}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv11}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv12}}</th>
+                <th rowspan="3" style="text-align:center"></th>
+            </tr>
+            <tr>
+                <th style="text-align:center">{{TotalIzmGod}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm1}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm2}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm3}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm4}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm5}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm6}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm7}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm8}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm9}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm10}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm11}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm12}}</th>
+            </tr>
+            <tr>
+                <th style="text-align:center">{{TotalGod}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total1}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total2}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total3}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total4}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total5}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total6}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total7}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total8}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total9}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total10}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total11}}</th>
+                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total12}}</th>
             </tr>
         </ng-template>
     </p-table>
