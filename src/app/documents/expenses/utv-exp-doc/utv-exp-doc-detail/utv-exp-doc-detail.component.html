@@ -176,8 +176,8 @@
             </p-tabPanel>
             <p-tabPanel header="Обязательства">
                 <div style="padding: 0 0 10px 10px;">
-                    <button pButton pRipple label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
-                        (click)="addSpec(fkr)"></button>
+                    <button [disabled]="fkr == undefined || fkr.id == 0" pButton pRipple label="добавить специфику"
+                        icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addSpec(fkr)"></button>
                 </div>
                 <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
                     selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"

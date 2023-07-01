@@ -7,7 +7,7 @@
 
         <div class="p-toolbar-group-right">
             <div style="margin-right: 10px;">
-              {{username}}
+                {{username}}
             </div>
             <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle">
             </p-avatar>
@@ -66,8 +66,7 @@
                     (closeEvent)="removetab()">
                 </app-izm-inc-doc-list>
 
-                <app-import219-deteail *ngIf="context.selector=='app-import219-deteail'"
-                    (closeEvent)="removetab()">
+                <app-import219-deteail *ngIf="context.selector=='app-import219-deteail'" (closeEvent)="removetab()">
                 </app-import219-deteail>
 
                 <app-izm-inc-doc-detail #someComp *ngIf="context.selector=='app-izm-inc-doc-detail'"
@@ -105,7 +104,7 @@
                     (closeEvent)="removetab()">
                 </app-utv-exp-doc-detail>
 
-                <app-specification-exp-list *ngIf="context.selector=='app-specification-exp-list'" [data]="true"
+                <app-specification-exp-list *ngIf="context.selector=='app-specification-exp-list'"
                     (closeEvent)="removetab()">
                 </app-specification-exp-list>
 
