@@ -4,7 +4,7 @@ import { OrganizationsService } from '../organization.service';
 import { organization_list, organization_detail } from '../interfaces';
 import { MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BudjetListComponent } from '../../income/budjet/budjet-list/budjet-list.component';
+import { BudjetSelectComponent } from '../../income/budjet/budjet-select/budjet-select.component';
 import { DialogService } from 'primeng/dynamicdialog';
 import { catchError, timeout } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
@@ -80,7 +80,7 @@ export class OrganizationDetailComponent implements OnInit {
   }
 
   addClassification() {
-    this.org_dialog_ref = this.org_dialog_servis.open(BudjetListComponent,
+    this.org_dialog_ref = this.org_dialog_servis.open(BudjetSelectComponent,
       {
         header: 'Выбрать бюджет',
         width: '70%',
@@ -96,7 +96,7 @@ export class OrganizationDetailComponent implements OnInit {
   }
 
   handleClick() {
-    this.org_dialog_ref = this.org_dialog_servis.open(BudjetListComponent,
+    this.org_dialog_ref = this.org_dialog_servis.open(BudjetSelectComponent,
       {
         header: 'Выбрать бюджет',
         width: '70%',

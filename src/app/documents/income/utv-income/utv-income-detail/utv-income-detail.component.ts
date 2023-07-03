@@ -3,14 +3,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ClassificationIncomeDetailComponent } from 'src/app/directory/income/classification-income/classification-income-detail/classification-income-detail.component';
-import { ClassificationIncomeListComponent } from 'src/app/directory/income/classification-income/classification-income-list/classification-income-list.component';
 import { classsification_income } from 'src/app/directory/income/classification-income/interfaces';
 import { utv_income_detail } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
 import { SHA256 } from 'crypto-js';
-import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
+import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
+import { ClassificationIncomeSelectComponent } from 'src/app/directory/income/classification-income/classification-income-select/classification-income-select.component';
 
 @Component({
   selector: 'app-utv-income-detail',
@@ -247,7 +247,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   }
 
   addClassification() {
-    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeListComponent,
+    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
         width: '60%',
@@ -288,7 +288,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   }
 
   editClassification(id: number) {
-    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeListComponent,
+    this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
         width: '60%',
@@ -374,7 +374,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   }
 
   selectOrg() {
-    this.utvDetailref = this.utvDetaildialog.open(OrganizationComponent,
+    this.utvDetailref = this.utvDetaildialog.open(OrganizationSelectComponent,
       {
         header: 'Выбор организации',
         width: '60%',

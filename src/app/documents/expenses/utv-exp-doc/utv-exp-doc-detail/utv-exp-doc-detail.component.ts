@@ -2,17 +2,16 @@ import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angula
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FkrListComponent } from 'src/app/directory/expenses/fkr/fkr-list/fkr-list.component';
 import { FkrSelectComponent } from 'src/app/directory/expenses/fkr/fkr-select/fkr-select.component';
 import { fkr_detail } from 'src/app/directory/expenses/fkr/interfaces';
 import { specification_income_detail } from 'src/app/directory/income/specification-income/interfaces';
 import { utv_expenses_detail } from '../interfaces';
 import { UtvExpensesService } from '../utv_expenses.service';
 import { SHA256 } from 'crypto-js';
-import { SpecificationExpListComponent } from 'src/app/directory/expenses/specification-exp/specification-exp-list/specification-exp-list.component';
+import { SpecificationExpSelectComponent } from 'src/app/directory/expenses/specification-exp/specification-exp-select/specification-exp-select.component';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
-import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
+import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
 
 @Component({
   selector: 'app-utv-exp-doc-detail',
@@ -168,7 +167,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   selectOrg() {
-    this.utvDetailref = this.utvDetaildialog.open(OrganizationComponent,
+    this.utvDetailref = this.utvDetaildialog.open(OrganizationSelectComponent,
       {
         header: 'Выбор организации',
         width: '60%',
@@ -261,7 +260,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
   addSpec(fkr_detail: fkr_detail) {
     if (fkr_detail !== undefined) {
-      this.utvDetailref = this.utvDetaildialog.open(SpecificationExpListComponent,
+      this.utvDetailref = this.utvDetaildialog.open(SpecificationExpSelectComponent,
         {
           header: 'Выбор спецификации',
           width: '60%',

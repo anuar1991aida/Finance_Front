@@ -3,12 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { CategoryIncomeComponent } from '../../category-income/category_income-list/category-income.component';
+import { CategoryIncomeSelectComponent } from '../../category-income/category_income-select/category-income-select.component';
 import { ClassificationIncomeService } from '../classification-income.services';
 import { classsification_income_detail } from '../interfaces';
-import { ClassIncomeListComponent } from '../../class-income/class-income-list/class-income-list.component';
-import { PodclassListComponent } from '../../podclass/podclass-list/podclass-list.component';
-import { SpecificationIncomeListComponent } from '../../specification-income/specification-income-list/specification-income-list.component';
+import { ClassIncomeSelectComponent } from '../../class-income/class-income-select/class-income-select.component';
+import { PodclassSelectComponent } from '../../podclass/podclass-select/podclass-select.component';
+import { SpecificationIncomeSelectComponent } from '../../specification-income/specification-income-select/specification-income-select.component';
 import { CategoryIncomeDetailComponent } from '../../category-income/category-income-detail/category-income-detail.component';
 import { ClassIncomeDetailComponent } from '../../class-income/class-income-detail/class-income-detail.component';
 import { PodclassDetailComponent } from '../../podclass/podclass-detail/podclass-detail.component';
@@ -77,7 +77,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   }
 
   addCategory() {
-    this.Select_dialog_ref = this.Select_dialog.open(CategoryIncomeComponent,
+    this.Select_dialog_ref = this.Select_dialog.open(CategoryIncomeSelectComponent,
       {
         header: 'Выбор категории',
         width: '70%',
@@ -95,7 +95,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   }
 
   addClass() {
-    this.Select_dialog_ref = this.Select_dialog.open(ClassIncomeListComponent,
+    this.Select_dialog_ref = this.Select_dialog.open(ClassIncomeSelectComponent,
       {
         header: 'Выбор класс',
         width: '70%',
@@ -112,7 +112,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
     })
   }
   addPodclass() {
-    this.Select_dialog_ref = this.Select_dialog.open(PodclassListComponent,
+    this.Select_dialog_ref = this.Select_dialog.open(PodclassSelectComponent,
       {
         header: 'Выбор подкласс',
         width: '70%',
@@ -130,7 +130,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   }
 
   addSpec() {
-    this.Select_dialog_ref = this.Select_dialog.open(SpecificationIncomeListComponent,
+    this.Select_dialog_ref = this.Select_dialog.open(SpecificationIncomeSelectComponent,
       {
         header: 'Выбор подкласс',
         width: '70%',

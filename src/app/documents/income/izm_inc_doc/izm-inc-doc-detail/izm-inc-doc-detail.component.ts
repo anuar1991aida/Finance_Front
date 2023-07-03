@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ClassificationIncomeDetailComponent } from 'src/app/directory/income/classification-income/classification-income-detail/classification-income-detail.component';
-import { ClassificationIncomeListComponent } from 'src/app/directory/income/classification-income/classification-income-list/classification-income-list.component';
+import { ClassificationIncomeSelectComponent } from 'src/app/directory/income/classification-income/classification-income-select/classification-income-select.component';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
-import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
+import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
 import { izm_inc_doc_detail } from '../interfaces';
 import { IzmIncomeService } from '../izm_income.service';
 import { SHA256 } from 'crypto-js';
@@ -243,7 +243,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   editClassification(ri: number) {
-    this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeListComponent,
+    this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
         width: '60%',
@@ -270,7 +270,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   addClassification() {
-    this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeListComponent,
+    this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
         width: '60%',
@@ -329,7 +329,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   selectOrg() {
-    this.izmDetailref = this.izmDetaildialog.open(OrganizationComponent,
+    this.izmDetailref = this.izmDetaildialog.open(OrganizationSelectComponent,
       {
         header: 'Выбор организации',
         width: '60%',
