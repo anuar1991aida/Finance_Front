@@ -10,6 +10,9 @@ import { utv_expenses_detail } from '../interfaces';
 import { UtvExpensesService } from '../utv_expenses.service';
 import { SHA256 } from 'crypto-js';
 import { SpecificationExpListComponent } from 'src/app/directory/expenses/specification-exp/specification-exp-list/specification-exp-list.component';
+import { organization_detail } from 'src/app/directory/organization/interfaces';
+import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
+import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
 
 @Component({
   selector: 'app-utv-exp-doc-detail',
@@ -23,7 +26,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     private utvDetailmsg: MessageService,
     private utvDetailref: DynamicDialogRef,
     private utvDetaildialog: DialogService,
-    private utvDetailconfirm: ConfirmationService,
+    private utvDetailconfirm: ConfirmationService
   ) {
     this.items = [
       {
@@ -145,6 +148,39 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
         name_rus: ''
       }
     }]
+  }
+
+  viewOrg() {
+    this.utvDetailref = this.utvDetaildialog.open(OrganizationDetailComponent,
+      {
+        header: 'Редактирование организации',
+        width: '60%',
+        height: '80%',
+        data: { org_id: this.utvDetail.doc._organization.id }
+      })
+
+    this.utvDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.utvDetail.doc._organization.id = org.id,
+          this.utvDetail.doc._organization.name_rus = org.name_rus
+      }
+    })
+  }
+
+  selectOrg() {
+    this.utvDetailref = this.utvDetaildialog.open(OrganizationComponent,
+      {
+        header: 'Выбор организации',
+        width: '60%',
+        height: '80%'
+      })
+
+    this.utvDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.utvDetail.doc._organization.id = org.id,
+          this.utvDetail.doc._organization.name_rus = org.name_rus
+      }
+    })
   }
 
   ngOnInit(): void {
