@@ -37,6 +37,7 @@ import { IzmIncDocDetailComponent } from './documents/income/izm_inc_doc/izm-inc
 import { IzmIncDocListComponent } from './documents/income/izm_inc_doc/izm-inc-doc-list/izm-inc-doc-list.component';
 import { FunctionalGroupDetailComponent } from './directory/expenses/functional-group/functional-group-detail/functional-group-detail.component';
 import { FunctionalGroupListComponent } from './directory/expenses/functional-group/functional-group-list/functional-group-list.component';
+import { FunctionalGroupSelectComponent } from './directory/expenses/functional-group/functional-group-select/functional-group-select.component';
 import { FunctionalPodgroupDetailComponent } from './directory/expenses/functional-podgroup/functional-podgroup-detail/functional-podgroup-detail.component';
 import { FunctionalPodgroupListComponent } from './directory/expenses/functional-podgroup/functional-podgroup-list/functional-podgroup-list.component';
 import { ABPListComponent } from './directory/expenses/ABP/abp-list/abp-list.component';
@@ -95,6 +96,7 @@ import { SpecificationExpDetailComponent } from './directory/expenses/specificat
     SkeletonComponent,
     BudjetListComponent,
     FunctionalGroupListComponent,
+    FunctionalGroupSelectComponent,
     FunctionalGroupDetailComponent,
     FunctionalPodgroupListComponent,
     FunctionalPodgroupDetailComponent,

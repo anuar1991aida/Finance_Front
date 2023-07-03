@@ -11,3 +11,9 @@ export interface func_group_list {
     previous?: string,
     results: [func_group_detail]
 }
+export interface func_group_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [func_group_detail]
+}
