@@ -63,6 +63,8 @@ import { Import219DeteailComponent } from './documents/import_document/import219
 import { UploadComponent } from './documents/import_document/import219/upload/upload.component';
 import { SpecificationExpListComponent } from './directory/expenses/specification-exp/specification-exp-list/specification-exp-list.component';
 import { SpecificationExpDetailComponent } from './directory/expenses/specification-exp/specification-exp-detail/specification-exp-detail.component';
+import { SpecificationExpSelectComponent } from './directory/expenses/specification-exp/specification-exp-select/specification-exp-select.component';
+import { BudjetSelectComponent } from './directory/income/budjet/budjet-select/budjet-select.component';
 
 @NgModule({
   imports: [
@@ -98,6 +100,7 @@ import { SpecificationExpDetailComponent } from './directory/expenses/specificat
     ClassificationIncomeDetailComponent,
     SkeletonComponent,
     BudjetListComponent,
+    BudjetSelectComponent,
     FunctionalGroupListComponent,
     FunctionalGroupSelectComponent,
     FunctionalGroupDetailComponent,
@@ -127,6 +130,7 @@ import { SpecificationExpDetailComponent } from './directory/expenses/specificat
     Import219DeteailComponent,
     UploadComponent,
     SpecificationExpListComponent,
+    SpecificationExpSelectComponent,
     SpecificationExpDetailComponent,
     UserComponent],
   bootstrap: [AppComponent],

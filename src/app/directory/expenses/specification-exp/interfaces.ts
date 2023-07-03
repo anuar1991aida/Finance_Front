@@ -11,3 +11,10 @@ export interface specification_expenses_list {
     previous?: string,
     results: [specification_expenses_detail]
 }
+
+export interface specification_expenses_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [specification_expenses_detail]
+}

@@ -11,3 +11,10 @@ export interface Budjet_list {
   previous?: string,
   results: [Budjet_detail]
 }
+
+export interface Budjet_select {
+  count?: number,
+  next: string,
+  previous?: string,
+  results: [Budjet_detail]
+}
