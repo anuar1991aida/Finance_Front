@@ -11,3 +11,10 @@ export interface specification_income_list {
     previous?: string,
     results: [specification_income_detail]
 }
+
+export interface specification_income_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [specification_income_detail]
+}

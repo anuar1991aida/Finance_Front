@@ -12,6 +12,13 @@ export interface classsification_income_list {
     results: [classsification_income]
 }
 
+export interface classsification_income_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [classsification_income]
+}
+
 export interface classsification_income_detail {
     id: number,
     code: string,

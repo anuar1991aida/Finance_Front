@@ -14,3 +14,10 @@ export interface organization_list {
     previous?: string,
     results: [organization_detail]
 }
+
+export interface organization_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [organization_detail]
+}

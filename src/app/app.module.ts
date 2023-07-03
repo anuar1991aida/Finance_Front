@@ -67,6 +67,10 @@ import { SpecificationExpSelectComponent } from './directory/expenses/specificat
 import { BudjetSelectComponent } from './directory/income/budjet/budjet-select/budjet-select.component';
 import { CategoryIncomeSelectComponent } from './directory/income/category-income/category_income-select/category-income-select.component';
 import { ClassIncomeSelectComponent } from './directory/income/class-income/class-income-select/class-income-select.component';
+import { ClassificationIncomeSelectComponent } from './directory/income/classification-income/classification-income-select/classification-income-select.component';
+import { PodclassSelectComponent } from './directory/income/podclass/podclass-select/podclass-select.component';
+import { SpecificationIncomeSelectComponent } from './directory/income/specification-income/specification-income-select/specification-income-select.component';
+import { OrganizationSelectComponent } from './directory/organization/organization-select/organization-select.component';
 
 @NgModule({
   imports: [
@@ -88,19 +92,23 @@ import { ClassIncomeSelectComponent } from './directory/income/class-income/clas
     LoginComponent,
     MainComponent,
     OrganizationComponent,
+    OrganizationSelectComponent,
     OrganizationDetailComponent,
     CategoryIncomeComponent,
     CategoryIncomeSelectComponent,
     SkeletonComponent,
     PodclassListComponent,
+    PodclassSelectComponent,
     PodclassDetailComponent,
     CategoryIncomeDetailComponent,
     ClassIncomeListComponent,
     ClassIncomeSelectComponent,
     ClassIncomeDetailComponent,
     SpecificationIncomeListComponent,
+    SpecificationIncomeSelectComponent,
     SpecificationIncomeDetailComponent,
     ClassificationIncomeListComponent,
+    ClassificationIncomeSelectComponent,
     ClassificationIncomeDetailComponent,
     SkeletonComponent,
     BudjetListComponent,
