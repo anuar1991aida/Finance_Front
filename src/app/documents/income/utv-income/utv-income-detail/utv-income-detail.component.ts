@@ -8,6 +8,9 @@ import { classsification_income } from 'src/app/directory/income/classification-
 import { utv_income_detail } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
 import { SHA256 } from 'crypto-js';
+import { OrganizationComponent } from 'src/app/directory/organization/organization-list/organization.component';
+import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
+import { organization_detail } from 'src/app/directory/organization/interfaces';
 
 @Component({
   selector: 'app-utv-income-detail',
@@ -54,7 +57,15 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       nom: '',
       _date: '',
       deleted: false,
-      _organization: 0,
+      _organization: {
+        id: 0,
+        budjet_name: '',
+        bin: '',
+        name_kaz: '',
+        name_rus: '',
+        adress: '',
+        _budjet: 0
+      },
       _budjet: 0
     },
     tbl1: [{
@@ -76,9 +87,12 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       _date: '',
       _organization: 0,
       _utv_inc: 0,
-      _classification: 0,
-      classification_name: '',
-      classification_code: ''
+      _classification: {
+        id: 0,
+        code: '',
+        name_kaz: '',
+        name_rus: ''
+      }
     }]
   }
   responce: any
@@ -126,7 +140,15 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
           nom: '',
           _date: '',
           deleted: false,
-          _organization: 0,
+          _organization: {
+            id: 0,
+            budjet_name: '',
+            bin: '',
+            name_kaz: '',
+            name_rus: '',
+            adress: '',
+            _budjet: 0
+          },
           _budjet: 0
         },
         tbl1: [{
@@ -148,9 +170,12 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
           _date: '',
           _organization: 0,
           _utv_inc: 0,
-          _classification: 0,
-          classification_name: '',
-          classification_code: ''
+          _classification: {
+            id: 0,
+            code: '',
+            name_kaz: '',
+            name_rus: ''
+          }
         }]
       }
 
@@ -233,9 +258,12 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       if (classific) {
         this.utvDetail.tbl1.push(
           {
-            _classification: classific.id,
-            classification_name: classific.name_rus,
-            classification_code: classific.code,
+            _classification: {
+              id: classific.id,
+              code: classific.code,
+              name_kaz: classific.name_kaz,
+              name_rus: classific.name_rus
+            },
             id: 0,
             god: 0,
             sm1: 0,
@@ -271,9 +299,12 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       if (classific) {
         let targetRow = this.utvDetail.tbl1.find((row) => row.id = id)
         if (targetRow) {
-          targetRow._classification = classific.id
-          targetRow.classification_name = classific.name_rus
-          targetRow.classification_code = classific.code
+          targetRow._classification = {
+            id: classific.id,
+            code: classific.code,
+            name_kaz: classific.name_kaz,
+            name_rus: classific.name_rus
+          }
         }
       }
     })
@@ -312,7 +343,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         for (let i = this.utvDetail.tbl1.length - 1; i >= 0; i--) {
-          let index = this.utvDetail.tbl1.findIndex(item => classification_id === item._classification)
+          let index = this.utvDetail.tbl1.findIndex(item => classification_id === item._classification.id)
           if (index !== -1) {
             this.utvDetail.tbl1.splice(index, 1)
           }
@@ -323,6 +354,39 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         this.utvDetailconfirm.close();
       }
     });
+  }
+
+  viewOrg() {
+    this.utvDetailref = this.utvDetaildialog.open(OrganizationDetailComponent,
+      {
+        header: 'Редактирование организации',
+        width: '60%',
+        height: '80%',
+        data: { org_id: this.utvDetail.doc._organization.id }
+      })
+
+    this.utvDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.utvDetail.doc._organization.id = org.id,
+          this.utvDetail.doc._organization.name_rus = org.name_rus
+      }
+    })
+  }
+
+  selectOrg() {
+    this.utvDetailref = this.utvDetaildialog.open(OrganizationComponent,
+      {
+        header: 'Выбор организации',
+        width: '60%',
+        height: '80%'
+      })
+
+    this.utvDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.utvDetail.doc._organization.id = org.id,
+          this.utvDetail.doc._organization.name_rus = org.name_rus
+      }
+    })
   }
 
   changedate() {
