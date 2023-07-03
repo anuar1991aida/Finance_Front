@@ -45,9 +45,11 @@ import { ABPListComponent } from './directory/expenses/ABP/abp-list/abp-list.com
 import { ABPSelectComponent } from './directory/expenses/ABP/abp-select/abp-select.component';
 import { ABPDetailComponent } from './directory/expenses/ABP/abp-detail/abp-detail.component';
 import { ProgrammListComponent } from './directory/expenses/programm/programm-list/programm-list.component';
+import { ProgrammSelectComponent } from './directory/expenses/programm/programm-select/programm-select.component';
 import { ProgrammDetailComponent } from './directory/expenses/programm/programm-detail/programm-detail.component';
 import { PodprogrammDetailComponent } from './directory/expenses/podprogramm/podprogramm-detail/podprogramm-detail.component';
 import { PodprogrammListComponent } from './directory/expenses/podprogramm/podprogramm-list/podprogramm-list.component';
+import { PodprogrammSelectComponent } from './directory/expenses/podprogramm/podprogramm-select/podprogramm-select.component';
 import { FkrDetailComponent } from './directory/expenses/fkr/fkr-detail/fkr-detail.component';
 import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.component';
 import { FkrSelectComponent } from './directory/expenses/fkr/fkr-select/fkr-select.component';
@@ -107,7 +109,9 @@ import { SpecificationExpDetailComponent } from './directory/expenses/specificat
     ABPDetailComponent,
     ProgrammListComponent,
     ProgrammDetailComponent,
+    ProgrammSelectComponent,
     PodprogrammListComponent,
+    PodprogrammSelectComponent,
     PodprogrammDetailComponent,
     FkrListComponent,
     FkrSelectComponent,

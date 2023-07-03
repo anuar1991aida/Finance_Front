@@ -11,3 +11,10 @@ export interface programm_list {
     previous?: string,
     results: [programm_detail]
 }
+
+export interface programm_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [programm_detail]
+}

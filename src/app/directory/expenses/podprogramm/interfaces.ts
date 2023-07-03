@@ -11,3 +11,9 @@ export interface podprogramm_list {
     previous?: string,
     results: [podprogramm_detail]
 }
+export interface podprogramm_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [podprogramm_detail]
+}
