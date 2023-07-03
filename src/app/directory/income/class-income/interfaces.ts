@@ -11,3 +11,10 @@ export interface class_income_list {
     previous?: string,
     results: [class_income_detail]
 }
+
+export interface class_income_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [class_income_detail]
+}

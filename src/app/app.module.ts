@@ -65,6 +65,8 @@ import { SpecificationExpListComponent } from './directory/expenses/specificatio
 import { SpecificationExpDetailComponent } from './directory/expenses/specification-exp/specification-exp-detail/specification-exp-detail.component';
 import { SpecificationExpSelectComponent } from './directory/expenses/specification-exp/specification-exp-select/specification-exp-select.component';
 import { BudjetSelectComponent } from './directory/income/budjet/budjet-select/budjet-select.component';
+import { CategoryIncomeSelectComponent } from './directory/income/category-income/category_income-select/category-income-select.component';
+import { ClassIncomeSelectComponent } from './directory/income/class-income/class-income-select/class-income-select.component';
 
 @NgModule({
   imports: [
@@ -88,11 +90,13 @@ import { BudjetSelectComponent } from './directory/income/budjet/budjet-select/b
     OrganizationComponent,
     OrganizationDetailComponent,
     CategoryIncomeComponent,
+    CategoryIncomeSelectComponent,
     SkeletonComponent,
     PodclassListComponent,
     PodclassDetailComponent,
     CategoryIncomeDetailComponent,
     ClassIncomeListComponent,
+    ClassIncomeSelectComponent,
     ClassIncomeDetailComponent,
     SpecificationIncomeListComponent,
     SpecificationIncomeDetailComponent,
