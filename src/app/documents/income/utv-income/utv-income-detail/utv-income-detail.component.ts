@@ -119,7 +119,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       number_doc: new FormControl(null, [Validators.required]),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required]),
-      budjet_name: new FormControl(null, [Validators.required])
+      // budjet_name: new FormControl(null, [Validators.required])
     })
 
     if (this.utv_inc_id !== '') {

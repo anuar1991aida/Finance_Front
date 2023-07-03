@@ -48,7 +48,7 @@
         <div class="p-field" style="padding-right: 10px; min-width: 20rem;">
             <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
-                <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc.org_name"
+                <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc._organization.name_rus"
                     formControlName="org_name" />
                 <span class="p-inputgroup-addon cursor-pointer" (click)="viewOrg()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -64,7 +64,7 @@
             </span>
         </div>
 
-        <div class="p-field" style="min-width: 20rem;">
+        <!-- <div class="p-field" style="min-width: 20rem;">
             <label for="budjet_name">Бюджет организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <input id="budjet_name" type="text" pInputText [(ngModel)]="utvDetail.doc.budjet_name"
@@ -74,7 +74,7 @@
                 *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
                 <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
             </span>
-        </div>
+        </div> -->
     </form>
 
     <div style="padding: 0 0 10px 10px;">
