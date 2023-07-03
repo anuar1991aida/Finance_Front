@@ -11,3 +11,9 @@ export interface func_podgroup_list {
     previous?: string,
     results: [func_podgroup_detail]
 }
+export interface func_podgroup_select {
+    count?: number,
+    next: string,
+    previous?: string,
+    results: [func_podgroup_detail]
+}

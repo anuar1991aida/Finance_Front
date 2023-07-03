@@ -40,6 +40,7 @@ import { FunctionalGroupListComponent } from './directory/expenses/functional-gr
 import { FunctionalGroupSelectComponent } from './directory/expenses/functional-group/functional-group-select/functional-group-select.component';
 import { FunctionalPodgroupDetailComponent } from './directory/expenses/functional-podgroup/functional-podgroup-detail/functional-podgroup-detail.component';
 import { FunctionalPodgroupListComponent } from './directory/expenses/functional-podgroup/functional-podgroup-list/functional-podgroup-list.component';
+import { FunctionalPodgroupSelectComponent } from './directory/expenses/functional-podgroup/functional-podgroup-select/functional-podgroup-select.component';
 import { ABPListComponent } from './directory/expenses/ABP/abp-list/abp-list.component';
 import { ABPSelectComponent } from './directory/expenses/ABP/abp-select/abp-select.component';
 import { ABPDetailComponent } from './directory/expenses/ABP/abp-detail/abp-detail.component';
@@ -100,6 +101,7 @@ import { SpecificationExpDetailComponent } from './directory/expenses/specificat
     FunctionalGroupDetailComponent,
     FunctionalPodgroupListComponent,
     FunctionalPodgroupDetailComponent,
+    FunctionalPodgroupSelectComponent,
     ABPListComponent,
     ABPSelectComponent,
     ABPDetailComponent,
