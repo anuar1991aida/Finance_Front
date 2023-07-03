@@ -1,3 +1,6 @@
+import { classsification_income } from "src/app/directory/income/classification-income/interfaces"
+import { organization_detail } from "src/app/directory/organization/interfaces"
+
 export interface utv_income_doc {
     id: number,
     org_name: string,
@@ -5,7 +8,7 @@ export interface utv_income_doc {
     nom: string,
     _date: string,
     deleted: boolean,
-    _organization: number,
+    _organization: organization_detail,
     _budjet: number
 }
 
@@ -28,9 +31,7 @@ export interface utv_income_doc_tab {
     _date: string,
     _organization: number,
     _utv_inc: number,
-    _classification: number,
-    classification_name: string,
-    classification_code: string
+    _classification: classsification_income
 }
 
 export interface utv_income_list {
