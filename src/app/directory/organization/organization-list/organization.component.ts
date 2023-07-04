@@ -63,6 +63,9 @@ export class OrganizationComponent implements OnInit {
       })
 
     this.org_dialog_ref.onClose.subscribe((save: boolean) => {
+
+      console.log(save);
+      
       if (save) {
         this.fetchOrg()
       }

@@ -1,4 +1,5 @@
 export interface Budjet_detail {
+  adress: '',
   id: number,
   code: string,
   name_kaz: string,

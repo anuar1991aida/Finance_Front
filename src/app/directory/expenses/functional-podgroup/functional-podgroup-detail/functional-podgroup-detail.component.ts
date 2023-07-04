@@ -57,7 +57,7 @@ export class FunctionalPodgroupDetailComponent implements OnInit {
   }
 
   closeCat(boll: boolean){
-
+    this.FuncpodGroup_Detailref.close(boll)
   }
 
 }

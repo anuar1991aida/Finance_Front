@@ -81,7 +81,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
       {
         header: 'Выбор категории',
         width: '70%',
-        height: '50%'
+        height: '80%'
       }
     )
 
@@ -99,7 +99,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
       {
         header: 'Выбор класс',
         width: '70%',
-        height: '50%'
+        height: '80%'
       }
     )
 
@@ -116,7 +116,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
       {
         header: 'Выбор подкласс',
         width: '70%',
-        height: '50%'
+        height: '80%'
       }
     )
 
@@ -132,9 +132,9 @@ export class ClassificationIncomeDetailComponent implements OnInit {
   addSpec() {
     this.Select_dialog_ref = this.Select_dialog.open(SpecificationIncomeSelectComponent,
       {
-        header: 'Выбор подкласс',
+        header: 'Выбор спецификации',
         width: '70%',
-        height: '50%'
+        height: '80%'
       }
     )
 

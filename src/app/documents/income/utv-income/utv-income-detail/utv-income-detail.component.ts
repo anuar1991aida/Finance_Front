@@ -11,6 +11,7 @@ import { OrganizationSelectComponent } from 'src/app/directory/organization/orga
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { ClassificationIncomeSelectComponent } from 'src/app/directory/income/classification-income/classification-income-select/classification-income-select.component';
+import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
 
 @Component({
   selector: 'app-utv-income-detail',
@@ -49,6 +50,15 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
 
   items: MenuItem[];
   form: FormGroup
+
+  budj_det: Budjet_detail = {
+    adress: '',
+    code: '',
+    id: 0,
+    name_kaz: '',
+    name_rus: ''
+  }
+
   utvDetail: utv_income_detail = {
     doc: {
       id: 0,
@@ -59,12 +69,11 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       deleted: false,
       _organization: {
         id: 0,
-        budjet_name: '',
         bin: '',
         name_kaz: '',
         name_rus: '',
         adress: '',
-        _budjet: 0
+        _budjet: this.budj_det
       },
       _budjet: 0
     },
@@ -142,12 +151,11 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
           deleted: false,
           _organization: {
             id: 0,
-            budjet_name: '',
             bin: '',
             name_kaz: '',
             name_rus: '',
             adress: '',
-            _budjet: 0
+            _budjet: this.budj_det
           },
           _budjet: 0
         },

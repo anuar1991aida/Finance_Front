@@ -1,11 +1,12 @@
+import { Budjet_detail } from "../income/budjet/interfaces"
+
 export interface organization_detail {
     id: number,
-    budjet_name: string,
     bin: string,
     name_kaz: string,
     name_rus: string,
     adress: string,
-    _budjet: number
+    _budjet: Budjet_detail
 }
 
 export interface organization_list {

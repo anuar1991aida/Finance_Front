@@ -12,6 +12,7 @@ import { SpecificationExpSelectComponent } from 'src/app/directory/expenses/spec
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
 import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
+import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
 
 @Component({
   selector: 'app-utv-exp-doc-detail',
@@ -34,14 +35,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
         command: () => {
 
         }
-      },
-      // {
-      //   label: 'Пометка на удаление',
-      //   icon: 'pi pi-times',
-      //   command: () => {
-      //     this.onDelete();
-      //   }
-      // }
+      }
     ]
   }
 
@@ -69,6 +63,14 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     name_rus: ''
   }
 
+  budj_det: Budjet_detail = {
+    adress: '',
+    code: '',
+    id: 0,
+    name_kaz: '',
+    name_rus: ''
+  }
+
   utvDetail: utv_expenses_detail = {
     doc: {
       id: 0,
@@ -77,12 +79,11 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
       deleted: false,
       _organization: {
         id: 0,
-        budjet_name: '',
         bin: '',
         name_kaz: '',
         name_rus: '',
         adress: '',
-        _budjet: 0
+        _budjet: this.budj_det
       }
     },
     payments: [{

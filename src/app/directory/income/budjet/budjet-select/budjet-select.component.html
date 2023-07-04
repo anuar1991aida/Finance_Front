@@ -24,7 +24,7 @@
 
         </ng-template>
         <ng-template pTemplate="body" let-budjet let-ri="rowIndex" *ngFor="let item of budjets.results| keyvalue">
-            <tr class="cursor-pointer" (click)="selectBudjet(budjet)" [pSelectableRow]="budjet">
+            <tr class="cursor-pointer" (dblclick)="selectBudjet(budjet)" [pSelectableRow]="budjet">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                   {{budjet.code}}

@@ -20,19 +20,33 @@ export class OrganizationDetailComponent implements OnInit {
     private orgService: OrganizationsService,
     private org_massage: MessageService,
     private org_dialog_ref: DynamicDialogRef,
+    private budjet_ref: DynamicDialogRef,
     public org_dialog_config: DynamicDialogConfig,
     private org_dialog_servis: DialogService) { }
 
   form: FormGroup
   org_id = 0
+  saved = false
+  budj_det: Budjet_detail = {
+    id: 0,
+    code: '',
+    name_kaz: '',
+    name_rus: '',
+    adress: ''
+  }
   org_detail: organization_detail = {
     id: 0,
-    budjet_name: '',
     bin: '',
     name_kaz: '',
     name_rus: '',
     adress: '',
-    _budjet: 0
+    _budjet: {
+      id: 0,
+      code: '',
+      name_kaz: '',
+      name_rus: '',
+      adress: ''
+    }
   }
 
   ngOnInit(): void {
@@ -49,7 +63,9 @@ export class OrganizationDetailComponent implements OnInit {
     if (this.org_id !== 0) {
       this.orgService.fetchOrg(this.org_id)
         .subscribe(
-          (data) => (this.org_detail = data)
+          (data) => (
+              this.org_detail = data
+            )
         )
     }
 
@@ -58,61 +74,31 @@ export class OrganizationDetailComponent implements OnInit {
 
   saveOrg() {
     this.orgService.add(this.org_detail)
-      .pipe(
-        timeout(5000), // установка таймаута на 5 секунд
-        catchError(error => {
-          if (error.name === 'TimeoutError') {
-            this.org_massage.add({ severity: 'error', summary: 'Ошибка', detail: 'Время ожидания истекло. Попробуйте позднее!' });
-          }
-          else {
-            this.org_massage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось загрузить данные!' });
-          }
-          return throwError('Произошла ошибка: ' + error.message);
-        })
-
-      )
       .subscribe(
         (data) => (
           this.org_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Организация сохранена!' }),
-          this.org_dialog_ref.close(true)
+          this.saved = true,
+          this.closeOrg()
         ),
         (error) => (this.org_massage.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
   }
 
   addClassification() {
-    this.org_dialog_ref = this.org_dialog_servis.open(BudjetSelectComponent,
+    this.budjet_ref = this.org_dialog_servis.open(BudjetSelectComponent,
       {
         header: 'Выбрать бюджет',
         width: '70%',
-        height: '30%'
+        height: '80%'
       })
 
-    this.org_dialog_ref.onClose.subscribe((budjet: Budjet_detail) => {
+    this.budjet_ref.onClose.subscribe((budjet: Budjet_detail) => {
       if (budjet) {
-        this.org_detail.budjet_name = budjet.name_kaz,
-          this.org_detail._budjet = budjet.id
+          this.org_detail._budjet = budjet
       }
     })
   }
 
-  handleClick() {
-    this.org_dialog_ref = this.org_dialog_servis.open(BudjetSelectComponent,
-      {
-        header: 'Выбрать бюджет',
-        width: '70%',
-        height: '30%'
-      })
-
-    this.org_dialog_ref.onClose.subscribe((budjet: any) => {
-      if (budjet) {
-        this.org_detail.budjet_name = budjet.name_kaz,
-          this.org_detail._budjet = budjet.id
-      }
-    })
-
-  }
-
-  closeOrg(save: boolean) {
-    this.org_dialog_ref.close(save)
+  closeOrg() {
+    this.org_dialog_ref.close(this.saved)
   }
 }
