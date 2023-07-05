@@ -295,7 +295,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     })
   }
 
-  editClassification(id: number) {
+  editClassification(ri:number) {
     this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
@@ -303,17 +303,14 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         height: '80%'
       })
 
-    this.utvDetailref.onClose.subscribe((classific: any) => {
+    this.utvDetailref.onClose.subscribe((classific: classsification_income) => {
       if (classific) {
-        let targetRow = this.utvDetail.tbl1.find((row) => row.id = id)
-        if (targetRow) {
-          targetRow._classification = {
-            id: classific.id,
-            code: classific.code,
-            name_kaz: classific.name_kaz,
-            name_rus: classific.name_rus
-          }
-        }
+        this.utvDetail.tbl1[ri]._classification = {
+              id: classific.id,
+              code: classific.code,
+              name_kaz: classific.name_kaz,
+              name_rus: classific.name_rus
+            }
       }
     })
   }

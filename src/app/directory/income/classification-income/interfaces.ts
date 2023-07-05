@@ -1,3 +1,9 @@
+import { category_income_detail } from "../category-income/interfaces"
+import { class_income_detail } from "../class-income/interfaces"
+import { PodclassDetailComponent } from "../podclass/podclass-detail/podclass-detail.component"
+import { podclass_interfaces_detail } from "../podclass/podclass_interfaces"
+import { specification_income_detail } from "../specification-income/interfaces"
+
 export interface classsification_income {
     id: number,
     code: string,
@@ -24,16 +30,8 @@ export interface classsification_income_detail {
     code: string,
     name_kaz: string,
     name_rus: string,
-    _category_id: number,
-    category_code: string,
-    category_name: string,
-    _classs_id: number,
-    classs_code: string,
-    classs_name: string,
-    _podclass_id: number,
-    podclass_code: string,
-    podclass_name: string,
-    _spec_id: number,
-    spec_code: string,
-    spec_name: string
+    _category: category_income_detail,
+    _classs: class_income_detail,
+    _podclass: podclass_interfaces_detail,
+    _spec: specification_income_detail
 }

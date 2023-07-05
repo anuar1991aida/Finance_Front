@@ -32,7 +32,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
   form: FormGroup
   // classifDetail$: Observable<classsification_income_detail>
-  classif_id = ''
+  classif_id = 0
   classifDetail: classsification_income_detail
 
   ngOnInit(): void {
@@ -48,30 +48,46 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.classif_id = this.ClassifDetailconfig.data.classif_id
 
-    if (this.classif_id == '') {
+    if (this.classif_id == 0) {
       this.classifDetail = {
         id: 0,
         code: '',
         name_kaz: '',
         name_rus: '',
-        _category_id: 0,
-        category_code: '',
-        category_name: '',
-        _classs_id: 0,
-        classs_code: '',
-        classs_name: '',
-        _podclass_id: 0,
-        podclass_code: '',
-        podclass_name: '',
-        _spec_id: 0,
-        spec_code: '',
-        spec_name: ''
+        _category: {
+          id: 0,
+          code: '',
+          name_kaz: '',
+          name_rus: ''
+        },
+        _classs: {
+          id: 0,
+          code: '',
+          name_kaz: '',
+          name_rus: ''
+        },
+        _podclass: {
+          id: 0,
+          code: '',
+          name_kaz: '',
+          name_rus: ''
+        },
+        _spec: {
+          id: 0,
+          code: '',
+          name_kaz: '',
+          name_rus: ''
+        }
       }
     }
     else {
       this.ClassifDetailService.fetch_detail(this.classif_id)
         .subscribe(
-          (classifDetail) => (this.classifDetail = classifDetail)
+          (classifDetail) => (
+            console.log(classifDetail),
+            
+            this.classifDetail = classifDetail
+            )
         )
     }
   }
@@ -87,9 +103,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((category: any) => {
       if (category) {
-        this.classifDetail._category_id = category.id;
-        this.classifDetail.category_name = category.name_rus;
-        this.classifDetail.category_code = category.code;
+        this.classifDetail._category = category;
       }
     })
   }
@@ -105,9 +119,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((classs: any) => {
       if (classs) {
-        this.classifDetail._classs_id = classs.id;
-        this.classifDetail.classs_name = classs.name_rus;
-        this.classifDetail.classs_code = classs.code;
+        this.classifDetail._classs = classs;
       }
     })
   }
@@ -122,9 +134,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((podcl: any) => {
       if (podcl) {
-        this.classifDetail._podclass_id = podcl.id;
-        this.classifDetail.podclass_name = podcl.name_rus;
-        this.classifDetail.podclass_code = podcl.code;
+        this.classifDetail._podclass = podcl;
       }
     })
   }
@@ -140,9 +150,7 @@ export class ClassificationIncomeDetailComponent implements OnInit {
 
     this.Select_dialog_ref.onClose.subscribe((specif: any) => {
       if (specif) {
-        this.classifDetail._spec_id = specif.id;
-        this.classifDetail.spec_name = specif.name_rus;
-        this.classifDetail.spec_code = specif.code;
+        this.classifDetail._spec = specif;
       }
     })
   }

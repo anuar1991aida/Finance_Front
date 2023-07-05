@@ -26,7 +26,7 @@ export class ClassIncomeService {
         return this.http.post(this.host + 'dirs/classadd', class_inc)
     }
 
-    deleteClass(class_inc_id: string = '') {
+    deleteClass(class_inc_id: number = 0) {
         return this.http.delete(this.host + 'dirs/classdelete/' + class_inc_id)
     }
 }

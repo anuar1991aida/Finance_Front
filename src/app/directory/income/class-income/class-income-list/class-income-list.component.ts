@@ -23,7 +23,7 @@ export class ClassIncomeListComponent implements OnInit {
   
   class$: Observable<class_income_list>
   NewClass: class_income_detail = {
-    id: '',
+    id: 0,
     code: '',
     name_kaz: '',
     name_rus: ''

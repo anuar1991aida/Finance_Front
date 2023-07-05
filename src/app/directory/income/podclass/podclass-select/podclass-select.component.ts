@@ -20,7 +20,7 @@ export class PodclassSelectComponent implements OnInit {
 
   podclass$: Observable<podclass_interfaces>
   NewCat: podclass_interfaces_detail = {
-    id: '',
+    id: 0,
     code: '',
     name_kaz: '',
     name_rus: ''
@@ -94,7 +94,7 @@ export class PodclassSelectComponent implements OnInit {
   openNew() {
 
     this.NewCat = {
-      id: '',
+      id: 0,
       code: '',
       name_kaz: '',
       name_rus: ''

@@ -37,7 +37,7 @@ export class PodclassDetailComponent implements OnInit {
   }
 
   saveCategory() {
-    if (this.podclass_detail.id == '') {
+    if (this.podclass_detail.id == 0) {
       this.podclass_Service.addpodclass(this.podclass_detail)
         .pipe(
           timeout(5000), // установка таймаута на 5 секунд

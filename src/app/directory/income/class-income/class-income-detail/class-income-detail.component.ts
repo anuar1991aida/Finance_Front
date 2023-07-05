@@ -34,7 +34,7 @@ export class ClassIncomeDetailComponent implements OnInit {
   }
 
   saveCategory() {
-    if (this.class_detail.id == '') {
+    if (this.class_detail.id == 0) {
       this.ClassService.addClass(this.class_detail)
         .pipe(
           timeout(5000), // установка таймаута на 5 секунд
