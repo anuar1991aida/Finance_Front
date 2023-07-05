@@ -181,8 +181,13 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
           itog10: 0,
           itog11: 0,
           itog12: 0,
-          _classification: 0,
-          classification_name: ''
+          _classification: {
+            id: 0,
+            code: '',
+            name_kaz: '',
+            name_rus: ''
+          }
+          
         }]
       }
 
@@ -253,7 +258,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
         this.izmDetail.tbl1.splice(ri, 1)
-        this.addClassificationRow(classific.id)
+        this.addClassificationRow(classific)
       }
     })
   }
@@ -279,17 +284,17 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        this.addClassificationRow(classific.id)
+        this.addClassificationRow(classific)
       }
     })
 
   }
 
-  addClassificationRow(classific_id: number) {
+  addClassificationRow(classific_id: any) {
     let params = {
       _organization: this.izmDetail.doc._organization,
       date: this.izmDetail.doc._date,
-      _classification: classific_id
+      _classification: classific_id.id
     }
 
     this.izmDetailService.getOstatok(params)
@@ -297,6 +302,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         (data) => (
           data.forEach((item: any) => {
             item.id = 0
+            item._classification = classific_id
             this.izmDetail.tbl1.push(item)
           })
         )

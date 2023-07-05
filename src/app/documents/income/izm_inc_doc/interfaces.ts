@@ -1,3 +1,5 @@
+import { classsification_income } from "src/app/directory/income/classification-income/interfaces"
+
 export interface izm_inc_doc_tab {
   id: number,
   sm1: number,
@@ -36,8 +38,7 @@ export interface izm_inc_doc_tab {
   itog10: number,
   itog11: number,
   itog12: number,
-  _classification: number,
-  classification_name: string
+  _classification: classsification_income
 }
 
 export interface izm_inc_doc {

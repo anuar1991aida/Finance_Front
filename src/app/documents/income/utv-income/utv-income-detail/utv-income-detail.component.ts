@@ -136,7 +136,9 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.utvDetail = detail,
-              this.calculate()
+              this.calculate(),
+              console.log(detail)
+              
           }
         )
     }

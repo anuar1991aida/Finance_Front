@@ -151,7 +151,7 @@
                 <td rowspan="3" style="text-align:center; width: 30%;">
                     <div class="p-inputgroup w-full">
                         <input pInputText [readOnly]="true"
-                            [ngModel]="izm.classification_code + ' ' + izm.classification_name" />
+                            [ngModel]="izm._classification.code + ' ' + izm._classification.name_rus" />
                         <span class="p-inputgroup-addon" (click)="viewClassification(izm._classification)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-files" viewBox="0 0 16 16">
