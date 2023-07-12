@@ -22,7 +22,7 @@
 
 <div class="card" *ngIf="(Prog$ | async) as Prog; else loader">
     <p-table *ngIf="Prog.count !== 0; else empty" [value]="Prog.results" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single"
+        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>

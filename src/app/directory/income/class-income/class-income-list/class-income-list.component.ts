@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -35,15 +35,27 @@ export class ClassIncomeListComponent implements OnInit {
   first = 0
   rows = 25
   selected: any
+  windowHeight: number
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
 
   ngOnInit(): void {
-    this.fetchClass()
+    this.fetchClass(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   fetchClass() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchclass.toString()
     }
 
     this.class$ = this.classService.fetch(params)
@@ -129,7 +141,13 @@ export class ClassIncomeListComponent implements OnInit {
   }
 
   search() {
+    let params = {
+      limit: this.rows.toString(),
+      offset: this.first.toString(),
+      search: this.searchclass.toString()
+    }
 
+    this.class$ = this.classService.fetch(params)
   }
 
 }

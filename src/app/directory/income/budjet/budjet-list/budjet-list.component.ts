@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { Budjet_list , Budjet_detail} from '../interfaces';
 import { Budjet_Service } from '../budjet.servise';
 import { Observable } from 'rxjs';
@@ -25,9 +25,22 @@ export class BudjetListComponent implements OnInit {
   first = 0
   rows = 25
   last = 3
+  windowHeight: number
+  // items = ["5","10","20","30","50"]
+  // selectedItem = 'Количество строк'
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
 
   ngOnInit(): void {
-    this.fetchbudjet()
+    this.fetchbudjet(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   closeform() {

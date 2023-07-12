@@ -10,7 +10,7 @@
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-left" style="margin-right: 10px;">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [(ngModel)]="searchclass" (change)="search()" placeholder="поиск..." />
+            <input pInputText type="text" [(ngModel)]="searchclass" (change)="fetchClass()" placeholder="поиск..." />
         </span>
         <div style="padding-right: 10px;">
             <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
@@ -25,7 +25,7 @@
 
 <div class="card" *ngIf="(class$ | async) as class_inc; else loader">
     <p-table *ngIf="class_inc.count !== 0; else empty" [value]="class_inc.results" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single"  [(selection)]="selected"
+        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"  [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>

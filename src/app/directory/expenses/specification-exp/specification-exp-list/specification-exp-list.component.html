@@ -25,7 +25,7 @@
 
 <div class="card" *ngIf="(spec$ | async) as spec; else loader">
     <p-table *ngIf="spec.count !== 0; else empty" [value]="spec.results" [scrollable]="true"
-        scrollHeight="calc(100vh - 200px)" selectionMode="single" [(selection)]="specif"
+        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single" [(selection)]="specif"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>

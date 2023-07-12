@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -37,9 +37,20 @@ export class CategoryIncomeComponent implements OnInit {
   rows = 25
   last = 3
   selected: any
+  windowHeight: number
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
 
   ngOnInit(): void {
-    this.fetchCat()
+    this.fetchCat(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   closeform() {

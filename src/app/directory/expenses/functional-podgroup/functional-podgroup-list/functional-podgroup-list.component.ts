@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -28,9 +28,20 @@ export class FunctionalPodgroupListComponent implements OnInit {
   first = 0
   rows = 25
   selected: any
+  windowHeight: number
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
 
   ngOnInit(): void {
-    this.fetchGr()
+    this.fetchGr(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   fetchGr() {

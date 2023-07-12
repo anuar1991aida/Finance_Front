@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { podclassService } from "../podclass_servise";
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -28,15 +28,27 @@ export class PodclassListComponent implements OnInit {
 
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
-  searchcategory = ''
+  searchpodclass = ''
   first = 0
   rows = 25
   last = 3
   selected: any
+  windowHeight: number
   // items = ["5","10","20","30","50"]
   // selectedItem = 'Количество строк'
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
+  
   ngOnInit(): void {
-    this.fetchCat()
+    this.fetchCat(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   closeform() {
@@ -46,7 +58,8 @@ export class PodclassListComponent implements OnInit {
   fetchCat() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchpodclass.toString()
     }
 
     this.podclass$ = this.podclassService.fetch(params)
@@ -102,10 +115,6 @@ export class PodclassListComponent implements OnInit {
         height: '40%',
         data: { podclass: this.NewCat }
       })
-  }
-
-  search() {
-
   }
 
 }

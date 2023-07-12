@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -26,10 +26,21 @@ export class IzmIncDocListComponent implements OnInit {
   first = 0
   rows = 25
   searchIzmInc = ''
+  windowHeight: number
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
 
 
   ngOnInit(): void {
-    this.fetch_doc_izm()
+    this.fetch_doc_izm(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   setClass(deleted: boolean) {

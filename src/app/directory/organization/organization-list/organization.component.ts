@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { organization_list, organization_detail } from '../interfaces';
 import { OrganizationsService } from '../organization.service';
@@ -26,9 +26,21 @@ export class OrganizationComponent implements OnInit {
   rows = 25
   searchorg = ''
   selected: any
+  windowHeight: number
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize(),
+    this.updateWindowSize()
+  }
 
   ngOnInit() {
-    this.fetchOrg()
+    this.fetchOrg(),
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight;
   }
 
   closeform() {
