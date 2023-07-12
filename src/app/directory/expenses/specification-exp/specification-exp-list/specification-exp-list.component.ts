@@ -37,7 +37,6 @@ export class SpecificationExpListComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
-    this.updateWindowSize(),
     this.updateWindowSize()
   }
 
@@ -46,7 +45,8 @@ export class SpecificationExpListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchSpec()
+    this.fetchSpec(),
+    this.updateWindowSize()
   }
 
   closeform() {
