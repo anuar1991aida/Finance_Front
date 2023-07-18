@@ -108,6 +108,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   hashBegin = ''
   hashEnd = ''
   nochanged = true
+  selected = false
 
   totalgod = 0
   total1 = 0

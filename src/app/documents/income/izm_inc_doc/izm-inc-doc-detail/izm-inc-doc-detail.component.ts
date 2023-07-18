@@ -36,6 +36,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   nochanged = true
   hashBegin = ''
   hashEnd = ''
+  selected = false
   spravkatypes: any = []
   TotalUtvGod = 0
   TotalUtv1 = 0

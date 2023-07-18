@@ -93,7 +93,7 @@
             (click)="addClassification()"></button>
     </div>
 
-    <p-table [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
+    <p-table [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"  [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
@@ -146,7 +146,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-izm let-ri="rowIndex">
-            <tr class="cursor-pointer">
+            <tr class="cursor-pointer" [pSelectableRow]="izm">
                 <td rowspan="3" style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td rowspan="3" style="text-align:center; width: 30%;">
                     <div class="p-inputgroup w-full">
