@@ -35,7 +35,6 @@ export class UploadComponent implements OnInit {
 
 
   send_file(reader: any) {
-    console.log(reader)
     this.uploadServise
       .send_file({ "file": reader, "type": this.configupload.data })
       .subscribe(

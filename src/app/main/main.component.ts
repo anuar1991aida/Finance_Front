@@ -146,6 +146,10 @@ export class MainComponent implements OnInit {
               items: [{
                 label: 'Импорт формы 2-19',
                 command: () => this.openTab('app-import219-deteail', 'Импорт формы 2-19', '')
+              },
+              {
+                label: 'Импорт формы 4-20',
+                command: () => this.openTab('app-import420-list', 'Импорт формы 4-20', '')
               }]
             }
           ]

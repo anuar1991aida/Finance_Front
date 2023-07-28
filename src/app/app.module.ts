@@ -71,6 +71,8 @@ import { ClassificationIncomeSelectComponent } from './directory/income/classifi
 import { PodclassSelectComponent } from './directory/income/podclass/podclass-select/podclass-select.component';
 import { SpecificationIncomeSelectComponent } from './directory/income/specification-income/specification-income-select/specification-income-select.component';
 import { OrganizationSelectComponent } from './directory/organization/organization-select/organization-select.component';
+import { Import420ListComponent } from './documents/import_document/import420/import420-list/import420-list.component';
+import { Import420DetailComponent } from './documents/import_document/import420/import420-detail/import420-detail.component';
 
 @NgModule({
   imports: [
@@ -144,7 +146,9 @@ import { OrganizationSelectComponent } from './directory/organization/organizati
     SpecificationExpListComponent,
     SpecificationExpSelectComponent,
     SpecificationExpDetailComponent,
-    UserComponent],
+    UserComponent,
+    Import420DetailComponent,
+    Import420ListComponent],
   bootstrap: [AppComponent],
   providers: [
     {

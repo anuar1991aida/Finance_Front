@@ -19,9 +19,10 @@ export class Import219DeteailComponent implements OnInit {
   form: FormGroup
   other: boolean = false;
 
-  constructor(private messageService: MessageService,
-  private DialogService: DialogService,
-  public uploadref: DynamicDialogRef ) {}
+  constructor(
+    private messageService: MessageService,
+    private DialogService: DialogService,
+    private uploadref: DynamicDialogRef) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -39,18 +40,18 @@ export class Import219DeteailComponent implements OnInit {
 
   }
 
-  changedate(){
+  changedate() {
 
   }
 
 
   openUpload() {
     this.uploadref = this.DialogService.open(UploadComponent,
-        {
-            header: 'Импорт формы',
-            width: '25%',
-            height: '35%',
-            data: this.other
-        });
-}
+      {
+        header: 'Импорт формы',
+        width: '25%',
+        height: '35%',
+        data: this.other
+      });
+  }
 }
