@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { classsification_income_detail, classsification_income_list, classsification_income } from "./interfaces";
+import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
     providedIn: 'root'
@@ -9,10 +10,13 @@ import { classsification_income_detail, classsification_income_list, classsifica
 
 
 export class ClassificationIncomeService {
-    constructor(private http: HttpClient) {
-    }
-    host = "http://192.168.5.27:8000/"
+    host = ""
 
+    constructor(
+        private http: HttpClient,
+        private authservice: AuthService) {
+        this.host = this.authservice.host;
+    }
 
     fetch(params: any): Observable<classsification_income_list> {
         return this.http.get<classsification_income_list>(this.host + 'dirs/classificationinclist', { params })

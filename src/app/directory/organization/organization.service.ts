@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { organization_list, organization_detail } from "./interfaces";
-
+import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
     providedIn: 'root'
@@ -10,9 +10,13 @@ import { organization_list, organization_detail } from "./interfaces";
 
 
 export class OrganizationsService {
-    constructor(private http: HttpClient) {
+    host = ""
+
+    constructor(
+        private http: HttpClient,
+        private authservice: AuthService) {
+        this.host = this.authservice.host;
     }
-    host = "http://192.168.5.27:8000/"
 
 
     fetch(params: any): Observable<organization_list> {

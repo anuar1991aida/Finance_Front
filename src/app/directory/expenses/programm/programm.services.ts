@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { programm_detail, programm_list } from "./interfaces";
+import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
     providedIn: 'root'
@@ -9,10 +10,13 @@ import { programm_detail, programm_list } from "./interfaces";
 
 
 export class programmService {
-    constructor(private http: HttpClient) {
-    }
-    host = "http://192.168.5.27:8000/"
+    host = ""
 
+    constructor(
+        private http: HttpClient,
+        private authservice: AuthService) {
+        this.host = this.authservice.host;
+    }
 
     fetch(params: any): Observable<programm_list> {
         return this.http.get<programm_list>(this.host + 'dirs/programlist', { params })

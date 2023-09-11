@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { utv_income_detail, utv_income_list } from "./interfaces";
+import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
     providedIn: 'root'
@@ -9,10 +10,14 @@ import { utv_income_detail, utv_income_list } from "./interfaces";
 
 
 export class UtvIncomeService {
-    constructor(private http: HttpClient) {
-    }
-    host = "http://192.168.5.27:8000/"
 
+    host = ""
+
+    constructor(
+        private http: HttpClient,
+        private authservice: AuthService) {
+        this.host = this.authservice.host;
+    }
 
     fetch(params: any): Observable<utv_income_list> {
         return this.http.get<utv_income_list>(this.host + 'docs/utvinclist', { params })

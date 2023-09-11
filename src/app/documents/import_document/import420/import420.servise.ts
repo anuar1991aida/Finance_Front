@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
   providedIn: 'root'
@@ -8,10 +9,13 @@ import { Observable } from "rxjs";
 
 export class import420Servise {
 
-  constructor(private http: HttpClient) {
-  }
+  host = ""
 
-  host = "http://192.168.5.27:8000/"
+  constructor(
+    private http: HttpClient,
+    private authservice: AuthService) {
+    this.host = this.authservice.host;
+  }
 
   send_file() {
     return this.http.get(this.host + "docs/import420")

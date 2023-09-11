@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { AuthService } from "src/app/login/auth.service";
 import { fkr_detail, fkr_list } from "./interfaces";
 
 @Injectable({
@@ -9,10 +10,13 @@ import { fkr_detail, fkr_list } from "./interfaces";
 
 
 export class fkrService {
-    constructor(private http: HttpClient) {
-    }
-    host = "http://192.168.5.27:8000/"
+    host = ""
 
+    constructor(
+        private http: HttpClient,
+        private authservice: AuthService) {
+        this.host = this.authservice.host;
+    }
 
     fetch(params: any): Observable<fkr_list> {
         return this.http.get<fkr_list>(this.host + 'dirs/fkrlist', { params })

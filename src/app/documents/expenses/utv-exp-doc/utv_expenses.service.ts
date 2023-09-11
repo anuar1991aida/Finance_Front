@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { utv_expenses_detail, utv_expenses_list } from "./interfaces";
+import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
     providedIn: 'root'
@@ -9,10 +10,13 @@ import { utv_expenses_detail, utv_expenses_list } from "./interfaces";
 
 
 export class UtvExpensesService {
-    constructor(private http: HttpClient) {
-    }
-    host = "http://192.168.5.27:8000/"
+    host = ""
 
+    constructor(
+        private http: HttpClient,
+        private authservice: AuthService) {
+        this.host = this.authservice.host;
+    }
 
     fetch(params: any): Observable<utv_expenses_list> {
         return this.http.get<utv_expenses_list>(this.host + 'docs/utvexplist', { params })
