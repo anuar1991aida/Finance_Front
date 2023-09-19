@@ -139,7 +139,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
             this.utvDetail = detail,
               this.calculate(),
               console.log(detail)
-              
+
           }
         )
     }
@@ -298,7 +298,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     })
   }
 
-  editClassification(ri:number) {
+  editClassification(ri: number) {
     this.utvDetailref = this.utvDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
@@ -309,11 +309,11 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     this.utvDetailref.onClose.subscribe((classific: classsification_income) => {
       if (classific) {
         this.utvDetail.tbl1[ri]._classification = {
-              id: classific.id,
-              code: classific.code,
-              name_kaz: classific.name_kaz,
-              name_rus: classific.name_rus
-            }
+          id: classific.id,
+          code: classific.code,
+          name_kaz: classific.name_kaz,
+          name_rus: classific.name_rus
+        }
       }
     })
   }
@@ -402,7 +402,8 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   }
 
   toLocaleDate(dateForStr: string) {
-    return new Date(dateForStr).toLocaleDateString() + ' ' + new Date(dateForStr).toLocaleTimeString()
+    return new Date(dateForStr).toLocaleDateString()
+    // + ' ' + new Date(dateForStr).toLocaleTimeString()
   }
 
   closeaftersave(close: boolean) {
