@@ -1,4 +1,5 @@
 import { classsification_income } from "src/app/directory/income/classification-income/interfaces"
+import { organization_detail } from "src/app/directory/organization/interfaces"
 
 export interface izm_inc_doc_tab {
   id: number,
@@ -46,12 +47,16 @@ export interface izm_inc_doc {
   nom: string,
   _date: string,
   deleted: boolean,
-  _organization: number,
-  org_name: string,
+  _organization: organization_detail,
   _budjet: number,
   budjet_name: string,
-  _type_izm_doc: number,
-  type_izm_name: string
+  _type_izm_doc: type_izm_doc
+}
+
+export interface type_izm_doc {
+  id: number,
+  name_kaz: string,
+  name_rus: string
 }
 
 export interface izm_inc_doc_detail {

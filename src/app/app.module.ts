@@ -73,6 +73,8 @@ import { SpecificationIncomeSelectComponent } from './directory/income/specifica
 import { OrganizationSelectComponent } from './directory/organization/organization-select/organization-select.component';
 import { Import420ListComponent } from './documents/import_document/import420/import420-list/import420-list.component';
 import { Import420DetailComponent } from './documents/import_document/import420/import420-detail/import420-detail.component';
+import { IzmPlatejiDetailComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-detail/izm-plateji-detail.component';
+import { IzmPlatejiListComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-list/izm-plateji-list.component';
 
 @NgModule({
   imports: [
@@ -148,7 +150,9 @@ import { Import420DetailComponent } from './documents/import_document/import420/
     SpecificationExpDetailComponent,
     UserComponent,
     Import420DetailComponent,
-    Import420ListComponent],
+    Import420ListComponent,
+    IzmPlatejiListComponent,
+    IzmPlatejiDetailComponent],
   bootstrap: [AppComponent],
   providers: [
     {

@@ -33,6 +33,8 @@ export class MainComponent implements OnInit {
   counttabs = 0;
   User: MenuModule[];
   username = ''
+  first = 0
+  rows = 25
 
   ngOnInit(): void {
     this.User = [
@@ -134,9 +136,10 @@ export class MainComponent implements OnInit {
               items: [{
                 label: 'Утвержденный план по расходам',
                 command: () => this.openTab('app-utv-exp-doc-list', 'Утвержденный план по расходам', '')
-              }, {
-                label: 'Изменения плана по расходам',
-                command: () => this.openTab('app-izm-inc-doc-list', 'Изменения плана по поступлениям', '')
+              },
+              {
+                label: 'Изменения плана по платежам',
+                command: () => this.openTab('app-izm-plateji-list', 'Изменения плана по платежам', '')
               }]
             }
           ],

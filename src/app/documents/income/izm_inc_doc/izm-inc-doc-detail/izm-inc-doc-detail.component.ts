@@ -10,6 +10,7 @@ import { OrganizationSelectComponent } from 'src/app/directory/organization/orga
 import { izm_inc_doc_detail } from '../interfaces';
 import { IzmIncomeService } from '../izm_income.service';
 import { SHA256 } from 'crypto-js';
+import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
 
 @Component({
   selector: 'app-izm-inc-doc-detail',
@@ -78,6 +79,14 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   Total11 = 0
   Total12 = 0
 
+  budj_det: Budjet_detail = {
+    adress: '',
+    code: '',
+    id: 0,
+    name_kaz: '',
+    name_rus: ''
+  }
+
   closeform(close: boolean) {
 
     let objString = JSON.stringify(this.izmDetail)
@@ -126,7 +135,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.izmDetail = detail,
-            this.calculatetot()
+              this.calculatetot()
           }
         )
     }
@@ -137,12 +146,21 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
           nom: '',
           _date: '',
           deleted: false,
-          _organization: 0,
-          org_name: '',
+          _organization: {
+            id: 0,
+            bin: '',
+            name_kaz: '',
+            name_rus: '',
+            adress: '',
+            _budjet: this.budj_det
+          },
           _budjet: 0,
           budjet_name: '',
-          _type_izm_doc: 0,
-          type_izm_name: ''
+          _type_izm_doc: {
+            id: 0,
+            name_kaz: '',
+            name_rus: ''
+          }
         },
         tbl1: [{
           id: 0,
@@ -188,7 +206,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
             name_kaz: '',
             name_rus: ''
           }
-          
+
         }]
       }
 
@@ -201,35 +219,35 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   calculatetot() {
-    let asd:any;
-    let self:any;
+    let asd: any;
+    let self: any;
     console.log(this.izmDetail.tbl1)
     self = this
     asd = self.izmDetail.tbl1
     let TotUtvGod = 0
-    let TotUtv = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    let TotUtv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     let TotIzmGod = 0
-    let TotIzm = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    let TotIzm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     let TotGod = 0
-    let Tot = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+    let Tot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for (let str of asd) {
-      for (let i of [1,2,3,4,5,6,7,8,9,10,11,12]) {
-        TotUtv[i] += str['utv'+i],
-        TotIzm[i] += str['sm'+i],
-        Tot[i] += str['itog'+i]
+      for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+        TotUtv[i] += str['utv' + i],
+          TotIzm[i] += str['sm' + i],
+          Tot[i] += str['itog' + i]
       }
     }
-    for (let i of [1,2,3,4,5,6,7,8,9,10,11,12]) {
-      self['TotalUtv'+i]  = TotUtv[i],
-      self['TotalIzm'+i]  = TotIzm[i],
-      self['Total'+i]     = Tot[i],
-      TotUtvGod           += TotUtv[i],
-      TotIzmGod           += TotIzm[i],
-      TotGod              += Tot[i]
+    for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+      self['TotalUtv' + i] = TotUtv[i],
+        self['TotalIzm' + i] = TotIzm[i],
+        self['Total' + i] = Tot[i],
+        TotUtvGod += TotUtv[i],
+        TotIzmGod += TotIzm[i],
+        TotGod += Tot[i]
     }
-    this.TotalIzmGod  = TotIzmGod,
-    this.TotalUtvGod  = TotUtvGod,
-    this.TotalGod     = TotGod
+    this.TotalIzmGod = TotIzmGod,
+      this.TotalUtvGod = TotUtvGod,
+      this.TotalGod = TotGod
   }
   ngDoCheck() {
 
@@ -345,8 +363,8 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
     this.izmDetailref.onClose.subscribe((org: organization_detail) => {
       if (org) {
-        this.izmDetail.doc._organization = org.id,
-          this.izmDetail.doc.org_name = org.name_rus
+        this.izmDetail.doc._organization.id = org.id,
+          this.izmDetail.doc._organization.name_rus = org.name_rus
       }
     })
   }
@@ -362,8 +380,8 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
     this.izmDetailref.onClose.subscribe((org: organization_detail) => {
       if (org) {
-        this.izmDetail.doc._organization = org.id,
-          this.izmDetail.doc.org_name = org.name_rus
+        this.izmDetail.doc._organization.id = org.id,
+          this.izmDetail.doc._organization.name_rus = org.name_rus
       }
     })
   }
