@@ -59,10 +59,10 @@
           <span [ngClass]="setClass(doc.deleted)">{{doc._date}}</span>
         </td>
         <td>
-          <span [ngClass]="setClass(doc.deleted)">{{doc.org_name}}</span>
+          <span [ngClass]="setClass(doc.deleted)">{{doc._organization.name_rus}}</span>
         </td>
         <td>
-          <span [ngClass]="setClass(doc.deleted)">{{doc.budjet_name}}</span>
+          <span [ngClass]="setClass(doc.deleted)">{{doc._organization._budjet.name_rus}}</span>
         </td>
         <td style="padding: 0; margin:0;">
           <div class="flex align-items-center justify-content-center gap-2">

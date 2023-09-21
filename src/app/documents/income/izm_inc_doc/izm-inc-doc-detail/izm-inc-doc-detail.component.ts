@@ -11,6 +11,7 @@ import { izm_inc_doc_detail } from '../interfaces';
 import { IzmIncomeService } from '../izm_income.service';
 import { SHA256 } from 'crypto-js';
 import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
+import { classsification_income } from 'src/app/directory/income/classification-income/interfaces';
 
 @Component({
   selector: 'app-izm-inc-doc-detail',
@@ -113,25 +114,16 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     }
   }
 
-  gettypespr() {
-    this.izmDetailService.gettypespr()
-      .subscribe(
-        (data) => (
-          this.spravkatypes = data
-        )
-      )
-  }
-
   ngOnInit(): void {
     this.form = new FormGroup({
-      number_doc: new FormControl(null, [Validators.required]),
+      number_doc: new FormControl(null),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required]),
       type_name: new FormControl(null, [Validators.required])
     })
-    this.gettypespr()
     if (this.izm_inc_id !== '') {
-      this.izmDetailService.fetch_detail(this.izm_inc_id)
+      this.izmDetailService
+        .fetch_detail(this.izm_inc_id)
         .subscribe(
           (detail) => {
             this.izmDetail = detail,
@@ -140,6 +132,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         )
     }
     else {
+      let responce: any;
       this.izmDetail = {
         doc: {
           id: 0,
@@ -154,8 +147,6 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
             adress: '',
             _budjet: this.budj_det
           },
-          _budjet: 0,
-          budjet_name: '',
           _type_izm_doc: {
             id: 0,
             name_kaz: '',
@@ -207,9 +198,21 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
             name_rus: ''
           }
 
+        }],
+        typesdoc: [{
+          id: 0,
+          name_kaz: '',
+          name_rus: ''
         }]
       }
-
+      this.izmDetailService
+        .gettypespr()
+        .subscribe(
+          (detail) => {
+            responce = detail,
+              this.izmDetail.typesdoc = responce
+          }
+        )
       this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)
     }
 
@@ -221,7 +224,6 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   calculatetot() {
     let asd: any;
     let self: any;
-    console.log(this.izmDetail.tbl1)
     self = this
     asd = self.izmDetail.tbl1
     let TotUtvGod = 0
@@ -249,6 +251,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       this.TotalUtvGod = TotUtvGod,
       this.TotalGod = TotGod
   }
+
   ngDoCheck() {
 
     let objString = JSON.stringify(this.izmDetail)
@@ -267,6 +270,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   editClassification(ri: number) {
+
     this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeSelectComponent,
       {
         header: 'Выбор классификации',
@@ -301,7 +305,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         height: '80%'
       })
 
-    this.izmDetailref.onClose.subscribe((classific: any) => {
+    this.izmDetailref.onClose.subscribe((classific: classsification_income) => {
       if (classific) {
         this.addClassificationRow(classific)
       }
@@ -309,22 +313,20 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
   }
 
-  addClassificationRow(classific_id: any) {
+  addClassificationRow(classific: classsification_income) {
     let params = {
-      _organization: this.izmDetail.doc._organization,
+      _organization: this.izmDetail.doc._organization.id,
       date: this.izmDetail.doc._date,
-      _classification: classific_id.id
+      _classification: classific.id
     }
 
     this.izmDetailService.getOstatok(params)
       .subscribe(
         (data) => (
-          data.forEach((item: any) => {
-            item.id = 0
-            item._classification = classific_id
-            this.izmDetail.tbl1.push(item)
-          })
+          this.izmDetail.tbl1.push(data),
+          this.calculatetot()
         )
+
       )
   }
 
@@ -363,8 +365,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
     this.izmDetailref.onClose.subscribe((org: organization_detail) => {
       if (org) {
-        this.izmDetail.doc._organization.id = org.id,
-          this.izmDetail.doc._organization.name_rus = org.name_rus
+        this.izmDetail.doc._organization = org
       }
     })
   }
@@ -375,13 +376,12 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         header: 'Редактирование организации',
         width: '60%',
         height: '80%',
-        data: { org_id: this.izmDetail.doc._organization }
+        data: { org_id: this.izmDetail.doc._organization.id }
       })
 
     this.izmDetailref.onClose.subscribe((org: organization_detail) => {
       if (org) {
-        this.izmDetail.doc._organization.id = org.id,
-          this.izmDetail.doc._organization.name_rus = org.name_rus
+        this.izmDetail.doc._organization = org
       }
     })
   }
@@ -394,6 +394,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       accept: () => {
         this.izmDetail.tbl1.splice(ri, 1)
         this.izmDetailconfirm.close()
+        this.calculatetot()
       },
       reject: () => {
         this.izmDetailconfirm.close()

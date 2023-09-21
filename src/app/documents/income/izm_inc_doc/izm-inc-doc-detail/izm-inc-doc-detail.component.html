@@ -22,15 +22,15 @@
 
 <div class="card" *ngIf="(izmDetail) as utvDetail; else loader">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
-        <div class="p-field" style="padding-right: 10px;">
-            <label for="number_doc">Номер <span style="color: red;">*</span></label>
+        <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер </label>
             <div class="p-inputgroup">
                 <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
-            <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
+            <!-- <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
                 <span *ngIf="form.controls['number_doc'].errors?.required">Номер не должен быть пустым</span>
-            </span>
+            </span> -->
         </div>
 
         <div class="p-field" style="padding-right: 10px;">
@@ -51,7 +51,8 @@
             <div class="p-inputgroup">
                 <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc._organization.name_rus"
                     formControlName="org_name" />
-                <span class="p-inputgroup-addon cursor-pointer" (click)="viewOrg()">
+                <span *ngIf="utvDetail.doc._organization.id !== 0" class="p-inputgroup-addon cursor-pointer"
+                    (click)="viewOrg()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-files" viewBox="0 0 16 16">
                         <path
@@ -68,9 +69,9 @@
         <div class="p-field">
             <label for="type_name">Тип справки <span style="color: red;">*</span></label>
             <div class="card flex justify-content-center" style="margin: 0; width: 100%;">
-                <p-dropdown id="type_name" [options]="spravkatypes" placeholder="Выберите тип"
-                    optionLabel="type_izm_name" optionValue="_type_izm_doc" appendTo="body" (onClick)="gettypespr()"
-                    [(ngModel)]="utvDetail.doc._type_izm_doc" formControlName="type_name">
+                <p-dropdown id="type_name" [options]="utvDetail.typesdoc" placeholder="Выберите тип"
+                    optionLabel="name_rus" optionValue="id" appendTo="body" [(ngModel)]="utvDetail.doc._type_izm_doc.id"
+                    formControlName="type_name">
                 </p-dropdown>
             </div>
         </div>
@@ -159,7 +160,7 @@
                                     d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
                             </svg>
                         </span>
-                        <span class="p-inputgroup-addon" (click)="editClassification(izm.ri)">...</span>
+                        <span class="p-inputgroup-addon" (click)="editClassification(ri)">...</span>
                     </div>
                 </td>
                 <td style="text-align:center; font-weight: 700;">
@@ -173,7 +174,7 @@
                 <td rowspan="3" style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
-                            (click)="onDelete(izm.ri, izm.classification_name)"></button>
+                            (click)="onDelete(izm.ri, izm._classification.name_rus)"></button>
                     </div>
                 </td>
             </tr>
@@ -187,9 +188,6 @@
                         <input type="number" (change)="sumColumn(izm, i)" [(ngModel)]="izm['sm' + i]"
                             style="text-align:right; width: 100%;">
                     </td>
-                    <!-- <td style="text-align:center; max-width: 7em; min-width: 7em">
-
-                        {{izm['sm' + i]}}</td> -->
                 </ng-container>
             </tr>
             <tr>

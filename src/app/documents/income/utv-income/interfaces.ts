@@ -1,15 +1,14 @@
+import { Budjet_detail } from "src/app/directory/income/budjet/interfaces"
 import { classsification_income } from "src/app/directory/income/classification-income/interfaces"
 import { organization_detail } from "src/app/directory/organization/interfaces"
 
 export interface utv_income_doc {
     id: number,
-    org_name: string,
-    budjet_name: string,
     nom: string,
     _date: string,
     deleted: boolean,
     _organization: organization_detail,
-    _budjet: number
+    _budjet: Budjet_detail
 }
 
 export interface utv_income_doc_tab {

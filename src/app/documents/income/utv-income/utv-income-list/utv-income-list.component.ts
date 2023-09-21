@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { MainComponent } from 'src/app/main/main.component'
 import { utv_income_doc, utv_income_list } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
 
@@ -12,20 +13,25 @@ import { UtvIncomeService } from '../utv_income.service';
 })
 export class UtvIncomeListComponent implements OnInit {
 
+  first = 0
+  rows = 25
+
   constructor(
     private utvListService: UtvIncomeService,
     private utvListref: DynamicDialogRef,
     private utvListconfirm: ConfirmationService,
     private utvListdialog: DialogService,
     private utvListmessage: MessageService,
-  ) { }
+    private MainComponent: MainComponent,
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+  }
 
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
   utvList$: Observable<utv_income_list>
   searchutvList = ''
-  first = 0
-  rows = 25
   windowHeight: number
 
   @HostListener('window:resize', ['$event'])
@@ -35,7 +41,7 @@ export class UtvIncomeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUtvList(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
@@ -45,11 +51,12 @@ export class UtvIncomeListComponent implements OnInit {
   closeform() {
     this.closeEvent.emit()
   }
-  
+
   fetchUtvList() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchutvList
     }
 
     this.utvList$ = this.utvListService.fetch(params)

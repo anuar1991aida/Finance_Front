@@ -59,51 +59,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     name_rus: ''
   }
 
-  utvDetail: utv_income_detail = {
-    doc: {
-      id: 0,
-      org_name: '',
-      budjet_name: '',
-      nom: '',
-      _date: '',
-      deleted: false,
-      _organization: {
-        id: 0,
-        bin: '',
-        name_kaz: '',
-        name_rus: '',
-        adress: '',
-        _budjet: this.budj_det
-      },
-      _budjet: 0
-    },
-    tbl1: [{
-      id: 0,
-      deleted: false,
-      god: 0,
-      sm1: 0,
-      sm2: 0,
-      sm3: 0,
-      sm4: 0,
-      sm5: 0,
-      sm6: 0,
-      sm7: 0,
-      sm8: 0,
-      sm9: 0,
-      sm10: 0,
-      sm11: 0,
-      sm12: 0,
-      _date: '',
-      _organization: 0,
-      _utv_inc: 0,
-      _classification: {
-        id: 0,
-        code: '',
-        name_kaz: '',
-        name_rus: ''
-      }
-    }]
-  }
+  utvDetail: utv_income_detail
   responce: any
   hashBegin = ''
   hashEnd = ''
@@ -126,7 +82,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      number_doc: new FormControl(null, [Validators.required]),
+      number_doc: new FormControl(null, []),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required]),
       // budjet_name: new FormControl(null, [Validators.required])
@@ -137,9 +93,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.utvDetail = detail,
-              this.calculate(),
-              console.log(detail)
-
+              this.calculate()
           }
         )
     }
@@ -147,8 +101,6 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       this.utvDetail = {
         doc: {
           id: 0,
-          org_name: '',
-          budjet_name: '',
           nom: '',
           _date: '',
           deleted: false,
@@ -160,7 +112,13 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
             adress: '',
             _budjet: this.budj_det
           },
-          _budjet: 0
+          _budjet: {
+            adress: '',
+            id: 0,
+            code: '',
+            name_kaz: '',
+            name_rus: ''
+          }
         },
         tbl1: [{
           id: 0,
@@ -332,11 +290,14 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   saveDoc(close: boolean): void {
     let responce: any
 
-    this.utvDetailService.saveUtv(this.utvDetail)
+    this.utvDetailService
+      .saveUtv(this.utvDetail)
       .subscribe(
         (data) => (
           this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          responce = data, this.utvDetail = responce, this.closeaftersave(close)
+          responce = data,
+          this.utvDetail = responce,
+          this.closeaftersave(close)
         ),
         (error) => (
           this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
@@ -344,24 +305,26 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       )
   }
 
-  onDelete(classification_id: number, classification_name: string) {
+  onDelete(_classification: classsification_income) {
+
     this.utvDetailconfirm.confirm({
-      message: 'Вы действительно хотите удалить ' + classification_name + '?',
+      message: 'Вы действительно хотите удалить ' + _classification.name_rus + '?',
       header: 'Удаление классификации',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         for (let i = this.utvDetail.tbl1.length - 1; i >= 0; i--) {
-          let index = this.utvDetail.tbl1.findIndex(item => classification_id === item._classification.id)
+          let index = this.utvDetail.tbl1.findIndex(item => _classification.id === item._classification.id)
           if (index !== -1) {
             this.utvDetail.tbl1.splice(index, 1)
           }
         }
         this.utvDetailconfirm.close()
+        this.calculate()
       },
       reject: () => {
         this.utvDetailconfirm.close();
       }
-    });
+    })
   }
 
   viewOrg() {
@@ -402,8 +365,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   }
 
   toLocaleDate(dateForStr: string) {
-    return new Date(dateForStr).toLocaleDateString()
-    // + ' ' + new Date(dateForStr).toLocaleTimeString()
+    return new Date(dateForStr).toLocaleDateString() + ' ' + new Date(dateForStr).toLocaleTimeString()
   }
 
   closeaftersave(close: boolean) {

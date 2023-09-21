@@ -185,7 +185,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      number_doc: new FormControl(null, [Validators.required]),
+      number_doc: new FormControl(null),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required])
     })
@@ -199,6 +199,10 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
               this.addFKRtoArray()
           }
         )
+    }
+    else {
+      this.utvDetail.obligats.splice(0, this.utvDetail.obligats.length)
+      this.utvDetail.payments.splice(0, this.utvDetail.payments.length)
     }
 
     let objString = JSON.stringify(this.utvDetail)
@@ -382,7 +386,8 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   saveDoc(close: boolean) {
-    this.utvDetailService.saveUtv(this.utvDetail)
+    this.utvDetailService
+      .saveUtv(this.utvDetail)
       .subscribe(
         (data) => (this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
           this.closeaftersave(close)

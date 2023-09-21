@@ -138,8 +138,8 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('app-utv-exp-doc-list', 'Утвержденный план по расходам', '')
               },
               {
-                label: 'Изменения плана по платежам',
-                command: () => this.openTab('app-izm-plateji-list', 'Изменения плана по платежам', '')
+                label: 'Изменения плана по расходам',
+                command: () => this.openTab('app-izm-plateji-list', 'Изменения плана по расходам', '')
               }]
             }
           ],

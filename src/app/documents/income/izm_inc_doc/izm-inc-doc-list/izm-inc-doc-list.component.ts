@@ -36,7 +36,7 @@ export class IzmIncDocListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetch_doc_izm(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
@@ -58,7 +58,8 @@ export class IzmIncDocListComponent implements OnInit {
 
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchIzmInc,
     }
 
     this.doc_izm$ = this.IzmListService.fetch(params)

@@ -22,15 +22,15 @@
 
 <div class="card" *ngIf="(izmPlatezhiDetail) as izmPlatezhiDetail; else loader">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
-        <div class="p-field" style="padding-right: 10px;">
-            <label for="number_doc">Номер <span style="color: red;">*</span></label>
+        <div *ngIf="izmPlatezhiDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер</label>
             <div class="p-inputgroup">
                 <input id="number_doc" type="text" pInputText [(ngModel)]="izmPlatezhiDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
-            <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
+            <!-- <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
                 <span *ngIf="form.controls['number_doc'].errors?.required">Номер не должен быть пустым</span>
-            </span>
+            </span> -->
         </div>
 
         <div class="p-field" style="padding-right: 10px;">
@@ -51,7 +51,8 @@
             <div class="p-inputgroup">
                 <input id="org_name" type="text" pInputText [(ngModel)]="izmPlatezhiDetail.doc._organization.name_rus"
                     formControlName="org_name" />
-                <span class="p-inputgroup-addon cursor-pointer" (click)="viewOrg()">
+                <span *ngIf="izmPlatezhiDetail.doc._organization.id !== 0" class="p-inputgroup-addon cursor-pointer"
+                    (click)="viewOrg()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-files" viewBox="0 0 16 16">
                         <path
@@ -69,8 +70,8 @@
             <label for="type_name">Тип справки <span style="color: red;">*</span></label>
             <div class="card flex justify-content-center" style="margin: 0; width: 100%;">
                 <p-dropdown id="type_name" [options]="spravkatypes" placeholder="Выберите тип" optionLabel="name_rus"
-                    optionValue="id" appendTo="body" (onClick)="gettypespr()"
-                    [(ngModel)]="izmPlatezhiDetail.doc._type_izm_doc" formControlName="type_name">
+                    optionValue="name_rus" appendTo="body" [(ngModel)]="izmPlatezhiDetail.doc._type_izm_doc"
+                    formControlName="type_name">
                 </p-dropdown>
             </div>
         </div>
@@ -82,10 +83,7 @@
         </div>
     </ng-template>
 </div>
-<!-- <div style="padding: 0 0 10px 10px;">
-        <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
-            (click)="addClassification()"></button>
-    </div> -->
+
 <p-splitter [panelSizes]="[15, 85]" styleClass="mb-5">
     <ng-template pTemplate>
         <div style="width: 100%;">
@@ -184,7 +182,7 @@
                                 <td rowspan="3" style="text-align:center; width: 30%;">
                                     <div class="p-inputgroup w-full">
                                         <input pInputText [readOnly]="true"
-                                            [ngModel]="izm._fkr.code + ' ' + izm._fkr.name_rus" />
+                                            [ngModel]="izm._spec.code + ' ' + izm._spec.name_rus" />
                                         <span class="p-inputgroup-addon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
@@ -207,7 +205,8 @@
                                     style="padding: 0; margin:0;">
                                     <div class="flex align-items-center justify-content-center gap-2">
                                         <button pButton pRipple type="button" icon="pi pi-trash"
-                                            class="p-button-rounded p-button-text"></button>
+                                            class="p-button-rounded p-button-text"
+                                            (click)="onDelete(izm, true)"></button>
                                     </div>
                                 </td>
                             </tr>
@@ -304,7 +303,7 @@
                                 <td rowspan="3" style="text-align:center; width: 30%;">
                                     <div class="p-inputgroup w-full">
                                         <input pInputText [readOnly]="true"
-                                            [ngModel]="izm._fkr.code + ' ' + izm._fkr.name_rus" />
+                                            [ngModel]="izm._spec.code + ' ' + izm._spec.name_rus" />
                                         <span class="p-inputgroup-addon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
@@ -327,7 +326,8 @@
                                     style="padding: 0; margin:0;">
                                     <div class="flex align-items-center justify-content-center gap-2">
                                         <button pButton pRipple type="button" icon="pi pi-trash"
-                                            class="p-button-rounded p-button-text"></button>
+                                            class="p-button-rounded p-button-text"
+                                            (click)="onDelete(izm, false)"></button>
                                     </div>
                                 </td>
                             </tr>

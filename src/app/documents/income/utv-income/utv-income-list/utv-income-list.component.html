@@ -15,8 +15,8 @@
                 styleClass="p-button-sm" (click)="fetchUtvList()"></button>
         </div>
         <div>
-          <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
-            (click)="closeform()"></button>
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
+                (click)="closeform()"></button>
         </div>
     </div>
 </p-toolbar>
@@ -59,10 +59,10 @@
                     {{utvList._date}}
                 </td>
                 <td>
-                    {{utvList.org_name}}
+                    {{utvList._organization.name_rus}}
                 </td>
                 <td>
-                    {{utvList.budjet_name}}
+                    {{utvList._budjet.name_rus}}
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">

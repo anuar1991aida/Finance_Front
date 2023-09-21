@@ -10,6 +10,7 @@ import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
 import { specification_income_detail } from 'src/app/directory/income/specification-income/interfaces';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
+import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
 import { IzmIncomeService } from 'src/app/documents/income/izm_inc_doc/izm_income.service';
 import { izm_plateji_detail } from '../interfaces';
 import { IzmPlatezhiService } from '../izm-plateji.services';
@@ -20,8 +21,6 @@ import { IzmPlatezhiService } from '../izm-plateji.services';
   styleUrls: ['./izm-plateji-detail.component.css']
 })
 export class IzmPlatejiDetailComponent implements OnInit {
-
-
   constructor(
     private izmDetailService: IzmIncomeService,
     private izmPlatezhiDetailService: IzmPlatezhiService,
@@ -75,7 +74,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      number_doc: new FormControl(null, [Validators.required]),
+      number_doc: new FormControl(null),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required]),
       type_name: new FormControl(null, [Validators.required])
@@ -202,6 +201,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
       }
 
       this.izmPlatezhiDetail.payments.splice(0, this.izmPlatezhiDetail.payments.length)
+      this.izmPlatezhiDetail.obligats.splice(0, this.izmPlatezhiDetail.obligats.length)
     }
 
     let objString = JSON.stringify(this.izmPlatezhiDetail)
@@ -240,33 +240,51 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   gettypespr() {
-    // if (this.spravkatypes.length == 0) {
-    //   this.izmDetailService.gettypespr()
-    //     .subscribe(
-    //       (data) => (
-    //         this.spravkatypes = data
-    //       )
-    //     )
-    // }
+    if (this.spravkatypes.length == 0) {
+      this.izmDetailService.gettypespr()
+        .subscribe(
+          (data) => (
+            this.spravkatypes = data
+          )
+        )
+    }
   }
 
-  delSpec(utv: any) {
 
-    for (let i = this.izmPlatezhiDetail.obligats.length - 1; i >= 0; i--) {
-      let index = this.izmPlatezhiDetail.obligats.findIndex(item => utv.id === item.id)
-      if (index !== -1) {
-        this.izmPlatezhiDetail.obligats.splice(index, 1)
+  onDelete(izm: any, payments: boolean) {
+    this.izmPlatezhiDetailconfirm.confirm({
+      message: 'Вы действительно хотите удалить ' + izm._spec.name_rus + '?',
+      header: 'Удаление классификации',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.delSpec(izm, payments)
+      },
+      reject: () => {
+        this.izmPlatezhiDetailconfirm.close()
       }
-    }
-    for (let i = this.izmPlatezhiDetail.payments.length - 1; i >= 0; i--) {
-      let index = this.izmPlatezhiDetail.payments.findIndex(item => utv.id === item.id)
-      if (index !== -1) {
-        this.izmPlatezhiDetail.payments.splice(index, 1)
+    })
+  }
+
+  delSpec(izm: any, payments: boolean) {
+    if (payments) {
+      for (let i = this.izmPlatezhiDetail.payments.length - 1; i >= 0; i--) {
+        let index = this.izmPlatezhiDetail.payments.findIndex(item => izm._spec.id === item._spec.id)
+        if (index !== -1) {
+          this.izmPlatezhiDetail.payments.splice(index, 1)
+        }
       }
+      this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == izm._fkr.id)
     }
 
-    this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == utv._fkr.id)
-    this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == utv._fkr.id)
+    else {
+      for (let i = this.izmPlatezhiDetail.obligats.length - 1; i >= 0; i--) {
+        let index = this.izmPlatezhiDetail.obligats.findIndex(item => izm._spec.id === item._spec.id)
+        if (index !== -1) {
+          this.izmPlatezhiDetail.obligats.splice(index, 1)
+        }
+      }
+      this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == izm._fkr.id)
+    }
 
     this.addFKRtoArray()
   }
@@ -300,43 +318,63 @@ export class IzmPlatejiDetailComponent implements OnInit {
           width: '60%',
           height: '80%'
         })
-      this.izmPlatezhiDetailref.onClose.subscribe((spec_detail: specification_income_detail) => {
-        if (spec_detail) {
-          if (payments)
-            this.pushArray(fkr_detail, spec_detail, this.izmPlatezhiDetail.payments)
-          this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == fkr_detail.id)
+
+      this.izmPlatezhiDetailref
+        .onClose.subscribe((spec_detail: specification_income_detail) => {
+          if (spec_detail) {
+            if (payments) {
+              let mass = [{
+                '_organizations': this.izmPlatezhiDetail.doc._organization.id,
+                '_fkr': fkr_detail.id,
+                '_spec': spec_detail.id,
+                '_date': this.izmPlatezhiDetail.doc._date,
+                'table': 'pay'
+              }
+              ]
+
+              this.izmPlatezhiDetailService
+                .get_ostatok_expenses(mass)
+                .subscribe(
+                  (detail) => {
+                    this.izmPlatezhiDetail.payments.push(detail)
+                  })
+              // this.pushArray(fkr_detail, spec_detail, this.izmPlatezhiDetail.payments)
+              this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == fkr_detail.id)
+              // this.getExp(fkr_detail, spec_detail, 'pay')
+            }
+            else {
+              let mass = [{
+                '_organizations': this.izmPlatezhiDetail.doc._organization.id,
+                '_fkr': fkr_detail.id,
+                '_spec': spec_detail.id,
+                '_date': this.izmPlatezhiDetail.doc._date,
+                'table': 'obl'
+              }
+              ]
+
+              this.izmPlatezhiDetailService
+                .get_ostatok_expenses(mass)
+                .subscribe(
+                  (detail) => {
+                    this.izmPlatezhiDetail.payments.push(detail)
+                  })
+              // this.pushArray(fkr_detail, spec_detail, this.izmPlatezhiDetail.obligats)
+              this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == fkr_detail.id)
+            }
+          }
         }
-      }
-      )
+        )
     }
     else {
       this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите ФКР!' })
       return
-
     }
   }
 
-  addSpecToObligats(fkr_detail: fkr_detail) {
-    if (fkr_detail !== undefined) {
-      this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(SpecificationExpSelectComponent,
-        {
-          header: 'Выбор спецификации',
-          width: '60%',
-          height: '80%'
-        })
-      this.izmPlatezhiDetailref.onClose.subscribe((spec_detail: specification_income_detail) => {
-        if (spec_detail) {
-          this.pushArray(fkr_detail, spec_detail, this.izmPlatezhiDetail.obligats)
-          this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == fkr_detail.id)
-        }
-      }
-      )
-    }
-    else {
-      this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите ФКР!' })
-      return
+  getExp(kr_detail: fkr_detail, spec_detail: specification_income_detail, tab: string) {
 
-    }
+
+
   }
 
   pushArray(fkr_detail: fkr_detail, spec_detail: specification_income_detail, tab: any) {
@@ -433,11 +471,42 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean) {
+    this.izmPlatezhiDetailService.saveUtv(this.izmPlatezhiDetail)
+      .subscribe(
+        (data) => (this.izmPlatezhiDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          this.closeaftersave(close)
+        ),
+        (error) => (
+          this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+        )
+      )
+  }
 
+  closeaftersave(close: boolean) {
+    let objString = JSON.stringify(this.izmPlatezhiDetail)
+    this.hashEnd = SHA256(objString).toString()
+
+    this.hashBegin = this.hashEnd
+
+    if (close) {
+      this.closeEvent.emit()
+    }
   }
 
   selectOrg() {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(OrganizationSelectComponent,
+      {
+        header: 'Выбор организации',
+        width: '60%',
+        height: '80%'
+      })
 
+    this.izmPlatezhiDetailref.onClose.subscribe((org: organization_detail) => {
+      if (org) {
+        this.izmPlatezhiDetail.doc._organization.id = org.id,
+          this.izmPlatezhiDetail.doc._organization.name_rus = org.name_rus
+      }
+    })
   }
 
   viewOrg() {
@@ -467,28 +536,28 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
   closeform(close: boolean) {
 
-    // let objString = JSON.stringify(this.utvDetail)
-    // this.hashEnd = SHA256(objString).toString()
+    let objString = JSON.stringify(this.izmPlatezhiDetail)
+    this.hashEnd = SHA256(objString).toString()
 
-    // if (close) {
-    //   if (this.hashBegin == this.hashEnd) {
-    //     this.closeEvent.emit()
-    //   }
-    //   else {
-    //     this.utvDetailconfirm.confirm({
-    //       message: 'Данные были изменены. Закрыть документ?',
-    //       header: 'Закрытие',
-    //       icon: 'pi pi-exclamation-triangle',
-    //       accept: () => {
-    //         this.closeEvent.emit()
-    //         this.utvDetailconfirm.close()
-    //       },
-    //       reject: () => {
-    //         this.utvDetailconfirm.close()
-    //       }
-    //     })
-    //   }
-    // }
+    if (close) {
+      if (this.hashBegin == this.hashEnd) {
+        this.closeEvent.emit()
+      }
+      else {
+        this.izmPlatezhiDetailconfirm.confirm({
+          message: 'Данные были изменены. Закрыть документ?',
+          header: 'Закрытие',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.closeEvent.emit()
+            this.izmPlatezhiDetailconfirm.close()
+          },
+          reject: () => {
+            this.izmPlatezhiDetailconfirm.close()
+          }
+        })
+      }
+    }
   }
 
 }

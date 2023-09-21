@@ -47,9 +47,7 @@ export interface izm_inc_doc {
   nom: string,
   _date: string,
   deleted: boolean,
-  _organization: organization_detail,
-  _budjet: number,
-  budjet_name: string,
+  _organization: organization_detail
   _type_izm_doc: type_izm_doc
 }
 
@@ -62,7 +60,7 @@ export interface type_izm_doc {
 export interface izm_inc_doc_detail {
   doc: izm_inc_doc,
   tbl1: [izm_inc_doc_tab]
-
+  typesdoc: [type_izm_doc]
 }
 
 export interface izm_inc_doc_list {

@@ -22,15 +22,15 @@
 
 <div class="card" *ngIf="(utvDetail) as utvDetail; else loader">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
-        <div class="p-field" style="padding-right: 10px;">
-            <label for="number_doc">Номер <span style="color: red;">*</span></label>
+        <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер </label>
             <div class="p-inputgroup">
                 <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
-            <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
+            <!-- <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
                 <span *ngIf="form.controls['number_doc'].errors?.required">Номер не должен быть пустым</span>
-            </span>
+            </span> -->
         </div>
 
         <div class="p-field" style="padding-right: 10px;">
@@ -51,7 +51,8 @@
             <div class="p-inputgroup">
                 <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc._organization.name_rus"
                     formControlName="org_name" />
-                <span class="p-inputgroup-addon cursor-pointer" (click)="viewOrg()">
+                <span *ngIf="utvDetail.doc._organization.id !== 0" class="p-inputgroup-addon cursor-pointer"
+                    (click)="viewOrg()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-files" viewBox="0 0 16 16">
                         <path
