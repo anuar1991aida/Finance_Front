@@ -24,7 +24,8 @@ export interface izm_plateji_doc_list {
 export interface izm_plateji_detail {
     doc: izm_plateji_doc,
     payments: [izm_plateji_table],
-    obligats: [izm_plateji_table]
+    obligats: [izm_plateji_table],
+    typesdoc: [type_izm_doc]
 }
 
 export interface izm_plateji_table {

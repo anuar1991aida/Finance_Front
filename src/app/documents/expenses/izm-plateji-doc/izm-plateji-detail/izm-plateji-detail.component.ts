@@ -39,7 +39,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
   obligats: any = []
   payments: any = []
   spravkatypes: any = []
-  izmPlatezhiDetail: izm_plateji_detail
+  izmPlatezhiDetail!: izm_plateji_detail
   responce: any
   nochanged = true
   hashBegin = ''
@@ -80,8 +80,6 @@ export class IzmPlatejiDetailComponent implements OnInit {
       type_name: new FormControl(null, [Validators.required])
     })
 
-    this.gettypespr()
-
     if (this.izm_inc_id !== '') {
       this.izmPlatezhiDetailService.fetch_detail(this.izm_inc_id)
         .subscribe(
@@ -91,117 +89,27 @@ export class IzmPlatejiDetailComponent implements OnInit {
               this.obligats = this.izmPlatezhiDetail.obligats,
               this.addFKRtoArray()
             // this.calculatetot()
+          },
+          (error) => {
+            this.izmPlatezhiDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
           }
         )
     }
     else {
-      this.izmPlatezhiDetail = {
-        doc: {
-          id: 0,
-          nom: '',
-          _date: '',
-          deleted: false,
-          doc_hash: '',
-          _organization: {
-            id: 0,
-            bin: '',
-            name_kaz: '',
-            name_rus: '',
-            adress: '',
-            _budjet: this.budj_det
+      this.izmPlatezhiDetailService.fetch_detail('0')
+        .subscribe(
+          (detail) => {
+            this.izmPlatezhiDetail = detail
+            this.izmPlatezhiDetail.payments.splice(0, this.izmPlatezhiDetail.payments.length)
+            this.izmPlatezhiDetail.obligats.splice(0, this.izmPlatezhiDetail.obligats.length)
           },
-          _type_izm_doc: {
-            id: 0,
-            name_kaz: '',
-            name_rus: ''
-          }
-        },
-        payments: [{
-          id: 0,
-          _fkr: this.fkr_detail,
-          _spec: this.spec_detail,
-          sm1: 0,
-          sm2: 0,
-          sm3: 0,
-          sm4: 0,
-          sm5: 0,
-          sm6: 0,
-          sm7: 0,
-          sm8: 0,
-          sm9: 0,
-          sm10: 0,
-          sm11: 0,
-          sm12: 0,
-          utv1: 0,
-          utv2: 0,
-          utv3: 0,
-          utv4: 0,
-          utv5: 0,
-          utv6: 0,
-          utv7: 0,
-          utv8: 0,
-          utv9: 0,
-          utv10: 0,
-          utv11: 0,
-          utv12: 0,
-          itog1: 0,
-          itog2: 0,
-          itog3: 0,
-          itog4: 0,
-          itog5: 0,
-          itog6: 0,
-          itog7: 0,
-          itog8: 0,
-          itog9: 0,
-          itog10: 0,
-          itog11: 0,
-          itog12: 0
-        }],
-        obligats: [{
-          id: 0,
-          _fkr: this.fkr_detail,
-          _spec: this.spec_detail,
-          sm1: 0,
-          sm2: 0,
-          sm3: 0,
-          sm4: 0,
-          sm5: 0,
-          sm6: 0,
-          sm7: 0,
-          sm8: 0,
-          sm9: 0,
-          sm10: 0,
-          sm11: 0,
-          sm12: 0,
-          utv1: 0,
-          utv2: 0,
-          utv3: 0,
-          utv4: 0,
-          utv5: 0,
-          utv6: 0,
-          utv7: 0,
-          utv8: 0,
-          utv9: 0,
-          utv10: 0,
-          utv11: 0,
-          utv12: 0,
-          itog1: 0,
-          itog2: 0,
-          itog3: 0,
-          itog4: 0,
-          itog5: 0,
-          itog6: 0,
-          itog7: 0,
-          itog8: 0,
-          itog9: 0,
-          itog10: 0,
-          itog11: 0,
-          itog12: 0
-        }]
-      }
-
-      this.izmPlatezhiDetail.payments.splice(0, this.izmPlatezhiDetail.payments.length)
-      this.izmPlatezhiDetail.obligats.splice(0, this.izmPlatezhiDetail.obligats.length)
+          (error) => {
+            this.izmPlatezhiDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
+          })
     }
 
     let objString = JSON.stringify(this.izmPlatezhiDetail)
@@ -290,6 +198,17 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   addFKR() {
+
+    if (this.izmPlatezhiDetail.doc._date == '') {
+      this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Заполните дату!' })
+      return
+    }
+
+    if (this.izmPlatezhiDetail.doc._organization.id == 0) {
+      this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
+      return
+    }
+
     this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(FkrSelectComponent,
       {
         header: 'Выбор ФКР',
@@ -311,6 +230,17 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   addSpec(fkr_detail: fkr_detail, payments: boolean) {
+
+    if (this.izmPlatezhiDetail.doc._date == '') {
+      this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Заполните дату!' })
+      return
+    }
+
+    if (this.izmPlatezhiDetail.doc._organization.id == 0) {
+      this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
+      return
+    }
+
     if (fkr_detail !== undefined) {
       this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(SpecificationExpSelectComponent,
         {
@@ -323,43 +253,41 @@ export class IzmPlatejiDetailComponent implements OnInit {
         .onClose.subscribe((spec_detail: specification_income_detail) => {
           if (spec_detail) {
             if (payments) {
-              let mass = [{
-                '_organizations': this.izmPlatezhiDetail.doc._organization.id,
+              let mass = {
+                '_organization': this.izmPlatezhiDetail.doc._organization.id,
                 '_fkr': fkr_detail.id,
                 '_spec': spec_detail.id,
                 '_date': this.izmPlatezhiDetail.doc._date,
                 'table': 'pay'
               }
-              ]
+
 
               this.izmPlatezhiDetailService
                 .get_ostatok_expenses(mass)
                 .subscribe(
                   (detail) => {
                     this.izmPlatezhiDetail.payments.push(detail)
+                    this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == fkr_detail.id)
                   })
-              // this.pushArray(fkr_detail, spec_detail, this.izmPlatezhiDetail.payments)
-              this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == fkr_detail.id)
-              // this.getExp(fkr_detail, spec_detail, 'pay')
             }
             else {
-              let mass = [{
-                '_organizations': this.izmPlatezhiDetail.doc._organization.id,
+              let mass = {
+                '_organization': this.izmPlatezhiDetail.doc._organization.id,
                 '_fkr': fkr_detail.id,
                 '_spec': spec_detail.id,
                 '_date': this.izmPlatezhiDetail.doc._date,
                 'table': 'obl'
               }
-              ]
+
 
               this.izmPlatezhiDetailService
                 .get_ostatok_expenses(mass)
                 .subscribe(
                   (detail) => {
-                    this.izmPlatezhiDetail.payments.push(detail)
+                    this.izmPlatezhiDetail.obligats.push(detail)
+                    this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == fkr_detail.id)
                   })
-              // this.pushArray(fkr_detail, spec_detail, this.izmPlatezhiDetail.obligats)
-              this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == fkr_detail.id)
+
             }
           }
         }
@@ -369,12 +297,6 @@ export class IzmPlatejiDetailComponent implements OnInit {
       this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите ФКР!' })
       return
     }
-  }
-
-  getExp(kr_detail: fkr_detail, spec_detail: specification_income_detail, tab: string) {
-
-
-
   }
 
   pushArray(fkr_detail: fkr_detail, spec_detail: specification_income_detail, tab: any) {
@@ -468,6 +390,16 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
     this._lastfkr = _fkr.id
 
+  }
+
+  selectFKR(_fkr: fkr_detail): string {
+
+    if (!this.allrecord) {
+      return 'yellow-class'
+    }
+    else {
+      return ''
+    }
   }
 
   saveDoc(close: boolean) {

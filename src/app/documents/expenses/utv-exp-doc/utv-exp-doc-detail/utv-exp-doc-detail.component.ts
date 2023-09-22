@@ -197,12 +197,23 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
               this.obligats = this.utvDetail.obligats,
               this.payments = this.utvDetail.payments,
               this.addFKRtoArray()
+          },
+          (error) => {
+            this.utvDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
           }
         )
     }
     else {
-      this.utvDetail.obligats.splice(0, this.utvDetail.obligats.length)
-      this.utvDetail.payments.splice(0, this.utvDetail.payments.length)
+      this.utvDetailService.fetch_detail(0)
+        .subscribe(
+          (detail) => {
+            this.utvDetail = detail
+            this.utvDetail.obligats.splice(0, this.utvDetail.obligats.length)
+            this.utvDetail.payments.splice(0, this.utvDetail.payments.length)
+          }
+        )
     }
 
     let objString = JSON.stringify(this.utvDetail)

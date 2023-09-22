@@ -128,89 +128,25 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
           (detail) => {
             this.izmDetail = detail,
               this.calculatetot()
+          },
+          (error) => {
+            this.izmDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
           }
         )
     }
     else {
-      let responce: any;
-      this.izmDetail = {
-        doc: {
-          id: 0,
-          nom: '',
-          _date: '',
-          deleted: false,
-          _organization: {
-            id: 0,
-            bin: '',
-            name_kaz: '',
-            name_rus: '',
-            adress: '',
-            _budjet: this.budj_det
-          },
-          _type_izm_doc: {
-            id: 0,
-            name_kaz: '',
-            name_rus: ''
-          }
-        },
-        tbl1: [{
-          id: 0,
-          sm1: 0,
-          sm2: 0,
-          sm3: 0,
-          sm4: 0,
-          sm5: 0,
-          sm6: 0,
-          sm7: 0,
-          sm8: 0,
-          sm9: 0,
-          sm10: 0,
-          sm11: 0,
-          sm12: 0,
-          utv1: 0,
-          utv2: 0,
-          utv3: 0,
-          utv4: 0,
-          utv5: 0,
-          utv6: 0,
-          utv7: 0,
-          utv8: 0,
-          utv9: 0,
-          utv10: 0,
-          utv11: 0,
-          utv12: 0,
-          itog1: 0,
-          itog2: 0,
-          itog3: 0,
-          itog4: 0,
-          itog5: 0,
-          itog6: 0,
-          itog7: 0,
-          itog8: 0,
-          itog9: 0,
-          itog10: 0,
-          itog11: 0,
-          itog12: 0,
-          _classification: {
-            id: 0,
-            code: '',
-            name_kaz: '',
-            name_rus: ''
-          }
-
-        }],
-        typesdoc: [{
-          id: 0,
-          name_kaz: '',
-          name_rus: ''
-        }]
-      }
       this.izmDetailService
-        .gettypespr()
+        .fetch_detail('0')
         .subscribe(
           (detail) => {
-            responce = detail,
-              this.izmDetail.typesdoc = responce
+            this.izmDetail = detail
+          },
+          (error) => {
+            this.izmDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
           }
         )
       this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)

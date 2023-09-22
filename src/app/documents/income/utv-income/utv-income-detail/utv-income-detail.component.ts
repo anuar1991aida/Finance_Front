@@ -94,59 +94,26 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
           (detail) => {
             this.utvDetail = detail,
               this.calculate()
+          },
+          (error) => {
+            this.utvDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
           }
         )
     }
     else {
-      this.utvDetail = {
-        doc: {
-          id: 0,
-          nom: '',
-          _date: '',
-          deleted: false,
-          _organization: {
-            id: 0,
-            bin: '',
-            name_kaz: '',
-            name_rus: '',
-            adress: '',
-            _budjet: this.budj_det
+      this.utvDetailService.fetch_detail('0')
+        .subscribe(
+          (detail) => {
+            this.utvDetail = detail
           },
-          _budjet: {
-            adress: '',
-            id: 0,
-            code: '',
-            name_kaz: '',
-            name_rus: ''
+          (error) => {
+            this.utvDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
           }
-        },
-        tbl1: [{
-          id: 0,
-          deleted: false,
-          god: 0,
-          sm1: 0,
-          sm2: 0,
-          sm3: 0,
-          sm4: 0,
-          sm5: 0,
-          sm6: 0,
-          sm7: 0,
-          sm8: 0,
-          sm9: 0,
-          sm10: 0,
-          sm11: 0,
-          sm12: 0,
-          _date: '',
-          _organization: 0,
-          _utv_inc: 0,
-          _classification: {
-            id: 0,
-            code: '',
-            name_kaz: '',
-            name_rus: ''
-          }
-        }]
-      }
+        )
 
       this.utvDetail.tbl1.splice(0, this.utvDetail.tbl1.length)
     }

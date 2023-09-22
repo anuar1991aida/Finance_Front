@@ -69,9 +69,9 @@
         <div class="p-field">
             <label for="type_name">Тип справки <span style="color: red;">*</span></label>
             <div class="card flex justify-content-center" style="margin: 0; width: 100%;">
-                <p-dropdown id="type_name" [options]="spravkatypes" placeholder="Выберите тип" optionLabel="name_rus"
-                    optionValue="name_rus" appendTo="body" [(ngModel)]="izmPlatezhiDetail.doc._type_izm_doc"
-                    formControlName="type_name">
+                <p-dropdown id="type_name" [options]="izmPlatezhiDetail.typesdoc" placeholder="Выберите тип"
+                    optionLabel="name_rus" optionValue="id" appendTo="body"
+                    [(ngModel)]="izmPlatezhiDetail.doc._type_izm_doc.id" formControlName="type_name">
                 </p-dropdown>
             </div>
         </div>
@@ -100,7 +100,7 @@
                                 <th style="text-align:center">Программа</th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-utv let-ri="rowIndex">
+                        <ng-template pTemplate="body" let-utv>
                             <tr class="cursor-pointer">
                                 <td (dblclick)="filterFKR(utv)">
                                     {{utv.code}}
