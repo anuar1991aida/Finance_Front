@@ -15,7 +15,7 @@ export class AuthService {
 
     private auth_token = ''
 
-    host = "http://192.168.10.237:8000/"
+    host = "http://192.168.5.27:8000/"
 
     login(user: User): Observable<{ auth_token: string }> {
         return this.http.post<{ auth_token: string }>
