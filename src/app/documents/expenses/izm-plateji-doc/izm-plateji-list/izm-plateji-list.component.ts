@@ -41,7 +41,8 @@ export class IzmPlatejiListComponent implements OnInit {
   fetchIzmPlatList() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchizmList
     }
 
     this.izmplatList$ = this.izmplatListService.fetch(params)
@@ -86,7 +87,7 @@ export class IzmPlatejiListComponent implements OnInit {
   }
 
   onRowEdit(izm_plateji: izm_plateji_doc) {
-    this.newItemEvent.emit({ params: { selector: 'app-izm-plateji-detail', nomer: 'Изменения плана по платежам ' + izm_plateji.nom, id: izm_plateji.id } });
+    this.newItemEvent.emit({ params: { selector: 'app-izm-plateji-detail', nomer: 'Изменения плана по расходам ' + izm_plateji.nom, id: izm_plateji.id } });
   }
 
   onPageChange(event: any) {
@@ -96,7 +97,7 @@ export class IzmPlatejiListComponent implements OnInit {
   }
 
   NewDoc() {
-    this.newItemEvent.emit({ params: { selector: 'app-izm-plateji-detail', nomer: 'Изменения плана по платежам ', id: '' } });
+    this.newItemEvent.emit({ params: { selector: 'app-izm-plateji-detail', nomer: 'Изменения плана по расходам ', id: '' } });
   }
 
   onResize(event: Event) {

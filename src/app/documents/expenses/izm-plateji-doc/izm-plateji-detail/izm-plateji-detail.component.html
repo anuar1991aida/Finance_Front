@@ -1,11 +1,20 @@
 <p-toolbar>
     <div class="p-toolbar-group-left">
-        <div style="padding-right: 10px;">
-            <button [disabled]="form.invalid" pButton pRipple label="Записать" icon="pi pi-save"
-                class="p-button-secondary p-mr-2" (click)="saveDoc(false)"></button>
+        <div style="display: flex;">
+            <div style="padding-right: 10px;">
+                <button [disabled]="form.invalid" pButton pRipple label="Записать" icon="pi pi-save"
+                    class="p-button-secondary p-mr-2" (click)="saveDoc(false)"></button>
+            </div>
+            <div style="padding-right: 10px;">
+                <button [disabled]="form.invalid" pButton pRipple label="Записать и закрыть" icon="pi pi-save"
+                    class="p-button-info p-mr-2" (click)="saveDoc(true)"></button>
+            </div>
+            <div>
+                <p-splitButton label="Приложения" [model]="items"
+                    styleClass="p-button-raised p-button-success mr-2 mb-2">
+                </p-splitButton>
+            </div>
         </div>
-        <button [disabled]="form.invalid" pButton pRipple label="Записать и закрыть" icon="pi pi-save"
-            class="p-button-info p-mr-2" (click)="saveDoc(true)"></button>
     </div>
 
     <div class="p-toolbar-group-right">
@@ -20,7 +29,7 @@
     </div>
 </p-toolbar>
 
-<div class="card" *ngIf="(izmPlatezhiDetail) as izmPlatezhiDetail; else loader">
+<div class="card" *ngIf="(izmPlatezhiDetail) as izmPlatezhiDetail">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
         <div *ngIf="izmPlatezhiDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
             <label for="number_doc">Номер</label>
@@ -114,7 +123,7 @@
         </div>
     </ng-template>
     <ng-template pTemplate>
-        <div style="width: 100%;">
+        <div style="width: 100%;" *ngIf="payments; else loader">
             <p-tabView>
                 <p-tabPanel header="Платежи">
                     <div style="padding: 0 0 10px 10px;">
@@ -122,7 +131,7 @@
                             label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
                             (click)="addSpec(fkr_detail, true)"></button>
                     </div>
-                    <p-table [value]="payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+                    <p-table [value]="payments" [scrollable]="true" scrollHeight="calc(85vh - 200px)"
                         selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
                         [resizableColumns]="true" columnResizeMode="expand">
                         <ng-template pTemplate="header">
@@ -242,7 +251,7 @@
                             label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
                             (click)="addSpec(fkr_detail, false)"></button>
                     </div>
-                    <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+                    <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(85vh - 200px)"
                         selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
                         [resizableColumns]="true" columnResizeMode="expand">
                         <ng-template pTemplate="header">

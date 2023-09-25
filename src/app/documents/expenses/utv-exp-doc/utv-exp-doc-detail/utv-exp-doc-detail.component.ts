@@ -167,6 +167,10 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     })
   }
 
+  ot4et() {
+    this.utvDetailService.getot4et()
+  }
+
   selectOrg() {
     this.utvDetailref = this.utvDetaildialog.open(OrganizationSelectComponent,
       {

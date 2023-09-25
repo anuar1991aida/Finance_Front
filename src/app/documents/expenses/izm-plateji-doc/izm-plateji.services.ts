@@ -37,4 +37,12 @@ export class IzmPlatezhiService {
     deleteIzmPlatezhi(izm_platezhi_id: number = 0) {
         return this.http.delete(this.host + `docs/izmexpdelete/${izm_platezhi_id}`)
     }
+
+    getReport(param: any) {
+        return this.http.post(this.host + "reps/report2728", param, { responseType: 'blob' })
+    }
+
+    getReport2930(param: any) {
+        return this.http.post(this.host + "reps/report2930", param, { responseType: 'blob' })
+    }
 }

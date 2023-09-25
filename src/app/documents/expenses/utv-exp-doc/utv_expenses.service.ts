@@ -33,4 +33,14 @@ export class UtvExpensesService {
     deleteUtv(utv_inc_id: number = 0) {
         return this.http.delete(this.host + `docs/utvexpdelete/${utv_inc_id}`)
     }
+
+    getot4et() {
+        return this.http.post(this.host + "reps/report2728", { responseType: 'blob' })
+            .subscribe((data: any) => {
+                let blob: any = new Blob([data], { type: 'application/pdf' });
+                let url = window.URL.createObjectURL(blob);
+                window.open(url);
+            })
+    }
+
 }

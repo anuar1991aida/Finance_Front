@@ -75,6 +75,7 @@ import { Import420ListComponent } from './documents/import_document/import420/im
 import { Import420DetailComponent } from './documents/import_document/import420/import420-detail/import420-detail.component';
 import { IzmPlatejiDetailComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-detail/izm-plateji-detail.component';
 import { IzmPlatejiListComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-list/izm-plateji-list.component';
+import { reportComponent } from './reports/report';
 
 @NgModule({
   imports: [
@@ -152,7 +153,8 @@ import { IzmPlatejiListComponent } from './documents/expenses/izm-plateji-doc/iz
     Import420DetailComponent,
     Import420ListComponent,
     IzmPlatejiListComponent,
-    IzmPlatejiDetailComponent],
+    IzmPlatejiDetailComponent,
+    reportComponent],
   bootstrap: [AppComponent],
   providers: [
     {

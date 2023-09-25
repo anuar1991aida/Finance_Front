@@ -14,6 +14,8 @@ import { OrganizationSelectComponent } from 'src/app/directory/organization/orga
 import { IzmIncomeService } from 'src/app/documents/income/izm_inc_doc/izm_income.service';
 import { izm_plateji_detail } from '../interfaces';
 import { IzmPlatezhiService } from '../izm-plateji.services';
+import { DomSanitizer } from '@angular/platform-browser';
+import { reportComponent } from '../../../../reports/report';
 
 @Component({
   selector: 'app-izm-plateji-detail',
@@ -28,7 +30,39 @@ export class IzmPlatejiDetailComponent implements OnInit {
     private izmPlatezhiDetailref: DynamicDialogRef,
     private izmPlatezhiDetaildialog: DialogService,
     private izmPlatezhiDetailconfirm: ConfirmationService,
-  ) { }
+    private sanitizer: DomSanitizer
+  ) {
+    this.items = [
+      {
+        label: 'Приложение 27',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.formReport('obl', 'Приложение 27');
+        }
+      },
+      {
+        label: 'Приложение 28',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.formReport('pay', 'Приложение 28');
+        }
+      },
+      {
+        label: 'Приложение 29',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.formReport2930('obl', 'Приложение 29');
+        }
+      },
+      {
+        label: 'Приложение 30',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.formReport2930('pay', 'Приложение 30');
+        }
+      }
+    ]
+  }
 
   @Input() izm_inc_id = ''
   @Output() closeEvent = new EventEmitter<any>()
@@ -47,6 +81,9 @@ export class IzmPlatejiDetailComponent implements OnInit {
   firstclick = true
   _lastfkr = 0
   allrecord = true
+  loading = false
+  url = ''
+  PDFURL: any
 
   spec_detail: specification_income_detail = {
     id: 0,
@@ -98,7 +135,8 @@ export class IzmPlatejiDetailComponent implements OnInit {
         )
     }
     else {
-      this.izmPlatezhiDetailService.fetch_detail('0')
+      this.izmPlatezhiDetailService
+        .fetch_detail('0')
         .subscribe(
           (detail) => {
             this.izmPlatezhiDetail = detail
@@ -114,6 +152,53 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
     let objString = JSON.stringify(this.izmPlatezhiDetail)
     this.hashBegin = SHA256(objString).toString()
+  }
+
+  formReport(tbl: string, name_table: string) {
+    let params = {
+      id: this.izmPlatezhiDetail.doc.id,
+      tip_rep: tbl
+    }
+
+    this.izmPlatezhiDetailService
+      .getReport(params)
+      .subscribe
+      (data => {
+        let blob: Blob = new Blob([data], { type: 'application/pdf' });
+        this.url = window.URL.createObjectURL(blob);
+        this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+        this.showReport(name_table)
+      })
+
+  }
+
+  formReport2930(tbl: string, name_table: string) {
+    let params = {
+      id: this.izmPlatezhiDetail.doc.id,
+      tip_rep: tbl
+    }
+
+    this.izmPlatezhiDetailService
+      .getReport2930(params)
+      .subscribe
+      (data => {
+        let blob: Blob = new Blob([data], { type: 'application/pdf' });
+        this.url = window.URL.createObjectURL(blob);
+        this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+        this.showReport(name_table)
+      })
+  }
+
+  showReport(name_table: string) {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
+      header: name_table,
+      width: '95%',
+      height: '95%',
+      data: { 'url': this.PDFURL },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
   }
 
   addFKRtoArray() {
