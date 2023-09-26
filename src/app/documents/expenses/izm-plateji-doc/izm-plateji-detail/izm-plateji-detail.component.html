@@ -93,6 +93,31 @@
     </ng-template>
 </div>
 
+<div class="card" *ngIf="!izmPlatezhiDetail">
+    <form class="card" style="display: flex; padding-bottom: 10px;">
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер</label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+
+            <label for="date_doc">Дата <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field">
+            <label for="type_name">Тип справки <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+    </form>
+</div>
+
 <p-splitter [panelSizes]="[15, 85]" styleClass="mb-5">
     <ng-template pTemplate>
         <div style="width: 100%;">
@@ -123,7 +148,7 @@
         </div>
     </ng-template>
     <ng-template pTemplate>
-        <div style="width: 100%;" *ngIf="payments; else loader">
+        <div style="width: 100%;" *ngIf="payments;">
             <p-tabView>
                 <p-tabPanel header="Платежи">
                     <div style="padding: 0 0 10px 10px;">
@@ -191,7 +216,7 @@
                                 <td rowspan="3" style="text-align:center; width: 30%;">
                                     <div class="p-inputgroup w-full">
                                         <input pInputText [readOnly]="true"
-                                            [ngModel]="izm._spec.code + ' ' + izm._spec.name_rus" />
+                                            [ngModel]="izm._spec_code + ' ' + izm._spec_name" />
                                         <span class="p-inputgroup-addon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
@@ -312,7 +337,7 @@
                                 <td rowspan="3" style="text-align:center; width: 30%;">
                                     <div class="p-inputgroup w-full">
                                         <input pInputText [readOnly]="true"
-                                            [ngModel]="izm._spec.code + ' ' + izm._spec.name_rus" />
+                                            [ngModel]="izm._spec_code + ' ' + izm._spec_name" />
                                         <span class="p-inputgroup-addon">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                 fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
@@ -374,6 +399,6 @@
 <p-confirmDialog [closeOnEscape]="true" [closable]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
 </p-confirmDialog>
 
-<ng-template #loader>
+<!-- <ng-template #loader>
     <app-skeleton></app-skeleton>
-</ng-template>
+</ng-template> -->

@@ -194,7 +194,20 @@ export class IzmPlatejiDetailComponent implements OnInit {
       header: name_table,
       width: '95%',
       height: '95%',
-      data: { 'url': this.PDFURL },
+      data: {
+        'url': this.PDFURL,
+        'doc': {
+          'id': this.izmPlatezhiDetail.doc.id,
+          'nom': this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm-exp',
+          'service': 'report2930',
+          'prilozhenieValue': 'obl',
+          'prilozhenieType': [
+            { label: 'Приложение 29', value: 'obl' },
+            { label: 'Приложение 30', value: 'pay' }
+          ]
+        },
+      },
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true
@@ -206,17 +219,17 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
     for (let i = 0; i < this.izmPlatezhiDetail.payments.length; i++) {
 
-      let index = this.fkr_array.findIndex(item => this.izmPlatezhiDetail.payments[i]._fkr.id === item.id)
+      let index = this.fkr_array.findIndex(item => this.izmPlatezhiDetail.payments[i]._fkr_id === item.id)
 
       if (index !== -1) {
         continue
       }
 
       this.fkr_array.push({
-        id: this.izmPlatezhiDetail.payments[i]._fkr.id,
-        code: this.izmPlatezhiDetail.payments[i]._fkr.code,
-        name_kaz: this.izmPlatezhiDetail.payments[i]._fkr.name_kaz,
-        name_rus: this.izmPlatezhiDetail.payments[i]._fkr.name_rus,
+        id: this.izmPlatezhiDetail.payments[i]._fkr_id,
+        code: this.izmPlatezhiDetail.payments[i]._fkr_code,
+        name_rus: this.izmPlatezhiDetail.payments[i]._fkr_name,
+        name_kaz: this.izmPlatezhiDetail.payments[i]._fkr_name
       })
     }
   }
@@ -261,22 +274,22 @@ export class IzmPlatejiDetailComponent implements OnInit {
   delSpec(izm: any, payments: boolean) {
     if (payments) {
       for (let i = this.izmPlatezhiDetail.payments.length - 1; i >= 0; i--) {
-        let index = this.izmPlatezhiDetail.payments.findIndex(item => izm._spec.id === item._spec.id)
+        let index = this.izmPlatezhiDetail.payments.findIndex(item => izm._spec.id === item._spec_id)
         if (index !== -1) {
           this.izmPlatezhiDetail.payments.splice(index, 1)
         }
       }
-      this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == izm._fkr.id)
+      this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == izm._fkr.id)
     }
 
     else {
       for (let i = this.izmPlatezhiDetail.obligats.length - 1; i >= 0; i--) {
-        let index = this.izmPlatezhiDetail.obligats.findIndex(item => izm._spec.id === item._spec.id)
+        let index = this.izmPlatezhiDetail.obligats.findIndex(item => izm._spec.id === item._spec_id)
         if (index !== -1) {
           this.izmPlatezhiDetail.obligats.splice(index, 1)
         }
       }
-      this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == izm._fkr.id)
+      this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == izm._fkr.id)
     }
 
     this.addFKRtoArray()
@@ -352,7 +365,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
                 .subscribe(
                   (detail) => {
                     this.izmPlatezhiDetail.payments.push(detail)
-                    this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == fkr_detail.id)
+                    this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == fkr_detail.id)
                   })
             }
             else {
@@ -370,7 +383,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
                 .subscribe(
                   (detail) => {
                     this.izmPlatezhiDetail.obligats.push(detail)
-                    this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == fkr_detail.id)
+                    this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == fkr_detail.id)
                   })
 
             }
@@ -424,18 +437,12 @@ export class IzmPlatejiDetailComponent implements OnInit {
         itog10: 0,
         itog11: 0,
         itog12: 0,
-        _fkr: {
-          id: fkr_detail.id,
-          code: fkr_detail.code,
-          name_kaz: fkr_detail.name_kaz,
-          name_rus: fkr_detail.name_rus
-        },
-        _spec: {
-          id: spec_detail.id,
-          code: spec_detail.code,
-          name_kaz: spec_detail.name_kaz,
-          name_rus: spec_detail.name_rus
-        }
+        _fkr_id: fkr_detail.id,
+        _fkr_name: fkr_detail.name_rus,
+        _fkr_code: fkr_detail.code,
+        _spec_id: spec_detail.id,
+        _spec_code: spec_detail.code,
+        _spec_name: spec_detail.name_rus
       })
   }
 
@@ -454,8 +461,8 @@ export class IzmPlatejiDetailComponent implements OnInit {
     }
 
     if (!this.allrecord) {
-      this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr'].id == _fkr.id)
-      this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr'].id == _fkr.id)
+      this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == _fkr.id)
+      this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == _fkr.id)
 
       this.fkr_detail.id = _fkr.id
       this.fkr_detail.code = _fkr.code

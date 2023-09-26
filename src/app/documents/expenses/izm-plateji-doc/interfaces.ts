@@ -30,8 +30,12 @@ export interface izm_plateji_detail {
 
 export interface izm_plateji_table {
     id: number,
-    _fkr: fkr_detail,
-    _spec: specification_income_detail,
+    _fkr_id: number,
+    _fkr_name: string,
+    _fkr_code: string,
+    _spec_id: number,
+    _spec_name: string,
+    _spec_code: string,
     sm1: number,
     sm2: number,
     sm3: number,
