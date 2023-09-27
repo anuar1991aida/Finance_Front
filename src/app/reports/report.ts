@@ -1,7 +1,14 @@
-import { Component, Injectable } from "@angular/core";
+import { Component, EventEmitter, Injectable, Input, Output } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { DynamicDialogConfig } from "primeng/dynamicdialog";
-import { IzmPlatezhiService } from "../documents/expenses/izm-plateji-doc/izm-plateji.services";
+import { provideRouter, provideRoutes } from "@angular/router";
+import { ConfirmationService, MessageService } from "primeng/api";
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
+import { organization_detail } from "../directory/organization/interfaces";
+import { OrganizationDetailComponent } from "../directory/organization/organization-detail/organization-detail.component";
+import { OrganizationSelectComponent } from "../directory/organization/organization-select/organization-select.component";
+import { izm_plateji_doc } from "../documents/expenses/izm-plateji-doc/interfaces";
+import { IzmPlatejiListComponent } from "../documents/expenses/izm-plateji-doc/izm-plateji-list/izm-plateji-list.component";
+import { ReportService } from "./reports.service";
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +21,16 @@ import { IzmPlatezhiService } from "../documents/expenses/izm-plateji-doc/izm-pl
 
 export class reportComponent {
     constructor(
-        private config: DynamicDialogConfig,
-        private izmPlatezhiDetailService: IzmPlatezhiService,
-        private sanitizer: DomSanitizer) { }
+        private Reportconfig: DynamicDialogConfig,
+        private ReportService: ReportService,
+        private sanitizer: DomSanitizer,
+        private Reportmsg: MessageService,
+        private Reportref: DynamicDialogRef,
+        private Reportdialog: DialogService,
+        private Reportconfirm: ConfirmationService,) { }
+
+    @Input() type_report = ''
+    @Output() closeEvent = new EventEmitter<any>()
 
     url: any = ''
     doc = {
@@ -27,53 +41,113 @@ export class reportComponent {
         'prilozhenieValue': '',
         'prilozhenieType': []
     }
+
     language = 'kaz'
     name = ''
-    prilozhenieValue = ''
-
+    prilozhenieValue = 'pay'
+    prilozhenieType: any = []
+    _organization = {
+        'id': 0,
+        'name': ''
+    }
     langOptions = [
         { label: 'Казахша', value: 'kaz' },
         { label: 'Русский', value: 'rus' }
     ]
 
-
-
     ngOnInit() {
 
-        // this.url = this.config.data.url || '';
-        this.doc = this.config.data.doc || '';
-        console.log(this.doc);
+        if (this.type_report == '') {
+            this.doc = this.Reportconfig.data.doc || '';
 
-        if (this.doc) {
-            if (this.doc.type_doc = 'izm-exp') {
-                this.name = 'Изменения плана по расходам ' + this.doc.nom
+            if (this.doc) {
+                this.prilozhenieType = this.doc.prilozhenieType
+                if (this.doc.type_doc = 'izm-exp') {
+                    this.name = 'Изменения плана по расходам ' + this.doc.nom
+                }
+            }
+        }
+        else {
+            if (this.type_report == '2-5') {
+                this.prilozhenieType = [
+                    { label: 'Приложение 2', value: 'pay' },
+                    { label: 'Приложение 5', value: 'obl' }
+                ]
             }
         }
     }
 
-    selectDoc() {
+    viewOrg() {
+        this.Reportref = this.Reportdialog.open(OrganizationDetailComponent,
+            {
+                header: 'Редактирование организации',
+                width: '60%',
+                height: '80%',
+                data: { org_id: this._organization.id }
+            })
 
+        this.Reportref.onClose.subscribe((org: organization_detail) => {
+            if (org) {
+                this._organization.id = org.id,
+                    this._organization.name = org.name_rus
+            }
+        })
+    }
+
+    selectOrg() {
+        this.Reportref = this.Reportdialog.open(OrganizationSelectComponent,
+            {
+                header: 'Выбор организации',
+                width: '60%',
+                height: '80%'
+            })
+
+        this.Reportref.onClose.subscribe((org: organization_detail) => {
+            if (org) {
+                this._organization.id = org.id,
+                    this._organization.name = org.name_rus
+            }
+        })
+    }
+
+    selectDoc() {
+        this.Reportref = this.Reportdialog.open(IzmPlatejiListComponent,
+            {
+                header: 'Выбор документа',
+                width: '60%',
+                height: '80%'
+            })
+
+        this.Reportref.onClose.subscribe((doc: izm_plateji_doc) => {
+            if (doc) {
+                this.doc.id = doc.id,
+                    this.name = 'Изменения плана по расходам ' + doc.nom
+            }
+        })
     }
 
     form() {
 
-        let params = {
-            id: this.doc.id,
-            tip_rep: this.doc.prilozhenieValue
-        }
-
         if (this.doc.service == 'report2728') {
-            this.formReport2728(params)
+            this.formReport2728()
         }
         else if (this.doc.service == 'report2930') {
-            this.formReport2930(params)
+            this.formReport2930()
+        }
+        else if (this.type_report == '2-5') {
+            this.formReport2_5()
         }
     }
 
-    formReport2930(params: any) {
+    formReport2_5() {
 
-        this.izmPlatezhiDetailService
-            .getReport2930(params)
+        let params = {
+            _organization_id: this._organization.id,
+            tip_rep: this.prilozhenieValue
+        }
+
+        this.ReportService
+            .getReport2_5(params)
             .subscribe
             (data => {
                 let blob: Blob = new Blob([data], { type: 'application/pdf' });
@@ -82,10 +156,15 @@ export class reportComponent {
             })
     }
 
-    formReport2728(params: any) {
+    formReport2728() {
 
-        this.izmPlatezhiDetailService
-            .getReport2728(params)
+        let params = {
+            id: this.doc.id,
+            tip_rep: this.prilozhenieValue
+        }
+
+        this.ReportService
+            .getReport27_28(params)
             .subscribe
             (data => {
                 let blob: Blob = new Blob([data], { type: 'application/pdf' });
@@ -93,6 +172,23 @@ export class reportComponent {
                 this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
             })
 
+    }
+
+    formReport2930() {
+
+        let params = {
+            id: this.doc.id,
+            tip_rep: this.prilozhenieValue
+        }
+
+        this.ReportService
+            .getReport29_30(params)
+            .subscribe
+            (data => {
+                let blob: Blob = new Blob([data], { type: 'application/pdf' });
+                let url = window.URL.createObjectURL(blob);
+                this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            })
     }
 
     changePrilozhenie() {

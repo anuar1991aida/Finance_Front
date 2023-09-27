@@ -34,7 +34,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-izmList let-ri="rowIndex" *ngFor="let item of izmplatList.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowEdit(izmList)">
+            <tr class="cursor-pointer" (dblclick)="onRowSelect(izmList)">
                 <td style="text-align:center">
                     <span [ngClass]="setClass(izmList.deleted)">{{izmList.nom}}</span>
                 </td>

@@ -111,7 +111,7 @@
                 <app-import420-list *ngIf="context.selector=='app-import420-list'" (closeEvent)="removetab()">
                 </app-import420-list>
 
-                <app-izm-plateji-list *ngIf="context.selector=='app-izm-plateji-list'"
+                <app-izm-plateji-list *ngIf="context.selector=='app-izm-plateji-list'" [List]="true"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
                     (closeEvent)="removetab()">
                 </app-izm-plateji-list>
@@ -119,6 +119,11 @@
                 <app-izm-plateji-detail *ngIf="context.selector=='app-izm-plateji-detail'" [izm_inc_id]="number"
                     (closeEvent)="removetab()">
                 </app-izm-plateji-detail>
+
+                <report-detail *ngIf="context.selector=='report-detail'" [type_report]="number"
+                    (closeEvent)="removetab()">
+                </report-detail>
+
 
 
 

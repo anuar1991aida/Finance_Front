@@ -76,6 +76,7 @@ import { Import420DetailComponent } from './documents/import_document/import420/
 import { IzmPlatejiDetailComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-detail/izm-plateji-detail.component';
 import { IzmPlatejiListComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-list/izm-plateji-list.component';
 import { reportComponent } from './reports/report';
+import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @NgModule({
   imports: [
@@ -160,10 +161,12 @@ import { reportComponent } from './reports/report';
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
-      useClass: TokenInterceptor
+      useClass: TokenInterceptor,
     },
     MessageService,
-    ConfirmationService
+    MainComponent,
+    ConfirmationService,
+    DynamicDialogConfig
   ]
 })
 export class AppModule { }

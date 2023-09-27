@@ -1,5 +1,6 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { MainComponent } from 'src/app/main/main.component'
 import { izm_plateji_doc_list, izm_plateji_doc } from '../interfaces';
@@ -19,12 +20,14 @@ export class IzmPlatejiListComponent implements OnInit {
     private MainComponent: MainComponent,
     private izmplatListService: IzmPlatezhiService,
     private izmplatListconfirm: ConfirmationService,
-    private izmplatListmessage: MessageService
+    private izmplatListmessage: MessageService,
+    private izmplatListref: DynamicDialogRef,
   ) {
     this.first = this.MainComponent.first
     this.rows = this.MainComponent.rows
   }
 
+  @Input() List = false
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
   @HostListener('window:resize', ['$event'])
@@ -84,6 +87,15 @@ export class IzmPlatejiListComponent implements OnInit {
 
     return classs
 
+  }
+
+  onRowSelect(izm_plateji: izm_plateji_doc) {
+    if (this.List) {
+      this.onRowEdit(izm_plateji)
+    }
+    else {
+      this.izmplatListref.close(izm_plateji)
+    }
   }
 
   onRowEdit(izm_plateji: izm_plateji_doc) {
