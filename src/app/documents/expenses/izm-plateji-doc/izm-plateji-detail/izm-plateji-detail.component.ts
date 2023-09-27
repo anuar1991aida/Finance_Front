@@ -34,31 +34,17 @@ export class IzmPlatejiDetailComponent implements OnInit {
   ) {
     this.items = [
       {
-        label: 'Приложение 27',
+        label: 'Приложение 27/28',
         icon: 'pi pi-file-pdf',
         command: () => {
-          this.formReport('obl', 'Приложение 27');
+          this.showReport2728();
         }
       },
       {
-        label: 'Приложение 28',
+        label: 'Приложение 29/30',
         icon: 'pi pi-file-pdf',
         command: () => {
-          this.formReport('pay', 'Приложение 28');
-        }
-      },
-      {
-        label: 'Приложение 29',
-        icon: 'pi pi-file-pdf',
-        command: () => {
-          this.formReport2930('obl', 'Приложение 29');
-        }
-      },
-      {
-        label: 'Приложение 30',
-        icon: 'pi pi-file-pdf',
-        command: () => {
-          this.formReport2930('pay', 'Приложение 30');
+          this.showReport2930();
         }
       }
     ]
@@ -154,48 +140,71 @@ export class IzmPlatejiDetailComponent implements OnInit {
     this.hashBegin = SHA256(objString).toString()
   }
 
-  formReport(tbl: string, name_table: string) {
-    let params = {
-      id: this.izmPlatezhiDetail.doc.id,
-      tip_rep: tbl
-    }
+  // formReport(tbl: string, name_table: string) {
+  //   let params = {
+  //     id: this.izmPlatezhiDetail.doc.id,
+  //     tip_rep: tbl
+  //   }
 
-    this.izmPlatezhiDetailService
-      .getReport(params)
-      .subscribe
-      (data => {
-        let blob: Blob = new Blob([data], { type: 'application/pdf' });
-        this.url = window.URL.createObjectURL(blob);
-        this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-        this.showReport(name_table)
-      })
+  //   this.izmPlatezhiDetailService
+  //     .getReport(params)
+  //     .subscribe
+  //     (data => {
+  //       let blob: Blob = new Blob([data], { type: 'application/pdf' });
+  //       this.url = window.URL.createObjectURL(blob);
+  //       this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+  //       this.showReport()
+  //     })
 
-  }
+  // }
 
-  formReport2930(tbl: string, name_table: string) {
-    let params = {
-      id: this.izmPlatezhiDetail.doc.id,
-      tip_rep: tbl
-    }
+  // formReport2930(tbl: string, name_table: string) {
+  //   let params = {
+  //     id: this.izmPlatezhiDetail.doc.id,
+  //     tip_rep: tbl
+  //   }
 
-    this.izmPlatezhiDetailService
-      .getReport2930(params)
-      .subscribe
-      (data => {
-        let blob: Blob = new Blob([data], { type: 'application/pdf' });
-        this.url = window.URL.createObjectURL(blob);
-        this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-        this.showReport(name_table)
-      })
-  }
+  //   this.izmPlatezhiDetailService
+  //     .getReport2930(params)
+  //     .subscribe
+  //     (data => {
+  //       let blob: Blob = new Blob([data], { type: 'application/pdf' });
+  //       this.url = window.URL.createObjectURL(blob);
+  //       this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+  //       this.showReport()
+  //     })
+  // }
 
-  showReport(name_table: string) {
+  showReport2728() {
     this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
-      header: name_table,
+      header: 'Отчеты',
       width: '95%',
       height: '95%',
       data: {
-        'url': this.PDFURL,
+        'doc': {
+          'id': this.izmPlatezhiDetail.doc.id,
+          'nom': this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm-exp',
+          'service': 'report2728',
+          'prilozhenieValue': 'obl',
+          'prilozhenieType': [
+            { label: 'Приложение 27', value: 'obl' },
+            { label: 'Приложение 28', value: 'pay' }
+          ]
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
+  showReport2930() {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
         'doc': {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,

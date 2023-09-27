@@ -28,9 +28,10 @@
 
     <div class="p-field">
         <label for="type_name">Приложения </label>
-        <div class="card flex justify-content-center" style="margin: 0; width: 100%;">
-            <p-dropdown id="type_name" [options]="doc.prilozhenieType" placeholder="Выберите тип" optionLabel="label"
-                optionValue="value" appendTo="body" [(ngModel)]="doc.prilozhenieValue">
+        <div class="card flex justify-content-center" style="width: 100%;">
+            <p-dropdown id="type_name" [options]="doc.prilozhenieType" placeholder="Выберите приложение"
+                optionLabel="label" optionValue="value" appendTo="body" [(ngModel)]="doc.prilozhenieValue"
+                (ngModelChange)="changePrilozhenie()">
             </p-dropdown>
         </div>
     </div>
