@@ -88,8 +88,10 @@ export class reportComponent {
 
         this.Reportref.onClose.subscribe((org: organization_detail) => {
             if (org) {
-                this._organization.id = org.id,
-                    this._organization.name = org.name_rus
+                console.log(org);
+
+                // this._organization.id = org.id,
+                //     this._organization.name = org.name_rus
             }
         })
     }
@@ -128,11 +130,28 @@ export class reportComponent {
 
     form() {
 
+        if (this.type_report == '2-5') {
+            if (this._organization.id == 0) {
+                this.Reportmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию' })
+                return
+            }
+        }
+        else if (this.doc.service == 'report2728' || this.doc.service == 'report2930') {
+            if (this.doc.id == 0) {
+                this.Reportmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите документ' })
+                return
+            }
+        }
+
+
         if (this.doc.service == 'report2728') {
             this.formReport2728()
         }
         else if (this.doc.service == 'report2930') {
             this.formReport2930()
+        }
+        else if (this.doc.service == 'report3335') {
+            this.formReport3335()
         }
         else if (this.type_report == '2-5') {
             this.formReport2_5()
@@ -191,9 +210,29 @@ export class reportComponent {
             })
     }
 
+    formReport3335() {
+
+        let params = {
+            id: this.doc.id,
+            tip_rep: this.prilozhenieValue
+        }
+
+        this.ReportService
+            .getReport33_35(params)
+            .subscribe
+            (data => {
+                let blob: Blob = new Blob([data], { type: 'application/pdf' });
+                let url = window.URL.createObjectURL(blob);
+                this.url = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+            })
+    }
+
     changePrilozhenie() {
         this.url = ''
     }
 
+    closeform() {
+        this.closeEvent.emit()
+    }
 
 }

@@ -52,11 +52,16 @@ export class MainComponent implements OnInit {
         items: [
           [
             {
-              label: 'Организация',
+              label: 'Администрирование',
               items: [{
                 label: 'Организации',
                 command: () => this.openTab('app-organization', 'Организации', '')
-              }]
+              },
+              {
+                label: 'Пользователи',
+                command: () => this.openTab('app-user-list', 'Пользователи', '')
+              }
+              ]
             }
           ],
           [

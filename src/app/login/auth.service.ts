@@ -1,7 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject, tap } from "rxjs";
-import { User } from "./interfaces";
+import { observableToBeFn } from "rxjs/internal/testing/TestScheduler";
+import { user_detail } from "../directory/user/interfaces";
+import { User, body } from "./interfaces";
 
 @Injectable({
     providedIn: 'root'
@@ -28,6 +30,17 @@ export class AuthService {
                     }
                 )
             )
+    }
+
+    checkLogin(body: body) {
+        // return this.http.post(this.host + '/dirs/logineduser', body)
+        //     .pipe(
+        //         tap(
+        //             () => {
+        //                 sessionStorage.setItem('auth-token', this.auth_token)
+        //             }
+        //         )
+        //     )
     }
 
     setToken(token: string) {

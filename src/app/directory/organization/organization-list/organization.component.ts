@@ -5,22 +5,29 @@ import { OrganizationsService } from '../organization.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OrganizationDetailComponent } from '../organization-detail/organization-detail.component'
 import { MessageService } from 'primeng/api';
+import { MainComponent } from 'src/app/main/main.component';
+
 @Component({
   selector: 'app-organization',
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.css']
 })
+
 export class OrganizationComponent implements OnInit {
 
   constructor(
+    private MainComponent: MainComponent,
     private orgService: OrganizationsService,
     private org_dialog_ref: DynamicDialogRef,
     private messageServicedelSelect: MessageService,
     private org_dialog_servis: DialogService,
-  ) { }
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+  }
 
   @Output() closeEvent = new EventEmitter<any>()
-  @Input() data = false
+  @Input() list = false
   organizations$: Observable<organization_list>
   first = 0
   rows = 25
@@ -31,12 +38,12 @@ export class OrganizationComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.updateWindowSize(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   ngOnInit() {
     this.fetchOrg(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
@@ -51,7 +58,8 @@ export class OrganizationComponent implements OnInit {
 
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchorg
     }
 
     this.organizations$ = this.orgService.fetch(params)
@@ -76,8 +84,6 @@ export class OrganizationComponent implements OnInit {
 
     this.org_dialog_ref.onClose.subscribe((save: boolean) => {
 
-      console.log(save);
-      
       if (save) {
         this.fetchOrg()
       }
@@ -86,7 +92,7 @@ export class OrganizationComponent implements OnInit {
   }
 
   onRowClick(org: organization_detail) {
-    if (this.data) {
+    if (this.list) {
       this.onRowEdit(org)
     }
     else {

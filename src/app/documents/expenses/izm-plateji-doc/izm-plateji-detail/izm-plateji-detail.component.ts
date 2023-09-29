@@ -46,6 +46,13 @@ export class IzmPlatejiDetailComponent implements OnInit {
         command: () => {
           this.showReport2930();
         }
+      },
+      {
+        label: 'Приложение 33/35',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReport3335();
+        }
       }
     ]
   }
@@ -70,6 +77,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
   loading = false
   url = ''
   PDFURL: any
+  numberMonth = 0
 
   spec_detail: specification_income_detail = {
     id: 0,
@@ -110,6 +118,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
             this.izmPlatezhiDetail = detail,
               this.payments = this.izmPlatezhiDetail.payments,
               this.obligats = this.izmPlatezhiDetail.obligats,
+              this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5)),
               this.addFKRtoArray()
             // this.calculatetot()
           },
@@ -139,41 +148,6 @@ export class IzmPlatejiDetailComponent implements OnInit {
     let objString = JSON.stringify(this.izmPlatezhiDetail)
     this.hashBegin = SHA256(objString).toString()
   }
-
-  // formReport(tbl: string, name_table: string) {
-  //   let params = {
-  //     id: this.izmPlatezhiDetail.doc.id,
-  //     tip_rep: tbl
-  //   }
-
-  //   this.izmPlatezhiDetailService
-  //     .getReport(params)
-  //     .subscribe
-  //     (data => {
-  //       let blob: Blob = new Blob([data], { type: 'application/pdf' });
-  //       this.url = window.URL.createObjectURL(blob);
-  //       this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-  //       this.showReport()
-  //     })
-
-  // }
-
-  // formReport2930(tbl: string, name_table: string) {
-  //   let params = {
-  //     id: this.izmPlatezhiDetail.doc.id,
-  //     tip_rep: tbl
-  //   }
-
-  //   this.izmPlatezhiDetailService
-  //     .getReport2930(params)
-  //     .subscribe
-  //     (data => {
-  //       let blob: Blob = new Blob([data], { type: 'application/pdf' });
-  //       this.url = window.URL.createObjectURL(blob);
-  //       this.PDFURL = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-  //       this.showReport()
-  //     })
-  // }
 
   showReport2728() {
     this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
@@ -214,6 +188,30 @@ export class IzmPlatejiDetailComponent implements OnInit {
           'prilozhenieType': [
             { label: 'Приложение 29', value: 'obl' },
             { label: 'Приложение 30', value: 'pay' }
+          ]
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
+  showReport3335() {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.izmPlatezhiDetail.doc.id,
+          'nom': this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm-exp',
+          'service': 'report3335',
+          'prilozhenieValue': 'obl',
+          'prilozhenieType': [
+            { label: 'Приложение 33', value: 'obl' },
+            { label: 'Приложение 35', value: 'pay' }
           ]
         },
       },
@@ -561,6 +559,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
   changedate() {
     this.izmPlatezhiDetail.doc._date = this.toLocaleDate(this.izmPlatezhiDetail.doc._date)
+    this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5))
   }
 
   toLocaleDate(dateForStr: string) {

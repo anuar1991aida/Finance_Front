@@ -28,7 +28,7 @@
                         </svg>
                     </i> -->
                 </ng-template>
-                <app-organization *ngIf="context.selector=='app-organization'" [data]="true" (closeEvent)="removetab()">
+                <app-organization *ngIf="context.selector=='app-organization'" [list]="true" (closeEvent)="removetab()">
                 </app-organization>
 
                 <app-category-income *ngIf="context.selector=='app-category-income'" [data]="true"
@@ -124,9 +124,8 @@
                     (closeEvent)="removetab()">
                 </report-detail>
 
-
-
-
+                <app-user-list *ngIf="context.selector=='app-user-list'" [list]="true" (closeEvent)="removetab()">
+                </app-user-list>
             </mat-tab>
         </ng-template>
     </mat-tab-group>

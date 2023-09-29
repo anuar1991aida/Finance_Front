@@ -71,84 +71,85 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     name_rus: ''
   }
 
-  utvDetail: utv_expenses_detail = {
-    doc: {
-      id: 0,
-      nom: '',
-      _date: '',
-      deleted: false,
-      _organization: {
-        id: 0,
-        bin: '',
-        name_kaz: '',
-        name_rus: '',
-        adress: '',
-        _budjet: this.budj_det
-      }
-    },
-    payments: [{
-      id: 0,
-      god: 0,
-      sm1: 0,
-      sm2: 0,
-      sm3: 0,
-      sm4: 0,
-      sm5: 0,
-      sm6: 0,
-      sm7: 0,
-      sm8: 0,
-      sm9: 0,
-      sm10: 0,
-      sm11: 0,
-      sm12: 0,
-      _date: '',
-      _utv_exp: 0,
-      _organization: 0,
-      _fkr: {
-        id: 0,
-        code: '',
-        name_kaz: '',
-        name_rus: ''
-      },
-      _spec: {
-        id: 0,
-        code: '',
-        name_kaz: '',
-        name_rus: ''
-      }
-    }],
-    obligats: [{
-      id: 0,
-      god: 0,
-      sm1: 0,
-      sm2: 0,
-      sm3: 0,
-      sm4: 0,
-      sm5: 0,
-      sm6: 0,
-      sm7: 0,
-      sm8: 0,
-      sm9: 0,
-      sm10: 0,
-      sm11: 0,
-      sm12: 0,
-      _date: '',
-      _utv_exp: 0,
-      _organization: 0,
-      _fkr: {
-        id: 0,
-        code: '',
-        name_kaz: '',
-        name_rus: ''
-      },
-      _spec: {
-        id: 0,
-        code: '',
-        name_kaz: '',
-        name_rus: ''
-      }
-    }]
-  }
+  utvDetail: utv_expenses_detail
+  //   = {
+  //   doc: {
+  //     id: 0,
+  //     nom: '',
+  //     _date: '',
+  //     deleted: false,
+  //     _organization: {
+  //       id: 0,
+  //       bin: '',
+  //       name_kaz: '',
+  //       name_rus: '',
+  //       adress: '',
+  //       _budjet: this.budj_det
+  //     }
+  //   },
+  //   payments: [{
+  //     id: 0,
+  //     god: 0,
+  //     sm1: 0,
+  //     sm2: 0,
+  //     sm3: 0,
+  //     sm4: 0,
+  //     sm5: 0,
+  //     sm6: 0,
+  //     sm7: 0,
+  //     sm8: 0,
+  //     sm9: 0,
+  //     sm10: 0,
+  //     sm11: 0,
+  //     sm12: 0,
+  //     _date: '',
+  //     _utv_exp: 0,
+  //     _organization: 0,
+  //     _fkr: {
+  //       id: 0,
+  //       code: '',
+  //       name_kaz: '',
+  //       name_rus: ''
+  //     },
+  //     _spec: {
+  //       id: 0,
+  //       code: '',
+  //       name_kaz: '',
+  //       name_rus: ''
+  //     }
+  //   }],
+  //   obligats: [{
+  //     id: 0,
+  //     god: 0,
+  //     sm1: 0,
+  //     sm2: 0,
+  //     sm3: 0,
+  //     sm4: 0,
+  //     sm5: 0,
+  //     sm6: 0,
+  //     sm7: 0,
+  //     sm8: 0,
+  //     sm9: 0,
+  //     sm10: 0,
+  //     sm11: 0,
+  //     sm12: 0,
+  //     _date: '',
+  //     _utv_exp: 0,
+  //     _organization: 0,
+  //     _fkr: {
+  //       id: 0,
+  //       code: '',
+  //       name_kaz: '',
+  //       name_rus: ''
+  //     },
+  //     _spec: {
+  //       id: 0,
+  //       code: '',
+  //       name_kaz: '',
+  //       name_rus: ''
+  //     }
+  //   }]
+  // }
 
   viewOrg() {
     this.utvDetailref = this.utvDetaildialog.open(OrganizationDetailComponent,

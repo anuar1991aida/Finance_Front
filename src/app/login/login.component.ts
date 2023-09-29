@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from './auth.service';
+import { body } from './interfaces';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
 
   form: FormGroup
   loading = true
+  body: body
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -41,17 +43,42 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.form.disable()
-    this.auth.login(this.form.value).subscribe(
-      () => {
-        sessionStorage.setItem("username", this.form.value.username)
-        this.router.navigate([''])
-      },
-      error => {
-        this.form.enable(),
-          this.msgLogin.add({
-            severity: 'error', summary: 'Ошибка', detail: 'Логин или пароль неверный!'
-          })
-      }
-    )
+    this.auth.login(this.form.value)
+      .subscribe(
+        () => {
+          sessionStorage.setItem("username", this.form.value.username),
+            this.router.navigate([''])
+          // this.checkLoogin(this.form.value.username, 'ok')        
+        },
+        error => {
+          this.form.enable(),
+            // this.checkLoogin(this.form.value.username, 'error'),
+            this.msgLogin.add({
+              severity: 'error', summary: 'Ошибка', detail: 'Логин или пароль неверный!'
+            })
+        }
+      )
+  }
+
+  checkLoogin(login: string, status: string) {
+
+    // this.body =
+    // {
+    //   "username": login,
+    //   "status": status
+    // }
+
+    // this.auth.checkLogin(this.body)
+    //   .subscribe(
+    //     (data) => (
+    //       sessionStorage.setItem("username", this.form.value.username),
+    //       this.router.navigate([''])
+    //     )
+    //   )
+
+
+
+
+
   }
 }

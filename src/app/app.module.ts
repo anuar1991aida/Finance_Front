@@ -77,6 +77,8 @@ import { IzmPlatejiDetailComponent } from './documents/expenses/izm-plateji-doc/
 import { IzmPlatejiListComponent } from './documents/expenses/izm-plateji-doc/izm-plateji-list/izm-plateji-list.component';
 import { reportComponent } from './reports/report';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { UserDetailComponent } from './directory/user/user-detail/user-detail.component';
+import { UserListComponent } from './directory/user/user-list/user-list.component';
 
 @NgModule({
   imports: [
@@ -155,6 +157,8 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
     Import420ListComponent,
     IzmPlatejiListComponent,
     IzmPlatejiDetailComponent,
+    UserDetailComponent,
+    UserListComponent,
     reportComponent],
   bootstrap: [AppComponent],
   providers: [

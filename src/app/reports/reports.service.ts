@@ -27,4 +27,8 @@ export class ReportService {
     getReport29_30(param: any) {
         return this.http.post(this.host + "reps/report2930", param, { responseType: 'blob' })
     }
+
+    getReport33_35(param: any) {
+        return this.http.post(this.host + "reps/report3335", param, { responseType: 'blob' })
+    }
 }

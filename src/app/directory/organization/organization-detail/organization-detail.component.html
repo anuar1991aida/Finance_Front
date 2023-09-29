@@ -1,65 +1,116 @@
-<form class="card" [formGroup]="form">
-  <div class="p-field" style="padding-bottom: 10px;">
-    <label for="bin">Бин организации<span style="color: red;">*</span></label>
-    <div class="p-inputgroup">
-      <input id="bin" type="text" pInputText [(ngModel)]="org_detail.bin" formControlName="bin" />
-    </div>
-    <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
-      <span *ngIf="form.controls['bin'].errors?.required">Бин не должен быть пустым</span>
-    </span>
+<div style="display: flex;">
+  <div class="card" style="padding-right: 30px; width: 50%;">
+    <h3>Основные сведения</h3>
+    <form class="card" [formGroup]="form">
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label for="bin">Бин организации<span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+          <input id="bin" type="text" pInputText [(ngModel)]="org_detail.bin" formControlName="bin" />
+        </div>
+        <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
+          <span *ngIf="form.controls['bin'].errors?.required">Бин не должен быть пустым</span>
+        </span>
 
-  </div>
-
-  <div class="p-field" style="padding-bottom: 10px;">
-    <label for="_budjet.name_rus">Бюджет наименовании<span style="color: red;">*</span></label>
-    <div class="p-inputgroup">
-      <input id="budjet_name" type="text" pInputText [(ngModel)]="org_detail._budjet.name_rus"
-        formControlName="budjet_name" />
-      <div class="cursor-pointer">
-        <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
       </div>
+
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label for="_budjet.name_rus">Бюджет<span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+          <input id="budjet_name" type="text" pInputText [(ngModel)]="org_detail._budjet.name_rus"
+            formControlName="budjet_name" />
+          <div class="cursor-pointer">
+            <span class="p-inputgroup-addon" (click)="addClassification()">...</span>
+          </div>
+        </div>
+        <span class="p-invalid" *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
+          <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
+        </span>
+      </div>
+
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label for="name_kaz">Наименование на каз. языке <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+          <input id="name_kaz" type="text" pInputText [(ngModel)]="org_detail.name_kaz" formControlName="name_kaz" />
+        </div>
+        <span class="p-invalid" *ngIf="form.controls['name_kaz'].invalid && form.controls['name_kaz'].touched">
+          <span *ngIf="form.controls['name_kaz'].errors?.required">Наименование не должно быть пустым</span>
+        </span>
+      </div>
+
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label for="name_rus">Наименование на рус. языке <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+          <input id="name_rus" type="text" pInputText [(ngModel)]="org_detail.name_rus" formControlName="name_rus" />
+        </div>
+        <span class="p-invalid" *ngIf="form.controls['name_rus'].invalid && form.controls['name_rus'].touched">
+          <span *ngIf="form.controls['name_rus'].errors?.required">Наименование не должно быть пустым</span>
+        </span>
+      </div>
+
+      <div class="p-field" style="padding-bottom: 10px;">
+        <label for="adress">Адрес <span style="color: red;">*</span></label>
+        <div class="p-inputgroup">
+          <input id="adress" type="text" pInputText [(ngModel)]="org_detail.adress" formControlName="adress" />
+        </div>
+        <span class="p-invalid" *ngIf="form.controls['adress'].invalid && form.controls['adress'].touched">
+          <span *ngIf="form.controls['adress'].errors?.required">Адрес не должен быть пустым</span>
+        </span>
+      </div>
+
+      <div style="width:100%; padding: 10px 0;">
+        <label style="color: red;">* - обязательные поля</label>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" style="width: 50%;">
+    <h3>Родитель</h3>
+    <div style="padding-bottom: 10px;">
+      <button pButton pRipple label="добавить" icon="pi pi-plus" class="p-button-success p-mr-2"
+        (click)="addOrg()"></button>
     </div>
-    <span class="p-invalid" *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
-      <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
-    </span>
+    <p-table *ngIf="org_detail.parent_organizations; else empty" [value]="org_detail.parent_organizations"
+      [scrollable]="true" scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
+      styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width:5%; text-align:center">Номер</th>
+          <th style="width:10%; text-align:center">Период</th>
+          <th style="text-align:center">Наименование</th>
+          <th style="width:10%; text-align:center">Действия</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-org let-ri="rowIndex">
+        <tr class="cursor-pointer">
+          <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+          <td style="text-align:center">
+            {{org._date}}
+          </td>
+          <td>
+            {{org._parent.name_rus}}
+          </td>
+          <td style="padding: 0; margin:0;">
+            <div class="flex align-items-center justify-content-center gap-2">
+              <!-- <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"></button> -->
+              <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
+                (click)="delParent(ri, org.id, org._parent.name_rus)"></button>
+              <!-- <button pButton pRipple type="button" icon="pi pi-check" style="color: green"
+                class="p-button-rounded p-button-text"></button>
+              <button pButton pRipple type="button" icon="pi pi-times" style="color: red"
+                class="p-button-rounded p-button-text"></button> -->
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template #empty>
+      <div class="center">
+        Нет ни одного родителя
+      </div>
+    </ng-template>
   </div>
-
-
-
-  <div class="p-field" style="padding-bottom: 10px;">
-    <label for="name_kaz">Наименование на каз. языке <span style="color: red;">*</span></label>
-    <div class="p-inputgroup">
-      <input id="name_kaz" type="text" pInputText [(ngModel)]="org_detail.name_kaz" formControlName="name_kaz" />
-    </div>
-    <span class="p-invalid" *ngIf="form.controls['name_kaz'].invalid && form.controls['name_kaz'].touched">
-      <span *ngIf="form.controls['name_kaz'].errors?.required">Наименование не должно быть пустым</span>
-    </span>
-  </div>
-
-  <div class="p-field" style="padding-bottom: 10px;">
-    <label for="name_rus">Наименование на рус. языке <span style="color: red;">*</span></label>
-    <div class="p-inputgroup">
-      <input id="name_rus" type="text" pInputText [(ngModel)]="org_detail.name_rus" formControlName="name_rus" />
-    </div>
-    <span class="p-invalid" *ngIf="form.controls['name_rus'].invalid && form.controls['name_rus'].touched">
-      <span *ngIf="form.controls['name_rus'].errors?.required">Наименование не должно быть пустым</span>
-    </span>
-  </div>
-
-  <div class="p-field" style="padding-bottom: 10px;">
-    <label for="adress">Адрес <span style="color: red;">*</span></label>
-    <div class="p-inputgroup">
-      <input id="adress" type="text" pInputText [(ngModel)]="org_detail.adress" formControlName="adress" />
-    </div>
-    <span class="p-invalid" *ngIf="form.controls['adress'].invalid && form.controls['adress'].touched">
-      <span *ngIf="form.controls['adress'].errors?.required">Адрес не должен быть пустым</span>
-    </span>
-  </div>
-
-  <div style="width:100%; padding: 10px 0;">
-    <label style="color: red;">* - обязательные поля</label>
-  </div>
-</form>
+</div>
 
 <div class="flex align-items-center justify-content-center gap-2">
   <button pButton pRipple label="Сохранить" (click)="saveOrg()" icon="pi pi-check"
@@ -67,6 +118,9 @@
   <button pButton pRipple label="Отмена" icon="pi pi-times" (click)="closeOrg()"
     class="p-button-outlined p-button-warning"></button>
 </div>
+
+<p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+</p-confirmDialog>
 
 <ng-template #loader>
   <app-skeleton></app-skeleton>

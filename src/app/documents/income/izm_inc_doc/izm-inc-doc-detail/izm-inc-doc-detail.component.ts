@@ -39,6 +39,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   hashBegin = ''
   hashEnd = ''
   selected = false
+  numberMonth = 0
   spravkatypes: any = []
   TotalUtvGod = 0
   TotalUtv1 = 0
@@ -127,6 +128,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.izmDetail = detail,
+              this.numberMonth = parseInt(this.izmDetail.doc._date.slice(3, 5)),
               this.calculatetot()
           },
           (error) => {
@@ -350,6 +352,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
   changedate() {
     this.izmDetail.doc._date = this.toLocaleDate(this.izmDetail.doc._date)
+    this.numberMonth = parseInt(this.izmDetail.doc._date.slice(3, 5))
   }
 
   toLocaleDate(dateForStr: string) {

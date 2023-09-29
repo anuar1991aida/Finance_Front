@@ -36,7 +36,7 @@ export class UtvExpDocListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUtvList(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
@@ -79,7 +79,7 @@ export class UtvExpDocListComponent implements OnInit {
             this.utvListconfirm.close()
           ),
             (error) => (
-              this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось выполнить операцию!' })
+              this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
             )
           )
       },

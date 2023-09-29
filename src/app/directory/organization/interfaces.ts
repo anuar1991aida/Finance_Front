@@ -7,6 +7,23 @@ export interface organization_detail {
     name_rus: string,
     adress: string,
     _budjet: Budjet_detail
+    parent_organizations: [parent_detail]
+}
+
+export interface parent_detail {
+    id: number,
+    _date: string,
+    _organization: number,
+    _parent: {
+        id: number,
+        name_rus: string
+    }
+}
+
+export interface params_org {
+    _organization_id: number,
+    _parent_id: number,
+    _date: string
 }
 
 export interface organization_list {
