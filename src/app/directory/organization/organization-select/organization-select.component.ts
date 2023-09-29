@@ -35,7 +35,7 @@ export class OrganizationSelectComponent implements OnInit {
 
   ngOnInit() {
     this.fetchOrg(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
@@ -50,7 +50,9 @@ export class OrganizationSelectComponent implements OnInit {
 
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchorg,
+      list: false
     }
 
     this.organizations$ = this.orgService.fetch(params)

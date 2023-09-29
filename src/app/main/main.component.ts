@@ -6,6 +6,8 @@ import { MenuModule } from 'primeng/menu';
 import { UserComponent } from '../user/user.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import { profileuser } from '../login/interfaces';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -19,7 +21,15 @@ export class MainComponent implements OnInit {
     private dialog_form: DialogService,
     private user_massage: MessageService,
     private user_ref: DynamicDialogRef,
-    private router: Router) { }
+    private router: Router) {
+    this.profileuser.user_id = sessionStorage.getItem('user_id') || '',
+      this.profileuser.username = sessionStorage.getItem('username') || '',
+      this.profileuser.first_name = sessionStorage.getItem('first_name') || '',
+      this.profileuser.org_id = sessionStorage.getItem('_organization_id') || '',
+      this.profileuser.org_name = sessionStorage.getItem('_organization_name') || '',
+      this.profileuser.budjet_id = sessionStorage.getItem('budjet_id') || '',
+      this.profileuser.budjet_name = sessionStorage.getItem('budjet_name') || ''
+  }
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
   viewContainerRef: ViewContainerRef;
@@ -32,18 +42,34 @@ export class MainComponent implements OnInit {
   number = '';
   counttabs = 0;
   User: MenuModule[];
-  username = ''
+  // username = ''
   first = 0
   rows = 25
 
+  profileuser: profileuser = {
+    user_id: '',
+    username: '',
+    first_name: '',
+    org_id: '',
+    org_name: '',
+    budjet_id: '',
+    budjet_name: ''
+  }
+
+  auth_token = ''
+
   ngOnInit(): void {
+
+    this.auth_token = sessionStorage.getItem('auth-token') || ''
+
+    sessionStorage.clear()
+    sessionStorage.setItem('auth-token', this.auth_token)
+
     this.User = [
 
       { label: 'Изменить пароль', icon: 'pi pi-fw pi-lock', command: this.changepass },
       { label: 'Выйти из системы', icon: 'pi pi-fw pi-power-off', command: this.logout }
     ]
-    const username = sessionStorage.getItem("username");
-    this.username = username !== null ? username : '';
 
     this.items = [
       {
@@ -172,6 +198,10 @@ export class MainComponent implements OnInit {
               items: [{
                 label: 'Приложение 2-5',
                 command: () => this.openTab('report-detail', 'Приложение 2-5', '2-5')
+              },
+              {
+                label: 'Приложение 14',
+                command: () => this.openTab('report-detail', 'Приложение 14', 'prilozhenie14')
               }]
             }
           ]]
@@ -236,12 +266,13 @@ export class MainComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout().subscribe(
-      () => this.router.navigate(['login']),
-      error => {
-        console.warn(console.error())
-      }
-    )
+    this.auth.logout()
+      .subscribe(
+        () => this.router.navigate(['login']),
+        error => {
+          console.warn(console.error())
+        }
+      )
   }
 
   removetab() {

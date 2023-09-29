@@ -103,4 +103,15 @@ export class UtvIncomeListComponent implements OnInit {
     this.newItemEvent.emit({ params: { selector: 'app-utv-income-detail', nomer: 'Утвержденный план по поступлениям ', id: '' } });
   }
 
+  setClass(deleted: boolean) {
+    let classs = ''
+
+    if (deleted) {
+      classs = 'class-deleted'
+    }
+
+    return classs
+
+  }
+
 }

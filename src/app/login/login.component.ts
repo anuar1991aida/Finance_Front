@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from './auth.service';
-import { body } from './interfaces';
+import { body, profileuser } from './interfaces';
 
 @Component({
   selector: 'app-login',
@@ -46,39 +46,47 @@ export class LoginComponent implements OnInit {
     this.auth.login(this.form.value)
       .subscribe(
         () => {
-          sessionStorage.setItem("username", this.form.value.username),
-            this.router.navigate([''])
-          // this.checkLoogin(this.form.value.username, 'ok')        
+          // sessionStorage.setItem("username", this.form.value.username),
+          //   this.router.navigate([''])
+          this.checkLoogin(this.form.value.username, 'ok')
         },
         error => {
           this.form.enable(),
-            // this.checkLoogin(this.form.value.username, 'error'),
-            this.msgLogin.add({
-              severity: 'error', summary: 'Ошибка', detail: 'Логин или пароль неверный!'
-            })
+            this.checkLoogin(this.form.value.username, 'error')
+          // this.msgLogin.add({
+          //   severity: 'error', summary: 'Ошибка', detail: 'Логин или пароль неверный!'
+          // })
         }
       )
   }
 
   checkLoogin(login: string, status: string) {
 
-    // this.body =
-    // {
-    //   "username": login,
-    //   "status": status
-    // }
+    this.body =
+    {
+      "username": login,
+      "status": status
+    }
 
-    // this.auth.checkLogin(this.body)
-    //   .subscribe(
-    //     (data) => (
-    //       sessionStorage.setItem("username", this.form.value.username),
-    //       this.router.navigate([''])
-    //     )
-    //   )
+    let responce: any
 
-
-
-
-
+    this.auth.checkLogin(this.body)
+      .subscribe(
+        (data) => (
+          responce = data,
+          sessionStorage.setItem('user_id', responce.user.id),
+          sessionStorage.setItem('username', responce.user.username),
+          sessionStorage.setItem('first_name', responce.user.first_name),
+          sessionStorage.setItem('_organization_id', responce.profile._organization.id),
+          sessionStorage.setItem('_organization_name', responce.profile._organization.name_rus),
+          sessionStorage.setItem('budjet_id', responce.profile._organization._budjet.id),
+          sessionStorage.setItem('budjet_name', responce.profile._organization._budjet.name_rus),
+          this.router.navigate([''])
+        ),
+        (error) => (
+          this.form.enable(),
+          this.msgLogin.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+        )
+      )
   }
 }

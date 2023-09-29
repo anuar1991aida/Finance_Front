@@ -93,7 +93,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.utvDetail = detail,
-              this.calculate()
+              this.calculate(0)
           },
           (error) => {
             this.utvDetailmsg.add({
@@ -134,7 +134,14 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     }
   }
 
-  calculate() {
+  calculate(summ: number) {
+
+    if (summ < 0) {
+      summ = 0
+      this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Нельзя указывать сумму меньше 0!' })
+      return
+    }
+
     let total1 = 0
     let total2 = 0
     let total3 = 0
@@ -286,7 +293,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
           }
         }
         this.utvDetailconfirm.close()
-        this.calculate()
+        this.calculate(0)
       },
       reject: () => {
         this.utvDetailconfirm.close();

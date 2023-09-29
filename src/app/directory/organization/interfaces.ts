@@ -6,7 +6,8 @@ export interface organization_detail {
     name_kaz: string,
     name_rus: string,
     adress: string,
-    _budjet: Budjet_detail
+    _budjet: Budjet_detail,
+    deleted: boolean
     parent_organizations: [parent_detail]
 }
 

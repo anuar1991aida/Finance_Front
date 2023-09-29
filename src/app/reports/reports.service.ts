@@ -20,6 +20,14 @@ export class ReportService {
         return this.http.post(this.host + "reps/report2_5", param, { responseType: 'blob' })
     }
 
+    getReport14(param: any) {
+        return this.http.post(this.host + "reps/report_14", param, { responseType: 'blob' })
+    }
+
+    getReport25(param: any) {
+        return this.http.post(this.host + "reps/report_25", param, { responseType: 'blob' })
+    }
+
     getReport27_28(param: any) {
         return this.http.post(this.host + "reps/report2728", param, { responseType: 'blob' })
     }

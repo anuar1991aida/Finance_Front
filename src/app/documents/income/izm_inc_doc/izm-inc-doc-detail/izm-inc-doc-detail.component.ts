@@ -12,6 +12,7 @@ import { IzmIncomeService } from '../izm_income.service';
 import { SHA256 } from 'crypto-js';
 import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
 import { classsification_income } from 'src/app/directory/income/classification-income/interfaces';
+import { reportComponent } from 'src/app/reports/report';
 
 @Component({
   selector: 'app-izm-inc-doc-detail',
@@ -26,7 +27,17 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     private izmDetailref: DynamicDialogRef,
     private izmDetaildialog: DialogService,
     private izmDetailconfirm: ConfirmationService,
-  ) { }
+  ) {
+    this.items = [
+      {
+        label: 'Приложение 25',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReport25();
+        }
+      }
+    ]
+  }
 
   @Input() izm_inc_id = ''
   @Output() closeEvent = new EventEmitter<any>()
@@ -157,6 +168,29 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     let objString = JSON.stringify(this.izmDetail)
     this.hashBegin = SHA256(objString).toString()
 
+  }
+
+  showReport25() {
+    this.izmDetailref = this.izmDetaildialog.open(reportComponent, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.izmDetail.doc.id,
+          'nom': this.izmDetail.doc.nom,
+          'type_doc': 'izm-inc',
+          'service': 'report25',
+          'prilozhenieValue': 'pay',
+          'prilozhenieType': [
+            { label: 'Приложение 25', value: 'pay' }
+          ]
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
   }
 
   calculatetot() {

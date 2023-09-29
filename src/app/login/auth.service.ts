@@ -16,8 +16,10 @@ export class AuthService {
         private http: HttpClient) { }
 
     private auth_token = ''
+    private tokken = ''
 
-    host = "http://192.168.10.237:8000/"
+    host = "https://artback.qazna24.kz/"
+    // host = "http://192.168.10.237:8000/"
 
     login(user: User): Observable<{ auth_token: string }> {
         return this.http.post<{ auth_token: string }>
@@ -25,22 +27,24 @@ export class AuthService {
             .pipe(
                 tap(
                     ({ auth_token }) => {
-                        sessionStorage.setItem('auth-token', auth_token)
-                        this.setToken(auth_token)
+                        // sessionStorage.setItem('auth-token', auth_token)
+                        // this.setToken(auth_token)
+                        this.tokken = auth_token
                     }
                 )
             )
     }
 
     checkLogin(body: body) {
-        // return this.http.post(this.host + '/dirs/logineduser', body)
-        //     .pipe(
-        //         tap(
-        //             () => {
-        //                 sessionStorage.setItem('auth-token', this.auth_token)
-        //             }
-        //         )
-        //     )
+        return this.http.post(this.host + '/dirs/logineduser', body)
+            .pipe(
+                tap(
+                    () => {
+                        sessionStorage.setItem('auth-token', this.tokken)
+                        this.setToken(this.tokken)
+                    }
+                )
+            )
     }
 
     setToken(token: string) {
@@ -62,6 +66,7 @@ export class AuthService {
                 tap(
                     () => {
                         this.setToken('')
+                        this.tokken = ''
                         sessionStorage.clear()
                     }
                 )

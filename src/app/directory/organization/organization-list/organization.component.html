@@ -46,23 +46,23 @@
             <tr class="cursor-pointer" (dblclick)="onRowClick(org)" [pSelectableRow]="org">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
-                    {{org.bin}}
+                    <span [ngClass]="setClass(org.deleted)">{{org.bin}}</span>
                 </td>
                 <td>
-                    {{org._budjet.name_rus}}
+                    <span [ngClass]="setClass(org.deleted)">{{org._budjet.name_rus}}</span>
                 </td>
                 <td>
-                    {{org.name_kaz}}
+                    <span [ngClass]="setClass(org.deleted)">{{org.name_kaz}}</span>
                 </td>
                 <td>
-                    {{org.name_rus}}
+                    <span [ngClass]="setClass(org.deleted)">{{org.name_rus}}</span>
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                             (click)="onRowEdit(org)"></button>
-                        <button pButton pRipple type="button" icon="pi pi-trash"
-                            class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
+                            (click)="onDeleteOrg(org)"></button>
                     </div>
                 </td>
             </tr>
@@ -80,6 +80,8 @@
             currentPageReportTemplate="{{first+1}} - {{(first + rows) > (organizations.count || 0)  ? organizations.count : first + rows }} из {{organizations.count}} элементов"
             [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
     </div>
+    <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+    </p-confirmDialog>
 </div>
 
 <ng-template #loader>

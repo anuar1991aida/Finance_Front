@@ -169,6 +169,7 @@ import { UserListComponent } from './directory/user/user-list/user-list.componen
     },
     MessageService,
     MainComponent,
+    LoginComponent,
     ConfirmationService,
     DynamicDialogConfig
   ]

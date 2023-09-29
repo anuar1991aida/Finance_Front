@@ -1,11 +1,20 @@
 <p-toolbar>
     <div class="p-toolbar-group-left">
-        <div style="padding-right: 10px;">
-            <button [disabled]="form.invalid" pButton pRipple label="Записать" icon="pi pi-save"
-                class="p-button-secondary p-mr-2" (click)="saveDoc(false)"></button>
+        <div style="display: flex;">
+            <div style="padding-right: 10px;">
+                <button [disabled]="form.invalid" pButton pRipple label="Записать" icon="pi pi-save"
+                    class="p-button-secondary p-mr-2" (click)="saveDoc(false)"></button>
+            </div>
+            <div style="padding-right: 10px;">
+                <button [disabled]="form.invalid" pButton pRipple label="Записать и закрыть" icon="pi pi-save"
+                    class="p-button-info p-mr-2" (click)="saveDoc(true)"></button>
+            </div>
+            <div>
+                <p-splitButton label="Приложения" [model]="items"
+                    styleClass="p-button-raised p-button-success mr-2 mb-2">
+                </p-splitButton>
+            </div>
         </div>
-        <button [disabled]="form.invalid" pButton pRipple label="Записать и закрыть" icon="pi pi-save"
-            class="p-button-info p-mr-2" (click)="saveDoc(true)"></button>
     </div>
 
     <div class="p-toolbar-group-right">

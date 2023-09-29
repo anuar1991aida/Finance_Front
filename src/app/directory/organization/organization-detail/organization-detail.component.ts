@@ -6,10 +6,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BudjetSelectComponent } from '../../income/budjet/budjet-select/budjet-select.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { catchError, timeout } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
 import { Budjet_detail } from '../../income/budjet/interfaces';
 import { OrganizationSelectComponent } from '../organization-select/organization-select.component';
+import { profileuser } from 'src/app/login/interfaces';
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
@@ -24,27 +23,21 @@ export class OrganizationDetailComponent implements OnInit {
     private org_dialog_ref: DynamicDialogRef,
     private budjet_ref: DynamicDialogRef,
     public org_dialog_config: DynamicDialogConfig,
-    private org_dialog_servis: DialogService) { }
+    private org_dialog_servis: DialogService) {
+  }
 
   form: FormGroup
   org_id = 0
   _date = new Date
   saved = false
-  // org_detail: organization_detail = {}
   windowHeight: number
-  // budj_det: Budjet_detail = {
-  //   id: 0,
-  //   code: '',
-  //   name_kaz: '',
-  //   name_rus: '',
-  //   adress: ''
-  // }
   org_detail: organization_detail = {
     id: 0,
     bin: '',
     name_kaz: '',
     name_rus: '',
     adress: '',
+    deleted: false,
     _budjet: {
       id: 0,
       code: '',
@@ -87,6 +80,9 @@ export class OrganizationDetailComponent implements OnInit {
             this.updateWindowSize()
           )
         )
+    }
+    else {
+
     }
 
 

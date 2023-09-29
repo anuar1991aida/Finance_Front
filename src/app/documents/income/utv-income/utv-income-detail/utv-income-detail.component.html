@@ -130,7 +130,7 @@
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
                     <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
-                        <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]" (change)="calculate()"
+                        <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]" (change)="calculate(utv['sm' + i])"
                             style="text-align:center; width: 100%;">
                     </td>
                 </ng-container>

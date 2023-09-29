@@ -4,8 +4,9 @@ import { organization_list, organization_detail } from '../interfaces';
 import { OrganizationsService } from '../organization.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OrganizationDetailComponent } from '../organization-detail/organization-detail.component'
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MainComponent } from 'src/app/main/main.component';
+import { profileuser } from 'src/app/login/interfaces';
 
 @Component({
   selector: 'app-organization',
@@ -18,17 +19,20 @@ export class OrganizationComponent implements OnInit {
   constructor(
     private MainComponent: MainComponent,
     private orgService: OrganizationsService,
+    private orgListconfirm: ConfirmationService,
     private org_dialog_ref: DynamicDialogRef,
-    private messageServicedelSelect: MessageService,
+    private orgListmessageService: MessageService,
     private org_dialog_servis: DialogService,
   ) {
     this.first = this.MainComponent.first
-    this.rows = this.MainComponent.rows
+    this.rows = this.MainComponent.rows,
+      this.profileuser = this.MainComponent.profileuser
   }
 
   @Output() closeEvent = new EventEmitter<any>()
   @Input() list = false
   organizations$: Observable<organization_list>
+  profileuser: profileuser
   first = 0
   rows = 25
   searchorg = ''
@@ -44,6 +48,7 @@ export class OrganizationComponent implements OnInit {
   ngOnInit() {
     this.fetchOrg(),
       this.updateWindowSize()
+
   }
 
   private updateWindowSize() {
@@ -59,7 +64,8 @@ export class OrganizationComponent implements OnInit {
     let params = {
       limit: this.rows.toString(),
       offset: this.first.toString(),
-      search: this.searchorg
+      search: this.searchorg,
+      list: this.list
     }
 
     this.organizations$ = this.orgService.fetch(params)
@@ -102,13 +108,47 @@ export class OrganizationComponent implements OnInit {
 
   onSelected(org: organization_detail) {
     if (!this.selected) {
-      this.messageServicedelSelect.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
+      this.orgListmessageService.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию!' })
       return
     }
     this.org_dialog_ref.close(org)
   }
 
-  search() {
+  onDeleteOrg(org: organization_detail) {
+    let msg = !org.deleted ? "Пометить " + org.name_rus + " на удаление?" : "Снять с " + org.name_rus + " пометку на удаление?"
+    let header = !org.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !org.deleted ? "Организация помечена на удаление" : "С организации снята пометка на удаление"
+
+    this.orgListconfirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.orgService.organization_del(org.id)
+          .subscribe((data) => (
+            this.orgListmessageService.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetchOrg(),
+            this.orgListconfirm.close()
+          ),
+            (error) => (
+              this.orgListmessageService.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+            )
+          )
+      },
+      reject: () => {
+        this.orgListconfirm.close();
+      }
+    });
+  }
+
+  setClass(deleted: boolean) {
+    let classs = ''
+
+    if (deleted) {
+      classs = 'class-deleted'
+    }
+
+    return classs
 
   }
 

@@ -31,6 +31,10 @@ export class OrganizationsService {
         return this.http.post(this.host + 'dirs/organizationsave', param)
     }
 
+    organization_del(id: number) {
+        return this.http.delete(this.host + `dirs/organizationdelete/${id}`)
+    }
+
     parent_organization_add(params: params_org) {
         return this.http.post(this.host + 'dirs/parent_organization_add', params)
     }
