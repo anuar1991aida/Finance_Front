@@ -6,7 +6,8 @@ import { MenuModule } from 'primeng/menu';
 import { UserComponent } from '../user/user.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { profileuser } from '../login/interfaces';
+import { profileuser } from './interfaces';
+import { MainService } from './main.service'
 
 @Component({
   selector: 'app-main',
@@ -17,18 +18,19 @@ export class MainComponent implements OnInit {
 
   constructor(
     private auth: AuthService,
+    private mainservice: MainService,
     private config: PrimeNGConfig,
     private dialog_form: DialogService,
     private user_massage: MessageService,
     private user_ref: DynamicDialogRef,
     private router: Router) {
-    this.profileuser.user_id = sessionStorage.getItem('user_id') || '',
-      this.profileuser.username = sessionStorage.getItem('username') || '',
-      this.profileuser.first_name = sessionStorage.getItem('first_name') || '',
-      this.profileuser.org_id = sessionStorage.getItem('_organization_id') || '',
-      this.profileuser.org_name = sessionStorage.getItem('_organization_name') || '',
-      this.profileuser.budjet_id = sessionStorage.getItem('budjet_id') || '',
-      this.profileuser.budjet_name = sessionStorage.getItem('budjet_name') || ''
+    // this.profileuser.user_id = sessionStorage.getItem('user_id') || '',
+    //   this.profileuser.username = sessionStorage.getItem('username') || '',
+    //   this.profileuser.first_name = sessionStorage.getItem('first_name') || '',
+    //   this.profileuser.org_id = sessionStorage.getItem('_organization_id') || '',
+    //   this.profileuser.org_name = sessionStorage.getItem('_organization_name') || '',
+    //   this.profileuser.budjet_id = sessionStorage.getItem('budjet_id') || '',
+    //   this.profileuser.budjet_name = sessionStorage.getItem('budjet_name') || ''
   }
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
@@ -56,15 +58,50 @@ export class MainComponent implements OnInit {
     budjet_name: ''
   }
 
-  auth_token = ''
+  // auth_token = ''
 
   ngOnInit(): void {
+    let responce: any
 
-    this.auth_token = sessionStorage.getItem('auth-token') || ''
+    this.mainservice
+      .getinfo()
+      .subscribe(
+        (data) => (responce = data,
+          this.profileuser.user_id = responce.user.id,
+          this.profileuser.first_name = responce.user.first_name,
+          this.profileuser.username = responce.user.username,
+          this.profileuser.org_id = responce.profile._organization.id,
+          this.profileuser.org_name = responce.profile._organization.name_rus,
+          this.profileuser.budjet_id = responce.profile._organization._budjet.id,
+          this.profileuser.budjet_name = responce.profile._organization._budjet.name_rus,
+          this.formMenu())
+      )
 
-    sessionStorage.clear()
-    sessionStorage.setItem('auth-token', this.auth_token)
+    // responce.user.id),
+    // sessionStorage.setItem('username', responce.user.username),
+    // sessionStorage.setItem('first_name', responce.user.first_name),
+    // sessionStorage.setItem('_organization_id', responce.profile._organization.id),
+    // sessionStorage.setItem('_organization_name', responce.profile._organization.name_rus),
+    // sessionStorage.setItem('budjet_id', responce.profile._organization._budjet.id),
+    // sessionStorage.setItem('budjet_name', responce.profile._organization._budjet.name_rus)
 
+    // this.auth_token = sessionStorage.getItem('auth-token') || ''
+
+    // sessionStorage.clear()
+    // sessionStorage.setItem('auth-token', this.auth_token)
+
+
+
+    this.config.setTranslation({
+      monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+      monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+      dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+      firstDayOfWeek: 1
+    })
+
+  }
+
+  formMenu() {
     this.User = [
 
       { label: 'Изменить пароль', icon: 'pi pi-fw pi-lock', command: this.changepass },
@@ -212,16 +249,6 @@ export class MainComponent implements OnInit {
         command: () => this.logout()
       }
     ]
-
-    this.config.setTranslation({
-      monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-      monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-      dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-      firstDayOfWeek: 1
-    })
-
-
-
   }
 
   openTab(nameselector: string, nametitle: string, id: string, data?: any) {
