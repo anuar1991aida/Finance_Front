@@ -18,8 +18,8 @@ export class AuthService {
     private auth_token = ''
     private tokken = ''
 
-    // host = "https://artback.qazna24.kz/"
-    host = "http://192.168.10.237:8000/"
+    host = "https://artback.qazna24.kz/"
+    // host = "http://192.168.10.237:8000/"
 
     login(user: User): Observable<{ auth_token: string }> {
         return this.http.post<{ auth_token: string }>
