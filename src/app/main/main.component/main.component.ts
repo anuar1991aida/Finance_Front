@@ -3,9 +3,7 @@ import { Router } from '@angular/router';
 import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../../login/auth.service';
 import { MenuModule } from 'primeng/menu';
-import { UserComponent } from '../../user/user.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessageService } from 'primeng/api';
 import { profileuser } from './interfaces';
 import { MainService } from './main.service'
 import { StartPageComponent } from './../startpage/startpage.component'
@@ -16,18 +14,17 @@ import { UserhistoryDetailComponent } from '../userhistory/userhistory-detail/us
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
+
 export class MainComponent implements OnInit {
 
   constructor(
-    private startpage: StartPageComponent,
+    private StartPageComponent: StartPageComponent,
     private auth: AuthService,
     private mainservice: MainService,
     private config: PrimeNGConfig,
     public dialog_form: DialogService,
-    private user_massage: MessageService,
-    private router: Router,
-    private Changeref: DynamicDialogRef,
-    private dialogServiceChange: DialogService) {
+    public ref: DynamicDialogRef,
+    private router: Router) {
   }
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
@@ -43,6 +40,7 @@ export class MainComponent implements OnInit {
   User: MenuModule[];
   first = 0
   rows = 25
+  history = []
 
   profileuser: profileuser = {
     user_id: '',
@@ -68,6 +66,7 @@ export class MainComponent implements OnInit {
           this.profileuser.org_name = responce.profile._organization.name_rus,
           this.profileuser.budjet_id = responce.profile._organization._budjet.id,
           this.profileuser.budjet_name = responce.profile._organization._budjet.name_rus,
+          this.history = responce.history,
           this.formMenu(),
           this.openTab("startpage-element", "Начальная страница", ''))
       )
@@ -84,7 +83,7 @@ export class MainComponent implements OnInit {
   formMenu() {
     this.User = [
 
-      { label: 'История входа', icon: 'pi pi-fw pi-id-card', command: this.UserHistory },
+      { label: 'История входа', icon: 'pi pi-fw pi-id-card', command: this.changepass },
       { label: 'Изменить пароль', icon: 'pi pi-fw pi-lock', command: this.changepass },
       { label: 'Выйти из системы', icon: 'pi pi-fw pi-power-off', command: this.logout }
     ]
@@ -256,41 +255,18 @@ export class MainComponent implements OnInit {
 
   }
 
-  UserHistory() {
-
-    // this.startpage.UserHistory()
-
-    this.Changeref = this.dialogServiceChange.open(UserhistoryDetailComponent,
-      {
-        header: 'История входа пользователя',
-        width: 'calc(40%)',
-        height: 'calc(30%)',
-        closable: true
-      });
-
-    // this.user_ref.onClose.subscribe((save: boolean) => {
-    //   if (save) {
-    //     // this.user_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Пароль изменен! Войдите, пожалуйста, в систему!' }),
-    //     //   this.router.navigate(['login'])
-    //   }
-    // });
+  changepass() {
+    this.ref = this.dialog_form.open(UserhistoryDetailComponent, {})
   }
 
-  changepass() {
-    // this.user_ref = this.dialog_form.open(UserComponent,
-    //   {
-    //     header: 'Изменение пароля пользователя',
-    //     width: 'calc(40%)',
-    //     height: 'calc(30%)',
-    //     closable: true
-    //   });
-
-    // this.user_ref.onClose.subscribe((save: boolean) => {
-    //   if (save) {
-    //     this.user_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Пароль изменен! Войдите, пожалуйста, в систему!' }),
-    //       this.router.navigate(['login'])
-    //   }
-    // });
+  userHistory() {
+    this.ref = this.dialog_form.open(UserhistoryDetailComponent, {
+      header: 'История входа учетной записи',
+      width: 'calc(50%)',
+      height: 'calc(30%)',
+      closable: true,
+      data: { history: this.history }
+    })
   }
 
   logout() {

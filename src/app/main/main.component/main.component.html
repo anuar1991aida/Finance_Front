@@ -9,9 +9,14 @@
             <div style="margin-right: 10px;">
                 {{profileuser.first_name}}
             </div>
-            <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" styleClass="mr-2" size="danger" shape="circle">
+            <!-- <p-menu #menu [model]="User" [popup]="true"></p-menu> -->
+            <!-- <a>
+                <p-button label={{profileuser.first_name}} styleClass="p-button-link p-button-plain"
+                    (click)="op.toggle($event)"></p-button>
+            </a> -->
+            <p-avatar class="cursor-pointer" icon="pi pi-user" (click)="op.toggle($event)" styleClass="mr-2"
+                size="danger" shape="circle">
             </p-avatar>
-            <p-menu #menu [model]="User" [popup]="true"></p-menu>
         </div>
     </p-toolbar>
     <p-toast></p-toast>
@@ -126,10 +131,25 @@
 
                 <app-user-list *ngIf="context.selector=='app-user-list'" [list]="true" (closeEvent)="removetab()">
                 </app-user-list>
+
+                <startpage-element *ngIf="context.selector=='startpage-element'">
+                </startpage-element>
+
             </mat-tab>
         </ng-template>
     </mat-tab-group>
 </div>
+
+<p-overlayPanel #op [style]="{width: '180px'}">
+    <ng-template pTemplate>
+        <div class="align-items-center justify-content-left gap-2">
+            <!-- <p-button label="Изменить пароль" styleClass="p-button-link" (click)="changepass()"><i
+                    style="padding-right: 15px; font-size: 0.4cm;" class="pi pi-key"></i></p-button> -->
+            <p-button label="История входа" styleClass="p-button-link" (click)="userHistory()"><i
+                    style="padding-right: 15px; font-size: 0.4cm;" class="pi pi-id-card"></i></p-button>
+        </div>
+    </ng-template>
+</p-overlayPanel>
 
 <div #viewContainerRef>
 </div>
