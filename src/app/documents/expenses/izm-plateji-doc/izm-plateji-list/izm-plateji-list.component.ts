@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@a
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { MainComponent } from 'src/app/main/main.component'
+import { MainComponent } from 'src/app/main/main.component/main.component'
 import { izm_plateji_doc_list, izm_plateji_doc } from '../interfaces';
 import { IzmPlatezhiService } from '../izm-plateji.services';
 

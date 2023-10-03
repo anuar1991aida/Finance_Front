@@ -74,13 +74,6 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => (
           responce = data,
-          // sessionStorage.setItem('user_id', responce.user.id),
-          // sessionStorage.setItem('username', responce.user.username),
-          // sessionStorage.setItem('first_name', responce.user.first_name),
-          // sessionStorage.setItem('_organization_id', responce.profile._organization.id),
-          // sessionStorage.setItem('_organization_name', responce.profile._organization.name_rus),
-          // sessionStorage.setItem('budjet_id', responce.profile._organization._budjet.id),
-          // sessionStorage.setItem('budjet_name', responce.profile._organization._budjet.name_rus),
           this.router.navigate([''])
         ),
         (error) => (

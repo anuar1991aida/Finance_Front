@@ -5,7 +5,7 @@ import { OrganizationsService } from '../organization.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OrganizationDetailComponent } from '../organization-detail/organization-detail.component'
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MainComponent } from 'src/app/main/main.component';
+import { MainComponent } from 'src/app/main/main.component/main.component';
 import { profileuser } from 'src/app/login/interfaces';
 
 @Component({

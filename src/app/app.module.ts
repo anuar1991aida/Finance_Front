@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
-import { MainComponent } from './main/main.component';
+import { MainComponent } from './main/main.component/main.component';
 import { SkeletonComponent } from './loader/skeleton/skeleton.component'
 import { PrimeModules } from './primeng.module'
 import { MegaMenuModule } from 'primeng/megamenu';
@@ -79,6 +79,8 @@ import { reportComponent } from './reports/report';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { UserDetailComponent } from './directory/user/user-detail/user-detail.component';
 import { UserListComponent } from './directory/user/user-list/user-list.component';
+import { StartPageComponent } from './main/startpage/startpage.component';
+import { UserhistoryDetailComponent } from './main/userhistory/userhistory-detail/userhistory-detail.component';
 
 @NgModule({
   imports: [
@@ -159,7 +161,9 @@ import { UserListComponent } from './directory/user/user-list/user-list.componen
     IzmPlatejiDetailComponent,
     UserDetailComponent,
     UserListComponent,
-    reportComponent],
+    reportComponent,
+    StartPageComponent,
+    UserhistoryDetailComponent],
   bootstrap: [AppComponent],
   providers: [
     {
@@ -169,6 +173,7 @@ import { UserListComponent } from './directory/user/user-list/user-list.componen
     },
     MessageService,
     MainComponent,
+    StartPageComponent,
     LoginComponent,
     ConfirmationService,
     DynamicDialogConfig

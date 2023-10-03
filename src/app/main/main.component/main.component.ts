@@ -1,13 +1,15 @@
 import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
-import { AuthService } from '../login/auth.service';
+import { AuthService } from '../../login/auth.service';
 import { MenuModule } from 'primeng/menu';
-import { UserComponent } from '../user/user.component';
+import { UserComponent } from '../../user/user.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { profileuser } from './interfaces';
 import { MainService } from './main.service'
+import { StartPageComponent } from './../startpage/startpage.component'
+import { UserhistoryDetailComponent } from '../userhistory/userhistory-detail/userhistory-detail.component';
 
 @Component({
   selector: 'app-main',
@@ -17,20 +19,15 @@ import { MainService } from './main.service'
 export class MainComponent implements OnInit {
 
   constructor(
+    private startpage: StartPageComponent,
     private auth: AuthService,
     private mainservice: MainService,
     private config: PrimeNGConfig,
-    private dialog_form: DialogService,
+    public dialog_form: DialogService,
     private user_massage: MessageService,
-    private user_ref: DynamicDialogRef,
-    private router: Router) {
-    // this.profileuser.user_id = sessionStorage.getItem('user_id') || '',
-    //   this.profileuser.username = sessionStorage.getItem('username') || '',
-    //   this.profileuser.first_name = sessionStorage.getItem('first_name') || '',
-    //   this.profileuser.org_id = sessionStorage.getItem('_organization_id') || '',
-    //   this.profileuser.org_name = sessionStorage.getItem('_organization_name') || '',
-    //   this.profileuser.budjet_id = sessionStorage.getItem('budjet_id') || '',
-    //   this.profileuser.budjet_name = sessionStorage.getItem('budjet_name') || ''
+    private router: Router,
+    private Changeref: DynamicDialogRef,
+    private dialogServiceChange: DialogService) {
   }
 
   @ViewChild('viewContainerRef', { read: ViewContainerRef, static: true })
@@ -44,7 +41,6 @@ export class MainComponent implements OnInit {
   number = '';
   counttabs = 0;
   User: MenuModule[];
-  // username = ''
   first = 0
   rows = 25
 
@@ -57,8 +53,6 @@ export class MainComponent implements OnInit {
     budjet_id: '',
     budjet_name: ''
   }
-
-  // auth_token = ''
 
   ngOnInit(): void {
     let responce: any
@@ -74,23 +68,9 @@ export class MainComponent implements OnInit {
           this.profileuser.org_name = responce.profile._organization.name_rus,
           this.profileuser.budjet_id = responce.profile._organization._budjet.id,
           this.profileuser.budjet_name = responce.profile._organization._budjet.name_rus,
-          this.formMenu())
+          this.formMenu(),
+          this.openTab("startpage-element", "Начальная страница", ''))
       )
-
-    // responce.user.id),
-    // sessionStorage.setItem('username', responce.user.username),
-    // sessionStorage.setItem('first_name', responce.user.first_name),
-    // sessionStorage.setItem('_organization_id', responce.profile._organization.id),
-    // sessionStorage.setItem('_organization_name', responce.profile._organization.name_rus),
-    // sessionStorage.setItem('budjet_id', responce.profile._organization._budjet.id),
-    // sessionStorage.setItem('budjet_name', responce.profile._organization._budjet.name_rus)
-
-    // this.auth_token = sessionStorage.getItem('auth-token') || ''
-
-    // sessionStorage.clear()
-    // sessionStorage.setItem('auth-token', this.auth_token)
-
-
 
     this.config.setTranslation({
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
@@ -104,6 +84,7 @@ export class MainComponent implements OnInit {
   formMenu() {
     this.User = [
 
+      { label: 'История входа', icon: 'pi pi-fw pi-id-card', command: this.UserHistory },
       { label: 'Изменить пароль', icon: 'pi pi-fw pi-lock', command: this.changepass },
       { label: 'Выйти из системы', icon: 'pi pi-fw pi-power-off', command: this.logout }
     ]
@@ -275,21 +256,41 @@ export class MainComponent implements OnInit {
 
   }
 
-  changepass() {
-    this.user_ref = this.dialog_form.open(UserComponent,
+  UserHistory() {
+
+    // this.startpage.UserHistory()
+
+    this.Changeref = this.dialogServiceChange.open(UserhistoryDetailComponent,
       {
-        header: 'Изменение пароля пользователя',
+        header: 'История входа пользователя',
         width: 'calc(40%)',
         height: 'calc(30%)',
         closable: true
       });
 
-    this.user_ref.onClose.subscribe((save: boolean) => {
-      if (save) {
-        this.user_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Пароль изменен! Войдите, пожалуйста, в систему!' }),
-          this.router.navigate(['login'])
-      }
-    });
+    // this.user_ref.onClose.subscribe((save: boolean) => {
+    //   if (save) {
+    //     // this.user_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Пароль изменен! Войдите, пожалуйста, в систему!' }),
+    //     //   this.router.navigate(['login'])
+    //   }
+    // });
+  }
+
+  changepass() {
+    // this.user_ref = this.dialog_form.open(UserComponent,
+    //   {
+    //     header: 'Изменение пароля пользователя',
+    //     width: 'calc(40%)',
+    //     height: 'calc(30%)',
+    //     closable: true
+    //   });
+
+    // this.user_ref.onClose.subscribe((save: boolean) => {
+    //   if (save) {
+    //     this.user_massage.add({ severity: 'success', summary: 'Успешно', detail: 'Пароль изменен! Войдите, пожалуйста, в систему!' }),
+    //       this.router.navigate(['login'])
+    //   }
+    // });
   }
 
   logout() {

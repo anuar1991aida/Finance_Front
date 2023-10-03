@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { MainComponent } from 'src/app/main/main.component'
+import { MainComponent } from 'src/app/main/main.component/main.component'
 import { utv_income_doc, utv_income_list } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
 

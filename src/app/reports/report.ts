@@ -8,7 +8,7 @@ import { OrganizationDetailComponent } from "../directory/organization/organizat
 import { OrganizationSelectComponent } from "../directory/organization/organization-select/organization-select.component";
 import { izm_plateji_doc } from "../documents/expenses/izm-plateji-doc/interfaces";
 import { IzmPlatejiListComponent } from "../documents/expenses/izm-plateji-doc/izm-plateji-list/izm-plateji-list.component";
-import { MainComponent } from 'src/app/main/main.component';
+import { MainComponent } from 'src/app/main/main.component/main.component';
 import { profileuser } from "../login/interfaces";
 import { ReportService } from "./reports.service";
 import { BudjetSelectComponent } from "../directory/income/budjet/budjet-select/budjet-select.component";
