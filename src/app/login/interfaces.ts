@@ -5,7 +5,7 @@ export interface User {
 
 export interface body {
     "username": string,
-    "status": string
+    "password": string
 }
 
 export interface profileuser {

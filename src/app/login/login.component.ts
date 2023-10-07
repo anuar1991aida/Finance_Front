@@ -2,6 +2,8 @@ import { Component, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ChangepassComponent } from '../services/changepass/changepass.component';
 import { AuthService } from './auth.service';
 import { body, profileuser } from './interfaces';
 
@@ -16,7 +18,9 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    private msgLogin: MessageService) { }
+    private msgLogin: MessageService,
+    private login_ref: DynamicDialogRef,
+    private login_form: DialogService,) { }
 
   form: FormGroup
   loading = true
@@ -41,18 +45,18 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  onSubmit() {
+  login() {
     this.form.disable()
     this.auth.login(this.form.value)
       .subscribe(
         () => {
-          // sessionStorage.setItem("username", this.form.value.username),
-          //   this.router.navigate([''])
-          this.checkLoogin(this.form.value.username, 'ok')
+          this.router.navigate([''])
+          // this.checkLoogin(this.form.value.username, 'ok')
         },
         error => {
           this.form.enable(),
-            this.checkLoogin(this.form.value.username, 'error')
+            this.auth.setToken('')
+          // this.checkLoogin(this.form.value.username, 'error')
           // this.msgLogin.add({
           //   severity: 'error', summary: 'Ошибка', detail: 'Логин или пароль неверный!'
           // })
@@ -60,26 +64,73 @@ export class LoginComponent implements OnInit {
       )
   }
 
-  checkLoogin(login: string, status: string) {
-
-    this.body =
-    {
-      "username": login,
-      "status": status
-    }
+  onSubmit() {
 
     let responce: any
-
-    this.auth.checkLogin(this.body)
+    sessionStorage.clear()
+    this.auth
+      .clearToken(this.form.value)
       .subscribe(
         (data) => (
+          // this.auth.setToken(''),
           responce = data,
-          this.router.navigate([''])
+          this.changepass(responce)
         ),
-        (error) => (
-          this.form.enable(),
-          this.msgLogin.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-        )
+        error => {
+          this.form.enable()
+          this.msgLogin.add({
+            severity: 'error', summary: 'Ошибка', detail: error.error.detail
+          })
+        }
       )
+
+
+    //old method
+    // this.body =
+    // {
+    //   "username": login,
+    //   "status": status
+    // }
+
+    // let responce: any
+
+    // this.auth.checkLogin(this.body)
+    //   .subscribe(
+    //     (data) => (
+    //       responce = data,
+    //       this.router.navigate([''])
+    //     ),
+    //     (error) => (
+    //       this.form.enable(),
+    //       this.msgLogin.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+    //     )
+    //   )
+  }
+
+  changepass(responce: any) {
+    if (responce.changepass == 'True') {
+      this.login_ref = this.login_form.open(ChangepassComponent, {
+        header: 'Изменение пароля пользователя',
+        width: 'calc(40%)',
+        height: 'calc(40%)',
+        data: { 'byToken': true },
+        closable: true
+      })
+
+      this.login_ref.onClose.subscribe((save: boolean) => {
+
+        if (save) {
+          this.form.enable(),
+            sessionStorage.setItem('temp-token', ''),
+            this.msgLogin.add({
+              severity: 'success', summary: 'Успешно', detail: 'Пароль успешно изменен! Пожалуйста, войдите в систему заново!'
+            })
+        }
+      })
+    }
+    else {
+      this.login()
+    }
+
   }
 }

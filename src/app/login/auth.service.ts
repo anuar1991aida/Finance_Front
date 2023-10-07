@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject, tap } from "rxjs";
 import { observableToBeFn } from "rxjs/internal/testing/TestScheduler";
@@ -16,7 +16,7 @@ export class AuthService {
         private http: HttpClient) { }
 
     private auth_token = ''
-    private tokken = ''
+
 
     // host = "https://artback.qazna24.kz/"
     host = "http://192.168.10.237:8000/"
@@ -24,33 +24,36 @@ export class AuthService {
     // host = "https://finback.qazna24.kz/"
 
     login(user: User): Observable<{ auth_token: string }> {
+
         return this.http.post<{ auth_token: string }>
             (this.host + 'api/auth/token/login', user)
             .pipe(
                 tap(
                     ({ auth_token }) => {
-                        // sessionStorage.setItem('auth-token', auth_token)
-                        // this.setToken(auth_token)
-                        this.tokken = auth_token
+                        sessionStorage.setItem('auth-token', auth_token)
+                        this.setToken(auth_token)
                     }
                 )
             )
     }
 
-    checkLogin(body: body) {
-        return this.http.post(this.host + '/dirs/logineduser', body)
-            .pipe(
-                tap(
-                    () => {
-                        sessionStorage.setItem('auth-token', this.tokken)
-                        this.setToken(this.tokken)
-                    }
-                )
-            )
+    clearToken(body: body) {
+
+        let temp_token = 'Basic ' + btoa(unescape(encodeURIComponent(body.username + ":" + body.password)))
+        sessionStorage.setItem('temp-token', temp_token)
+
+        let myHeaders = new HttpHeaders()
+            .set('Content-Type', 'application/json')
+            .set('Authorization', temp_token);
+        return this.http.get(this.host + "dirs/cleartoken", { headers: myHeaders })
     }
 
     setToken(token: string) {
         this.auth_token = token
+    }
+
+    setStorageToken() {
+        sessionStorage.setItem('auth-token', '')
     }
 
     getToken(): string {
@@ -58,7 +61,7 @@ export class AuthService {
     }
 
     isAuthenticated(): boolean {
-        return !!this.auth_token
+        return this.auth_token != ''
     }
 
     logout(): Observable<any> {
@@ -67,9 +70,10 @@ export class AuthService {
             .pipe(
                 tap(
                     () => {
-                        this.setToken('')
-                        this.tokken = ''
+                        // this.setStorageToken()
                         sessionStorage.clear()
+                        this.auth_token = ''
+
                     }
                 )
             )

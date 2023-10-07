@@ -55,7 +55,6 @@ import { FkrListComponent } from './directory/expenses/fkr/fkr-list/fkr-list.com
 import { FkrSelectComponent } from './directory/expenses/fkr/fkr-select/fkr-select.component';
 import { SpecificationIncomeListComponent } from './directory/income/specification-income/specification-income-list/specification-income-list.component';
 import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
-import { UserComponent } from './user/user.component';
 import { UtvExpDocListComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-list/utv-exp-doc-list.component';
 import { UtvExpDocDetailComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-detail/utv-exp-doc-detail.component';
 import { Import219ListComponent } from './documents/import_document/import219/import219-list/import219-list.component';
@@ -81,6 +80,7 @@ import { UserDetailComponent } from './directory/user/user-detail/user-detail.co
 import { UserListComponent } from './directory/user/user-list/user-list.component';
 import { StartPageComponent } from './main/startpage/startpage.component';
 import { UserhistoryDetailComponent } from './main/userhistory/userhistory-detail/userhistory-detail.component';
+import { ChangepassComponent } from './services/changepass/changepass.component';
 
 @NgModule({
   imports: [
@@ -154,7 +154,6 @@ import { UserhistoryDetailComponent } from './main/userhistory/userhistory-detai
     SpecificationExpListComponent,
     SpecificationExpSelectComponent,
     SpecificationExpDetailComponent,
-    UserComponent,
     Import420DetailComponent,
     Import420ListComponent,
     IzmPlatejiListComponent,
@@ -163,7 +162,8 @@ import { UserhistoryDetailComponent } from './main/userhistory/userhistory-detai
     UserListComponent,
     reportComponent,
     StartPageComponent,
-    UserhistoryDetailComponent],
+    UserhistoryDetailComponent,
+    ChangepassComponent],
   bootstrap: [AppComponent],
   providers: [
     {

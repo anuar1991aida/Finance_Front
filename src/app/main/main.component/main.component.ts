@@ -8,6 +8,7 @@ import { profileuser } from './interfaces';
 import { MainService } from './main.service'
 import { StartPageComponent } from './../startpage/startpage.component'
 import { UserhistoryDetailComponent } from '../userhistory/userhistory-detail/userhistory-detail.component';
+import { ChangepassComponent } from 'src/app/services/changepass/changepass.component';
 
 @Component({
   selector: 'app-main',
@@ -23,8 +24,8 @@ export class MainComponent implements OnInit {
     private mainservice: MainService,
     private mainmsg: MessageService,
     private config: PrimeNGConfig,
-    public dialog_form: DialogService,
-    public ref: DynamicDialogRef,
+    private dialog_form: DialogService,
+    private ref: DynamicDialogRef,
     private router: Router) {
   }
 
@@ -111,6 +112,10 @@ export class MainComponent implements OnInit {
       monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
       monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
       dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+      weak: 'Легкий',
+      medium: 'Средний',
+      strong: 'Сложный',
+      passwordPrompt: 'Введите пароль',
       firstDayOfWeek: 1
     })
 
@@ -259,11 +264,11 @@ export class MainComponent implements OnInit {
             }
           ]]
       },
-      {
-        label: 'Quit',
-        icon: 'pi pi-fw pi-power-off',
-        command: () => this.logout()
-      }
+      // {
+      //   label: 'Quit',
+      //   icon: 'pi pi-fw pi-power-off',
+      //   command: () => this.logout()
+      // }
     ]
   }
 
@@ -292,14 +297,30 @@ export class MainComponent implements OnInit {
   }
 
   changepass() {
-    this.ref = this.dialog_form.open(UserhistoryDetailComponent, {})
+    this.ref = this.dialog_form.open(ChangepassComponent, {
+      header: 'Изменение пароля пользователя',
+      width: 'calc(40%)',
+      height: 'calc(40%)',
+      closable: true
+    }),
+      this.ref.onClose.subscribe((success: boolean) => {
+
+        if (success) {
+
+          setTimeout(() => {
+            sessionStorage.clear(),
+              this.auth.setToken(''),
+              this.router.navigate(['login'])
+          }, 1500)
+        }
+      })
   }
 
   userHistory() {
     this.ref = this.dialog_form.open(UserhistoryDetailComponent, {
       header: 'История входа учетной записи',
       width: 'calc(50%)',
-      height: 'calc(30%)',
+      height: 'calc(50%)',
       closable: true,
       data: { history: this.history }
     })
