@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, HostListener, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { MegaMenuItem, PrimeNGConfig } from 'primeng/api';
+import { MegaMenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
 import { AuthService } from '../../login/auth.service';
 import { MenuModule } from 'primeng/menu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -21,6 +21,7 @@ export class MainComponent implements OnInit {
     private StartPageComponent: StartPageComponent,
     private auth: AuthService,
     private mainservice: MainService,
+    private mainmsg: MessageService,
     private config: PrimeNGConfig,
     public dialog_form: DialogService,
     public ref: DynamicDialogRef,
@@ -31,7 +32,42 @@ export class MainComponent implements OnInit {
   viewContainerRef: ViewContainerRef;
   @ViewChild('templateRef', { read: TemplateRef, static: true })
   templateRef: TemplateRef<any>;
+  @HostListener('window:keydown', ['$event'])
+  @HostListener('window:mousemove', ['$event'])
 
+  onKeyDown(event: KeyboardEvent) {
+    this.checkEvent()
+  }
+
+  onMouseMove(event: MouseEvent) {
+    this.checkEvent()
+
+  }
+
+  checkEvent() {
+    let newEventDatetime = new Date
+    let raznica = (newEventDatetime.getTime() - this.lastEvent.getTime()) / 1000
+    if (raznica > 30000) {
+
+      if (this.quit == false) {
+        this.quit = true
+        this.mainmsg.add({
+          severity: 'error', summary: 'Ошибка', detail: 'Время сессии истекло! Войдите заново!'
+        })
+        setTimeout(() => {
+          this.logout()
+        }, 2000)
+      }
+
+
+    }
+    else {
+      this.lastEvent = new Date;
+    }
+  }
+
+  quit = false
+  lastEvent = new Date();
   items: MegaMenuItem[];
   mass_tabs: string[] = [];
   tabcount = 0;
@@ -270,7 +306,8 @@ export class MainComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout()
+    this.auth
+      .logout()
       .subscribe(
         () => this.router.navigate(['login']),
         error => {
