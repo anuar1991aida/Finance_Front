@@ -15,13 +15,11 @@ export class TokenInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.auth.isAuthenticated()) {
-
             req = req.clone({
                 setHeaders: {
                     Authorization: 'Token ' + this.auth.getToken()
                 }
             })
-
         }
         return next.handle(req).pipe(
             catchError(
@@ -31,15 +29,14 @@ export class TokenInterceptor implements HttpInterceptor {
     }
 
     private handleAuthError(error: HttpErrorResponse): Observable<any> {
-
         if (error.status === 401) {
-            this.auth.setStorageToken(),
-                this.router.navigate(['/login'],
-                    {
-                        queryParams: {
-                            sessionFailed: true
-                        }
-                    })
+            // this.auth.setStorageToken(),
+            this.router.navigate(['/login'],
+                {
+                    queryParams: {
+                        sessionFailed: true
+                    }
+                })
         }
 
         return throwError(error)

@@ -109,13 +109,15 @@ export class LoginComponent implements OnInit {
 
   changepass(responce: any) {
     if (responce.changepass == 'True') {
-      this.login_ref = this.login_form.open(ChangepassComponent, {
-        header: 'Изменение пароля пользователя',
-        width: 'calc(40%)',
-        height: 'calc(40%)',
-        data: { 'byToken': true },
-        closable: true
-      })
+      this.login_ref = this.login_form.open(ChangepassComponent,
+        {
+          header: 'Изменение пароля пользователя',
+          width: 'calc(40%)',
+          height: 'calc(40%)',
+          data: { 'byToken': true },
+          closable: true
+        }
+      )
 
       this.login_ref.onClose.subscribe((save: boolean) => {
 

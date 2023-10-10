@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, Subject, tap } from "rxjs";
-import { observableToBeFn } from "rxjs/internal/testing/TestScheduler";
-import { user_detail } from "../directory/user/interfaces";
+import { Observable, tap } from "rxjs";
 import { User, body } from "./interfaces";
 
 @Injectable({
@@ -19,9 +17,9 @@ export class AuthService {
 
 
     // host = "https://artback.qazna24.kz/"
-    // host = "http://192.168.10.237:8000/"
-    // host = "http://192.168.10.251:8000/"
-    host = "https://finback.qazna24.kz/"
+    host = "http://192.168.10.237:8000/"
+    // host = "http://192.168.10.200:9999/"
+    // host = "https://finbackrez.qazna24.kz/"
 
     login(user: User): Observable<{ auth_token: string }> {
 
@@ -70,10 +68,8 @@ export class AuthService {
             .pipe(
                 tap(
                     () => {
-                        // this.setStorageToken()
                         sessionStorage.clear()
                         this.auth_token = ''
-
                     }
                 )
             )

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { MessageService } from "primeng/api";
+import { MessageService, PrimeNGConfig } from "primeng/api";
 import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
 import { AuthService } from "./login/auth.service";
 
@@ -12,7 +12,9 @@ import { AuthService } from "./login/auth.service";
 
 
 export class AppComponent implements OnInit {
-  constructor(private auth: AuthService) {
+  constructor(
+    private config: PrimeNGConfig,
+    private auth: AuthService) {
 
   }
 
@@ -21,5 +23,16 @@ export class AppComponent implements OnInit {
     if (potentialToken !== null) {
       this.auth.setToken(potentialToken)
     }
+
+    this.config.setTranslation({
+      monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+      monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+      dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+      weak: 'Легкий',
+      medium: 'Средний',
+      strong: 'Сложный',
+      passwordPrompt: 'Введите пароль',
+      firstDayOfWeek: 1
+    })
   }
 }

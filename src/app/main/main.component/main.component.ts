@@ -6,7 +6,6 @@ import { MenuModule } from 'primeng/menu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { profileuser } from './interfaces';
 import { MainService } from './main.service'
-import { StartPageComponent } from './../startpage/startpage.component'
 import { UserhistoryDetailComponent } from '../userhistory/userhistory-detail/userhistory-detail.component';
 import { ChangepassComponent } from 'src/app/services/changepass/changepass.component';
 
@@ -19,11 +18,9 @@ import { ChangepassComponent } from 'src/app/services/changepass/changepass.comp
 export class MainComponent implements OnInit {
 
   constructor(
-    private StartPageComponent: StartPageComponent,
     private auth: AuthService,
     private mainservice: MainService,
     private mainmsg: MessageService,
-    private config: PrimeNGConfig,
     private dialog_form: DialogService,
     private ref: DynamicDialogRef,
     private router: Router) {
@@ -95,7 +92,8 @@ export class MainComponent implements OnInit {
     this.mainservice
       .getinfo()
       .subscribe(
-        (data) => (responce = data,
+        (data) => (
+          responce = data,
           this.profileuser.user_id = responce.user.id,
           this.profileuser.first_name = responce.user.first_name,
           this.profileuser.username = responce.user.username,
@@ -108,26 +106,10 @@ export class MainComponent implements OnInit {
           this.openTab("startpage-element", "Начальная страница", ''))
       )
 
-    this.config.setTranslation({
-      monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-      monthNamesShort: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-      dayNamesMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-      weak: 'Легкий',
-      medium: 'Средний',
-      strong: 'Сложный',
-      passwordPrompt: 'Введите пароль',
-      firstDayOfWeek: 1
-    })
-
   }
 
   formMenu() {
-    this.User = [
 
-      { label: 'История входа', icon: 'pi pi-fw pi-id-card', command: this.changepass },
-      { label: 'Изменить пароль', icon: 'pi pi-fw pi-lock', command: this.changepass },
-      { label: 'Выйти из системы', icon: 'pi pi-fw pi-power-off', command: this.logout }
-    ]
 
     this.items = [
       {

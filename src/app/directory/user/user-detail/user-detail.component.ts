@@ -24,7 +24,21 @@ export class UserDetailComponent implements OnInit {
   ) { }
 
   userForm: FormGroup;
-  user_detail: user_detail
+  user_detail: user_detail = {
+    id: 0,
+    last_login: '',
+    date_joined: '',
+    username: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    is_active: true,
+    organization: {
+      id: 0,
+      name_rus: ''
+    }
+  }
   user_id = 0
   readonly = true
   changepass = false
@@ -49,7 +63,6 @@ export class UserDetailComponent implements OnInit {
           (data) => (this.user_detail = data),
           (error) => (this.userdetmessageService.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
         )
-
     }
   }
 
@@ -67,7 +80,7 @@ export class UserDetailComponent implements OnInit {
       .subscribe(
         (data) => (
           this.userdetmessageService.add({ severity: 'success', summary: 'Успешно', detail: 'Пользователь успешно сохранен!' }),
-          this.userdetref.close()),
+          this.userdetref.close(true)),
         (error) => (this.userdetmessageService.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
       )
   }
@@ -104,4 +117,7 @@ export class UserDetailComponent implements OnInit {
     })
   }
 
+  closeref() {
+    this.userdetref.close(false)
+  }
 }
