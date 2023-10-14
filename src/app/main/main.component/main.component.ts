@@ -8,6 +8,7 @@ import { profileuser } from './interfaces';
 import { MainService } from './main.service'
 import { UserhistoryDetailComponent } from '../userhistory/userhistory-detail/userhistory-detail.component';
 import { ChangepassComponent } from 'src/app/services/changepass/changepass.component';
+import { UploadComponent } from 'src/app/services/upload/upload.component';
 
 @Component({
   selector: 'app-main',
@@ -219,11 +220,11 @@ export class MainComponent implements OnInit {
               label: 'Импорт данных',
               items: [{
                 label: 'Импорт формы 2-19',
-                command: () => this.openTab('app-import219-deteail', 'Импорт формы 2-19', '')
+                command: () => this.openUpload()
               },
               {
                 label: 'Импорт формы 4-20',
-                command: () => this.openTab('app-import420-list', 'Импорт формы 4-20', '')
+                command: () => this.openUpload()
               }]
             }
           ]
@@ -276,6 +277,14 @@ export class MainComponent implements OnInit {
       this.tabcount = this.counttabs - 1;
     }
 
+  }
+
+  openUpload() {
+    this.ref = this.dialog_form.open(UploadComponent, {
+      header: 'Загрузка PDF',
+      width: 'calc(50%)',
+      height: 'calc(50%)'
+    })
   }
 
   changepass() {

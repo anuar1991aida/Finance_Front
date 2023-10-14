@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ChangepassComponent } from '../services/changepass/changepass.component';
 import { AuthService } from './auth.service';
-import { body, profileuser } from './interfaces';
+import { body } from './interfaces';
 
 @Component({
   selector: 'app-login',
@@ -47,19 +47,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.form.disable()
-    this.auth.login(this.form.value)
+    this.auth
+      .login(this.form.value)
       .subscribe(
         () => {
           this.router.navigate([''])
-          // this.checkLoogin(this.form.value.username, 'ok')
         },
         error => {
           this.form.enable(),
             this.auth.setToken('')
-          // this.checkLoogin(this.form.value.username, 'error')
-          // this.msgLogin.add({
-          //   severity: 'error', summary: 'Ошибка', detail: 'Логин или пароль неверный!'
-          // })
         }
       )
   }
@@ -72,7 +68,6 @@ export class LoginComponent implements OnInit {
       .clearToken(this.form.value)
       .subscribe(
         (data) => (
-          // this.auth.setToken(''),
           responce = data,
           this.changepass(responce)
         ),
@@ -83,28 +78,6 @@ export class LoginComponent implements OnInit {
           })
         }
       )
-
-
-    //old method
-    // this.body =
-    // {
-    //   "username": login,
-    //   "status": status
-    // }
-
-    // let responce: any
-
-    // this.auth.checkLogin(this.body)
-    //   .subscribe(
-    //     (data) => (
-    //       responce = data,
-    //       this.router.navigate([''])
-    //     ),
-    //     (error) => (
-    //       this.form.enable(),
-    //       this.msgLogin.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-    //     )
-    //   )
   }
 
   changepass(responce: any) {

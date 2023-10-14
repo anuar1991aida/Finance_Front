@@ -4,7 +4,7 @@
             <div class="p-field" style="padding-bottom: 20px;" [formGroup]="form">
                 <label for="pass">Новый пароль</label>
                 <p-password id="pass" [toggleMask]="true" [(ngModel)]="newpassword" formControlName="password"
-                    name="newpassword">
+                    name="newpassword" autocomplete="newpassword">
                     <ng-template pTemplate="header">
                         <h6>Сложность пароля</h6>
                     </ng-template>

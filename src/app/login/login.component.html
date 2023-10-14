@@ -11,18 +11,18 @@
                 <div class="p-field" style="padding-bottom: 10px;">
                     <label>Имя пользователя</label>
                     <div class="p-inputgroup">
-                        <input type="text" pInputText id="firstname" formControlName="username" />
+                        <input type="text" pInputText id="firstname" formControlName="username" id= />
                     </div>
                     <span class="p-invalid"
                         *ngIf="form.controls['username'].invalid && form.controls['username'].touched">
                         <span *ngIf="form.controls['username'].errors?.required">Логин не должен быть пустым</span>
                     </span>
-
                 </div>
 
                 <div class="p-field" style="padding-bottom: 20px;">
-                    <label for="pass">Пароль</label>
-                    <p-password id="pass" [toggleMask]="true" [feedback]="false" formControlName="password">
+                    <label for="password">Пароль</label>
+                    <p-password id="password" [toggleMask]="true" [feedback]="false" formControlName="password"
+                        autocomplete="password">
                     </p-password>
                     <span class="p-invalid"
                         *ngIf="form.controls['password'].invalid && form.controls['password'].touched">
