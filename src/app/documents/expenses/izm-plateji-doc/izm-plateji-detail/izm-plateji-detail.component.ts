@@ -112,22 +112,24 @@ export class IzmPlatejiDetailComponent implements OnInit {
     })
 
     if (this.izm_inc_id !== '') {
-      this.izmPlatezhiDetailService.fetch_detail(this.izm_inc_id)
-        .subscribe(
-          (detail) => {
-            this.izmPlatezhiDetail = detail,
-              this.payments = this.izmPlatezhiDetail.payments,
-              this.obligats = this.izmPlatezhiDetail.obligats,
-              this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5)),
-              this.addFKRtoArray()
-            // this.calculatetot()
-          },
-          (error) => {
-            this.izmPlatezhiDetailmsg.add({
-              severity: 'error', summary: 'Ошибка', detail: error.error.status
-            })
-          }
-        )
+      setTimeout(() => {
+        this.izmPlatezhiDetailService.fetch_detail(this.izm_inc_id)
+          .subscribe(
+            (detail) => {
+              this.izmPlatezhiDetail = detail,
+                this.payments = this.izmPlatezhiDetail.payments,
+                this.obligats = this.izmPlatezhiDetail.obligats,
+                this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5)),
+                this.addFKRtoArray()
+              // this.calculatetot()
+            },
+            (error) => {
+              this.izmPlatezhiDetailmsg.add({
+                severity: 'error', summary: 'Ошибка', detail: error.error.status
+              })
+            }
+          )
+      }, 5000)
     }
     else {
       this.izmPlatezhiDetailService

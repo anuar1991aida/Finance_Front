@@ -5,7 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { import219_detail } from '../interfaces';
 import { import219Servise } from '../import219.servise';
 import { FileUploadModule } from 'primeng/fileupload';
-import { UploadComponent } from '../upload/upload.component';
+import { UploadComponent } from '../../../../services/upload/upload.component';
 
 
 @Component({

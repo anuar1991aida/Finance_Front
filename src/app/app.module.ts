@@ -59,7 +59,7 @@ import { UtvExpDocListComponent } from './documents/expenses/utv-exp-doc/utv-exp
 import { UtvExpDocDetailComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-detail/utv-exp-doc-detail.component';
 import { Import219ListComponent } from './documents/import_document/import219/import219-list/import219-list.component';
 import { Import219DeteailComponent } from './documents/import_document/import219/import219-deteail/import219-deteail.component';
-import { UploadComponent } from './documents/import_document/import219/upload/upload.component';
+import { UploadComponent } from './services/upload/upload.component';
 import { SpecificationExpListComponent } from './directory/expenses/specification-exp/specification-exp-list/specification-exp-list.component';
 import { SpecificationExpDetailComponent } from './directory/expenses/specification-exp/specification-exp-detail/specification-exp-detail.component';
 import { SpecificationExpSelectComponent } from './directory/expenses/specification-exp/specification-exp-select/specification-exp-select.component';
