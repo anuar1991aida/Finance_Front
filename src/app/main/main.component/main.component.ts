@@ -220,11 +220,11 @@ export class MainComponent implements OnInit {
               label: 'Импорт данных',
               items: [{
                 label: 'Импорт формы 2-19',
-                command: () => this.openUpload()
+                command: () => this.openUpload('2_19')
               },
               {
                 label: 'Импорт формы 4-20',
-                command: () => this.openUpload()
+                command: () => this.openUpload('4_20')
               }]
             }
           ]
@@ -279,11 +279,12 @@ export class MainComponent implements OnInit {
 
   }
 
-  openUpload() {
+  openUpload(type_import: string) {
     this.ref = this.dialog_form.open(UploadComponent, {
       header: 'Загрузка PDF',
       width: 'calc(50%)',
-      height: 'calc(50%)'
+      height: 'calc(50%)',
+      data: { type_import: type_import }
     })
   }
 

@@ -1,3 +1,14 @@
-<p-fileUpload name="myfile[]" (uploadHandler)="onUpload($event)" [customUpload]="true" accept=".pdf"
-    chooseLabel="Выбрать файл" uploadLabel="Загрузить" cancelLabel="Отмена">
-</p-fileUpload>
+<div class="card" style="position: relative;">
+    <div style="position: relative;">
+        <p-fileUpload name="myfile[]" (uploadHandler)="onUpload($event)" [multiple]="true" [customUpload]="true"
+            accept=".pdf" chooseLabel="Выбрать файл" uploadLabel="Загрузить" cancelLabel="Отмена">
+        </p-fileUpload>
+    </div>
+
+    <div *ngIf="spinner" class="card" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex;
+    align-items: center; justify-content: center;">
+        <p-progressSpinner styleClass="w-6rem h-6rem" strokeWidth="7" fill="var(--surface-ground)"
+            animationDuration="1.5s">
+        </p-progressSpinner>
+    </div>
+</div>

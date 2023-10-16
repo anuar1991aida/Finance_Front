@@ -17,8 +17,8 @@ export class AuthService {
 
 
     // host = "https://artback.qazna24.kz/"
-    host = "http://192.168.10.251:8000/"
-    // host = "http://192.168.10.200:9999/"
+    // host = "http://192.168.10.251:8000/"
+    host = "http://192.168.10.237:8000/"
     // host = "https://finbackrez.qazna24.kz/"
 
     login(user: User): Observable<{ auth_token: string }> {
