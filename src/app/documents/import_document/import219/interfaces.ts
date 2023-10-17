@@ -1,6 +1,6 @@
 export interface import219_detail {
   doc: import219_doc,
-  tbl1: [import219_tab]
+  table: [import219_tab]
 }
 
 
@@ -8,9 +8,19 @@ export interface import219_doc {
   id: number,
   nom: string,
   _date: string,
-  delete: boolean,
-  _budjet_id: number,
-  _organization_id: number
+  deleted: boolean,
+  _budjet: {
+    id: number,
+    code: string,
+    name_kaz: string,
+    name_rus: string,
+    adress: string,
+    _parent: number
+  },
+  _organization: {
+    id: number,
+    name_rus: string
+  }
 
 }
 
@@ -24,8 +34,9 @@ export interface import219_list {
 
 export interface import219_tab {
   id: number,
-  _date: string,
-  deleted: boolean,
+  _classification_id: number,
+  code: string,
+  name: string,
   sm1: number,
   sm2: number,
   sm3: number,
@@ -36,8 +47,4 @@ export interface import219_tab {
   sm8: number,
   sm9: number,
   sm10: number,
-  _budjet_id: number,
-  _classification_id: number,
-  _izm_inc_id: number,
-  _organization_id: number
 }

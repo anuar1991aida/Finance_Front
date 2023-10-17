@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { AuthService } from "src/app/login/auth.service"
+import { import219_detail, import219_list } from "./interfaces";
 
 
 
@@ -21,8 +22,13 @@ export class import219Servise {
     this.host = this.authservice.host;
   }
 
-  send_file(body: any) {
-    console.log(body)
-    return this.http.post(this.host + "docs/import219", JSON.stringify(body))
+  fetch(params: any): Observable<import219_list> {
+    return this.http.get<import219_list>(this.host + 'docs/import219list', { params })
   }
+
+  fetch_detail(imp_219_id: string): Observable<import219_detail> {
+    return this.http.get<import219_detail>(this.host + `docs/import219item/${imp_219_id}`)
+  }
+
+
 }

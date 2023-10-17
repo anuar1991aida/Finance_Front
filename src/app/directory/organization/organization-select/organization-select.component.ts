@@ -5,6 +5,9 @@ import { OrganizationsService } from '../organization.service';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { OrganizationDetailComponent } from '../organization-detail/organization-detail.component'
 import { MessageService } from 'primeng/api';
+import { MainComponent } from 'src/app/main/main.component/main.component';
+import { profileuser } from 'src/app/login/interfaces';
+
 @Component({
   selector: 'app-organization-select',
   templateUrl: './organization-select.component.html',
@@ -13,15 +16,21 @@ import { MessageService } from 'primeng/api';
 export class OrganizationSelectComponent implements OnInit {
 
   constructor(
+    private MainComponent: MainComponent,
     private orgService: OrganizationsService,
     private org_dialog_ref: DynamicDialogRef,
     private messageServicedelSelect: MessageService,
     private org_dialog_servis: DialogService,
-  ) { }
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows,
+      this.profileuser = this.MainComponent.profileuser
+  }
 
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   organizations$: Observable<organization_select>
+  profileuser: profileuser
   first = 0
   rows = 25
   searchorg = ''

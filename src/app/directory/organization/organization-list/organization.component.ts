@@ -41,8 +41,7 @@ export class OrganizationComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
-    this.updateWindowSize(),
-      this.updateWindowSize()
+    this.updateWindowSize()
   }
 
   ngOnInit() {

@@ -58,7 +58,7 @@ import { SpecificationIncomeDetailComponent } from './directory/income/specifica
 import { UtvExpDocListComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-list/utv-exp-doc-list.component';
 import { UtvExpDocDetailComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-detail/utv-exp-doc-detail.component';
 import { Import219ListComponent } from './documents/import_document/import219/import219-list/import219-list.component';
-import { Import219DeteailComponent } from './documents/import_document/import219/import219-deteail/import219-deteail.component';
+import { Import219DetailComponent } from './documents/import_document/import219/import219-detail/import219-detail.component';
 import { UploadComponent } from './services/upload/upload.component';
 import { SpecificationExpListComponent } from './directory/expenses/specification-exp/specification-exp-list/specification-exp-list.component';
 import { SpecificationExpDetailComponent } from './directory/expenses/specification-exp/specification-exp-detail/specification-exp-detail.component';
@@ -149,7 +149,7 @@ import { ChangepassComponent } from './services/changepass/changepass.component'
     IzmIncDocDetailComponent,
     IzmIncDocListComponent,
     Import219ListComponent,
-    Import219DeteailComponent,
+    Import219DetailComponent,
     UploadComponent,
     SpecificationExpListComponent,
     SpecificationExpSelectComponent,
