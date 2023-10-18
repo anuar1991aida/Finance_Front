@@ -81,6 +81,7 @@ import { UserListComponent } from './directory/user/user-list/user-list.componen
 import { StartPageComponent } from './main/startpage/startpage.component';
 import { UserhistoryDetailComponent } from './main/userhistory/userhistory-detail/userhistory-detail.component';
 import { ChangepassComponent } from './services/changepass/changepass.component';
+import { PeriodDetailComponent } from './directory/period/period-detail/period-detail.component';
 
 @NgModule({
   imports: [
@@ -163,7 +164,8 @@ import { ChangepassComponent } from './services/changepass/changepass.component'
     reportComponent,
     StartPageComponent,
     UserhistoryDetailComponent,
-    ChangepassComponent],
+    ChangepassComponent,
+    PeriodDetailComponent],
   bootstrap: [AppComponent],
   providers: [
     {

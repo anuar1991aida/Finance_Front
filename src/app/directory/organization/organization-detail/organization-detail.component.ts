@@ -9,6 +9,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { Budjet_detail } from '../../income/budjet/interfaces';
 import { OrganizationSelectComponent } from '../organization-select/organization-select.component';
 import { profileuser } from 'src/app/login/interfaces';
+import { PeriodDetailComponent } from '../../period/period-detail/period-detail.component';
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
@@ -21,6 +22,7 @@ export class OrganizationDetailComponent implements OnInit {
     private org_confirm: ConfirmationService,
     private org_message: MessageService,
     private org_dialog_ref: DynamicDialogRef,
+    private period_dialog_ref: DynamicDialogRef,
     private budjet_ref: DynamicDialogRef,
     public org_dialog_config: DynamicDialogConfig,
     private org_dialog_servis: DialogService) {
@@ -102,10 +104,26 @@ export class OrganizationDetailComponent implements OnInit {
 
     this.org_dialog_ref.onClose.subscribe((org: organization_detail) => {
       if (org) {
+        this.SelectPeriod(org)
+      }
+    })
+  }
+
+  SelectPeriod(org: organization_detail) {
+    this.period_dialog_ref = this.org_dialog_servis.open(PeriodDetailComponent,
+      {
+        header: 'Выбор периода',
+        width: '40%',
+        height: '40%'
+      })
+    this.period_dialog_ref.onClose.subscribe((date: any) => {
+      if (date) {
+        let new_date = this.toLocaleDate(date)
+
         let params = {
           _organization_id: this.org_detail.id,
           _parent_id: org.id,
-          _date: '01.01.2023 00:00:00'
+          _date: new_date
         }
 
         let resp: any
@@ -113,18 +131,20 @@ export class OrganizationDetailComponent implements OnInit {
           .parent_organization_add(params)
           .subscribe(
             (data) => (resp = data,
-              this.PushtoTable(org, resp.id),
+              this.PushtoTable(org, resp.id, new_date),
               this.org_message.add({ severity: 'success', summary: 'Ошибка', detail: resp.status })),
             (error) => (this.org_message.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
           )
+
       }
-    })
+    }
+    )
   }
 
-  PushtoTable(org: organization_detail, id_str: number) {
+  PushtoTable(org: organization_detail, id_str: number, date: string) {
     this.org_detail.parent_organizations.push({
       id: id_str,
-      _date: '01.01.2023 00:00:00',
+      _date: date,
       _organization: this.org_detail.id,
       _parent: {
         id: org.id,

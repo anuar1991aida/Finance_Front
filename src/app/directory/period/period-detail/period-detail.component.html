@@ -1,0 +1,10 @@
+<div class="align-items-center justify-content-center gap-2" style="padding-bottom: 15px;">
+    <p-calendar [(ngModel)]="date" [showIcon]="true"></p-calendar>
+</div>
+
+<div class="flex align-items-center justify-content-center gap-2">
+    <button pButton pRipple label="Сохранить" (click)="savePeriod()" icon="pi pi-check"
+        class="p-button-outlined p-button-success"></button>
+    <button pButton pRipple label="Отмена" icon="pi pi-times" (click)="closePeriod()"
+        class="p-button-outlined p-button-warning"></button>
+</div>
