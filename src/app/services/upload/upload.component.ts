@@ -20,8 +20,6 @@ export class UploadComponent implements OnInit {
   spinner = false
   ngOnInit(): void {
     this.type_import = this.upload_config.data.type_import || ''
-    console.log(this.type_import);
-
   }
 
   onUpload(event: any) {

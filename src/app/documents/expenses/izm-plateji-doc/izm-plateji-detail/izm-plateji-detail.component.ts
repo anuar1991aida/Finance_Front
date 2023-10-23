@@ -112,24 +112,22 @@ export class IzmPlatejiDetailComponent implements OnInit {
     })
 
     if (this.izm_inc_id !== '') {
-      setTimeout(() => {
-        this.izmPlatezhiDetailService.fetch_detail(this.izm_inc_id)
-          .subscribe(
-            (detail) => {
-              this.izmPlatezhiDetail = detail,
-                this.payments = this.izmPlatezhiDetail.payments,
-                this.obligats = this.izmPlatezhiDetail.obligats,
-                this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5)),
-                this.addFKRtoArray()
-              // this.calculatetot()
-            },
-            (error) => {
-              this.izmPlatezhiDetailmsg.add({
-                severity: 'error', summary: 'Ошибка', detail: error.error.status
-              })
-            }
-          )
-      }, 5000)
+      this.izmPlatezhiDetailService.fetch_detail(this.izm_inc_id)
+        .subscribe(
+          (detail) => {
+            this.izmPlatezhiDetail = detail,
+              this.payments = this.izmPlatezhiDetail.payments,
+              this.obligats = this.izmPlatezhiDetail.obligats,
+              this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5)),
+              this.addFKRtoArray()
+            // this.calculatetot()
+          },
+          (error) => {
+            this.izmPlatezhiDetailmsg.add({
+              severity: 'error', summary: 'Ошибка', detail: error.error.status
+            })
+          }
+        )
     }
     else {
       this.izmPlatezhiDetailService
@@ -504,9 +502,13 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean) {
+    let responce: any
     this.izmPlatezhiDetailService.saveUtv(this.izmPlatezhiDetail)
       .subscribe(
-        (data) => (this.izmPlatezhiDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+        (data) => (
+          responce = data,
+          this.izmPlatezhiDetail.doc.id = responce.id_doc,
+          this.izmPlatezhiDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
           this.closeaftersave(close)
         ),
         (error) => (
@@ -516,10 +518,14 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   closeaftersave(close: boolean) {
+
+
     let objString = JSON.stringify(this.izmPlatezhiDetail)
     this.hashEnd = SHA256(objString).toString()
 
     this.hashBegin = this.hashEnd
+
+
 
     if (close) {
       this.closeEvent.emit()

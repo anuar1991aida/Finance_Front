@@ -4,7 +4,7 @@ import { profileuser } from 'src/app/login/interfaces';
 import { import219Servise } from '../import219.servise';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { import219_list, import219_detail, import219_doc } from '../interfaces';
+import { import219_list, import219_doc } from '../interfaces';
 import { Observable } from 'rxjs';
 import { UploadComponent } from 'src/app/services/upload/upload.component';
 
@@ -31,7 +31,6 @@ export class Import219ListComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   @Output() closeEvent = new EventEmitter<any>()
   @Output() newItemEvent = new EventEmitter<any>();
-  @Input() list = false
 
   imports$: Observable<import219_list>
   profileuser: profileuser
@@ -51,8 +50,7 @@ export class Import219ListComponent implements OnInit {
     let params = {
       limit: this.rows.toString(),
       offset: this.first.toString(),
-      search: this.searchimport,
-      list: false
+      search: this.searchimport
     }
 
     this.imports$ = this.import219_service.fetch(params)
