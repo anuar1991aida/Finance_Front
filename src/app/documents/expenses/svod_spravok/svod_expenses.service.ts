@@ -26,6 +26,13 @@ export class svodExpensesService {
         return this.http.get<svod_expenses_detail>(this.host + `docs/svodexpitem/${svod_exp_id}`)
     }
 
+    add_docs(svod_exp_id: number, docs: any): Observable<svod_expenses_detail> {
+        return this.http.post<svod_expenses_detail>(this.host + `docs/svodexpitem/${svod_exp_id}/add`, docs)
+    }
+
+    delete_docs(svod_exp_id: number, docs: any): Observable<svod_expenses_detail> {
+        return this.http.post<svod_expenses_detail>(this.host + `docs/svodexpitem/${svod_exp_id}/delete`, docs)
+    }
     // saveUtv(utv_inc: svod_expenses_detail) {
     //     return this.http.post(this.host + 'docs/utvexpsave', utv_inc)
     // }

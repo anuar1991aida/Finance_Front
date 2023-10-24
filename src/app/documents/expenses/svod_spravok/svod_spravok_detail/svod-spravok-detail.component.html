@@ -274,7 +274,8 @@
                                 <button pButton pRipple type="button" icon="pi pi-pencil"
                                     class="p-button-rounded p-button-text" (click)="onRowEdit(docList)"></button>
                                 <button pButton pRipple type="button" icon="pi pi-trash"
-                                    class="p-button-rounded p-button-text" (click)="onDelete(docList.id)"></button>
+                                    class="p-button-rounded p-button-text"
+                                    (click)="onDelete(docList.id, docList.nom)"></button>
                             </div>
                         </td>
                     </tr>

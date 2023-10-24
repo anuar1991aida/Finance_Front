@@ -230,21 +230,70 @@ export class SvodSpravokDetailComponent implements OnInit {
       if (docs_izm) {
 
         let doc = {
-          id: docs_izm.id,
-          izm_id: 0,
+          id: 0,
+          izm_id: docs_izm.id,
           nom: docs_izm.nom,
           _date: docs_izm._date,
           _organization_id: docs_izm._organization.id,
           _organization_name: docs_izm._organization.name_rus
         }
 
-        this.svodDetail.docs_izm.push(doc)
+        let docs = {
+          doc_id: docs_izm.id
+        }
+        this.svodDetailService
+          .add_docs(this.svod_exp_id, docs)
+          .subscribe(
+            (detail) => {
+              this.svodDetail = detail,
+                this.obligats = this.svodDetail.obligats,
+                this.payments = this.svodDetail.payments,
+                this.addFKRtoPayments()
+              this.addFKRtoObligats()
+            },
+            (error) => {
+              this.svodDetailmsg.add({
+                severity: 'error', summary: 'Ошибка', detail: error.error.status
+              })
+            }
+          )
       }
     })
   }
 
-  onDelete(id_doc: number) {
+  onDelete(id_doc: number, nomer: string) {
 
+    let docs = {
+      doc_id: id_doc
+    }
+
+    this.svodDetailconfirm.confirm({
+      message: 'Удалить документ ' + nomer + '?',
+      header: 'Удаление документа',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => (
+        this.svodDetailService
+          .delete_docs(this.svodDetail.doc.id, docs)
+          .subscribe(
+            (detail) => {
+              this.svodDetail = detail,
+                this.obligats = this.svodDetail.obligats,
+                this.payments = this.svodDetail.payments,
+                this.addFKRtoPayments()
+              this.addFKRtoObligats()
+              this.svodDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно удален!' })
+              this.svodDetailconfirm.close()
+            },
+            (error) => {
+              this.svodDetailmsg.add({
+                severity: 'error', summary: 'Ошибка', detail: error.error.status
+              })
+            }
+          )),
+      reject: () => {
+        this.svodDetailconfirm.close()
+      }
+    })
   }
 
   saveDoc(close: boolean) {
