@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { svod_expenses_detail, svod_expenses_list } from "./interfaces";
+import { svod_expenses_detail, svod_expenses_doc, svod_expenses_list } from "./interfaces";
 import { AuthService } from "src/app/login/auth.service"
 
 @Injectable({
@@ -33,9 +33,10 @@ export class svodExpensesService {
     delete_docs(svod_exp_id: number, docs: any): Observable<svod_expenses_detail> {
         return this.http.post<svod_expenses_detail>(this.host + `docs/svodexpitem/${svod_exp_id}/delete`, docs)
     }
-    // saveUtv(utv_inc: svod_expenses_detail) {
-    //     return this.http.post(this.host + 'docs/utvexpsave', utv_inc)
-    // }
+
+    saveSvod(svod_inc: svod_expenses_doc) {
+        return this.http.post(this.host + 'docs/svodexpadd', svod_inc)
+    }
 
     deleteUtv(utv_inc_id: number = 0) {
         return this.http.delete(this.host + `docs/utvexpdelete/${utv_inc_id}`)

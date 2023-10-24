@@ -71,7 +71,7 @@
     </ng-template>
 </div>
 
-<div style="width: 100%;">
+<div *ngIf="svodDetail" style="width: 100%;">
     <p-tabView>
         <p-tabPanel header="Платежи">
             <p-splitter [panelSizes]="[15, 85]" styleClass="mb-5">
@@ -123,18 +123,7 @@
                                 <tr class="cursor-pointer">
                                     <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                                     <td>
-                                        <div class="p-inputgroup w-full">
-                                            <input pInputText [readOnly]="true"
-                                                [ngModel]="utv._spec_code + '. ' + utv._spec_name" />
-                                            <span class="p-inputgroup-addon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-                                                </svg>
-                                            </span>
-                                            <span class="p-inputgroup-addon">...</span>
-                                        </div>
+                                        {{utv._spec_code + '. ' + utv._spec_name}}
                                     </td>
                                     <td style="text-align:center">
                                         {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
@@ -145,12 +134,6 @@
                                             {{utv['sm' + i]}}
                                         </td>
                                     </ng-container>
-                                    <!-- <td *ngIf="fkr !== undefined && fkr._id !== 0">
-                                    <div class="flex align-items-center justify-content-center gap-2">
-                                        <button pButton pRipple type="button" icon="pi pi-trash"
-                                            class="p-button-rounded p-button-text"></button>
-                                    </div>
-                                </td> -->
                                 </tr>
                             </ng-template>
                         </p-table>
@@ -181,63 +164,48 @@
                     </div>
                 </ng-template>
                 <ng-template pTemplate>
-                    <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-                        selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
-                        [resizableColumns]="true" columnResizeMode="expand">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th style="text-align:center; width: 2%;">Номер</th>
-                                <th style="text-align:center; width: 28%;">Код специфики</th>
-                                <th style="text-align:center; width: 10%;">Сумма на год</th>
-                                <th style="text-align:center; width: 5%;">Январь</th>
-                                <th style="text-align:center; width: 5%;">Февраль</th>
-                                <th style="text-align:center; width: 5%;">Март</th>
-                                <th style="text-align:center; width: 5%;">Апрель</th>
-                                <th style="text-align:center; width: 5%;">Май</th>
-                                <th style="text-align:center; width: 5%;">Июнь</th>
-                                <th style="text-align:center; width: 5%;">Июль</th>
-                                <th style="text-align:center; width: 5%;">Август</th>
-                                <th style="text-align:center; width: 5%;">Сентябрь</th>
-                                <th style="text-align:center; width: 5%;">Октябрь</th>
-                                <th style="text-align:center; width: 5%;">Ноябрь</th>
-                                <th style="text-align:center; width: 5%;">Декабрь</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-utv let-ri="rowIndex">
-                            <tr class="cursor-pointer">
-                                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
-                                <td>
-                                    <div class="p-inputgroup w-full">
-                                        <input pInputText [readOnly]="true"
-                                            [ngModel]="utv._spec_code + '. ' + utv._spec_name" />
-                                        <span class="p-inputgroup-addon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-                                            </svg>
-                                        </span>
-                                        <span class="p-inputgroup-addon">...</span>
-                                    </div>
-                                </td>
-                                <td style="text-align:center">
-                                    {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
-                                    utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
-                                </td>
-                                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                                    <td style="text-align:center">
-                                        {{utv['sm' + i]}}
+                    <div style="width: 100%;">
+                        <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+                            selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+                            [resizableColumns]="true" columnResizeMode="expand">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="text-align:center; width: 2%;">Номер</th>
+                                    <th style="text-align:center; width: 28%;">Код специфики</th>
+                                    <th style="text-align:center; width: 10%;">Сумма на год</th>
+                                    <th style="text-align:center; width: 5%;">Январь</th>
+                                    <th style="text-align:center; width: 5%;">Февраль</th>
+                                    <th style="text-align:center; width: 5%;">Март</th>
+                                    <th style="text-align:center; width: 5%;">Апрель</th>
+                                    <th style="text-align:center; width: 5%;">Май</th>
+                                    <th style="text-align:center; width: 5%;">Июнь</th>
+                                    <th style="text-align:center; width: 5%;">Июль</th>
+                                    <th style="text-align:center; width: 5%;">Август</th>
+                                    <th style="text-align:center; width: 5%;">Сентябрь</th>
+                                    <th style="text-align:center; width: 5%;">Октябрь</th>
+                                    <th style="text-align:center; width: 5%;">Ноябрь</th>
+                                    <th style="text-align:center; width: 5%;">Декабрь</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-utv let-ri="rowIndex">
+                                <tr class="cursor-pointer">
+                                    <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                                    <td>
+                                        {{utv._spec_code + '. ' + utv._spec_name}}
                                     </td>
-                                </ng-container>
-                                <!-- <td *ngIf="fkr !== undefined && fkr._id !== 0">
-                                                            <div class="flex align-items-center justify-content-center gap-2">
-                                                                <button pButton pRipple type="button" icon="pi pi-trash"
-                                                                    class="p-button-rounded p-button-text"></button>
-                                                            </div>
-                                                        </td> -->
-                            </tr>
-                        </ng-template>
-                    </p-table>
+                                    <td style="text-align:center">
+                                        {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
+                                        utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
+                                    </td>
+                                    <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                                        <td style="text-align:center">
+                                            {{utv['sm' + i]}}
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
                 </ng-template>
             </p-splitter>
         </p-tabPanel>

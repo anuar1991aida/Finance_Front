@@ -229,15 +229,6 @@ export class SvodSpravokDetailComponent implements OnInit {
     this.svodDetailref.onClose.subscribe((docs_izm: any) => {
       if (docs_izm) {
 
-        let doc = {
-          id: 0,
-          izm_id: docs_izm.id,
-          nom: docs_izm.nom,
-          _date: docs_izm._date,
-          _organization_id: docs_izm._organization.id,
-          _organization_name: docs_izm._organization.name_rus
-        }
-
         let docs = {
           doc_id: docs_izm.id
         }
@@ -297,6 +288,22 @@ export class SvodSpravokDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean) {
+    let responce: any
+    this.svodDetailService
+      .saveSvod(this.svodDetail.doc)
+      .subscribe(
+        (data) => (
+          responce = data,
+          this.svodDetail.doc.id = responce.doc_id,
+          this.svodDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          this.closeaftersave(close)
+        ),
+        (error) => {
+          this.svodDetailmsg.add({
+            severity: 'error', summary: 'Ошибка', detail: error.error.status
+          })
+        }
+      )
 
   }
 
