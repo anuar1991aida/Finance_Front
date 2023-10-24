@@ -13,6 +13,8 @@ import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
 import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
 import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
+import { MainComponent } from 'src/app/main/main.component/main.component';
+import { profileuser } from 'src/app/login/interfaces';
 
 @Component({
   selector: 'app-utv-exp-doc-detail',
@@ -22,6 +24,7 @@ import { Budjet_detail } from 'src/app/directory/income/budjet/interfaces';
 export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
   constructor(
+    private MainComponent: MainComponent,
     private utvDetailService: UtvExpensesService,
     private utvDetailmsg: MessageService,
     private utvDetailref: DynamicDialogRef,
@@ -36,12 +39,14 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
         }
       }
-    ]
+    ],
+      this.profileuser = this.MainComponent.profileuser
   }
 
   @Input() utv_exp_id = ''
   @Output() closeEvent = new EventEmitter<any>();
 
+  profileuser: profileuser
   items: MenuItem[]
   form: FormGroup
   obligats: any = []
@@ -72,84 +77,6 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   utvDetail: utv_expenses_detail
-  //   = {
-  //   doc: {
-  //     id: 0,
-  //     nom: '',
-  //     _date: '',
-  //     deleted: false,
-  //     _organization: {
-  //       id: 0,
-  //       bin: '',
-  //       name_kaz: '',
-  //       name_rus: '',
-  //       adress: '',
-  //       _budjet: this.budj_det
-  //     }
-  //   },
-  //   payments: [{
-  //     id: 0,
-  //     god: 0,
-  //     sm1: 0,
-  //     sm2: 0,
-  //     sm3: 0,
-  //     sm4: 0,
-  //     sm5: 0,
-  //     sm6: 0,
-  //     sm7: 0,
-  //     sm8: 0,
-  //     sm9: 0,
-  //     sm10: 0,
-  //     sm11: 0,
-  //     sm12: 0,
-  //     _date: '',
-  //     _utv_exp: 0,
-  //     _organization: 0,
-  //     _fkr: {
-  //       id: 0,
-  //       code: '',
-  //       name_kaz: '',
-  //       name_rus: ''
-  //     },
-  //     _spec: {
-  //       id: 0,
-  //       code: '',
-  //       name_kaz: '',
-  //       name_rus: ''
-  //     }
-  //   }],
-  //   obligats: [{
-  //     id: 0,
-  //     god: 0,
-  //     sm1: 0,
-  //     sm2: 0,
-  //     sm3: 0,
-  //     sm4: 0,
-  //     sm5: 0,
-  //     sm6: 0,
-  //     sm7: 0,
-  //     sm8: 0,
-  //     sm9: 0,
-  //     sm10: 0,
-  //     sm11: 0,
-  //     sm12: 0,
-  //     _date: '',
-  //     _utv_exp: 0,
-  //     _organization: 0,
-  //     _fkr: {
-  //       id: 0,
-  //       code: '',
-  //       name_kaz: '',
-  //       name_rus: ''
-  //     },
-  //     _spec: {
-  //       id: 0,
-  //       code: '',
-  //       name_kaz: '',
-  //       name_rus: ''
-  //     }
-  //   }]
-  // }
 
   viewOrg() {
     this.utvDetailref = this.utvDetaildialog.open(OrganizationDetailComponent,
@@ -211,7 +138,8 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
         )
     }
     else {
-      this.utvDetailService.fetch_detail(0)
+      this.utvDetailService
+        .fetch_detail(0)
         .subscribe(
           (detail) => {
             this.utvDetail = detail

@@ -7,22 +7,22 @@
     <div class="p-toolbar-group-right">
         <span class="p-input-icon-left" style="margin-right: 10px;">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" [(ngModel)]="searchizmList" (change)="fetchIzmPlatList()"
+            <input pInputText type="text" [(ngModel)]="searchutvList" (change)="fetchSvodList()"
                 placeholder="поиск..." />
         </span>
-        <div>
+        <div style="padding-right: 10px;">
             <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined"
-                styleClass="p-button-sm" (click)="fetchIzmPlatList()"></button>
+                styleClass="p-button-sm" (click)="fetchSvodList()"></button>
         </div>
-        <div *ngIf="List" style="padding-right: 10px;">
+        <div>
             <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined" styleClass="p-button-sm"
                 (click)="closeform()"></button>
         </div>
     </div>
 </p-toolbar>
 
-<div class="card" *ngIf="(izmplatList$ | async) as izmplatList; else loader">
-    <p-table *ngIf="izmplatList.count !== 0; else empty" [value]="izmplatList.results" [scrollable]="true"
+<div class="card" *ngIf="(svodList$ | async) as svodList; else loader">
+    <p-table *ngIf="svodList.count !== 0; else empty" [value]="svodList.results" [scrollable]="true"
         scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
@@ -33,23 +33,23 @@
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-izmList let-ri="rowIndex" *ngFor="let item of izmplatList.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowSelect(izmList)">
+        <ng-template pTemplate="body" let-utvList let-ri="rowIndex" *ngFor="let item of svodList.results| keyvalue">
+            <tr class="cursor-pointer" (dblclick)="onRowEdit(utvList)">
                 <td style="text-align:center">
-                    <span [ngClass]="setClass(izmList.deleted)">{{izmList.nom}}</span>
+                    <span [ngClass]="setClass(utvList.deleted)">{{utvList.nom}}</span>
                 </td>
                 <td style="text-align:center">
-                    <span [ngClass]="setClass(izmList.deleted)">{{izmList._date}}</span>
+                    <span [ngClass]="setClass(utvList.deleted)">{{utvList._date}}</span>
                 </td>
                 <td>
-                    <span [ngClass]="setClass(izmList.deleted)">{{izmList._organization.name_rus}}</span>
+                    <span [ngClass]="setClass(utvList.deleted)">{{utvList._organization.name_rus}}</span>
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
-                            (click)="onRowEdit(izmList)"></button>
+                            (click)="onRowEdit(utvList)"></button>
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
-                            (click)="onDelete(izmList)"></button>
+                            (click)="onDelete(utvList)"></button>
                     </div>
                 </td>
             </tr>
@@ -60,11 +60,11 @@
             Нет ни одного документа
         </div>
     </ng-template>
-    <div *ngIf="izmplatList.count !== 0" class="flex align-items-center justify-content-center">
+    <div *ngIf="svodList.count !== 0" class="flex align-items-center justify-content-center">
         <span class="mx-1 text-color">Указано</span>
-        <p-paginator [first]="first" [rows]="rows" [totalRecords]="izmplatList.count || 0"
+        <p-paginator [first]="first" [rows]="rows" [totalRecords]="svodList.count || 0"
             (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
-            currentPageReportTemplate="{{first+1}} - {{(first + rows) > (izmplatList.count || 0)  ? izmplatList.count : first + rows }} из {{izmplatList.count}} элементов"
+            currentPageReportTemplate="{{first+1}} - {{(first + rows) > (svodList.count || 0)  ? svodList.count : first + rows }} из {{svodList.count}} элементов"
             [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
     </div>
     <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">

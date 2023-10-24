@@ -64,5 +64,5 @@ export interface utv_expenses_list {
 export interface utv_expenses_detail {
     doc: utv_expenses_doc,
     payments: [utv_expenses_payments],
-    obligats: [utv_expenses_obligats]
+    obligats: [utv_expenses_payments]
 }

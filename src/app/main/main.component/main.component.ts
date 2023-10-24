@@ -212,6 +212,10 @@ export class MainComponent implements OnInit {
               {
                 label: 'Изменения плана по расходам',
                 command: () => this.openTab('app-izm-plateji-list', 'Изменения плана по расходам', '')
+              },
+              {
+                label: 'Свод справок',
+                command: () => this.openTab('app-svod-spravok-list', 'Свод справок', '')
               }]
             }
           ],

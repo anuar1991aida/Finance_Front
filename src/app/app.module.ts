@@ -82,6 +82,8 @@ import { StartPageComponent } from './main/startpage/startpage.component';
 import { UserhistoryDetailComponent } from './main/userhistory/userhistory-detail/userhistory-detail.component';
 import { ChangepassComponent } from './services/changepass/changepass.component';
 import { PeriodDetailComponent } from './directory/period/period-detail/period-detail.component';
+import { SvodSpravokListComponent } from './documents/expenses/svod_spravok/svod_spravok_list/svod-spravok-list.component';
+import { SvodSpravokDetailComponent } from './documents/expenses/svod_spravok/svod_spravok_detail/svod-spravok-detail.component';
 
 @NgModule({
   imports: [
@@ -165,7 +167,9 @@ import { PeriodDetailComponent } from './directory/period/period-detail/period-d
     StartPageComponent,
     UserhistoryDetailComponent,
     ChangepassComponent,
-    PeriodDetailComponent],
+    PeriodDetailComponent,
+    SvodSpravokListComponent,
+    SvodSpravokDetailComponent],
   bootstrap: [AppComponent],
   providers: [
     {
