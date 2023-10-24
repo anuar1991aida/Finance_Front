@@ -219,6 +219,14 @@ export class SvodSpravokDetailComponent implements OnInit {
   }
 
   addDoc() {
+
+    if (this.svodDetail.doc.id == 0) {
+      this.svodDetailmsg.add({
+        severity: 'error', summary: 'Ошибка', detail: 'Сначала запишите документ, пожалуйста!'
+      })
+      return
+    }
+
     this.svodDetailref = this.svodDetaildialog.open(IzmPlatejiListComponent,
       {
         header: 'Добавление документа',
@@ -233,7 +241,7 @@ export class SvodSpravokDetailComponent implements OnInit {
           doc_id: docs_izm.id
         }
         this.svodDetailService
-          .add_docs(this.svod_exp_id, docs)
+          .add_docs(this.svodDetail.doc.id, docs)
           .subscribe(
             (detail) => {
               this.svodDetail = detail,
@@ -296,7 +304,9 @@ export class SvodSpravokDetailComponent implements OnInit {
           responce = data,
           this.svodDetail.doc.id = responce.doc_id,
           this.svodDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          console.log(this.svodDetail.doc.id),
           this.closeaftersave(close)
+
         ),
         (error) => {
           this.svodDetailmsg.add({
