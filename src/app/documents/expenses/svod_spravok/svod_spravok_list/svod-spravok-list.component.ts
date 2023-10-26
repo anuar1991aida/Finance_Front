@@ -63,34 +63,35 @@ export class SvodSpravokListComponent implements OnInit {
   }
 
   onDelete(svod_exp: svod_expenses_doc) {
-    // let msg = !svod_exp.deleted ? "Пометить " + svod_exp.nom + " на удаление?" : "Снять с " + svod_exp.nom + " пометку на удаление?"
-    // let header = !svod_exp.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
-    // let msgsuccess = !svod_exp.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+    let msg = !svod_exp.deleted ? "Пометить " + svod_exp.nom + " на удаление?" : "Снять с " + svod_exp.nom + " пометку на удаление?"
+    let header = !svod_exp.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !svod_exp.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
 
-    // this.svodListconfirm.confirm({
-    //   message: msg,
-    //   header: header,
-    //   icon: 'pi pi-exclamation-triangle',
-    //   accept: () => {
-    //     this.svodListService.deleteUtv(svod_exp.id)
-    //       .subscribe((data) => (
-    //         this.svodListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
-    //         this.fetchSvodList(),
-    //         this.svodListconfirm.close()
-    //       ),
-    //         (error) => (
-    //           this.svodListmessage.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
-    //         )
-    //       )
-    //   },
-    //   reject: () => {
-    //     this.svodListconfirm.close();
-    //   }
-    // });
+    this.svodListconfirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.svodListService
+          .deleteSvod(svod_exp.id)
+          .subscribe((data) => (
+            this.svodListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetchSvodList(),
+            this.svodListconfirm.close()
+          ),
+            (error) => (
+              this.svodListmessage.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+            )
+          )
+      },
+      reject: () => {
+        this.svodListconfirm.close();
+      }
+    });
   }
 
   onRowEdit(svod_exp: svod_expenses_doc) {
-    this.newItemEvent.emit({ params: { selector: 'app-svod-spravok-detail', nomer: 'Свод справок ' + svod_exp.nom, id: svod_exp.id } });
+    this.newItemEvent.emit({ params: { selector: 'app-svod-spravok-detail', nomer: 'Свод справок №' + svod_exp.nom, id: svod_exp.id } });
   }
 
   NewDoc() {

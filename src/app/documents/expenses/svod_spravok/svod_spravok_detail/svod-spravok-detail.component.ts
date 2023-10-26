@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SHA256 } from 'crypto-js';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { fkr_detail } from 'src/app/directory/expenses/fkr/interfaces';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
 import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
@@ -70,11 +69,16 @@ export class SvodSpravokDetailComponent implements OnInit {
   hashBegin = ''
   hashEnd = ''
   nochanged = true
-  firstclick = true
-  allrecord = true
-  _lastfkr = 0
+  firstclick_pay = true
+  allrecord_pay = true
+  _lastfkr_pay = 0
+  firstclick_obl = true
+  allrecord_obl = true
+  _lastfkr_obl = 0
   obligats: any = []
   payments: any = []
+  totalPay = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  totalObl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
   ngOnInit(): void {
@@ -92,11 +96,8 @@ export class SvodSpravokDetailComponent implements OnInit {
       .fetch_detail(parseInt(this.svod_exp_id))
       .subscribe(
         (detail) => {
-          this.svodDetail = detail,
-            this.obligats = this.svodDetail.obligats,
-            this.payments = this.svodDetail.payments,
-            this.addFKRtoPayments()
-          this.addFKRtoObligats()
+          this.svodDetail = detail
+          this.main()
         },
         (error) => {
           this.svodDetailmsg.add({
@@ -108,6 +109,59 @@ export class SvodSpravokDetailComponent implements OnInit {
     let objString = JSON.stringify(this.svodDetail)
     this.hashBegin = SHA256(objString).toString()
 
+  }
+
+  main() {
+    this.obligats = this.svodDetail.obligats,
+      this.payments = this.svodDetail.payments,
+      this.addFKRtoPayments()
+    this.addFKRtoObligats()
+    this.calculateTotalPayments()
+    this.calculateTotalObligats()
+  }
+
+  calculateTotalPayments() {
+    this.totalPay = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    for (let i = 0; i < this.payments.length; i++) {
+      for (let l = 1; l <= 12; l++) {
+        this.totalPay[l] += this.payments[i]['sm' + l]
+        this.totalPay[0] += this.payments[i]['sm' + l]
+      }
+    }
+  }
+
+  calculateTotalObligats() {
+
+    this.totalObl = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    for (let i = 0; i < this.obligats.length; i++) {
+      for (let l = 1; l <= 12; l++) {
+        this.totalObl[l] += this.obligats[i]['sm' + l]
+        this.totalObl[0] += this.obligats[i]['sm' + l]
+      }
+    }
+
+  }
+
+  setClassSelect_pay(_id: number) {
+
+    if (!this.allrecord_pay && this._lastfkr_pay == _id) {
+      return 'yellow-class'
+    }
+    else {
+      return ''
+    }
+  }
+
+  setClassSelect_obl(_id: number) {
+
+    if (!this.allrecord_obl && this._lastfkr_obl == _id) {
+      return 'yellow-class'
+    }
+    else {
+      return ''
+    }
   }
 
   addFKRtoPayments() {
@@ -161,57 +215,68 @@ export class SvodSpravokDetailComponent implements OnInit {
     }
   }
 
-  filterFKR_payments(_fkr: any, payments: boolean) {
+  filterFKR_payments(_fkr: any) {
 
-    if (this.firstclick) {
-      this._lastfkr = _fkr.id
-      this.firstclick = false
+    if (this.firstclick_pay) {
+      this._lastfkr_pay = _fkr._id
+      this.firstclick_pay = false
     }
 
-    if (this._lastfkr == _fkr.id) {
-      this.allrecord = !this.allrecord
+    if (this._lastfkr_pay == _fkr._id) {
+      this.allrecord_pay = !this.allrecord_pay
     }
     else {
-      this.allrecord = false
+      this.allrecord_pay = false
     }
 
-    if (!this.allrecord) {
+    if (!this.allrecord_pay) {
 
-      if (payments) {
-        this.payments = this.svodDetail.payments.filter(item => item['_fkr_id'] == _fkr._id)
-
-        this.fkr_payments._id = _fkr._id
-        this.fkr_payments._code = _fkr._code
-        this.fkr_payments._name = _fkr._name
-      }
-      else {
-        this.obligats = this.svodDetail.obligats.filter(item => item['_fkr_id'] == _fkr._id)
-
-        this.fkr_obligats._id = _fkr._id
-        this.fkr_obligats._code = _fkr._code
-        this.fkr_obligats._name = _fkr._name
-      }
+      this.payments = this.svodDetail.payments.filter(item => item['_fkr_id'] == _fkr._id)
+      this.fkr_payments._id = _fkr._id
+      this.fkr_payments._code = _fkr._code
+      this.fkr_payments._name = _fkr._name
 
     }
     else {
-      if (payments) {
-        this.payments = this.svodDetail.payments
-
-        this.fkr_payments._id = 0
-        this.fkr_payments._code = ''
-        this.fkr_payments._name = ''
-      }
-      else {
-        this.obligats = this.svodDetail.obligats
-
-        this.fkr_obligats._id = 0
-        this.fkr_obligats._code = ''
-        this.fkr_obligats._name = ''
-      }
+      this.payments = this.svodDetail.payments
+      this.fkr_payments._id = 0
+      this.fkr_payments._code = ''
+      this.fkr_payments._name = ''
     }
 
-    this._lastfkr = _fkr.id
+    this._lastfkr_pay = _fkr._id
+    this.calculateTotalPayments()
+  }
 
+  filterFKR_obligats(_fkr: any) {
+
+    if (this.firstclick_obl) {
+      this._lastfkr_obl = _fkr._id
+      this.firstclick_obl = false
+    }
+
+    if (this._lastfkr_obl == _fkr._id) {
+      this.allrecord_obl = !this.allrecord_obl
+    }
+    else {
+      this.allrecord_obl = false
+    }
+
+    if (!this.allrecord_obl) {
+      this.obligats = this.svodDetail.obligats.filter(item => item['_fkr_id'] == _fkr._id)
+      this.fkr_obligats._id = _fkr._id
+      this.fkr_obligats._code = _fkr._code
+      this.fkr_obligats._name = _fkr._name
+    }
+    else {
+      this.obligats = this.svodDetail.obligats
+      this.fkr_obligats._id = 0
+      this.fkr_obligats._code = ''
+      this.fkr_obligats._name = ''
+    }
+
+    this._lastfkr_obl = _fkr._id
+    this.calculateTotalObligats()
   }
 
   onRowEdit(doc: doc_izm_detail) {
@@ -244,11 +309,8 @@ export class SvodSpravokDetailComponent implements OnInit {
           .add_docs(this.svodDetail.doc.id, docs)
           .subscribe(
             (detail) => {
-              this.svodDetail = detail,
-                this.obligats = this.svodDetail.obligats,
-                this.payments = this.svodDetail.payments,
-                this.addFKRtoPayments()
-              this.addFKRtoObligats()
+              this.svodDetail = detail
+              this.main()
             },
             (error) => {
               this.svodDetailmsg.add({
@@ -275,11 +337,8 @@ export class SvodSpravokDetailComponent implements OnInit {
           .delete_docs(this.svodDetail.doc.id, docs)
           .subscribe(
             (detail) => {
-              this.svodDetail = detail,
-                this.obligats = this.svodDetail.obligats,
-                this.payments = this.svodDetail.payments,
-                this.addFKRtoPayments()
-              this.addFKRtoObligats()
+              this.svodDetail = detail
+              this.main()
               this.svodDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно удален!' })
               this.svodDetailconfirm.close()
             },
@@ -303,10 +362,9 @@ export class SvodSpravokDetailComponent implements OnInit {
         (data) => (
           responce = data,
           this.svodDetail.doc.id = responce.doc_id,
+          this.svodDetail.doc.nom = responce.nom,
           this.svodDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
-          console.log(this.svodDetail.doc.id),
           this.closeaftersave(close)
-
         ),
         (error) => {
           this.svodDetailmsg.add({

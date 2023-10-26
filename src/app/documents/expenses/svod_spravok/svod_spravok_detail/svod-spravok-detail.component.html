@@ -16,12 +16,31 @@
     </div>
 </p-toolbar>
 
+<div class="card" *ngIf="!svodDetail">
+    <form class="card" style="display: flex; padding-bottom: 10px;">
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер</label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="date_doc">Дата <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+    </form>
+</div>
+
 <div class="card" *ngIf="(svodDetail) as svodDetail; else loader">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
         <div *ngIf="svodDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
             <label for="number_doc">Номер </label>
             <div class="p-inputgroup">
-                <input id="number_doc" type="text" pInputText [(ngModel)]="svodDetail.doc.nom"
+                <input id="number_doc" type="text" [readOnly]="true" pInputText [(ngModel)]="svodDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
         </div>
@@ -87,7 +106,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-fkr let-ri="rowIndex">
                                 <tr class="cursor-pointer">
-                                    <td (dblclick)="filterFKR_payments(fkr, true)">
+                                    <td (dblclick)="filterFKR_payments(fkr)" [ngClass]="setClassSelect_pay(fkr._id)">
                                         {{fkr._code}}
                                     </td>
                                 </tr>
@@ -136,6 +155,14 @@
                                     </ng-container>
                                 </tr>
                             </ng-template>
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td colspan="2" style="text-align: right; font-weight: 700;">Итого</td>
+                                    <ng-container *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                                        <td style="text-align:center">{{totalPay[i]}}</td>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
                         </p-table>
                     </div>
                 </ng-template>
@@ -155,7 +182,7 @@
                             </ng-template>
                             <ng-template pTemplate="body" let-fkr let-ri="rowIndex">
                                 <tr class="cursor-pointer">
-                                    <td (dblclick)="filterFKR_payments(fkr, false)">
+                                    <td (dblclick)="filterFKR_obligats(fkr)" [ngClass]="setClassSelect_obl(fkr._id)">
                                         {{fkr._code}}
                                     </td>
                                 </tr>
@@ -201,6 +228,15 @@
                                         <td style="text-align:center">
                                             {{utv['sm' + i]}}
                                         </td>
+                                    </ng-container>
+
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td colspan="2" style="text-align: right; font-weight: 700;">Итого</td>
+                                    <ng-container *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                                        <td style="text-align:center">{{totalObl[i]}}</td>
                                     </ng-container>
                                 </tr>
                             </ng-template>

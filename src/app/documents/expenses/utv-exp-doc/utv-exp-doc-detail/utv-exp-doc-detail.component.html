@@ -20,7 +20,27 @@
     </div>
 </p-toolbar>
 
-<div class="card" *ngIf="(utvDetail) as utvDetail; else loader">
+<div class="card" *ngIf="!utvDetail">
+    <form class="card" style="display: flex; padding-bottom: 10px;">
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="number_doc">Номер</label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+
+            <label for="date_doc">Дата <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+
+        <div class="p-field" style="padding-right: 10px;">
+            <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
+            <p-skeleton width="15rem" height="3rem"></p-skeleton>
+        </div>
+    </form>
+</div>
+
+<div class="card" *ngIf="(utvDetail) as utvDetail">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
         <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
             <label for="number_doc">Номер </label>
@@ -28,9 +48,6 @@
                 <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
-            <!-- <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
-                <span *ngIf="form.controls['number_doc'].errors?.required">Номер не должен быть пустым</span>
-            </span> -->
         </div>
 
         <div class="p-field" style="padding-right: 10px;">
@@ -74,6 +91,7 @@
         </div>
     </ng-template>
 </div>
+
 <p-splitter [panelSizes]="[15, 85]" styleClass="mb-5">
     <ng-template pTemplate>
         <div style="width: 100%;">

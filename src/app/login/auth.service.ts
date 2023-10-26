@@ -38,7 +38,7 @@ export class AuthService {
     clearToken(body: body) {
 
         let temp_token = 'Basic ' + btoa(unescape(encodeURIComponent(body.username + ":" + body.password)))
-        sessionStorage.setItem('temp-token', temp_token)
+        // sessionStorage.setItem('temp-token', temp_token)
 
         let myHeaders = new HttpHeaders()
             .set('Content-Type', 'application/json')

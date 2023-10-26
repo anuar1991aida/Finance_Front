@@ -111,7 +111,6 @@ export class MainComponent implements OnInit {
 
   formMenu() {
 
-
     this.items = [
       {
         label: 'Справочники',

@@ -1,16 +1,13 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { MessageService } from "primeng/api";
 import { catchError, Observable, throwError } from "rxjs";
 import { AuthService } from "../login/auth.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
     constructor(private auth: AuthService,
-        private router: Router,
-        private msgToken: MessageService) {
-
+        private router: Router) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
