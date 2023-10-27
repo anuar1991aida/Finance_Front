@@ -116,19 +116,23 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   ngOnInit(): void {
+
     this.form = new FormGroup({
       number_doc: new FormControl(null),
       date_doc: new FormControl(null, [Validators.required]),
       org_name: new FormControl(null, [Validators.required])
     })
+
+
     if (this.utv_exp_id !== '') {
-      this.utvDetailService.fetch_detail(parseInt(this.utv_exp_id))
+      this.utvDetailService
+        .fetch_detail(parseInt(this.utv_exp_id))
         .subscribe(
           (detail) => {
-            this.utvDetail = detail,
-              this.obligats = this.utvDetail.obligats,
-              this.payments = this.utvDetail.payments,
-              this.addFKRtoArray()
+            this.utvDetail = detail
+            this.obligats = this.utvDetail.obligats
+            this.payments = this.utvDetail.payments
+            this.addFKRtoArray()
           },
           (error) => {
             this.utvDetailmsg.add({

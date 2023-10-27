@@ -36,8 +36,8 @@ export class IzmIncomeService {
     return this.http.get<any>(this.host + 'docs/incgetplanbyclassif', { params })
   }
 
-  deleteIzm(izm_inc_id: number = 0) {
-    return this.http.delete(this.host + `docs/izmincdelete/${izm_inc_id}`)
+  deleteIzm(izm_inc_id: any) {
+    return this.http.delete(this.host + 'docs/izmincdelete', { body: izm_inc_id })
   }
 
   gettypespr() {

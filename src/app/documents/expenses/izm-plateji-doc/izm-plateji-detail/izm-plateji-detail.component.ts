@@ -502,13 +502,20 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   saveDoc(close: boolean) {
+
+    if (this.izmPlatezhiDetail.doc._type_izm_doc.id == 0) {
+      this.izmPlatezhiDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Не выбран тип справки!' })
+      return
+    }
+
     let responce: any
     this.izmPlatezhiDetailService.saveUtv(this.izmPlatezhiDetail)
       .subscribe(
         (data) => (
           responce = data,
           this.izmPlatezhiDetail.doc.id = responce.id_doc,
-          this.izmPlatezhiDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          this.izmPlatezhiDetail.doc.nom = responce.nom,
+          this.izmPlatezhiDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: responce.status }),
           this.closeaftersave(close)
         ),
         (error) => (

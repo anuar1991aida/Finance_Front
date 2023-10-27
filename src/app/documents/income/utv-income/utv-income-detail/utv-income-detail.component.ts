@@ -115,7 +115,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
           }
         )
 
-      this.utvDetail.tbl1.splice(0, this.utvDetail.tbl1.length)
+      // this.utvDetail.tbl1.splice(0, this.utvDetail.tbl1.length)
     }
 
     let objString = JSON.stringify(this.utvDetail)
@@ -268,9 +268,10 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       .saveUtv(this.utvDetail)
       .subscribe(
         (data) => (
-          this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
           responce = data,
-          this.utvDetail = responce,
+          this.utvDetail.doc.id = responce.id_doc,
+          this.utvDetail.doc.nom = responce.nom,
+          this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: responce.status }),
           this.closeaftersave(close)
         ),
         (error) => (

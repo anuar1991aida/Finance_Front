@@ -76,6 +76,7 @@ export class MainComponent implements OnInit {
   first = 0
   rows = 25
   history = []
+  roles = []
 
   profileuser: profileuser = {
     user_id: '',
@@ -102,6 +103,7 @@ export class MainComponent implements OnInit {
           this.profileuser.org_name = responce.profile._organization.name_rus,
           this.profileuser.budjet_id = responce.profile._organization._budjet.id,
           this.profileuser.budjet_name = responce.profile._organization._budjet.name_rus,
+          this.roles = responce.roles,
           this.history = responce.history,
           this.formMenu(),
           this.openTab("startpage-element", "Начальная страница", ''))

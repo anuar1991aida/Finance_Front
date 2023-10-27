@@ -9,10 +9,6 @@
     </div>
 
     <div class="p-toolbar-group-right">
-        <div style="padding-right: 10px;">
-            <p-splitButton appendTo="body" label="Еще" [model]="this.items"
-                styleClass="p-button-outlined p-button-plain p-mr-2"></p-splitButton>
-        </div>
         <div>
             <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-plain p-mr-2"
                 styleClass="p-button-sm" (click)="closeform(true)"></button>
@@ -29,12 +25,12 @@
 
         <div class="p-field" style="padding-right: 10px;">
 
-            <label for="date_doc">Дата <span style="color: red;">*</span></label>
+            <label for="date_doc">Дата</label>
             <p-skeleton width="15rem" height="3rem"></p-skeleton>
         </div>
 
         <div class="p-field" style="padding-right: 10px;">
-            <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
+            <label for="org_name">Наименование организации</label>
             <p-skeleton width="15rem" height="3rem"></p-skeleton>
         </div>
     </form>
@@ -92,174 +88,180 @@
     </ng-template>
 </div>
 
-<p-splitter [panelSizes]="[15, 85]" styleClass="mb-5">
-    <ng-template pTemplate>
-        <div style="width: 100%;">
-            <p-tabView>
-                <p-tabPanel header="Основная">
-                    <div style="padding: 0 0 10px 10px;">
-                        <button pButton pRipple label="добавить ФКР" icon="pi pi-plus" class="p-button-success p-mr-2"
-                            (click)="addFKR()"></button>
-                    </div>
-                    <p-table [value]="fkr_array" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-                        selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th style="text-align:center">Программа</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-utv let-ri="rowIndex">
-                            <tr class="cursor-pointer">
-                                <td (dblclick)="filterFKR(utv)">
-                                    {{utv.code}}
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-
-                </p-tabPanel>
-            </p-tabView>
-        </div>
-    </ng-template>
-    <ng-template pTemplate>
-        <div style="width: 100%;">
-            <p-tabView>
-                <p-tabPanel header="Платежи">
-                    <div style="padding: 0 0 10px 10px;">
-                        <button [disabled]="fkr == undefined || fkr.id == 0" pButton pRipple label="добавить специфику"
-                            icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addSpec(fkr)"></button>
-                    </div>
-                    <p-table [value]="payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-                        selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
-                        [resizableColumns]="true" columnResizeMode="expand">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th style="text-align:center">Номер</th>
-                                <th style="text-align:center">Код специфики</th>
-                                <th style="text-align:center">Сумма на год</th>
-                                <th style="text-align:center">Январь</th>
-                                <th style="text-align:center">Февраль</th>
-                                <th style="text-align:center">Март</th>
-                                <th style="text-align:center">Апрель</th>
-                                <th style="text-align:center">Май</th>
-                                <th style="text-align:center">Июнь</th>
-                                <th style="text-align:center">Июль</th>
-                                <th style="text-align:center">Август</th>
-                                <th style="text-align:center">Сентябрь</th>
-                                <th style="text-align:center">Октябрь</th>
-                                <th style="text-align:center">Ноябрь</th>
-                                <th style="text-align:center">Декабрь</th>
-                                <th *ngIf="fkr !== undefined && fkr.id !== 0" style="text-align:center">Действия</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-utv let-ri="rowIndex">
-                            <tr class="cursor-pointer">
-                                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
-                                <td>
-                                    <div class="p-inputgroup w-full">
-                                        <input pInputText [readOnly]="true"
-                                            [ngModel]="utv._spec.code + '. ' + utv._spec.name_rus" />
-                                        <span class="p-inputgroup-addon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-                                            </svg>
-                                        </span>
-                                        <span class="p-inputgroup-addon">...</span>
-                                    </div>
-                                </td>
-                                <td style="text-align:center">
-                                    {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
-                                    utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
-                                </td>
-                                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                                    <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
-                                        <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]"
-                                            style="text-align:center; width: 100%;">
+<div *ngIf="utvDetail">
+    <p-splitter [panelSizes]="[15, 85]" styleClass="mb-5">
+        <ng-template pTemplate>
+            <div style="width: 100%;">
+                <p-tabView>
+                    <p-tabPanel header="Основная">
+                        <div style="padding: 0 0 10px 10px;">
+                            <button pButton pRipple label="добавить ФКР" icon="pi pi-plus"
+                                class="p-button-success p-mr-2" (click)="addFKR()"></button>
+                        </div>
+                        <p-table [value]="fkr_array" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+                            selectionMode="single"
+                            styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="text-align:center">Программа</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-utv let-ri="rowIndex">
+                                <tr class="cursor-pointer">
+                                    <td (dblclick)="filterFKR(utv)">
+                                        {{utv.code}}
                                     </td>
-                                </ng-container>
-                                <td *ngIf="fkr !== undefined && fkr.id !== 0">
-                                    <div class="flex align-items-center justify-content-center gap-2">
-                                        <button pButton pRipple type="button" icon="pi pi-trash"
-                                            class="p-button-rounded p-button-text" (click)="delSpec(utv)"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </p-tabPanel>
-                <p-tabPanel header="Обязательства">
-                    <div style="padding: 0 0 10px 10px;">
-                        <button [disabled]="fkr == undefined || fkr.id == 0" pButton pRipple label="добавить специфику"
-                            icon="pi pi-plus" class="p-button-success p-mr-2" (click)="addSpec(fkr)"></button>
-                    </div>
-                    <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
-                        selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
-                        [resizableColumns]="true" columnResizeMode="expand">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th style="text-align:center">Номер</th>
-                                <th style="text-align:center">Код специфики</th>
-                                <th style="text-align:center">Сумма на год</th>
-                                <th style="text-align:center">Январь</th>
-                                <th style="text-align:center">Февраль</th>
-                                <th style="text-align:center">Март</th>
-                                <th style="text-align:center">Апрель</th>
-                                <th style="text-align:center">Май</th>
-                                <th style="text-align:center">Июнь</th>
-                                <th style="text-align:center">Июль</th>
-                                <th style="text-align:center">Август</th>
-                                <th style="text-align:center">Сентябрь</th>
-                                <th style="text-align:center">Октябрь</th>
-                                <th style="text-align:center">Ноябрь</th>
-                                <th style="text-align:center">Декабрь</th>
-                                <th *ngIf="fkr !== undefined && fkr.id !== 0" style="text-align:center">Действия</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-utv let-ri="rowIndex">
-                            <tr class="cursor-pointer">
-                                <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
-                                <td>
-                                    <div class="p-inputgroup w-full">
-                                        <input pInputText [readOnly]="true"
-                                            [ngModel]="utv._spec.code + '. ' + utv._spec.name_rus" />
-                                        <span class="p-inputgroup-addon">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-                                            </svg>
-                                        </span>
-                                        <span class="p-inputgroup-addon">...</span>
-                                    </div>
-                                </td>
-                                <td style="text-align:center">
-                                    {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
-                                    utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
-                                </td>
-                                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                                    <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
-                                        <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]"
-                                            style="text-align:center; width: 100%;">
-                                    </td>
-                                </ng-container>
-                                <td *ngIf="fkr !== undefined && fkr.id !== 0">
-                                    <div class="flex align-items-center justify-content-center gap-2">
-                                        <button pButton pRipple type="button" icon="pi pi-trash"
-                                            class="p-button-rounded p-button-text" (click)="delSpec(utv)"></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </p-tabPanel>
-            </p-tabView>
-        </div>
-        <!-- </div> -->
-    </ng-template>
-</p-splitter>
+                                </tr>
+                            </ng-template>
+                        </p-table>
 
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </ng-template>
+        <ng-template pTemplate>
+            <div style="width: 100%;">
+                <p-tabView>
+                    <p-tabPanel header="Платежи">
+                        <div style="padding: 0 0 10px 10px;">
+                            <button [disabled]="fkr == undefined || fkr.id == 0" pButton pRipple
+                                label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
+                                (click)="addSpec(fkr)"></button>
+                        </div>
+                        <p-table [value]="payments" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+                            selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+                            [resizableColumns]="true" columnResizeMode="expand">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="text-align:center">Номер</th>
+                                    <th style="text-align:center">Код специфики</th>
+                                    <th style="text-align:center">Сумма на год</th>
+                                    <th style="text-align:center">Январь</th>
+                                    <th style="text-align:center">Февраль</th>
+                                    <th style="text-align:center">Март</th>
+                                    <th style="text-align:center">Апрель</th>
+                                    <th style="text-align:center">Май</th>
+                                    <th style="text-align:center">Июнь</th>
+                                    <th style="text-align:center">Июль</th>
+                                    <th style="text-align:center">Август</th>
+                                    <th style="text-align:center">Сентябрь</th>
+                                    <th style="text-align:center">Октябрь</th>
+                                    <th style="text-align:center">Ноябрь</th>
+                                    <th style="text-align:center">Декабрь</th>
+                                    <th *ngIf="fkr !== undefined && fkr.id !== 0" style="text-align:center">Действия
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-utv let-ri="rowIndex">
+                                <tr class="cursor-pointer">
+                                    <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                                    <td>
+                                        <div class="p-inputgroup w-full">
+                                            <input pInputText [readOnly]="true"
+                                                [ngModel]="utv._spec.code + '. ' + utv._spec.name_rus" />
+                                            <span class="p-inputgroup-addon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                                                </svg>
+                                            </span>
+                                            <span class="p-inputgroup-addon">...</span>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+                                        {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
+                                        utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
+                                    </td>
+                                    <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                                        <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
+                                            <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]"
+                                                style="text-align:center; width: 100%;">
+                                        </td>
+                                    </ng-container>
+                                    <td *ngIf="fkr !== undefined && fkr.id !== 0">
+                                        <div class="flex align-items-center justify-content-center gap-2">
+                                            <button pButton pRipple type="button" icon="pi pi-trash"
+                                                class="p-button-rounded p-button-text" (click)="delSpec(utv)"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-tabPanel>
+                    <p-tabPanel header="Обязательства">
+                        <div style="padding: 0 0 10px 10px;">
+                            <button [disabled]="fkr == undefined || fkr.id == 0" pButton pRipple
+                                label="добавить специфику" icon="pi pi-plus" class="p-button-success p-mr-2"
+                                (click)="addSpec(fkr)"></button>
+                        </div>
+                        <p-table [value]="obligats" [scrollable]="true" scrollHeight="calc(100vh - 200px)"
+                            selectionMode="single" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines"
+                            [resizableColumns]="true" columnResizeMode="expand">
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="text-align:center">Номер</th>
+                                    <th style="text-align:center">Код специфики</th>
+                                    <th style="text-align:center">Сумма на год</th>
+                                    <th style="text-align:center">Январь</th>
+                                    <th style="text-align:center">Февраль</th>
+                                    <th style="text-align:center">Март</th>
+                                    <th style="text-align:center">Апрель</th>
+                                    <th style="text-align:center">Май</th>
+                                    <th style="text-align:center">Июнь</th>
+                                    <th style="text-align:center">Июль</th>
+                                    <th style="text-align:center">Август</th>
+                                    <th style="text-align:center">Сентябрь</th>
+                                    <th style="text-align:center">Октябрь</th>
+                                    <th style="text-align:center">Ноябрь</th>
+                                    <th style="text-align:center">Декабрь</th>
+                                    <th *ngIf="fkr !== undefined && fkr.id !== 0" style="text-align:center">Действия
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-utv let-ri="rowIndex">
+                                <tr class="cursor-pointer">
+                                    <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
+                                    <td>
+                                        <div class="p-inputgroup w-full">
+                                            <input pInputText [readOnly]="true"
+                                                [ngModel]="utv._spec.code + '. ' + utv._spec.name_rus" />
+                                            <span class="p-inputgroup-addon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                                                </svg>
+                                            </span>
+                                            <span class="p-inputgroup-addon">...</span>
+                                        </div>
+                                    </td>
+                                    <td style="text-align:center">
+                                        {{utv.sm1 + utv.sm2 + utv.sm3 + utv.sm4 + utv.sm5 + utv.sm6 +
+                                        utv.sm7 + utv.sm8 + utv.sm9 + utv.sm10 + utv.sm11 + utv.sm12}}
+                                    </td>
+                                    <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                                        <td style="text-align:right;" style="max-width: 7em; min-width: 7em">
+                                            <input type="number" [min]="0" [(ngModel)]="utv['sm' + i]"
+                                                style="text-align:center; width: 100%;">
+                                        </td>
+                                    </ng-container>
+                                    <td *ngIf="fkr !== undefined && fkr.id !== 0">
+                                        <div class="flex align-items-center justify-content-center gap-2">
+                                            <button pButton pRipple type="button" icon="pi pi-trash"
+                                                class="p-button-rounded p-button-text" (click)="delSpec(utv)"></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+            <!-- </div> -->
+        </ng-template>
+    </p-splitter>
+</div>
 <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
 </p-confirmDialog>
 

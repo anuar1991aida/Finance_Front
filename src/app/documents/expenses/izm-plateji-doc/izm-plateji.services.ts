@@ -34,8 +34,8 @@ export class IzmPlatezhiService {
         return this.http.post(this.host + 'docs/izmexpsave', izm_plateji)
     }
 
-    deleteIzmPlatezhi(izm_platezhi_id: number = 0) {
-        return this.http.delete(this.host + `docs/izmexpdelete/${izm_platezhi_id}`)
+    deleteIzmPlatezhi(izm_platezhi_id: any) {
+        return this.http.delete(this.host + 'docs/izmexpdelete', { body: izm_platezhi_id })
     }
 
     getReport2728(param: any) {

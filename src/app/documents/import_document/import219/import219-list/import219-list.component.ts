@@ -31,6 +31,15 @@ export class Import219ListComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   @Output() closeEvent = new EventEmitter<any>()
   @Output() newItemEvent = new EventEmitter<any>();
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Delete') {
+      this.massDelete(true)
+    }
+    else if (event.key === 'Delete') {
+      this.massDelete(false)
+    }
+  }
 
   imports$: Observable<import219_list>
   profileuser: profileuser
@@ -84,6 +93,12 @@ export class Import219ListComponent implements OnInit {
   }
 
   onDelete(import_219: import219_doc) {
+
+    if (this.selectedDocs && this.selectedDocs.length !== 1) {
+      this.import219_messageService.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите только один документ!' })
+      return
+    }
+
     let msg = !import_219.deleted ? "Пометить " + import_219.nom + " на удаление?" : "Снять с " + import_219.nom + " пометку на удаление?"
     let header = !import_219.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
     let msgsuccess = !import_219.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"

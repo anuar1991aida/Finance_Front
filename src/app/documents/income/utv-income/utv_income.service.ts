@@ -31,7 +31,7 @@ export class UtvIncomeService {
         return this.http.post(this.host + 'docs/utvincsave', utv_inc)
     }
 
-    deleteUtv(utv_inc_id: number = 0) {
-        return this.http.delete(this.host + `docs/utvincdelete/${utv_inc_id}`)
+    deleteUtv(utv_inc_id: any) {
+        return this.http.delete(this.host + 'docs/utvincdelete', { body: utv_inc_id })
     }
 }

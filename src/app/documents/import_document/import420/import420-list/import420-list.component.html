@@ -27,7 +27,6 @@
         scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="multiple"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [metaKeySelection]="true"
         [(selection)]="selectedDocs">
-
         <ng-template pTemplate="header">
             <tr>
                 <th style="width:5%; text-align:center">Номер</th>
@@ -36,7 +35,6 @@
                 <th style="width:30%; text-align:center">Организация</th>
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
-
         </ng-template>
         <ng-template pTemplate="body" let-import let-ri="rowIndex" *ngFor="let item of imports.results| keyvalue">
             <tr class="cursor-pointer" (dblclick)="onRowClick(import)" [pSelectableRow]="import"

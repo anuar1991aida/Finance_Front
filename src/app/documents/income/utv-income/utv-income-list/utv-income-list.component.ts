@@ -2,6 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
+import { profileuser } from 'src/app/login/interfaces';
 import { MainComponent } from 'src/app/main/main.component/main.component'
 import { utv_income_doc, utv_income_list } from '../interfaces';
 import { UtvIncomeService } from '../utv_income.service';
@@ -26,13 +27,28 @@ export class UtvIncomeListComponent implements OnInit {
   ) {
     this.first = this.MainComponent.first
     this.rows = this.MainComponent.rows
+    this.roles = this.MainComponent.roles
   }
 
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
+  @HostListener('window:keydown', ['$event'])
+
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
+      this.massDelete(true)
+    }
+    else if (event.key === 'Delete') {
+      this.massDelete(false)
+    }
+  }
+
+  profileuser: profileuser
   utvList$: Observable<utv_income_list>
   searchutvList = ''
   windowHeight: number
+  selectedDocs!: any
+  roles: string[] = []
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -42,6 +58,80 @@ export class UtvIncomeListComponent implements OnInit {
   ngOnInit(): void {
     this.fetchUtvList(),
       this.updateWindowSize()
+  }
+
+  isAdmin() {
+    return this.roles.includes('fulldata')
+  }
+
+  massDelete(shift: boolean) {
+
+    if (this.selectedDocs) {
+      let msg = !shift ? "Пометить документы на удаление?" : "Вы точно хотите удалить документы?"
+      let header = !shift ? "Пометка на удаление" : "Удаление документов"
+      let msgsuccess = !shift ? "Документы помечены на удаление" : "Документы удалены"
+
+      let mass_doc_id = []
+
+      for (let i = 0; i < this.selectedDocs.length; i++) {
+        mass_doc_id.push(this.selectedDocs[i].id)
+      }
+
+      let body = {
+        shift: shift,
+        mass_doc_id: mass_doc_id
+      }
+
+      this.deleteService(msg, header, msgsuccess, body)
+    }
+    else {
+      this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Документ не выбран' })
+    }
+  }
+
+
+  onDelete(utv_inc: utv_income_doc) {
+
+    if (this.selectedDocs && this.selectedDocs.length !== 1) {
+      this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите только один документ!' })
+      return
+    }
+
+    let msg = !utv_inc.deleted ? "Пометить " + utv_inc.nom + " на удаление?" : "Снять с " + utv_inc.nom + " пометку на удаление?"
+    let header = !utv_inc.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !utv_inc.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
+    let body = {
+      shift: false,
+      mass_doc_id: [utv_inc.id]
+    }
+
+    this.deleteService(msg, header, msgsuccess, body)
+  }
+
+  deleteService(msg: string, header: string, msgsuccess: string, body: any) {
+
+    this.utvListconfirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.utvListService
+          .deleteUtv(body)
+          .subscribe((data) => (
+            this.utvListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetchUtvList(),
+            this.utvListconfirm.close()
+          ),
+            (error) => (
+              this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось выполнить операцию!' })
+            )
+          )
+      },
+      reject: () => {
+        this.utvListconfirm.close();
+      }
+    });
   }
 
   private updateWindowSize() {
@@ -66,33 +156,6 @@ export class UtvIncomeListComponent implements OnInit {
     this.first = event.first
     this.rows = event.rows
     this.fetchUtvList()
-  }
-
-  onDelete(utv_inc: utv_income_doc) {
-    let msg = !utv_inc.deleted ? "Пометить " + utv_inc.nom + " на удаление?" : "Снять с " + utv_inc.nom + " пометку на удаление?"
-    let header = !utv_inc.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
-    let msgsuccess = !utv_inc.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
-
-    this.utvListconfirm.confirm({
-      message: msg,
-      header: header,
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.utvListService.deleteUtv(utv_inc.id)
-          .subscribe((data) => (
-            this.utvListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
-            this.fetchUtvList(),
-            this.utvListconfirm.close()
-          ),
-            (error) => (
-              this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Не удалось выполнить операцию!' })
-            )
-          )
-      },
-      reject: () => {
-        this.utvListconfirm.close();
-      }
-    });
   }
 
   onRowEdit(utv_inc: utv_income_doc) {

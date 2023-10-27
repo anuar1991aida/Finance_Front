@@ -38,7 +38,8 @@
 
         </ng-template>
         <ng-template pTemplate="body" let-import let-ri="rowIndex" *ngFor="let item of imports.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowClick(import)" [pSelectableRow]="import">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(import)" [pSelectableRow]="import"
+                [pSelectableRowIndex]="ri">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     <span [ngClass]="setClass(import.deleted)">{{import._date}}</span>

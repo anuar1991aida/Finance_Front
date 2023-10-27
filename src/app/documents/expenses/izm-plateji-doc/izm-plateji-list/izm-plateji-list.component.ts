@@ -25,20 +25,36 @@ export class IzmPlatejiListComponent implements OnInit {
   ) {
     this.first = this.MainComponent.first
     this.rows = this.MainComponent.rows
+    this.roles = this.MainComponent.roles
   }
 
   @Input() List = false
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
   @HostListener('window:resize', ['$event'])
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
+      this.massDelete(true)
+    }
+    else if (event.key === 'Delete') {
+      this.massDelete(false)
+    }
+  }
 
+  roles: string[] = []
   searchizmList = ''
   izmplatList$: Observable<izm_plateji_doc_list>
   windowHeight = 0
+  selectedDocs: any
 
   ngOnInit(): void {
     this.fetchIzmPlatList()
     this.updateWindowSize()
+  }
+
+  isAdmin() {
+    return this.roles.includes('fulldata')
   }
 
   fetchIzmPlatList() {
@@ -51,17 +67,60 @@ export class IzmPlatejiListComponent implements OnInit {
     this.izmplatList$ = this.izmplatListService.fetch(params)
   }
 
-  onDelete(izm_plateji: izm_plateji_doc) {
-    let msg = !izm_plateji.deleted ? "Пометить " + izm_plateji.nom + " на удаление?" : "Снять с " + izm_plateji.nom + " пометку на удаление?"
-    let header = !izm_plateji.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
-    let msgsuccess = !izm_plateji.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+  massDelete(shift: boolean) {
+
+    if (this.selectedDocs) {
+      let msg = !shift ? "Пометить документы на удаление?" : "Вы точно хотите удалить документы?"
+      let header = !shift ? "Пометка на удаление" : "Удаление документов"
+      let msgsuccess = !shift ? "Документы помечены на удаление" : "Документы удалены"
+
+      let mass_doc_id = []
+
+      for (let i = 0; i < this.selectedDocs.length; i++) {
+        mass_doc_id.push(this.selectedDocs[i].id)
+      }
+
+      let body = {
+        shift: shift,
+        mass_doc_id: mass_doc_id
+      }
+
+      this.deleteService(msg, header, msgsuccess, body)
+    }
+    else {
+      this.izmplatListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Документ не выбран' })
+    }
+  }
+
+
+  onDelete(izm_exp: izm_plateji_doc) {
+
+    if (this.selectedDocs && this.selectedDocs.length !== 1) {
+      this.izmplatListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите только один документ!' })
+      return
+    }
+
+    let msg = !izm_exp.deleted ? "Пометить " + izm_exp.nom + " на удаление?" : "Снять с " + izm_exp.nom + " пометку на удаление?"
+    let header = !izm_exp.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !izm_exp.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
+    let body = {
+      shift: false,
+      mass_doc_id: [izm_exp.id]
+    }
+
+    this.deleteService(msg, header, msgsuccess, body)
+  }
+
+  deleteService(msg: string, header: string, msgsuccess: string, body: any) {
 
     this.izmplatListconfirm.confirm({
       message: msg,
       header: header,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.izmplatListService.deleteIzmPlatezhi(izm_plateji.id)
+        this.izmplatListService.
+          deleteIzmPlatezhi(body)
           .subscribe((data) => (
             this.izmplatListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
             this.fetchIzmPlatList(),

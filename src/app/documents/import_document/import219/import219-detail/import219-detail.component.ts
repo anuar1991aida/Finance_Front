@@ -50,7 +50,9 @@ export class Import219DetailComponent implements OnInit {
     this.import219_service
       .fetch_detail(this.imp_219_id)
       .subscribe(
-        (data) => (this.imports = data),
+        (data) => (
+          this.imports = data
+        ),
         (error) => (this.import219_message.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
       )
   }

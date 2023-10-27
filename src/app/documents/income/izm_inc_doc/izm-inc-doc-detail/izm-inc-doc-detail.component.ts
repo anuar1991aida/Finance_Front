@@ -162,7 +162,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
             })
           }
         )
-      this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)
+      // this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)
     }
 
     let objString = JSON.stringify(this.izmDetail)
@@ -304,10 +304,20 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
   saveDoc(close: boolean): void {
 
+    if (this.izmDetail.doc._type_izm_doc.id == 0) {
+      this.izmDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: 'Не выбран тип справки!' })
+      return
+    }
+
+    let responce: any
+
     this.izmDetailService.saveIzm(this.izmDetail)
       .subscribe(
         (data) => (
-          this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+          responce = data,
+          this.izmDetail.doc.id = responce.id_doc,
+          this.izmDetail.doc.nom = responce.nom,
+          this.izmDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: responce.status }),
           this.closeaftersave(close)
         ),
         (error) => (

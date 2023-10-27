@@ -31,6 +31,15 @@ export class Import420ListComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   @Output() closeEvent = new EventEmitter<any>()
   @Output() newItemEvent = new EventEmitter<any>();
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Delete') {
+      this.massDelete(true)
+    }
+    else if (event.key === 'Delete') {
+      this.massDelete(false)
+    }
+  }
 
   imports$: Observable<import420_list>
   profileuser: profileuser
@@ -82,6 +91,12 @@ export class Import420ListComponent implements OnInit {
   }
 
   onDelete(import_420: import420_doc) {
+
+    if (this.selectedDocs && this.selectedDocs.length !== 1) {
+      this.msgService420.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите только один документ!' })
+      return
+    }
+
     let msg = !import_420.deleted ? "Пометить " + import_420.nom + " на удаление?" : "Снять с " + import_420.nom + " пометку на удаление?"
     let header = !import_420.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
     let msgsuccess = !import_420.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"

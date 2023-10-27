@@ -23,8 +23,9 @@
 
 <div class="card" *ngIf="(doc_izm$ | async) as izmList; else loader">
   <p-table *ngIf="izmList.count !== 0; else empty" [value]="izmList.results" [scrollable]="true"
-    scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
-    styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+    scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="multiple"
+    styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [(selection)]="selectedDocs"
+    [metaKeySelection]="true">
     <ng-template pTemplate="header">
       <tr>
         <th style="width:10%; text-align:center">Номер</th>
@@ -35,7 +36,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-doc let-ri="rowIndex" *ngFor="let item of izmList.results| keyvalue">
-      <tr class="cursor-pointer" (dblclick)="onRowEdit(doc)">
+      <tr class="cursor-pointer" (dblclick)="onRowEdit(doc)" [pSelectableRow]="doc" [pSelectableRowIndex]="ri">
         <td style="text-align:center">
           <!-- <span *ngIf="doc.deleted">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

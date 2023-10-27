@@ -25,7 +25,7 @@
         <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
             <label for="number_doc">Номер </label>
             <div class="p-inputgroup">
-                <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
+                <input id="number_doc" [readOnly]="true" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
             <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
