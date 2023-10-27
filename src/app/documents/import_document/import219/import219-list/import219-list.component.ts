@@ -38,6 +38,7 @@ export class Import219ListComponent implements OnInit {
   rows = 25
   searchimport = ''
   windowHeight: number
+  selectedDocs!: any
 
   ngOnInit(): void {
 
@@ -57,6 +58,68 @@ export class Import219ListComponent implements OnInit {
 
   }
 
+  massDelete(shift: boolean) {
+
+    if (this.selectedDocs) {
+      let msg = !shift ? "Пометить документы на удаление?" : "Вы точно хотите удалить документы?"
+      let header = !shift ? "Пометка на удаление" : "Удаление документов"
+      let msgsuccess = !shift ? "Документы помечены на удаление" : "Документы удалены"
+
+      let mass_doc_id = []
+
+      for (let i = 0; i < this.selectedDocs.length; i++) {
+        mass_doc_id.push(this.selectedDocs[i].id)
+      }
+
+      let body = {
+        shift: shift,
+        mass_doc_id: mass_doc_id
+      }
+
+      this.deleteService(msg, header, msgsuccess, body)
+    }
+    else {
+      this.import219_messageService.add({ severity: 'error', summary: 'Ошибка', detail: 'Документ не выбран' })
+    }
+  }
+
+  onDelete(import_219: import219_doc) {
+    let msg = !import_219.deleted ? "Пометить " + import_219.nom + " на удаление?" : "Снять с " + import_219.nom + " пометку на удаление?"
+    let header = !import_219.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !import_219.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
+    let body = {
+      shift: false,
+      mass_doc_id: [import_219.id]
+    }
+
+    this.deleteService(msg, header, msgsuccess, body)
+  }
+
+  deleteService(msg: string, header: string, msgsuccess: string, body: any) {
+    this.import219_confirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.import219_service
+          .delete_import219(body)
+          .subscribe((data) => (
+            this.import219_messageService.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetchImport(),
+            this.import219_confirm.close()
+          ),
+            (error) => (
+              this.import219_messageService.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+            )
+          )
+      },
+      reject: () => {
+        this.import219_confirm.close();
+      }
+    })
+  }
+
   onRowClick(imp: import219_doc) {
     this.newItemEvent.emit({ params: { selector: 'app-import219-detail', nomer: 'Импорт 2-19 №' + imp.nom, id: imp.id } })
   }
@@ -69,13 +132,10 @@ export class Import219ListComponent implements OnInit {
 
   setClass(deleted: boolean) {
     let classs = ''
-
     if (deleted) {
       classs = 'class-deleted'
     }
-
     return classs
-
   }
 
   import219() {

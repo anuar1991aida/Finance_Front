@@ -24,9 +24,9 @@
 
 <div class="card" *ngIf="(imports$ | async) as imports; else loader">
     <p-table *ngIf="imports.count !== 0; else empty" [value]="imports.results" [scrollable]="true"
-        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
-        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
-
+        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="multiple"
+        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines" [metaKeySelection]="true"
+        [(selection)]="selectedDocs">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width:5%; text-align:center">Номер</th>
@@ -38,7 +38,7 @@
 
         </ng-template>
         <ng-template pTemplate="body" let-import let-ri="rowIndex" *ngFor="let item of imports.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowClick(import)">
+            <tr class="cursor-pointer" (dblclick)="onRowClick(import)" [pSelectableRow]="import">
                 <td style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
                 <td style="text-align:center">
                     <span [ngClass]="setClass(import.deleted)">{{import._date}}</span>
@@ -51,10 +51,10 @@
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
-                        <button pButton pRipple type="button" icon="pi pi-pencil"
-                            class="p-button-rounded p-button-text"></button>
-                        <button pButton pRipple type="button" icon="pi pi-trash"
-                            class="p-button-rounded p-button-text"></button>
+                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                            (click)="onRowClick(import)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
+                            (click)="onDelete(import)"></button>
                     </div>
                 </td>
             </tr>

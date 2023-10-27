@@ -2,7 +2,7 @@ import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { svod_expenses_doc, svod_expenses_list } from '../interfaces';
+import { svod_expenses_detail, svod_expenses_doc, svod_expenses_list } from '../interfaces';
 import { svodExpensesService } from '../svod_expenses.service';
 
 @Component({
@@ -22,12 +22,22 @@ export class SvodSpravokListComponent implements OnInit {
 
   @Output() newItemEvent = new EventEmitter<any>()
   @Output() closeEvent = new EventEmitter<any>()
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Delete') {
+      this.massDelete(true)
+    }
+    else if (event.key === 'Delete') {
+      this.massDelete(false)
+    }
+  }
 
   svodList$: Observable<svod_expenses_list>
   searchutvList = ''
   first = 0
   rows = 25
   windowHeight: number
+  selectedDocs!: any
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -62,18 +72,54 @@ export class SvodSpravokListComponent implements OnInit {
     this.fetchSvodList()
   }
 
+
+  massDelete(shift: boolean) {
+
+    if (this.selectedDocs) {
+      let msg = !shift ? "Пометить документы на удаление?" : "Вы точно хотите удалить документы?"
+      let header = !shift ? "Пометка на удаление" : "Удаление документов"
+      let msgsuccess = !shift ? "Документы помечены на удаление" : "Документы удалены"
+
+      let mass_doc_id = []
+
+      for (let i = 0; i < this.selectedDocs.length; i++) {
+        mass_doc_id.push(this.selectedDocs[i].id)
+      }
+
+      let body = {
+        shift: shift,
+        mass_doc_id: mass_doc_id
+      }
+
+      this.deleteService(msg, header, msgsuccess, body)
+    }
+    else {
+      this.svodListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Документ не выбран' })
+    }
+  }
+
+
   onDelete(svod_exp: svod_expenses_doc) {
     let msg = !svod_exp.deleted ? "Пометить " + svod_exp.nom + " на удаление?" : "Снять с " + svod_exp.nom + " пометку на удаление?"
     let header = !svod_exp.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
     let msgsuccess = !svod_exp.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
 
+    let body = {
+      shift: false,
+      mass_doc_id: [svod_exp.id]
+    }
+
+    this.deleteService(msg, header, msgsuccess, body)
+  }
+
+  deleteService(msg: string, header: string, msgsuccess: string, body: any) {
     this.svodListconfirm.confirm({
       message: msg,
       header: header,
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.svodListService
-          .deleteSvod(svod_exp.id)
+          .deleteSvod(body)
           .subscribe((data) => (
             this.svodListmessage.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
             this.fetchSvodList(),
@@ -87,7 +133,7 @@ export class SvodSpravokListComponent implements OnInit {
       reject: () => {
         this.svodListconfirm.close();
       }
-    });
+    })
   }
 
   onRowEdit(svod_exp: svod_expenses_doc) {

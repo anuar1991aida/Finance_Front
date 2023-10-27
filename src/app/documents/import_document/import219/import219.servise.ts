@@ -30,5 +30,8 @@ export class import219Servise {
     return this.http.get<import219_detail>(this.host + `docs/import219item/${imp_219_id}`)
   }
 
+  delete_import219(imp_219: any) {
+    return this.http.delete(this.host + 'docs/import219delete', { body: imp_219 })
+  }
 
 }

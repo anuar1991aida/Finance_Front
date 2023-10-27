@@ -217,10 +217,15 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('app-svod-spravok-list', 'Свод справок', '')
               }]
             }
-          ],
+          ]
+        ]
+      },
+      {
+        label: 'Импорт',
+        icon: 'pi pi-fw pi-file-import',
+        items: [
           [
             {
-              label: 'Импорт данных',
               items: [{
                 label: 'Импорт формы 2-19',
                 command: () => this.openTab('app-import219-list', 'Импорт формы 2-19', '')
@@ -235,7 +240,7 @@ export class MainComponent implements OnInit {
       },
       {
         label: 'Отчеты',
-        icon: 'pi pi-fw pi-file',
+        icon: 'pi pi-fw pi-file-excel',
         items: [
           [
             {

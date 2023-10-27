@@ -1,6 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { MainComponent } from 'src/app/main/main.component/main.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { import420Servise } from '../import420.servise';
 import { profileuser } from 'src/app/login/interfaces';
 import { Observable } from 'rxjs';
@@ -18,6 +18,7 @@ export class Import420ListComponent implements OnInit {
   constructor(
     private MainComponent: MainComponent,
     private service420: import420Servise,
+    private import420_confirm: ConfirmationService,
     private msgService420: MessageService,
     private import420_dialog_ref: DynamicDialogRef,
     private import420_dialog_servis: DialogService,
@@ -37,6 +38,7 @@ export class Import420ListComponent implements OnInit {
   rows = 25
   searchimport = ''
   windowHeight: number
+  selectedDocs!: any
 
   ngOnInit(): void {
     this.fetchImport()
@@ -52,6 +54,68 @@ export class Import420ListComponent implements OnInit {
 
     this.imports$ = this.service420.fetch(params)
 
+  }
+
+  massDelete(shift: boolean) {
+
+    if (this.selectedDocs) {
+      let msg = !shift ? "Пометить документы на удаление?" : "Вы точно хотите удалить документы?"
+      let header = !shift ? "Пометка на удаление" : "Удаление документов"
+      let msgsuccess = !shift ? "Документы помечены на удаление" : "Документы удалены"
+
+      let mass_doc_id = []
+
+      for (let i = 0; i < this.selectedDocs.length; i++) {
+        mass_doc_id.push(this.selectedDocs[i].id)
+      }
+
+      let body = {
+        shift: shift,
+        mass_doc_id: mass_doc_id
+      }
+
+      this.deleteService(msg, header, msgsuccess, body)
+    }
+    else {
+      this.msgService420.add({ severity: 'error', summary: 'Ошибка', detail: 'Документ не выбран' })
+    }
+  }
+
+  onDelete(import_420: import420_doc) {
+    let msg = !import_420.deleted ? "Пометить " + import_420.nom + " на удаление?" : "Снять с " + import_420.nom + " пометку на удаление?"
+    let header = !import_420.deleted ? "Пометка на удаление" : "Снять с пометки на удаление"
+    let msgsuccess = !import_420.deleted ? "Документ помечен на удаление" : "С документа снята пометка на удаление"
+
+    let body = {
+      shift: false,
+      mass_doc_id: [import_420.id]
+    }
+
+    this.deleteService(msg, header, msgsuccess, body)
+  }
+
+  deleteService(msg: string, header: string, msgsuccess: string, body: any) {
+    this.import420_confirm.confirm({
+      message: msg,
+      header: header,
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.service420
+          .delete_import420(body)
+          .subscribe((data) => (
+            this.msgService420.add({ severity: 'success', summary: 'Успешно', detail: msgsuccess }),
+            this.fetchImport(),
+            this.import420_confirm.close()
+          ),
+            (error) => (
+              this.msgService420.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+            )
+          )
+      },
+      reject: () => {
+        this.import420_confirm.close();
+      }
+    })
   }
 
   onRowClick(imp: import420_doc) {

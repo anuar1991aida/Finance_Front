@@ -23,8 +23,8 @@
 
 <div class="card" *ngIf="(svodList$ | async) as svodList; else loader">
     <p-table *ngIf="svodList.count !== 0; else empty" [value]="svodList.results" [scrollable]="true"
-        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
-        styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        selectionMode="multiple" [metaKeySelection]="true" scrollHeight="calc({{windowHeight}}px - 230px)"
+        [(selection)]="selectedDocs" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
                 <th style="width:5%; text-align:center">Номер</th>
@@ -34,7 +34,8 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-utvList let-ri="rowIndex" *ngFor="let item of svodList.results| keyvalue">
-            <tr class="cursor-pointer" (dblclick)="onRowEdit(utvList)">
+            <tr class="cursor-pointer" (dblclick)="onRowEdit(utvList)" [pSelectableRow]="utvList"
+                [pSelectableRowIndex]="ri">
                 <td style="text-align:center">
                     <span [ngClass]="setClass(utvList.deleted)">{{utvList.nom}}</span>
                 </td>

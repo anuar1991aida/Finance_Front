@@ -38,8 +38,8 @@ export class svodExpensesService {
         return this.http.post(this.host + 'docs/svodexpadd', svod_inc)
     }
 
-    deleteSvod(svod_inc: number = 0) {
-        return this.http.delete(this.host + `docs/svodexpdelete/${svod_inc}`)
+    deleteSvod(svod_inc: any) {
+        return this.http.delete(this.host + 'docs/svodexpdelete', { body: svod_inc })
     }
 
     // getot4et() {

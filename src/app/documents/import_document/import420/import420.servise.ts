@@ -25,4 +25,8 @@ export class import420Servise {
   fetch_detail(imp_420_id: string): Observable<import420_detail> {
     return this.http.get<import420_detail>(this.host + `docs/import420item/${imp_420_id}`)
   }
+
+  delete_import420(imp_420: any) {
+    return this.http.delete(this.host + 'docs/import420delete', { body: imp_420 })
+  }
 }
