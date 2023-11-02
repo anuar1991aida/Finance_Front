@@ -1,6 +1,6 @@
 <p-toolbar>
     <div class="p-toolbar-group-left">
-        <button pButton pRipple label="выбрать"  icon="pi pi-check" class="p-button-success p-mr-2"
+        <button pButton pRipple label="выбрать" icon="pi pi-check" class="p-button-success p-mr-2"
             (click)="onSelected(selected)"></button>
     </div>
     <div class="p-toolbar-group-right">
@@ -17,7 +17,7 @@
 
 <div class="card" *ngIf="(organizations$ | async) as organizations; else loader">
     <p-table *ngIf="organizations.count !== 0; else empty" [value]="organizations.results" [scrollable]="true"
-        scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single" [(selection)]="selected"
+        scrollHeight="calc({{windowHeight}}px - 150px)" selectionMode="single" [(selection)]="selected"
         styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
 
         <ng-template pTemplate="header">

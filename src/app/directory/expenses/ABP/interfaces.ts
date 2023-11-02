@@ -11,10 +11,3 @@ export interface abp_list {
     previous?: string,
     results: [abp_detail]
 }
-
-export interface abp_select {
-    count?: number,
-    next: string,
-    previous?: string,
-    results: [abp_detail]
-}

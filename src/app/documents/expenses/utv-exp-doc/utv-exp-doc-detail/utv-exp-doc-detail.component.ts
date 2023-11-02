@@ -1,4 +1,4 @@
-import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -39,14 +39,17 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
         }
       }
-    ],
-      this.profileuser = this.MainComponent.profileuser
+    ]
+    // this.profileuser = this.MainComponent.profileuser
   }
 
   @Input() utv_exp_id = ''
   @Output() closeEvent = new EventEmitter<any>();
-
-  profileuser: profileuser
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
+  // profileuser: profileuser
   items: MenuItem[]
   form: FormGroup
   obligats: any = []
@@ -57,10 +60,15 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   allrecord = true
   _lastfkr = 0
   firstclick = true
+
   hashBegin = ''
   hashEnd = ''
   nochanged = true
   selectedrow = false
+
+  windowHeight = 0
+  windowWidht = 0
+
   fkr: fkr_detail = {
     id: 0,
     code: '',
@@ -77,6 +85,13 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   utvDetail: utv_expenses_detail
+
+
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight
+    this.windowWidht = window.innerWidth
+  }
 
   viewOrg() {
     this.utvDetailref = this.utvDetaildialog.open(OrganizationDetailComponent,
@@ -156,6 +171,18 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     let objString = JSON.stringify(this.utvDetail)
     this.hashBegin = SHA256(objString).toString()
 
+    this.updateWindowSize()
+
+  }
+
+  setClassSelect(_id: number) {
+
+    if (!this.allrecord && this._lastfkr == _id) {
+      return 'yellow-class'
+    }
+    else {
+      return ''
+    }
   }
 
   addFKRtoArray() {

@@ -38,15 +38,16 @@ export class UtvIncomeListComponent implements OnInit {
     if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
       this.massDelete(true)
     }
-    else if (event.key === 'Delete') {
-      this.massDelete(false)
-    }
+    // else if (event.key === 'Delete') {
+    //   this.massDelete(false)
+    // }
   }
 
   profileuser: profileuser
   utvList$: Observable<utv_income_list>
   searchutvList = ''
-  windowHeight: number
+  windowHeight = 0
+  windowWidht = 0
   selectedDocs!: any
   roles: string[] = []
 
@@ -135,7 +136,8 @@ export class UtvIncomeListComponent implements OnInit {
   }
 
   private updateWindowSize() {
-    this.windowHeight = window.innerHeight;
+    this.windowHeight = window.innerHeight
+    this.windowWidht = window.innerWidth
   }
 
   closeform() {

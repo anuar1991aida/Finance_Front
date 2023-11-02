@@ -44,8 +44,8 @@
                 </div>
             </div>
 
-            <div *ngIf="type_report == 'prilozhenie14'" class="p-field" style="padding-right: 10px;">
-
+            <div *ngIf="type_report == 'prilozhenie14' || type_report == '2-5'" class="p-field"
+                style="padding-right: 10px;">
                 <p-calendar appendTo="body" placeholder="Дата" [(ngModel)]="_date" dateFormat="dd.mm.yy"
                     [readonlyInput]="true" [showIcon]="true" inputId="calendar"></p-calendar>
             </div>

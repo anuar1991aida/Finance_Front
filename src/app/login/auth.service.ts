@@ -17,9 +17,9 @@ export class AuthService {
 
 
     // host = "https://artback.qazna24.kz/"
-    // host = "http://192.168.10.251:8000/"
+    // host = "http://192.168.5.27:8000/"
     host = "http://192.168.10.237:8000/"
-    // host = "https://finbackrez.qazna24.kz/"
+    // host = "https://tstfinsrv.qazna24.kz/"
 
     login(user: User): Observable<{ auth_token: string }> {
 
@@ -38,7 +38,7 @@ export class AuthService {
     clearToken(body: body) {
 
         let temp_token = 'Basic ' + btoa(unescape(encodeURIComponent(body.username + ":" + body.password)))
-        // sessionStorage.setItem('temp-token', temp_token)
+        sessionStorage.setItem('temp-token', temp_token)
 
         let myHeaders = new HttpHeaders()
             .set('Content-Type', 'application/json')

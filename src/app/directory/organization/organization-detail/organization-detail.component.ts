@@ -10,6 +10,8 @@ import { Budjet_detail } from '../../income/budjet/interfaces';
 import { OrganizationSelectComponent } from '../organization-select/organization-select.component';
 import { profileuser } from 'src/app/login/interfaces';
 import { PeriodDetailComponent } from '../../period/period-detail/period-detail.component';
+import { abp_detail } from '../../expenses/ABP/interfaces';
+import { ABPSelectComponent } from '../../expenses/ABP/abp-select/abp-select.component';
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
@@ -39,6 +41,8 @@ export class OrganizationDetailComponent implements OnInit {
     name_kaz: '',
     name_rus: '',
     adress: '',
+    codeorg: '',
+    is_abp: false,
     deleted: false,
     _budjet: {
       id: 0,
@@ -46,6 +50,12 @@ export class OrganizationDetailComponent implements OnInit {
       name_kaz: '',
       name_rus: '',
       adress: ''
+    },
+    _abp: {
+      id: 0,
+      code: '',
+      name_kaz: '',
+      name_rus: ''
     },
     parent_organizations: [{
       id: 0,
@@ -57,6 +67,9 @@ export class OrganizationDetailComponent implements OnInit {
       }
     }]
   }
+  is_abp = true
+  abp_full_name = ''
+
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.updateWindowSize(),
@@ -66,7 +79,10 @@ export class OrganizationDetailComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       bin: new FormControl(null, [Validators.required]),
+      codeorg: new FormControl(null, [Validators.required]),
       budjet_name: new FormControl(null, [Validators.required]),
+      abp_name: new FormControl(null, [Validators.required]),
+      is_abp: new FormControl(null),
       name_kaz: new FormControl(null, [Validators.required]),
       name_rus: new FormControl(null, [Validators.required]),
       adress: new FormControl(null, [Validators.required])
@@ -79,7 +95,8 @@ export class OrganizationDetailComponent implements OnInit {
         .subscribe(
           (data) => (
             this.org_detail = data,
-            this.updateWindowSize()
+            this.updateWindowSize(),
+            this.abp_full_name = this.org_detail._abp.code + ' ' + this.org_detail._abp.name_rus
           )
         )
     }
@@ -205,6 +222,22 @@ export class OrganizationDetailComponent implements OnInit {
     this.budjet_ref.onClose.subscribe((budjet: Budjet_detail) => {
       if (budjet) {
         this.org_detail._budjet = budjet
+      }
+    })
+  }
+
+  addABP() {
+    this.budjet_ref = this.org_dialog_servis.open(ABPSelectComponent,
+      {
+        header: 'Выбрать АБП',
+        width: '70%',
+        height: '80%'
+      })
+
+    this.budjet_ref.onClose.subscribe((abp_detail: abp_detail) => {
+      if (abp_detail) {
+        this.org_detail._abp = abp_detail,
+          this.abp_full_name = this.org_detail._abp.code + ' ' + this.org_detail._abp.name_rus
       }
     })
   }

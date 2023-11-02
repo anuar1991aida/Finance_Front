@@ -61,7 +61,6 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-
     let responce: any
     sessionStorage.clear()
     this.auth

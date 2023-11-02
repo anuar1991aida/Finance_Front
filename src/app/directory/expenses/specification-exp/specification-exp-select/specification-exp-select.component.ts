@@ -1,10 +1,11 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { specification_expenses_detail, specification_expenses_select } from '../interfaces';
 import { SpecificationExpDetailComponent } from '../specification-exp-detail/specification-exp-detail.component';
-import { SpecificationExpensesService } from '../specification_exp.service';
+import { SpecificationExpensesService } from '../specification_exp.service'
+import { MainComponent } from 'src/app/main/main.component/main.component'
 
 @Component({
   selector: 'app-specification-exp-select',
@@ -14,19 +15,27 @@ import { SpecificationExpensesService } from '../specification_exp.service';
 export class SpecificationExpSelectComponent implements OnInit {
 
   constructor(
+    private MainComponent: MainComponent,
     private specService: SpecificationExpensesService,
     private specref: DynamicDialogRef,
     private specconfirm: ConfirmationService,
     private specSelectdialog: DialogService,
-    private specSelectmessage: MessageService,) { }
+    private specSelectmessage: MessageService,
+    private specSelect_config: DynamicDialogConfig,
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+  }
 
   spec$: Observable<specification_expenses_select>
+
   NewSpec: specification_expenses_detail = {
     id: 0,
     code: '',
     name_kaz: '',
     name_rus: ''
   }
+
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   searchspec = ''
@@ -34,6 +43,7 @@ export class SpecificationExpSelectComponent implements OnInit {
   rows = 25
   specif: any
   windowHeight: number
+  exclude: any = []
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -41,12 +51,14 @@ export class SpecificationExpSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.exclude = this.specSelect_config.data.exclude || []
+
     this.fetchSpec(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
-    this.windowHeight = window.innerHeight * 0.8;
+    this.windowHeight = window.innerHeight * 0.85;
   }
 
   closeform() {
@@ -56,10 +68,12 @@ export class SpecificationExpSelectComponent implements OnInit {
   fetchSpec() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchspec.toString(),
+      exclude: this.exclude
     }
 
-    this.spec$ = this.specService.fetch(params)
+    this.spec$ = this.specService.fetch_select(params)
   }
 
   onPageChange(event: any) {
@@ -130,10 +144,6 @@ export class SpecificationExpSelectComponent implements OnInit {
         this.specconfirm.close();
       }
     });
-  }
-
-  search() {
-
   }
 
 }

@@ -2,19 +2,32 @@
   <div class="card" style="padding-right: 30px; width: 50%;">
     <h3>Основные сведения</h3>
     <form class="card" [formGroup]="form">
-      <div class="p-field" style="padding-bottom: 10px;">
-        <label for="bin">Бин организации<span style="color: red;">*</span></label>
-        <div class="p-inputgroup">
-          <input id="bin" type="text" pInputText [(ngModel)]="org_detail.bin" formControlName="bin" />
-        </div>
-        <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
-          <span *ngIf="form.controls['bin'].errors?.required">Бин не должен быть пустым</span>
-        </span>
 
+      <div style="display: flex; padding-bottom: 10px; width: 100%;">
+        <div class="p-field" style="padding-right: 10px; width: 50%;">
+          <label for="bin">БИН организации<span style="color: red;">*</span></label>
+          <div class="p-inputgroup">
+            <input id="bin" type="text" pInputText [(ngModel)]="org_detail.bin" formControlName="bin" />
+          </div>
+          <span class="p-invalid" *ngIf="form.controls['bin'].invalid && form.controls['bin'].touched">
+            <span *ngIf="form.controls['bin'].errors?.required">БИН не должен быть пустым</span>
+          </span>
+        </div>
+
+        <div class="p-field" style="width: 50%;">
+          <label for="code">Код учреждения<span style="color: red;">*</span></label>
+          <div class="p-inputgroup">
+            <input id="code" type="text" pInputText [(ngModel)]="org_detail.codeorg" formControlName="codeorg" />
+          </div>
+          <span class="p-invalid" *ngIf="form.controls['codeorg'].invalid && form.controls['codeorg'].touched">
+            <span *ngIf="form.controls['codeorg'].errors?.required">Код не должен быть пустым</span>
+          </span>
+        </div>
       </div>
 
+
       <div class="p-field" style="padding-bottom: 10px;">
-        <label for="_budjet.name_rus">Бюджет<span style="color: red;">*</span></label>
+        <label for="budjet_name">Бюджет<span style="color: red;">*</span></label>
         <div class="p-inputgroup">
           <input id="budjet_name" type="text" pInputText [(ngModel)]="org_detail._budjet.name_rus"
             formControlName="budjet_name" />
@@ -25,6 +38,31 @@
         <span class="p-invalid" *ngIf="form.controls['budjet_name'].invalid && form.controls['budjet_name'].touched">
           <span *ngIf="form.controls['budjet_name'].errors?.required">Бюджет не должен быть пустым</span>
         </span>
+      </div>
+
+      <div style="display: flex; padding-bottom: 10px; width: 100%;">
+        <div class="p-field" style="padding-right: 10px; width: 90%;">
+          <label for="abp_name">АБП<span style="color: red;">*</span></label>
+          <div class="p-inputgroup">
+            <input id="abp_name" type="text" pInputText [ngModel]="abp_full_name" formControlName="abp_name"
+              [readOnly]="true" />
+            <div class="cursor-pointer">
+              <span class="p-inputgroup-addon" (click)="addABP()">...</span>
+            </div>
+          </div>
+          <span class="p-invalid" *ngIf="form.controls['abp_name'].invalid && form.controls['abp_name'].touched">
+            <span *ngIf="form.controls['abp_name'].errors?.required">АБП не должен быть пустым</span>
+          </span>
+        </div>
+
+        <div class="p-field" style="width: 10%;">
+          <label for="binary">Это АБП</label>
+          <div class="p-inputgroup">
+            <p-checkbox [(ngModel)]="org_detail.is_abp" [binary]="true" inputId="binary" formControlName="is_abp">
+            </p-checkbox>
+            <!-- <input id="is_abp" type="checkbox" pInputText [(ngModel)]="org_detail.is_abp" formControlName="is_abp" /> -->
+          </div>
+        </div>
       </div>
 
       <div class="p-field" style="padding-bottom: 10px;">

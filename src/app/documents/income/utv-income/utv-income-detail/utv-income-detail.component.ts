@@ -1,4 +1,4 @@
-import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -27,22 +27,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
     private utvDetaildialog: DialogService,
     private utvDetailconfirm: ConfirmationService,
   ) {
-    this.items = [
-      {
-        label: 'Записать',
-        icon: 'pi pi-save',
-        command: () => {
-          this.saveDoc(false);
-        }
-      },
-      // {
-      //   label: 'Пометка на удаление',
-      //   icon: 'pi pi-times',
-      //   command: () => {
-      //     this.onDelete();
-      //   }
-      // }
-    ]
+
   }
 
   @Input() utv_inc_id = ''
@@ -65,27 +50,26 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
   hashEnd = ''
   nochanged = true
   selected = false
+  tbl: any = []
+  total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  windowHeight = 0
+  windowWidht = 0
 
-  totalgod = 0
-  total1 = 0
-  total2 = 0
-  total3 = 0
-  total4 = 0
-  total5 = 0
-  total6 = 0
-  total7 = 0
-  total8 = 0
-  total9 = 0
-  total10 = 0
-  total11 = 0
-  total12 = 0
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight
+    this.windowWidht = window.innerWidth
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
       number_doc: new FormControl(null, []),
       date_doc: new FormControl(null, [Validators.required]),
-      org_name: new FormControl(null, [Validators.required]),
-      // budjet_name: new FormControl(null, [Validators.required])
+      org_name: new FormControl(null, [Validators.required])
     })
 
     if (this.utv_inc_id !== '') {
@@ -93,6 +77,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.utvDetail = detail,
+              this.tbl = this.utvDetail.tbl1,
               this.calculate(0)
           },
           (error) => {
@@ -107,6 +92,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.utvDetail = detail
+            this.tbl = this.utvDetail.tbl1
           },
           (error) => {
             this.utvDetailmsg.add({
@@ -120,7 +106,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
 
     let objString = JSON.stringify(this.utvDetail)
     this.hashBegin = SHA256(objString).toString()
-
+    this.updateWindowSize()
   }
 
   ngDoCheck() {
@@ -142,50 +128,14 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       return
     }
 
-    let total1 = 0
-    let total2 = 0
-    let total3 = 0
-    let total4 = 0
-    let total5 = 0
-    let total6 = 0
-    let total7 = 0
-    let total8 = 0
-    let total9 = 0
-    let total10 = 0
-    let total11 = 0
-    let total12 = 0
-    let totalgod = 0
+    this.total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-    for (let tot of this.utvDetail.tbl1) {
-      total1 += tot.sm1
-      total2 += tot.sm2
-      total3 += tot.sm3
-      total4 += tot.sm4
-      total5 += tot.sm5
-      total6 += tot.sm6
-      total7 += tot.sm7
-      total8 += tot.sm8
-      total9 += tot.sm9
-      total10 += tot.sm10
-      total11 += tot.sm11
-      total12 += tot.sm12
-      totalgod += tot.sm1 + tot.sm2 + tot.sm3 + tot.sm4 + tot.sm7 + tot.sm6 +
-        tot.sm7 + tot.sm8 + tot.sm9 + tot.sm10 + tot.sm11 + tot.sm12
+    for (let i = 0; i < this.tbl.length; i++) {
+      for (let l = 1; l <= 12; l++) {
+        this.total[l] += this.tbl[i]['sm' + l]
+        this.total[0] += this.tbl[i]['sm' + l]
+      }
     }
-
-    this.totalgod = totalgod
-    this.total1 = total1
-    this.total2 = total2
-    this.total3 = total3
-    this.total4 = total4
-    this.total5 = total5
-    this.total6 = total6
-    this.total7 = total7
-    this.total8 = total8
-    this.total9 = total9
-    this.total10 = total10
-    this.total11 = total11
-    this.total12 = total12
 
   }
 
@@ -199,7 +149,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
 
     this.utvDetailref.onClose.subscribe((classific: classsification_income) => {
       if (classific) {
-        this.utvDetail.tbl1.push(
+        this.tbl.push(
           {
             _classification: {
               id: classific.id,
@@ -240,7 +190,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
 
     this.utvDetailref.onClose.subscribe((classific: classsification_income) => {
       if (classific) {
-        this.utvDetail.tbl1[ri]._classification = {
+        this.tbl[ri]._classification = {
           id: classific.id,
           code: classific.code,
           name_kaz: classific.name_kaz,
@@ -263,6 +213,7 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
 
   saveDoc(close: boolean): void {
     let responce: any
+    this.utvDetail.tbl1 = this.tbl
 
     this.utvDetailService
       .saveUtv(this.utvDetail)
@@ -287,10 +238,10 @@ export class UtvIncomeDetailComponent implements OnInit, DoCheck {
       header: 'Удаление классификации',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        for (let i = this.utvDetail.tbl1.length - 1; i >= 0; i--) {
-          let index = this.utvDetail.tbl1.findIndex(item => _classification.id === item._classification.id)
+        for (let i = this.tbl.length - 1; i >= 0; i--) {
+          let index = this.tbl.findIndex((item: any) => _classification.id === item._classification.id)
           if (index !== -1) {
-            this.utvDetail.tbl1.splice(index, 1)
+            this.tbl.splice(index, 1)
           }
         }
         this.utvDetailconfirm.close()

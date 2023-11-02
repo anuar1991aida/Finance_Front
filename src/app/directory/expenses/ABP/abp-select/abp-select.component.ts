@@ -3,8 +3,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { abpService } from '../abp.services';
-import { abp_detail, abp_select } from '../interfaces';
-import { ABPDetailComponent } from "../abp-detail/abp-detail.component"
+import { abp_detail, abp_list } from '../interfaces';
+import { MainComponent } from 'src/app/main/main.component/main.component'
 
 @Component({
   selector: 'app-abp-select',
@@ -14,17 +14,21 @@ import { ABPDetailComponent } from "../abp-detail/abp-detail.component"
 export class ABPSelectComponent implements OnInit {
 
   constructor(
+    private MainComponent: MainComponent,
     private abpSelectService: abpService,
     private abpSelectref: DynamicDialogRef,
     private abpSelectconfirm: ConfirmationService,
     private abpSelectdialog: DialogService,
     private abpSelectmessage: MessageService,
-  ) { }
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+  }
 
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
-  
-  abp_select$: Observable<abp_select>
+
+  abp_select$: Observable<abp_list>
   searchfuncGr = ''
   first = 0
   rows = 25
@@ -38,7 +42,7 @@ export class ABPSelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchABP(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {

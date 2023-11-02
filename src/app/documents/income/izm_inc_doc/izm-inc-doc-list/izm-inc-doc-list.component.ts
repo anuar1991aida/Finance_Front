@@ -34,9 +34,9 @@ export class IzmIncDocListComponent implements OnInit {
     if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
       this.massDelete(true)
     }
-    else if (event.key === 'Delete') {
-      this.massDelete(false)
-    }
+    // else if (event.key === 'Delete') {
+    //   this.massDelete(false)
+    // }
   }
 
   roles: string[] = []
@@ -44,7 +44,8 @@ export class IzmIncDocListComponent implements OnInit {
   first = 0
   rows = 25
   searchIzmInc = ''
-  windowHeight: number
+  windowHeight = 0
+  windowWidth = 0
   selectedDocs: any
 
   @HostListener('window:resize', ['$event'])
@@ -62,7 +63,8 @@ export class IzmIncDocListComponent implements OnInit {
   }
 
   private updateWindowSize() {
-    this.windowHeight = window.innerHeight;
+    this.windowHeight = window.innerHeight
+    this.windowWidth = window.innerWidth
   }
 
   setClass(deleted: boolean) {

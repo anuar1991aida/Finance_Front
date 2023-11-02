@@ -38,7 +38,7 @@ export class reportComponent {
         this.profileuser = this.MainComponent.profileuser
     }
 
-    @Input() type_report = ''
+    @Input() type_report_input = ''
     @Output() closeEvent = new EventEmitter<any>()
 
     url: any = ''
@@ -54,6 +54,7 @@ export class reportComponent {
     profileuser: profileuser
     language = 'kaz'
     name = ''
+    type_report = ''
     prilozhenieValue = 'pay'
     prilozhenieType: any = []
     _organization = {
@@ -65,12 +66,12 @@ export class reportComponent {
         'name': ''
     }
     langOptions = [
-        { label: 'Казахша', value: 'kaz' },
+        { label: 'Қазақша', value: 'kaz' },
         { label: 'Русский', value: 'rus' }
     ]
 
     ngOnInit() {
-
+        this.type_report = this.type_report_input
         if (this.type_report == '') {
             this.doc = this.Reportconfig.data.doc || '';
 
@@ -105,11 +106,6 @@ export class reportComponent {
                 }
             }
         }
-
-        console.log(this._budjet);
-
-
-
     }
 
     viewOrg() {
@@ -198,6 +194,7 @@ export class reportComponent {
 
 
     form() {
+        console.log(this.type_report);
 
         if (this.type_report == '2-5') {
             if (this._organization.id == 0) {
@@ -244,7 +241,9 @@ export class reportComponent {
 
         let params = {
             _organization_id: this._organization.id,
-            tip_rep: this.prilozhenieValue
+            _date: this._date.toLocaleDateString() + ' ' + this._date.toLocaleTimeString(),
+            tip_rep: this.prilozhenieValue,
+            lang: this.language
         }
 
         this.ReportService
@@ -261,7 +260,8 @@ export class reportComponent {
 
         let params = {
             _budjet_id: this._budjet.id,
-            _date: this._date.toLocaleDateString() + ' ' + this._date.toLocaleTimeString()
+            _date: this._date.toLocaleDateString() + ' ' + this._date.toLocaleTimeString(),
+            lang: this.language
         }
 
         this.ReportService
@@ -277,7 +277,8 @@ export class reportComponent {
     formReport25() {
 
         let params = {
-            _izm_inc_id: this.doc.id
+            _izm_inc_id: this.doc.id,
+            lang: this.language
         }
 
         this.ReportService
@@ -295,7 +296,8 @@ export class reportComponent {
 
         let params = {
             id: this.doc.id,
-            tip_rep: this.prilozhenieValue
+            tip_rep: this.prilozhenieValue,
+            lang: this.language
         }
 
         this.ReportService
@@ -313,7 +315,8 @@ export class reportComponent {
 
         let params = {
             id: this.doc.id,
-            tip_rep: this.prilozhenieValue
+            tip_rep: this.prilozhenieValue,
+            lang: this.language
         }
 
         this.ReportService
@@ -330,7 +333,8 @@ export class reportComponent {
 
         let params = {
             id: this.doc.id,
-            tip_rep: this.prilozhenieValue
+            tip_rep: this.prilozhenieValue,
+            lang: this.language
         }
 
         this.ReportService

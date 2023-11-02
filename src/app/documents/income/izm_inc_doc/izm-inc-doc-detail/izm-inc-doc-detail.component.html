@@ -18,20 +18,21 @@
     </div>
 
     <div class="p-toolbar-group-right">
-        <div style="padding-right: 10px;">
+        <!-- <div style="padding-right: 10px;">
             <p-splitButton appendTo="body" label="Еще" [model]="this.items"
                 styleClass="p-button-outlined p-button-plain p-mr-2"></p-splitButton>
         </div>
-        <div>
-            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-plain p-mr-2"
-                styleClass="p-button-sm" (click)="closeform(true)"></button>
-        </div>
+        <div> -->
+        <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-plain p-mr-2"
+            styleClass="p-button-sm" (click)="closeform(true)"></button>
+        <!-- </div> -->
     </div>
 </p-toolbar>
 
 <div class="card" *ngIf="(izmDetail) as utvDetail; else loader">
-    <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;">
-        <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px;">
+    <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;"
+        [style]="{'width': '{{windowWidht}}'}">
+        <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px; max-width: 15%;">
             <label for="number_doc">Номер </label>
             <div class="p-inputgroup">
                 <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
@@ -43,7 +44,6 @@
         </div>
 
         <div class="p-field" style="padding-right: 10px;">
-
             <label for="date_doc">Дата <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <p-calendar [showTime]="true" [showSeconds]="true" appendTo="body" (onSelect)="changedate()"
@@ -55,7 +55,7 @@
             </span>
         </div>
 
-        <div class="p-field" style="padding-right: 10px; min-width: 20rem;">
+        <div class="p-field" style="padding-right: 10px; width: 30%;">
             <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc._organization.name_rus"
@@ -104,12 +104,12 @@
     </div>
 
     <p-table [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
-        [(selection)]="selected" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        [(selection)]="selected" styleClass="p-datatable-sm p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
-                <th rowspan="3" style="text-align:center">Номер</th>
-                <th rowspan="3" style="text-align:center; width: 30%;">Код КП</th>
-                <th style="text-align:center">Утв сумма на год</th>
+                <th rowspan="3" [style.min-width.px]="(windowWidth * 0.01)" [style.text-align]="'center'">Номер</th>
+                <th rowspan="3" [style.min-width.px]="(windowWidth * 0.20)" [style.text-align]="'center'">Код КП</th>
+                <th [style.min-width.px]="(windowWidth * 0.09)" [style.text-align]="'center'">Утв сумма на год</th>
                 <th style="text-align:center">Утв январь</th>
                 <th style="text-align:center">Утв февраль</th>
                 <th style="text-align:center">Утв март</th>
@@ -122,7 +122,7 @@
                 <th style="text-align:center">Утв октябрь</th>
                 <th style="text-align:center">Утв ноябрь</th>
                 <th style="text-align:center">Утв декабрь</th>
-                <th rowspan="3" style="text-align:center">Действия</th>
+                <th rowspan="3" [style.min-width.px]="(windowWidth * 0.02)" [style.text-align]="'center'">Действия</th>
             </tr>
             <tr>
                 <th style="text-align:center">Сумма на год</th>
@@ -158,7 +158,7 @@
         <ng-template pTemplate="body" let-izm let-ri="rowIndex">
             <tr class="cursor-pointer" [pSelectableRow]="izm">
                 <td rowspan="3" style="text-align: center; font-weight: 700;">{{ri + 1}}</td>
-                <td rowspan="3" style="text-align:center; width: 30%;">
+                <td rowspan="3" style="text-align:center;">
                     <div class="p-inputgroup w-full">
                         <input pInputText [readOnly]="true"
                             [ngModel]="izm._classification.code + ' ' + izm._classification.name_rus" />
@@ -177,13 +177,13 @@
                     izm.utv7 + izm.utv8 + izm.utv9 + izm.utv10 + izm.utv11 + izm.utv12}}
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                    <td style="text-align:center; max-width: 7em; min-width: 7em">
+                    <td style="text-align:center;">
                         {{izm['utv' + i]}}</td>
                 </ng-container>
                 <td rowspan="3" style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
-                            (click)="onDelete(izm.ri, izm._classification.name_rus)"></button>
+                            (click)="onDelete(ri, izm._classification.name_rus)"></button>
                     </div>
                 </td>
             </tr>
@@ -193,9 +193,11 @@
                     izm.sm7 + izm.sm8 + izm.sm9 + izm.sm10 + izm.sm11 + izm.sm12}}
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-                    <td style="text-align:right; max-width: 7em; min-width: 7em">
-                        <input [readOnly]="i < numberMonth" type="number" (change)="sumColumn(izm, i)"
-                            [(ngModel)]="izm['sm' + i]" style="text-align:right; width: 100%;">
+                    <td style="text-align:right;">
+                        <p-inputNumber [readonly]="i < numberMonth" (ngModelChange)="sumColumn(izm, i)"
+                            [(ngModel)]="izm['sm' + i]" [minFractionDigits]="2" [maxFractionDigits]="2"
+                            [inputStyle]="{'width': '8%', 'padding-right':'8px', 'text-align':'right'}">
+                        </p-inputNumber>
                     </td>
                 </ng-container>
             </tr>
@@ -205,8 +207,7 @@
                     izm.itog7 + izm.itog8 + izm.itog9 + izm.itog10 + izm.itog11 + izm.itog12}}
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
-
-                    <td style="text-align:center; max-width: 7em; min-width: 7em">
+                    <td style="text-align:center;">
                         {{izm['itog' + i]}}</td>
                 </ng-container>
             </tr>
@@ -214,7 +215,7 @@
         <ng-template pTemplate="footer">
             <tr>
                 <th rowspan="3" style="text-align:center"></th>
-                <th rowspan="3" style="text-align:center; width: 30%;">Итого</th>
+                <th rowspan="3" style="text-align:center;">Итого</th>
                 <th style="text-align:center">{{TotalUtvGod}}</th>
                 <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv1}}</th>
                 <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv2}}</th>

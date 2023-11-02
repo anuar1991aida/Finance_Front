@@ -1,9 +1,10 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { fkrService } from '../fkr.services';
 import { fkr_detail, fkr_select } from '../interfaces';
+import { MainComponent } from 'src/app/main/main.component/main.component'
 
 @Component({
   selector: 'app-fkr-select',
@@ -14,12 +15,18 @@ import { fkr_detail, fkr_select } from '../interfaces';
 export class FkrSelectComponent implements OnInit {
 
   constructor(
+    private MainComponent: MainComponent,
     private fkrSelectService: fkrService,
     private fkrSelectref: DynamicDialogRef,
     private fkrSelectconfirm: ConfirmationService,
     private fkrSelectdialog: DialogService,
+    private fkrSelect_config: DynamicDialogConfig,
     private fkrSelectmessage: MessageService,
-  ) { }
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+  }
+
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   fkr$: Observable<fkr_select>
@@ -28,6 +35,8 @@ export class FkrSelectComponent implements OnInit {
   rows = 25
   selected: any
   windowHeight: number
+  org_id = 0
+  exclude: any = []
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -35,22 +44,28 @@ export class FkrSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.org_id = this.fkrSelect_config.data.org_id || 0
+    this.exclude = this.fkrSelect_config.data.exclude || []
+
     this.fetchPr(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
-    this.windowHeight = window.innerHeight * 0.8;
+    this.windowHeight = window.innerHeight * 0.85;
   }
 
   fetchPr() {
     let params = {
       limit: this.rows.toString(),
       offset: this.first.toString(),
-      search: this.searchfkr.toString()
+      search: this.searchfkr.toString(),
+      _organization: this.org_id,
+      exclude: this.exclude
     }
 
-    this.fkr$ = this.fkrSelectService.fetch(params)
+    this.fkr$ = this.fkrSelectService.fetch_select(params)
   }
 
   onSelected(fkrr: fkr_detail) {

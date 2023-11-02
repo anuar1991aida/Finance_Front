@@ -21,6 +21,10 @@ export class SpecificationExpensesService {
         return this.http.get<specification_expenses_list>(this.host + 'dirs/specexplist', { params })
     }
 
+    fetch_select(params: any): Observable<specification_expenses_list> {
+        return this.http.post<specification_expenses_list>(this.host + 'dirs/specexplist', params)
+    }
+
     saveSpec(spec: specification_expenses_detail) {
         return this.http.post(this.host + 'dirs/specincedit', spec)
     }

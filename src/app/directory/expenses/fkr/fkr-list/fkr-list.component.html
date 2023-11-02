@@ -61,7 +61,7 @@
             Нет ни одной ФКР
         </div>
     </ng-template>
-    <div *ngIf="fkr.count !== 0" class="flex align-items-center justify-content-center">
+    <div style="padding-top: 10px;" *ngIf="fkr.count !== 0" class="flex align-items-center justify-content-center">
         <span class="mx-1 text-color">Указано</span>
         <p-paginator [first]="first" [rows]="rows" [totalRecords]="fkr.count || 0" (onPageChange)="onPageChange($event)"
             [showCurrentPageReport]="true"

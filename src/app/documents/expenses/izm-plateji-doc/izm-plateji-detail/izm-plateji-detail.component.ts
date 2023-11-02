@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SHA256 } from 'crypto-js';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -30,7 +30,6 @@ export class IzmPlatejiDetailComponent implements OnInit {
     private izmPlatezhiDetailref: DynamicDialogRef,
     private izmPlatezhiDetaildialog: DialogService,
     private izmPlatezhiDetailconfirm: ConfirmationService,
-    private sanitizer: DomSanitizer
   ) {
     this.items = [
       {
@@ -102,6 +101,18 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   fkr_array: fkr_detail[] = []
+  windowHeight = 0
+  windowWidht = 0
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight
+    this.windowWidht = window.innerWidth
+  }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -147,6 +158,18 @@ export class IzmPlatejiDetailComponent implements OnInit {
 
     let objString = JSON.stringify(this.izmPlatezhiDetail)
     this.hashBegin = SHA256(objString).toString()
+
+    this.updateWindowSize()
+  }
+
+  setClassSelect(_id: number) {
+
+    if (!this.allrecord && this._lastfkr == _id) {
+      return 'yellow-class'
+    }
+    else {
+      return ''
+    }
   }
 
   showReport2728() {
@@ -264,13 +287,14 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
 
-  onDelete(izm: any, payments: boolean) {
+  onDelete(izm: any) {
     this.izmPlatezhiDetailconfirm.confirm({
-      message: 'Вы действительно хотите удалить ' + izm._spec.name_rus + '?',
+      message: 'Вы действительно хотите удалить ' + izm._spec_name + '?',
       header: 'Удаление классификации',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.delSpec(izm, payments)
+        this.delSpec(izm)
+        this.izmPlatezhiDetailconfirm.close()
       },
       reject: () => {
         this.izmPlatezhiDetailconfirm.close()
@@ -278,26 +302,26 @@ export class IzmPlatejiDetailComponent implements OnInit {
     })
   }
 
-  delSpec(izm: any, payments: boolean) {
-    if (payments) {
-      for (let i = this.izmPlatezhiDetail.payments.length - 1; i >= 0; i--) {
-        let index = this.izmPlatezhiDetail.payments.findIndex(item => izm._spec.id === item._spec_id)
-        if (index !== -1) {
-          this.izmPlatezhiDetail.payments.splice(index, 1)
-        }
+  delSpec(izm: any) {
+    for (let i = this.izmPlatezhiDetail.payments.length - 1; i >= 0; i--) {
+
+      let index = this.izmPlatezhiDetail.payments.findIndex(item => izm._fkr_id === item._fkr_id && izm._spec_id === item._spec_id)
+      if (index !== -1) {
+        this.izmPlatezhiDetail.payments.splice(index, 1)
       }
-      this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == izm._fkr.id)
     }
 
-    else {
-      for (let i = this.izmPlatezhiDetail.obligats.length - 1; i >= 0; i--) {
-        let index = this.izmPlatezhiDetail.obligats.findIndex(item => izm._spec.id === item._spec_id)
-        if (index !== -1) {
-          this.izmPlatezhiDetail.obligats.splice(index, 1)
-        }
+    this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == izm._fkr_id)
+
+
+    for (let i = this.izmPlatezhiDetail.obligats.length - 1; i >= 0; i--) {
+      let index = this.izmPlatezhiDetail.obligats.findIndex(item => izm._fkr_id === item._fkr_id && izm._spec_id === item._spec_id)
+      if (index !== -1) {
+        this.izmPlatezhiDetail.obligats.splice(index, 1)
       }
-      this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == izm._fkr.id)
     }
+    this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == izm._fkr_id)
+
 
     this.addFKRtoArray()
   }
@@ -314,11 +338,20 @@ export class IzmPlatejiDetailComponent implements OnInit {
       return
     }
 
+    let exclude = []
+    for (let i = 0; i < this.fkr_array.length; i++) {
+      exclude.push(this.fkr_array[i].id)
+    }
+
     this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(FkrSelectComponent,
       {
         header: 'Выбор ФКР',
         width: '60%',
-        height: '80%'
+        height: '80%',
+        data: {
+          org_id: this.izmPlatezhiDetail.doc._organization.id,
+          exclude: exclude
+        }
       })
 
     this.izmPlatezhiDetailref.onClose.subscribe((fkr_detail: fkr_detail) => {
@@ -346,54 +379,45 @@ export class IzmPlatejiDetailComponent implements OnInit {
       return
     }
 
+    let exclude = []
+    for (let i = 0; i < this.payments.length; i++) {
+      exclude.push(this.payments[i]._spec_id)
+    }
+
     if (fkr_detail !== undefined) {
       this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(SpecificationExpSelectComponent,
         {
           header: 'Выбор спецификации',
           width: '60%',
-          height: '80%'
+          height: '80%',
+          data: {
+            exclude: exclude
+          }
         })
 
       this.izmPlatezhiDetailref
         .onClose.subscribe((spec_detail: specification_income_detail) => {
           if (spec_detail) {
-            if (payments) {
-              let mass = {
-                '_organization': this.izmPlatezhiDetail.doc._organization.id,
-                '_fkr': fkr_detail.id,
-                '_spec': spec_detail.id,
-                '_date': this.izmPlatezhiDetail.doc._date,
-                'table': 'pay'
-              }
+            let responce: any
 
-
-              this.izmPlatezhiDetailService
-                .get_ostatok_expenses(mass)
-                .subscribe(
-                  (detail) => {
-                    this.izmPlatezhiDetail.payments.push(detail)
-                    this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == fkr_detail.id)
-                  })
+            let mass = {
+              '_organization': this.izmPlatezhiDetail.doc._organization.id,
+              '_fkr': fkr_detail.id,
+              '_spec': spec_detail.id,
+              '_date': this.izmPlatezhiDetail.doc._date
             }
-            else {
-              let mass = {
-                '_organization': this.izmPlatezhiDetail.doc._organization.id,
-                '_fkr': fkr_detail.id,
-                '_spec': spec_detail.id,
-                '_date': this.izmPlatezhiDetail.doc._date,
-                'table': 'obl'
-              }
 
 
-              this.izmPlatezhiDetailService
-                .get_ostatok_expenses(mass)
-                .subscribe(
-                  (detail) => {
-                    this.izmPlatezhiDetail.obligats.push(detail)
-                    this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == fkr_detail.id)
-                  })
-
-            }
+            this.izmPlatezhiDetailService
+              .get_ostatok_expenses(mass)
+              .subscribe(
+                (detail) => {
+                  responce = detail,
+                    this.izmPlatezhiDetail.payments.push(responce.pay)
+                  this.izmPlatezhiDetail.obligats.push(responce.obl)
+                  this.obligats = this.izmPlatezhiDetail.obligats.filter(item => item['_fkr_id'] == fkr_detail.id)
+                  this.payments = this.izmPlatezhiDetail.payments.filter(item => item['_fkr_id'] == fkr_detail.id)
+                })
           }
         }
         )

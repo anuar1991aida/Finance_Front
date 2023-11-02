@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { utv_expenses_doc, utv_expenses_list } from '../interfaces';
 import { UtvExpensesService } from '../utv_expenses.service';
+import { MainComponent } from 'src/app/main/main.component/main.component'
 
 @Component({
   selector: 'app-utv-exp-doc-list',
@@ -18,20 +19,67 @@ export class UtvExpDocListComponent implements OnInit {
     private utvListconfirm: ConfirmationService,
     private utvListdialog: DialogService,
     private utvListmessage: MessageService,
-  ) { }
+    private MainComponent: MainComponent,
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+    this.roles = this.MainComponent.roles
+  }
 
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
+  @HostListener('window:keydown', ['$event'])
+
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
+      this.massDelete(true)
+    }
+    // else if (event.key === 'Delete') {
+    //   this.massDelete(false)
+    // }
+  }
 
   utvList$: Observable<utv_expenses_list>
   searchutvList = ''
   first = 0
   rows = 25
-  windowHeight: number
+  selectedDocs: any
+  windowHeight = 0
+  windowWeight = 0
+  roles: string[] = []
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.updateWindowSize()
+  }
+
+  isAdmin() {
+    return this.roles.includes('fulldata')
+  }
+
+  massDelete(shift: boolean) {
+
+    if (this.selectedDocs) {
+      let msg = !shift ? "Пометить документы на удаление?" : "Вы точно хотите удалить документы?"
+      let header = !shift ? "Пометка на удаление" : "Удаление документов"
+      let msgsuccess = !shift ? "Документы помечены на удаление" : "Документы удалены"
+
+      let mass_doc_id = []
+
+      for (let i = 0; i < this.selectedDocs.length; i++) {
+        mass_doc_id.push(this.selectedDocs[i].id)
+      }
+
+      let body = {
+        shift: shift,
+        mass_doc_id: mass_doc_id
+      }
+
+      // this.deleteService(msg, header, msgsuccess, body)
+    }
+    else {
+      this.utvListmessage.add({ severity: 'error', summary: 'Ошибка', detail: 'Документ не выбран' })
+    }
   }
 
   ngOnInit(): void {
@@ -41,6 +89,7 @@ export class UtvExpDocListComponent implements OnInit {
 
   private updateWindowSize() {
     this.windowHeight = window.innerHeight;
+    this.windowWeight = window.innerHeight;
   }
 
   closeform() {

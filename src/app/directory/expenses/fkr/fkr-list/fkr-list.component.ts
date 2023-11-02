@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { fkrService } from '../fkr.services';
 import { fkr_detail, fkr_list } from '../interfaces';
+import { MainComponent } from 'src/app/main/main.component/main.component'
 
 @Component({
   selector: 'app-fkr-list',
@@ -13,12 +14,16 @@ import { fkr_detail, fkr_list } from '../interfaces';
 export class FkrListComponent implements OnInit {
 
   constructor(
+    private MainComponent: MainComponent,
     private fkrListService: fkrService,
     private fkrListref: DynamicDialogRef,
     private fkrListconfirm: ConfirmationService,
     private fkrListdialog: DialogService,
     private fkrListmessage: MessageService,
-  ) { }
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+  }
   @Output() closeEvent = new EventEmitter<any>()
   @Input() data = false
   fkr$: Observable<fkr_list>
@@ -34,7 +39,7 @@ export class FkrListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchPr(),
-    this.updateWindowSize()
+      this.updateWindowSize()
   }
 
   private updateWindowSize() {
@@ -63,10 +68,6 @@ export class FkrListComponent implements OnInit {
 
   closeform() {
     this.closeEvent.emit()
-  }
-
-  search() {
-
   }
 
 }

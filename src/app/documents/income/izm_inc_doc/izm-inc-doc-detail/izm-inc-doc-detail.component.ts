@@ -1,4 +1,4 @@
-import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -42,6 +42,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   @Input() izm_inc_id = ''
   @Output() closeEvent = new EventEmitter<any>()
   @Output() closeed = false
+
   items: MenuItem[];
   form: FormGroup
   izmDetail: izm_inc_doc_detail
@@ -52,6 +53,10 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   selected = false
   numberMonth = 0
   spravkatypes: any = []
+
+  windowHeight = 0
+  windowWidth = 0
+
   TotalUtvGod = 0
   TotalUtv1 = 0
   TotalUtv2 = 0
@@ -65,6 +70,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   TotalUtv10 = 0
   TotalUtv11 = 0
   TotalUtv12 = 0
+
   TotalIzmGod = 0
   TotalIzm1 = 0
   TotalIzm2 = 0
@@ -78,6 +84,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   TotalIzm10 = 0
   TotalIzm11 = 0
   TotalIzm12 = 0
+
   TotalGod = 0
   Total1 = 0
   Total2 = 0
@@ -98,6 +105,11 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     id: 0,
     name_kaz: '',
     name_rus: ''
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.updateWindowSize()
   }
 
   closeform(close: boolean) {
@@ -165,9 +177,15 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       // this.izmDetail.tbl1.splice(0, this.izmDetail.tbl1.length)
     }
 
+    this.updateWindowSize()
     let objString = JSON.stringify(this.izmDetail)
     this.hashBegin = SHA256(objString).toString()
 
+  }
+
+  private updateWindowSize() {
+    this.windowHeight = window.innerHeight
+    this.windowWidth = window.innerWidth
   }
 
   showReport25() {
@@ -204,6 +222,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     let TotIzm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     let TotGod = 0
     let Tot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
     for (let str of asd) {
       for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
         TotUtv[i] += str['utv' + i],
@@ -211,6 +230,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
           Tot[i] += str['itog' + i]
       }
     }
+
     for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
       self['TotalUtv' + i] = TotUtv[i],
         self['TotalIzm' + i] = TotIzm[i],
@@ -369,6 +389,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   onDelete(ri: number, classification_name: string) {
+
     this.izmDetailconfirm.confirm({
       message: 'Вы действительно хотите удалить ' + classification_name + '?',
       header: 'Удаление классификации',
