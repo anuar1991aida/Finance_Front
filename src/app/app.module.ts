@@ -84,6 +84,9 @@ import { ChangepassComponent } from './services/changepass/changepass.component'
 import { PeriodDetailComponent } from './directory/period/period-detail/period-detail.component';
 import { SvodSpravokListComponent } from './documents/expenses/svod_spravok/svod_spravok_list/svod-spravok-list.component';
 import { SvodSpravokDetailComponent } from './documents/expenses/svod_spravok/svod_spravok_detail/svod-spravok-detail.component';
+import { report_8_10_Component } from './reports/report_8_10/report_8_10';
+import { PogashenieKpListComponent } from './directory/pogashenie/pogashenie_kp/pogashenie-kp-list/pogashenie-kp-list.component';
+import { PogashenieFKRListComponent } from './directory/pogashenie/pogashenie-fkr/pogashenie-fkr-list/pogashenie-fkr-list.component';
 
 @NgModule({
   imports: [
@@ -169,7 +172,10 @@ import { SvodSpravokDetailComponent } from './documents/expenses/svod_spravok/sv
     ChangepassComponent,
     PeriodDetailComponent,
     SvodSpravokListComponent,
-    SvodSpravokDetailComponent],
+    SvodSpravokDetailComponent,
+    report_8_10_Component,
+    PogashenieKpListComponent,
+    PogashenieFKRListComponent],
   bootstrap: [AppComponent],
   providers: [
     {

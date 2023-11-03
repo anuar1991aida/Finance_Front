@@ -128,6 +128,14 @@ export class MainComponent implements OnInit {
               {
                 label: 'Пользователи',
                 command: () => this.openTab('app-user-list', 'Пользователи', '')
+              },
+              {
+                label: 'Погашение КП',
+                command: () => this.openTab('app-pogashenie-kp-list', 'Погашение КП', '')
+              },
+              {
+                label: 'Погашение ФКР',
+                command: () => this.openTab('app-pogashenie-fkr-list', 'Погашение ФКР', '')
               }
               ]
             }
@@ -253,6 +261,10 @@ export class MainComponent implements OnInit {
               {
                 label: 'Приложение 14',
                 command: () => this.openTab('report-detail', 'Приложение 14', 'prilozhenie14')
+              },
+              {
+                label: 'Приложение 8-10',
+                command: () => this.openTab('report_8_10', 'Приложение 8-10', '')
               }]
             }
           ]]

@@ -154,6 +154,16 @@
                 <startpage-element *ngIf="context.selector=='startpage-element'">
                 </startpage-element>
 
+                <report_8_10 *ngIf="context.selector=='report_8_10'" (closeEvent)="removetab()">
+                </report_8_10>
+
+                <app-pogashenie-kp-list *ngIf="context.selector=='app-pogashenie-kp-list'" (closeEvent)="removetab()">
+                </app-pogashenie-kp-list>
+
+                <app-pogashenie-fkr-list *ngIf="context.selector=='app-pogashenie-fkr-list'" (closeEvent)="removetab()">
+                </app-pogashenie-fkr-list>
+
+
             </mat-tab>
         </ng-template>
     </mat-tab-group>
