@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ import { MainComponent } from 'src/app/main/main.component/main.component'
   templateUrl: './utv-exp-doc-list.component.html',
   styleUrls: ['./utv-exp-doc-list.component.css']
 })
-export class UtvExpDocListComponent implements OnInit {
+export class UtvExpDocListComponent implements OnInit, OnChanges {
 
   constructor(
     private utvListService: UtvExpensesService,
@@ -26,17 +26,18 @@ export class UtvExpDocListComponent implements OnInit {
     this.roles = this.MainComponent.roles
   }
 
+  @Input() tabcount = 0
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
   @HostListener('window:keydown', ['$event'])
 
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin() && (this.tabcount == this.old_tabcount)) {
       this.massDelete(true)
     }
-    // else if (event.key === 'Delete') {
-    //   this.massDelete(false)
-    // }
+    else if (event.key === 'Delete' && (this.tabcount == this.old_tabcount)) {
+      this.massDelete(false)
+    }
   }
 
   utvList$: Observable<utv_expenses_list>
@@ -47,6 +48,7 @@ export class UtvExpDocListComponent implements OnInit {
   windowHeight = 0
   windowWeight = 0
   roles: string[] = []
+  old_tabcount = 0
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -83,8 +85,15 @@ export class UtvExpDocListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchUtvList(),
-      this.updateWindowSize()
+    this.old_tabcount = this.tabcount
+    this.fetchUtvList()
+    this.updateWindowSize()
+  }
+
+  ngOnChanges(): void {
+    if (this.tabcount == this.old_tabcount) {
+      this.fetchUtvList()
+    }
   }
 
   private updateWindowSize() {

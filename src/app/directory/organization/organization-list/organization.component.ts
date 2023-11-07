@@ -31,6 +31,7 @@ export class OrganizationComponent implements OnInit {
 
   @Output() closeEvent = new EventEmitter<any>()
   @Input() list = false
+  @Input() tabcount = 0
   organizations$: Observable<organization_list>
   profileuser: profileuser
   first = 0
@@ -38,6 +39,7 @@ export class OrganizationComponent implements OnInit {
   searchorg = ''
   selected: any
   windowHeight: number
+  old_tabcount = 0
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -45,9 +47,15 @@ export class OrganizationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchOrg(),
-      this.updateWindowSize()
+    this.old_tabcount = this.tabcount
+    this.fetchOrg()
+    this.updateWindowSize()
+  }
 
+  ngOnChanges(): void {
+    if (this.tabcount == this.old_tabcount) {
+      this.fetchOrg()
+    }
   }
 
   private updateWindowSize() {

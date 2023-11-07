@@ -1,7 +1,7 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Observable } from 'rxjs';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable, Subject } from 'rxjs';
 import { MainComponent } from 'src/app/main/main.component/main.component'
 import { izm_plateji_doc_list, izm_plateji_doc } from '../interfaces';
 import { IzmPlatezhiService } from '../izm-plateji.services';
@@ -11,7 +11,7 @@ import { IzmPlatezhiService } from '../izm-plateji.services';
   templateUrl: './izm-plateji-list.component.html',
   styleUrls: ['./izm-plateji-list.component.css']
 })
-export class IzmPlatejiListComponent implements OnInit {
+export class IzmPlatejiListComponent implements OnInit, OnChanges {
 
   first = 0
   rows = 25
@@ -22,6 +22,7 @@ export class IzmPlatejiListComponent implements OnInit {
     private izmplatListconfirm: ConfirmationService,
     private izmplatListmessage: MessageService,
     private izmplatListref: DynamicDialogRef,
+    public izm_plat_config: DynamicDialogConfig,
   ) {
     this.first = this.MainComponent.first
     this.rows = this.MainComponent.rows
@@ -29,15 +30,19 @@ export class IzmPlatejiListComponent implements OnInit {
   }
 
   @Input() List = false
-  @Output() newItemEvent = new EventEmitter<any>();
+  @Input() tabcount = 0;
+
+  @Output() newItemEvent = new EventEmitter<any>()
   @Output() closeEvent = new EventEmitter<any>()
+
   @HostListener('window:resize', ['$event'])
+
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin() && (this.tabcount == this.old_tabcount)) {
       this.massDelete(true)
     }
-    else if (event.key === 'Delete') {
+    else if (event.key === 'Delete' && (this.tabcount == this.old_tabcount)) {
       this.massDelete(false)
     }
   }
@@ -47,10 +52,20 @@ export class IzmPlatejiListComponent implements OnInit {
   izmplatList$: Observable<izm_plateji_doc_list>
   windowHeight = 0
   selectedDocs: any
+  type = ''
+  old_tabcount = 0
 
   ngOnInit(): void {
+    this.type = this.izm_plat_config.data?.type || ''
+    this.old_tabcount = this.tabcount
     this.fetchIzmPlatList()
     this.updateWindowSize()
+  }
+
+  ngOnChanges(): void {
+    if (this.tabcount == this.old_tabcount) {
+      this.fetchIzmPlatList()
+    }
   }
 
   isAdmin() {
@@ -61,7 +76,8 @@ export class IzmPlatejiListComponent implements OnInit {
     let params = {
       limit: this.rows.toString(),
       offset: this.first.toString(),
-      search: this.searchizmList
+      search: this.searchizmList,
+      type: this.type
     }
 
     this.izmplatList$ = this.izmplatListService.fetch(params)

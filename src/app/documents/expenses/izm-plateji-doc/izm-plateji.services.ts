@@ -19,7 +19,7 @@ export class IzmPlatezhiService {
     }
 
     fetch(params: any): Observable<izm_plateji_doc_list> {
-        return this.http.get<izm_plateji_doc_list>(this.host + 'docs/izmexplist', { params })
+        return this.http.post<izm_plateji_doc_list>(this.host + 'docs/izmexplist', params)
     }
 
     fetch_detail(izm_plateji: string): Observable<izm_plateji_detail> {

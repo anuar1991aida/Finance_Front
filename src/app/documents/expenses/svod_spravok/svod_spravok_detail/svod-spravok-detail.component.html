@@ -265,13 +265,13 @@
                 <ng-template pTemplate="body" let-docList let-ri="rowIndex">
                     <tr class="cursor-pointer" (dblclick)="onRowEdit(docList)">
                         <td style="text-align:center">
-                            {{docList.nom}}
+                            <span [ngClass]="setClass(docList.deleted)">{{docList.nom}}</span>
                         </td>
                         <td style="text-align:center">
-                            {{docList._date}}
+                            <span [ngClass]="setClass(docList.deleted)">{{docList._date}}</span>
                         </td>
                         <td>
-                            {{docList._organization_name}}
+                            <span [ngClass]="setClass(docList.deleted)">{{docList._organization_name}}</span>
                         </td>
                         <td style="padding: 0; margin:0;">
                             <div class="flex align-items-center justify-content-center gap-2">

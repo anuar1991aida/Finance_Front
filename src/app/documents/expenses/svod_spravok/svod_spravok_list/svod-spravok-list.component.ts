@@ -1,8 +1,9 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { svod_expenses_detail, svod_expenses_doc, svod_expenses_list } from '../interfaces';
+import { svod_expenses_doc, svod_expenses_list } from '../interfaces';
+import { MainComponent } from 'src/app/main/main.component/main.component'
 import { svodExpensesService } from '../svod_expenses.service';
 
 @Component({
@@ -10,24 +11,31 @@ import { svodExpensesService } from '../svod_expenses.service';
   templateUrl: './svod-spravok-list.component.html',
   styleUrls: ['./svod-spravok-list.component.css']
 })
-export class SvodSpravokListComponent implements OnInit {
+export class SvodSpravokListComponent implements OnInit, OnChanges {
 
   constructor(
+    private MainComponent: MainComponent,
     private svodListService: svodExpensesService,
     private svodListref: DynamicDialogRef,
     private svodListconfirm: ConfirmationService,
     private svodListdialog: DialogService,
     private svodListmessage: MessageService,
-  ) { }
+  ) {
+    this.first = this.MainComponent.first
+    this.rows = this.MainComponent.rows
+    this.roles = this.MainComponent.roles
+  }
 
+  @Input() tabcount = 0;
   @Output() newItemEvent = new EventEmitter<any>()
   @Output() closeEvent = new EventEmitter<any>()
+
   @HostListener('window:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.shiftKey && event.key === 'Delete') {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin() && (this.tabcount == this.old_tabcount)) {
       this.massDelete(true)
     }
-    else if (event.key === 'Delete') {
+    else if (event.key === 'Delete' && (this.tabcount == this.old_tabcount)) {
       this.massDelete(false)
     }
   }
@@ -36,17 +44,30 @@ export class SvodSpravokListComponent implements OnInit {
   searchutvList = ''
   first = 0
   rows = 25
+  roles: string[] = []
   windowHeight: number
   selectedDocs!: any
+  old_tabcount = 0
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     this.updateWindowSize()
   }
 
+  isAdmin() {
+    return this.roles.includes('fulldata')
+  }
+
   ngOnInit(): void {
-    this.fetchSvodList(),
-      this.updateWindowSize()
+    this.old_tabcount = this.tabcount
+    this.fetchSvodList()
+    this.updateWindowSize()
+  }
+
+  ngOnChanges(): void {
+    if (this.tabcount == this.old_tabcount) {
+      this.fetchSvodList()
+    }
   }
 
   private updateWindowSize() {

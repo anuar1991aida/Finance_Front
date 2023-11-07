@@ -296,7 +296,8 @@ export class SvodSpravokDetailComponent implements OnInit {
       {
         header: 'Добавление документа',
         width: '80%',
-        height: '80%'
+        height: '80%',
+        data: { type: 'select' }
       })
 
     this.svodDetailref.onClose.subscribe((docs_izm: any) => {
@@ -414,6 +415,17 @@ export class SvodSpravokDetailComponent implements OnInit {
 
   toLocaleDate(dateForStr: string) {
     return new Date(dateForStr).toLocaleDateString() + ' ' + new Date(dateForStr).toLocaleTimeString();
+  }
+
+  setClass(deleted: boolean) {
+    let classs = ''
+
+    if (deleted) {
+      classs = 'class-deleted'
+    }
+
+    return classs
+
   }
 
   closeaftersave(close: boolean) {

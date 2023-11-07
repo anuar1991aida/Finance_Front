@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { MegaMenuItem, MessageService, PrimeNGConfig } from 'primeng/api';
+import { MegaMenuItem, MessageService } from 'primeng/api';
 import { AuthService } from '../../login/auth.service';
 import { MenuModule } from 'primeng/menu';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -77,6 +77,8 @@ export class MainComponent implements OnInit {
   rows = 25
   history = []
   roles = []
+
+  updateIzm = false
 
   profileuser: profileuser = {
     user_id: '',

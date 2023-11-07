@@ -33,7 +33,16 @@
                         </svg>
                     </i> -->
                 </ng-template>
-                <app-organization *ngIf="context.selector=='app-organization'" [list]="true" (closeEvent)="removetab()">
+
+                <app-izm-plateji-list *ngIf="context.selector=='app-izm-plateji-list'" [List]="true"
+                    [tabcount]="this.tabcount"
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
+                    (closeEvent)="removetab()">
+                </app-izm-plateji-list>
+
+
+                <app-organization *ngIf="context.selector=='app-organization'" [list]="true" (closeEvent)="removetab()"
+                    [tabcount]="this.tabcount">
                 </app-organization>
 
                 <app-category-income *ngIf="context.selector=='app-category-income'" [data]="true"
@@ -56,7 +65,7 @@
 
                 <app-utv-income-list *ngIf="context.selector=='app-utv-income-list'"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
-                    (closeEvent)="removetab()">
+                    (closeEvent)="removetab()" [tabcount]="this.tabcount">
                 </app-utv-income-list>
 
                 <app-utv-income-detail *ngIf="context.selector=='app-utv-income-detail'" [utv_inc_id]="number"
@@ -68,7 +77,7 @@
 
                 <app-izm-inc-doc-list *ngIf="context.selector=='app-izm-inc-doc-list'"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
-                    (closeEvent)="removetab()">
+                    (closeEvent)="removetab()" [tabcount]="this.tabcount">
                 </app-izm-inc-doc-list>
 
                 <app-import420-list *ngIf="context.selector=='app-import420-list'" (closeEvent)="removetab()"
@@ -84,7 +93,8 @@
                 </app-import219-list>
 
                 <app-svod-spravok-list *ngIf="context.selector=='app-svod-spravok-list'" (closeEvent)="removetab()"
-                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
+                    [tabcount]="this.tabcount">
                 </app-svod-spravok-list>
 
                 <app-svod-spravok-detail *ngIf="context.selector=='app-svod-spravok-detail'" (closeEvent)="removetab()"
@@ -124,7 +134,7 @@
 
                 <app-utv-exp-doc-list *ngIf="context.selector=='app-utv-exp-doc-list'"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
-                    (closeEvent)="removetab()">
+                    (closeEvent)="removetab()" [tabcount]="this.tabcount">
                 </app-utv-exp-doc-list>
 
                 <app-utv-exp-doc-detail *ngIf="context.selector=='app-utv-exp-doc-detail'" [utv_exp_id]="number"
@@ -134,11 +144,6 @@
                 <app-specification-exp-list *ngIf="context.selector=='app-specification-exp-list'"
                     (closeEvent)="removetab()">
                 </app-specification-exp-list>
-
-                <app-izm-plateji-list *ngIf="context.selector=='app-izm-plateji-list'" [List]="true"
-                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
-                    (closeEvent)="removetab()">
-                </app-izm-plateji-list>
 
                 <app-izm-plateji-detail *ngIf="context.selector=='app-izm-plateji-detail'" [izm_inc_id]="number"
                     (closeEvent)="removetab()">

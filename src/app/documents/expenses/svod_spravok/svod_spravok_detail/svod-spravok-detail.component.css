@@ -1,3 +1,8 @@
 .yellow-class {
     background-color: rgb(220, 247, 167);
 }
+
+.class-deleted {
+    text-decoration: line-through;
+    text-decoration-color: red;
+}

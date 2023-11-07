@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { UtvIncomeService } from '../utv_income.service';
   templateUrl: './utv-income-list.component.html',
   styleUrls: ['./utv-income-list.component.css']
 })
-export class UtvIncomeListComponent implements OnInit {
+export class UtvIncomeListComponent implements OnInit, OnChanges {
 
   first = 0
   rows = 25
@@ -30,17 +30,18 @@ export class UtvIncomeListComponent implements OnInit {
     this.roles = this.MainComponent.roles
   }
 
+  @Input() tabcount = 0
   @Output() newItemEvent = new EventEmitter<any>();
   @Output() closeEvent = new EventEmitter<any>()
   @HostListener('window:keydown', ['$event'])
 
   handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.shiftKey && event.key === 'Delete' && this.isAdmin()) {
+    if (event.shiftKey && event.key === 'Delete' && this.isAdmin() && (this.tabcount == this.old_tabcount)) {
       this.massDelete(true)
     }
-    // else if (event.key === 'Delete') {
-    //   this.massDelete(false)
-    // }
+    else if (event.key === 'Delete' && (this.tabcount == this.old_tabcount)) {
+      this.massDelete(false)
+    }
   }
 
   profileuser: profileuser
@@ -50,6 +51,7 @@ export class UtvIncomeListComponent implements OnInit {
   windowWidht = 0
   selectedDocs!: any
   roles: string[] = []
+  old_tabcount = 0
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -57,8 +59,15 @@ export class UtvIncomeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchUtvList(),
-      this.updateWindowSize()
+    this.old_tabcount = this.tabcount
+    this.fetchUtvList()
+    this.updateWindowSize()
+  }
+
+  ngOnChanges(): void {
+    if (this.tabcount == this.old_tabcount) {
+      this.fetchUtvList()
+    }
   }
 
   isAdmin() {
