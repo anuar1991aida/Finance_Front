@@ -29,13 +29,13 @@
     </div>
 </p-toolbar>
 
-<div class="card" *ngIf="(izmDetail) as utvDetail; else loader">
+<div class="card" *ngIf="(izmDetail) as izmDetail; else loader">
     <form class="card" [formGroup]="form" style="display: flex; padding-bottom: 10px;"
         [style]="{'width': '{{windowWidht}}'}">
-        <div *ngIf="utvDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px; max-width: 15%;">
+        <div *ngIf="izmDetail.doc.nom !== ''" class="p-field" style="padding-right: 10px; max-width: 15%;">
             <label for="number_doc">Номер </label>
             <div class="p-inputgroup">
-                <input id="number_doc" type="text" pInputText [(ngModel)]="utvDetail.doc.nom"
+                <input id="number_doc" type="text" pInputText [(ngModel)]="izmDetail.doc.nom"
                     formControlName="number_doc" />
             </div>
             <!-- <span class="p-invalid" *ngIf="form.controls['number_doc'].invalid && form.controls['number_doc'].touched">
@@ -47,7 +47,7 @@
             <label for="date_doc">Дата <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
                 <p-calendar [showTime]="true" [showSeconds]="true" appendTo="body" (onSelect)="changedate()"
-                    [(ngModel)]="utvDetail.doc._date" dateFormat="dd.mm.yy" [showIcon]="true"
+                    [(ngModel)]="izmDetail.doc._date" dateFormat="dd.mm.yy" [showIcon]="true"
                     formControlName="date_doc"></p-calendar>
             </div>
             <span class="p-invalid" *ngIf="form.controls['date_doc'].invalid && form.controls['date_doc'].touched">
@@ -58,9 +58,9 @@
         <div class="p-field" style="padding-right: 10px; width: 30%;">
             <label for="org_name">Наименование организации <span style="color: red;">*</span></label>
             <div class="p-inputgroup">
-                <input id="org_name" type="text" pInputText [(ngModel)]="utvDetail.doc._organization.name_rus"
+                <input id="org_name" type="text" pInputText [(ngModel)]="izmDetail.doc._organization.name_rus"
                     formControlName="org_name" />
-                <span *ngIf="utvDetail.doc._organization.id !== 0" class="p-inputgroup-addon cursor-pointer"
+                <span *ngIf="izmDetail.doc._organization.id !== 0" class="p-inputgroup-addon cursor-pointer"
                     (click)="viewOrg()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-files" viewBox="0 0 16 16">
@@ -78,8 +78,8 @@
         <div class="p-field">
             <label for="type_name">Тип справки <span style="color: red;">*</span></label>
             <div class="card flex justify-content-center" style="margin: 0; width: 100%;">
-                <p-dropdown id="type_name" [options]="utvDetail.typesdoc" placeholder="Выберите тип"
-                    optionLabel="name_rus" optionValue="id" appendTo="body" [(ngModel)]="utvDetail.doc._type_izm_doc.id"
+                <p-dropdown id="type_name" [options]="izmDetail.typesdoc" placeholder="Выберите тип"
+                    optionLabel="name_rus" optionValue="id" appendTo="body" [(ngModel)]="izmDetail.doc._type_izm_doc.id"
                     formControlName="type_name">
                 </p-dropdown>
             </div>
@@ -103,7 +103,7 @@
             (click)="addClassification()"></button>
     </div>
 
-    <p-table [value]="utvDetail.tbl1" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
+    <p-table [value]="tbl" [scrollable]="true" scrollHeight="calc(100vh - 200px)" selectionMode="single"
         [(selection)]="selected" styleClass="p-datatable-sm p-datatable-gridlines">
         <ng-template pTemplate="header">
             <tr>
@@ -194,7 +194,7 @@
                 </td>
                 <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
                     <td style="text-align:right;">
-                        <p-inputNumber [readonly]="i < numberMonth" (ngModelChange)="sumColumn(izm, i)"
+                        <p-inputNumber [readonly]="i < numberMonth" (ngModelChange)="calculatetot()"
                             [(ngModel)]="izm['sm' + i]" [minFractionDigits]="2" [maxFractionDigits]="2"
                             [inputStyle]="{'width': '8%', 'padding-right':'8px', 'text-align':'right'}">
                         </p-inputNumber>
@@ -217,54 +217,33 @@
                 <th rowspan="3" style="text-align:center"></th>
                 <th rowspan="3" style="text-align:center;">Итого</th>
                 <th style="text-align:center">{{TotalUtvGod}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv1}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv2}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv3}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv4}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv5}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv6}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv7}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv8}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv9}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv10}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv11}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalUtv12}}</th>
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                    <td style="text-align:center;">
+                        {{totalUtv[i]}}
+                    </td>
+                </ng-container>
                 <th rowspan="3" style="text-align:center"></th>
             </tr>
             <tr>
-                <th style="text-align:center">{{TotalIzmGod}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm1}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm2}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm3}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm4}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm5}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm6}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm7}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm8}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm9}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm10}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm11}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{TotalIzm12}}</th>
+                <th style="text-align:center">{{TotalSmGod}}</th>
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                    <td style="text-align:center;">
+                        {{totalSm[i]}}
+                    </td>
+                </ng-container>
             </tr>
             <tr>
-                <th style="text-align:center">{{TotalGod}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total1}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total2}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total3}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total4}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total5}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total6}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total7}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total8}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total9}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total10}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total11}}</th>
-                <th style="text-align:center; max-width: 7em; min-width: 7em">{{Total12}}</th>
+                <th style="text-align:center">{{TotalItogGod}}</th>
+                <ng-container *ngFor="let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                    <td style="text-align:center;">
+                        {{totalItog[i]}}
+                    </td>
+                </ng-container>
             </tr>
         </ng-template>
     </p-table>
 
-    <ng-template *ngIf="!utvDetail.tbl1">
+    <ng-template *ngIf="!tbl">
         <div class="center">
             Нет ни одной записи
         </div>

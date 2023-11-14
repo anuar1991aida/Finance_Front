@@ -49,11 +49,16 @@ export class FkrListComponent implements OnInit {
   fetchPr() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString(),
+      offset: this.first.toString()
+    }
+
+    let body = {
+      _organization: 0,
+      exclude: [],
       search: this.searchfkr.toString()
     }
 
-    this.fkr$ = this.fkrListService.fetch(params)
+    this.fkr$ = this.fkrListService.fetch_select(params, body)
   }
 
   onPageChange(event: any) {

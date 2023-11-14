@@ -131,7 +131,8 @@ export class IzmPlatejiDetailComponent implements OnInit {
               this.obligats = this.izmPlatezhiDetail.obligats,
               this.numberMonth = parseInt(this.izmPlatezhiDetail.doc._date.slice(3, 5)),
               this.addFKRtoArray()
-            // this.calculatetot()
+            this.calculatePay()
+            this.calculateObl()
           },
           (error) => {
             this.izmPlatezhiDetailmsg.add({
@@ -160,6 +161,23 @@ export class IzmPlatejiDetailComponent implements OnInit {
     this.hashBegin = SHA256(objString).toString()
 
     this.updateWindowSize()
+  }
+
+
+  calculateObl() {
+    for (let i = 0; i < this.obligats.length; i++) {
+      for (let x of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+        this.obligats[i]['itog' + x] = this.obligats[i]['utv' + x] + this.obligats[i]['sm' + x]
+      }
+    }
+  }
+
+  calculatePay() {
+    for (let i = 0; i < this.payments.length; i++) {
+      for (let x of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+        this.payments[i]['itog' + x] = this.payments[i]['utv' + x] + this.payments[i]['sm' + x]
+      }
+    }
   }
 
   setClassSelect(_id: number) {

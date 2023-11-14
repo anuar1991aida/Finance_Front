@@ -57,48 +57,15 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   windowHeight = 0
   windowWidth = 0
 
+  totalUtv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  totalSm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  totalItog = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
   TotalUtvGod = 0
-  TotalUtv1 = 0
-  TotalUtv2 = 0
-  TotalUtv3 = 0
-  TotalUtv4 = 0
-  TotalUtv5 = 0
-  TotalUtv6 = 0
-  TotalUtv7 = 0
-  TotalUtv8 = 0
-  TotalUtv9 = 0
-  TotalUtv10 = 0
-  TotalUtv11 = 0
-  TotalUtv12 = 0
+  TotalSmGod = 0
+  TotalItogGod = 0
 
-  TotalIzmGod = 0
-  TotalIzm1 = 0
-  TotalIzm2 = 0
-  TotalIzm3 = 0
-  TotalIzm4 = 0
-  TotalIzm5 = 0
-  TotalIzm6 = 0
-  TotalIzm7 = 0
-  TotalIzm8 = 0
-  TotalIzm9 = 0
-  TotalIzm10 = 0
-  TotalIzm11 = 0
-  TotalIzm12 = 0
-
-  TotalGod = 0
-  Total1 = 0
-  Total2 = 0
-  Total3 = 0
-  Total4 = 0
-  Total5 = 0
-  Total6 = 0
-  Total7 = 0
-  Total8 = 0
-  Total9 = 0
-  Total10 = 0
-  Total11 = 0
-  Total12 = 0
-
+  tbl: any = []
   budj_det: Budjet_detail = {
     adress: '',
     code: '',
@@ -151,7 +118,8 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         .subscribe(
           (detail) => {
             this.izmDetail = detail,
-              this.numberMonth = parseInt(this.izmDetail.doc._date.slice(3, 5)),
+              this.tbl = this.izmDetail.tbl1
+            this.numberMonth = parseInt(this.izmDetail.doc._date.slice(3, 5)),
               this.calculatetot()
           },
           (error) => {
@@ -166,11 +134,14 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
         .fetch_detail('0')
         .subscribe(
           (detail) => {
-            this.izmDetail = detail
+            this.izmDetail = detail,
+              this.tbl = this.izmDetail.tbl1
           },
           (error) => {
             this.izmDetailmsg.add({
-              severity: 'error', summary: 'Ошибка', detail: error.error.status
+              severity: 'error',
+              summary: 'Ошибка',
+              detail: error.error.status
             })
           }
         )
@@ -212,36 +183,27 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
   }
 
   calculatetot() {
-    let asd: any;
-    let self: any;
-    self = this
-    asd = self.izmDetail.tbl1
-    let TotUtvGod = 0
-    let TotUtv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    let TotIzmGod = 0
-    let TotIzm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    let TotGod = 0
-    let Tot = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    this.totalUtv = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    this.totalSm = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    this.totalItog = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-    for (let str of asd) {
-      for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
-        TotUtv[i] += str['utv' + i],
-          TotIzm[i] += str['sm' + i],
-          Tot[i] += str['itog' + i]
+    this.TotalUtvGod = 0
+    this.TotalSmGod = 0
+    this.TotalItogGod = 0
+
+    for (let i = 0; i < this.tbl.length; i++) {
+      for (let x of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+        this.tbl[i]['itog' + x] = this.tbl[i]['utv' + x] + this.tbl[i]['sm' + x]
+
+        this.totalSm[x] += this.tbl[i]['sm' + x]
+        this.totalUtv[x] += this.tbl[i]['utv' + x]
+        this.totalItog[x] += this.tbl[i]['itog' + x]
+
+        this.TotalUtvGod += this.totalUtv[x]
+        this.TotalSmGod += this.totalSm[x]
+        this.TotalItogGod += this.totalSm[x]
       }
     }
-
-    for (let i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
-      self['TotalUtv' + i] = TotUtv[i],
-        self['TotalIzm' + i] = TotIzm[i],
-        self['Total' + i] = Tot[i],
-        TotUtvGod += TotUtv[i],
-        TotIzmGod += TotIzm[i],
-        TotGod += Tot[i]
-    }
-    this.TotalIzmGod = TotIzmGod,
-      this.TotalUtvGod = TotUtvGod,
-      this.TotalGod = TotGod
   }
 
   ngDoCheck() {
@@ -255,12 +217,6 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     }
   }
 
-  sumColumn(izm: any, i: number) {
-
-    izm["itog" + i] = izm["sm" + i] + izm["utv" + i]
-
-  }
-
   editClassification(ri: number) {
 
     this.izmDetailref = this.izmDetaildialog.open(ClassificationIncomeSelectComponent,
@@ -272,7 +228,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
 
     this.izmDetailref.onClose.subscribe((classific: any) => {
       if (classific) {
-        this.izmDetail.tbl1.splice(ri, 1)
+        this.tbl.splice(ri, 1)
         this.addClassificationRow(classific)
       }
     })
@@ -330,6 +286,7 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
     }
 
     let responce: any
+    this.izmDetail.tbl1 = this.tbl
 
     this.izmDetailService.saveIzm(this.izmDetail)
       .subscribe(
@@ -404,16 +361,6 @@ export class IzmIncDocDetailComponent implements OnInit, DoCheck {
       }
     })
   }
-
-  // deleteRow(_classification_id: number) {
-  //   for (let i = this.izmDetail.tbl1.length - 1; i >= 0; i--) {
-  //     let index = this.izmDetail.tbl1.findIndex(item => _classification_id === item._classification)
-
-  //     if (index !== -1) {
-  //       this.izmDetail.tbl1.splice(index, 1)
-  //     }
-  //   }
-  // }
 
   changedate() {
     this.izmDetail.doc._date = this.toLocaleDate(this.izmDetail.doc._date)

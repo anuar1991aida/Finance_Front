@@ -59,13 +59,16 @@ export class FkrSelectComponent implements OnInit {
   fetchPr() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString(),
-      search: this.searchfkr.toString(),
-      _organization: this.org_id,
-      exclude: this.exclude
+      offset: this.first.toString()
     }
 
-    this.fkr$ = this.fkrSelectService.fetch_select(params)
+    let body = {
+      _organization: this.org_id,
+      exclude: this.exclude,
+      search: this.searchfkr.toString()
+    }
+
+    this.fkr$ = this.fkrSelectService.fetch_select(params, body)
   }
 
   onSelected(fkrr: fkr_detail) {

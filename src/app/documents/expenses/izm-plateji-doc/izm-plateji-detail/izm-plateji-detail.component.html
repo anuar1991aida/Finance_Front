@@ -262,7 +262,8 @@
                                     <td style="text-align:center">
                                         <p-inputNumber [readonly]="i < numberMonth" [(ngModel)]="izm['sm' + i]"
                                             [minFractionDigits]="2" [maxFractionDigits]="2"
-                                            [inputStyle]="{'width': '8%', 'padding-right':'8px', 'text-align':'right'}">
+                                            [inputStyle]="{'width': '8%', 'padding-right':'8px', 'text-align':'right'}"
+                                            (ngModelChange)="calculatePay()">
                                         </p-inputNumber>
                                     </td>
                                 </ng-container>
@@ -386,7 +387,8 @@
                                     <td style="text-align:center;">
                                         <p-inputNumber [(ngModel)]="izm['sm' + i]" [minFractionDigits]="2"
                                             [maxFractionDigits]="2"
-                                            [inputStyle]="{'width': '8%', 'padding-right':'8px', 'text-align':'right'}">
+                                            [inputStyle]="{'width': '8%', 'padding-right':'8px', 'text-align':'right'}"
+                                            (ngModelChange)="calculateObl()">
                                         </p-inputNumber>
                                     </td>
                                 </ng-container>

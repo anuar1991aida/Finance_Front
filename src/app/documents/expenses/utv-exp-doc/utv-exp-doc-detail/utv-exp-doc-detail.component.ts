@@ -217,11 +217,39 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   addFKR() {
+
+    if (this.utvDetail.doc._date == '') {
+      this.utvDetailmsg.add({
+        severity: 'error',
+        summary: 'Ошибка',
+        detail: 'Заполните дату!'
+      })
+      return
+    }
+
+    if (this.utvDetail.doc._organization.id == 0) {
+      this.utvDetailmsg.add({
+        severity: 'error',
+        summary: 'Ошибка',
+        detail: 'Выберите организацию!'
+      })
+      return
+    }
+
+    let exclude = []
+    for (let i = 0; i < this.fkr_array.length; i++) {
+      exclude.push(this.fkr_array[i].id)
+    }
+
     this.utvDetailref = this.utvDetaildialog.open(FkrSelectComponent,
       {
         header: 'Выбор ФКР',
         width: '60%',
-        height: '80%'
+        height: '80%',
+        data: {
+          org_id: this.utvDetail.doc._organization.id,
+          exclude: exclude
+        }
       })
 
     this.utvDetailref.onClose.subscribe((fkr_detail: fkr_detail) => {
