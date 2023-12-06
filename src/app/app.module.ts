@@ -88,6 +88,11 @@ import { report_8_10_Component } from './reports/report_8_10/report_8_10';
 import { PogashenieKpListComponent } from './directory/pogashenie/pogashenie_kp/pogashenie-kp-list/pogashenie-kp-list.component';
 import { PogashenieFKRListComponent } from './directory/pogashenie/pogashenie-fkr/pogashenie-fkr-list/pogashenie-fkr-list.component';
 import { SvodSelectComponent } from './documents/expenses/svod_spravok/svod_spravok_select/svod-spravok-select.component';
+import { report_33_35_Component } from './reports/report_33_35/report_33_35';
+import { report_29_30_Component } from './reports/report_29_30/report_29_30';
+import { report_27_28_Component } from './reports/report_27_28/report_27_28';
+import { report_37_39_Component } from './reports/report_37_39/report_37_39';
+import { report_1_4_Component } from './reports/report_1_4/report_1_4';
 
 @NgModule({
   imports: [
@@ -174,7 +179,12 @@ import { SvodSelectComponent } from './documents/expenses/svod_spravok/svod_spra
     PeriodDetailComponent,
     SvodSpravokListComponent,
     SvodSpravokDetailComponent,
+    report_1_4_Component,
     report_8_10_Component,
+    report_33_35_Component,
+    report_29_30_Component,
+    report_27_28_Component,
+    report_37_39_Component,
     PogashenieKpListComponent,
     PogashenieFKRListComponent,
     SvodSelectComponent],

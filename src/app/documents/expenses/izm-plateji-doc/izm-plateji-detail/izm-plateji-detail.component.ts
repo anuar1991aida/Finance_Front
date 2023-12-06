@@ -16,6 +16,9 @@ import { izm_plateji_detail } from '../interfaces';
 import { IzmPlatezhiService } from '../izm-plateji.services';
 import { DomSanitizer } from '@angular/platform-browser';
 import { reportComponent } from '../../../../reports/report';
+import { report_33_35_Component } from 'src/app/reports/report_33_35/report_33_35';
+import { report_29_30_Component } from 'src/app/reports/report_29_30/report_29_30';
+import { report_27_28_Component } from 'src/app/reports/report_27_28/report_27_28';
 
 @Component({
   selector: 'app-izm-plateji-detail',
@@ -191,7 +194,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   showReport2728() {
-    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(report_27_28_Component, {
       header: 'Отчеты',
       width: '95%',
       height: '95%',
@@ -199,13 +202,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
         'doc': {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,
-          'type_doc': 'izm-exp',
-          'service': 'report2728',
-          'prilozhenieValue': 'obl',
-          'prilozhenieType': [
-            { label: 'Приложение 27', value: 'obl' },
-            { label: 'Приложение 28', value: 'pay' }
-          ]
+          'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom
         },
       },
       contentStyle: { overflow: 'auto' },
@@ -215,7 +212,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   showReport2930() {
-    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(report_29_30_Component, {
       header: 'Отчеты',
       width: '95%',
       height: '95%',
@@ -223,13 +220,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
         'doc': {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,
-          'type_doc': 'izm-exp',
-          'service': 'report2930',
-          'prilozhenieValue': 'obl',
-          'prilozhenieType': [
-            { label: 'Приложение 29', value: 'obl' },
-            { label: 'Приложение 30', value: 'pay' }
-          ]
+          'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom,
         },
       },
       contentStyle: { overflow: 'auto' },
@@ -239,7 +230,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
   }
 
   showReport3335() {
-    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(reportComponent, {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(report_33_35_Component, {
       header: 'Отчеты',
       width: '95%',
       height: '95%',
@@ -247,13 +238,8 @@ export class IzmPlatejiDetailComponent implements OnInit {
         'doc': {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,
-          'type_doc': 'izm-exp',
-          'service': 'report3335',
-          'prilozhenieValue': 'obl',
-          'prilozhenieType': [
-            { label: 'Приложение 33', value: 'obl' },
-            { label: 'Приложение 35', value: 'pay' }
-          ]
+          'name': 'Свод документов ' + this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm'
         },
       },
       contentStyle: { overflow: 'auto' },

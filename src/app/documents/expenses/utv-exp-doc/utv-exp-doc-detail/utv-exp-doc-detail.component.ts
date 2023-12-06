@@ -413,6 +413,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
               detail: 'Документ успешно записан!'
             }
           ),
+          responce = data,
           this.utvDetail.doc.id = responce.id_doc,
           this.utvDetail.doc.nom = responce.nom,
           this.closeaftersave(close)
@@ -471,6 +472,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   closeaftersave(close: boolean) {
+
     let objString = JSON.stringify(this.utvDetail)
     this.hashEnd = SHA256(objString).toString()
 

@@ -257,6 +257,10 @@ export class MainComponent implements OnInit {
           [
             {
               items: [{
+                label: 'Приложение 1-4',
+                command: () => this.openTab('report_1_4', 'Приложение 1-4', '1-4')
+              },
+              {
                 label: 'Приложение 2-5',
                 command: () => this.openTab('report-detail', 'Приложение 2-5', '2-5')
               },

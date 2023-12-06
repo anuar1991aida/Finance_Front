@@ -30,6 +30,7 @@
                 <th style="width:5%; text-align:center">Номер</th>
                 <th style="width:10%; text-align:center">Дата</th>
                 <th style="text-align:center">Организация</th>
+                <th style="text-align:center">Тип справки</th>
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
@@ -44,6 +45,9 @@
                 </td>
                 <td>
                     <span [ngClass]="setClass(utvList.deleted)">{{utvList._organization.name_rus}}</span>
+                </td>
+                <td>
+                    <span [ngClass]="setClass(utvList.deleted)">{{utvList._type_izm_doc.name_rus}}</span>
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">

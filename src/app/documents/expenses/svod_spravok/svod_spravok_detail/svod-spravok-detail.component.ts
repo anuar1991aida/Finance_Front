@@ -1,14 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SHA256 } from 'crypto-js';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { organization_detail } from 'src/app/directory/organization/interfaces';
 import { OrganizationDetailComponent } from 'src/app/directory/organization/organization-detail/organization-detail.component';
 import { OrganizationSelectComponent } from 'src/app/directory/organization/organization-select/organization-select.component';
 import { profileuser } from 'src/app/login/interfaces';
 import { MainComponent } from 'src/app/main/main.component/main.component';
-import { IzmPlatejiListComponent } from '../../izm-plateji-doc/izm-plateji-list/izm-plateji-list.component';
+import { report_29_30_Component } from 'src/app/reports/report_29_30/report_29_30';
+import { report_33_35_Component } from 'src/app/reports/report_33_35/report_33_35';
+import { report_37_39_Component } from 'src/app/reports/report_37_39/report_37_39';
 import { doc_izm_detail, svod_expenses_detail, svod_expenses_doc, svod_select_doc } from '../interfaces';
 import { svodExpensesService } from '../svod_expenses.service';
 import { SvodSelectComponent } from '../svod_spravok_select/svod-spravok-select.component';
@@ -29,12 +31,37 @@ export class SvodSpravokDetailComponent implements OnInit {
     private svodDetailconfirm: ConfirmationService
   ) {
     this.profileuser = this.MainComponent.profileuser
+    this.items = [
+
+      {
+        label: 'Приложение 29/30',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReport2930();
+        }
+      },
+      {
+        label: 'Приложение 33/35',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReport3335();
+        }
+      },
+      {
+        label: 'Приложение 37/39',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReport3739();
+        }
+      }
+    ]
   }
 
   @Input() svod_exp_id: any
   @Output() newItemEvent = new EventEmitter<any>()
   @Output() closeEvent = new EventEmitter<any>()
 
+  items: MenuItem[]
   profileuser: profileuser
   form: FormGroup
   svodDetail: svod_expenses_detail
@@ -208,6 +235,62 @@ export class SvodSpravokDetailComponent implements OnInit {
 
   }
 
+  showReport2930() {
+    this.svodDetailref = this.svodDetaildialog.open(report_29_30_Component, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.svodDetail.doc.id,
+          'nom': this.svodDetail.doc.nom,
+          'name': 'Свод справок ' + this.svodDetail.doc.nom,
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
+  showReport3335() {
+    this.svodDetailref = this.svodDetaildialog.open(report_33_35_Component, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.svodDetail.doc.id,
+          'nom': this.svodDetail.doc.nom,
+          'name': 'Свод справок ' + this.svodDetail.doc.nom,
+          'type_doc': 'svod'
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
+  showReport3739() {
+    this.svodDetailref = this.svodDetaildialog.open(report_37_39_Component, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.svodDetail.doc.id,
+          'nom': this.svodDetail.doc.nom,
+          'name': 'Свод справок ' + this.svodDetail.doc.nom,
+          'type_doc': 'svod'
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
   ngDoCheck() {
 
     let objString = JSON.stringify(this.svodDetail)
@@ -369,6 +452,7 @@ export class SvodSpravokDetailComponent implements OnInit {
               this.svodDetailmsg.add({
                 severity: 'error', summary: 'Ошибка', detail: error.error.status
               })
+              this.svodDetailconfirm.close()
             }
           )),
       reject: () => {
