@@ -47,10 +47,13 @@
                 </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
-                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                        <p-splitButton appendTo="body" [model]="menuItems" (onDropdownClick)="buildMenuItems(utvList)"
+                            styleClass="p-button-text mr-2 mb-2">
+                        </p-splitButton>
+                        <!-- <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                             (click)="onRowEdit(utvList)"></button>
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
-                            (click)="onDelete(utvList)"></button>
+                            (click)="onDelete(utvList)"></button> -->
                     </div>
                 </td>
             </tr>

@@ -34,6 +34,10 @@ export class IzmPlatezhiService {
         return this.http.post(this.host + 'docs/izmexpsave', izm_plateji)
     }
 
+    sendIzm(body: any) {
+        return this.http.post(this.host + 'docs/izmexpchangestatus', body)
+    }
+
     deleteIzmPlatezhi(izm_platezhi_id: any) {
         return this.http.delete(this.host + 'docs/izmexpdelete', { body: izm_platezhi_id })
     }

@@ -1,0 +1,61 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+
+    </div>
+
+    <div class="p-toolbar-group-right">
+        <span class="p-input-icon-left" style="margin-right: 10px;">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" [(ngModel)]="searchsvod_sel" (change)="fetchSvodSelect()"
+                placeholder="поиск..." />
+        </span>
+        <button pButton pRipple type="button" icon="pi pi-refresh" class="p-button-outlined" styleClass="p-button-sm"
+            (click)="fetchSvodSelect()"></button>
+    </div>
+</p-toolbar>
+
+<div class="card" *ngIf="(svod_select$ | async) as svod_select; else loader">
+    <p-table *ngIf="svod_select.count !== 0; else empty" [value]="svod_select.results" [scrollable]="true"
+        selectionMode="multiple" [metaKeySelection]="true" scrollHeight="calc(85vh - 210px)"
+        [(selection)]="selectedDocs" styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:5%; text-align:center">Номер</th>
+                <th style="width:10%; text-align:center">Дата</th>
+                <th style="text-align:center">Организация</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-selList let-ri="rowIndex" *ngFor="let item of svod_select.results| keyvalue">
+            <tr class="cursor-pointer" [pSelectableRow]="selList" [pSelectableRowIndex]="ri"
+                (dblclick)="onRowSelect(selList)">
+                <td style="text-align:center">
+                    {{getValue(selList)}}
+                </td>
+                <td style="text-align:center">
+                    {{selList._date}}
+                </td>
+                <td>
+                    {{selList.org_name}}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template #empty>
+        <div class="center">
+            Нет ни одного документа
+        </div>
+    </ng-template>
+    <div *ngIf="svod_select.count !== 0" class="flex align-items-center justify-content-center">
+        <span class="mx-1 text-color">Указано</span>
+        <p-paginator [first]="first" [rows]="rows" [totalRecords]="svod_select.count || 0"
+            (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
+            currentPageReportTemplate="{{first+1}} - {{(first + rows) > (svod_select.count || 0)  ? svod_select.count : first + rows }} из {{svod_select.count}} элементов"
+            [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
+    </div>
+    <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">
+    </p-confirmDialog>
+</div>
+
+<ng-template #loader>
+    <app-skeleton></app-skeleton>
+</ng-template>

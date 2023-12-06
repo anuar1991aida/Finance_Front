@@ -87,6 +87,7 @@ import { SvodSpravokDetailComponent } from './documents/expenses/svod_spravok/sv
 import { report_8_10_Component } from './reports/report_8_10/report_8_10';
 import { PogashenieKpListComponent } from './directory/pogashenie/pogashenie_kp/pogashenie-kp-list/pogashenie-kp-list.component';
 import { PogashenieFKRListComponent } from './directory/pogashenie/pogashenie-fkr/pogashenie-fkr-list/pogashenie-fkr-list.component';
+import { SvodSelectComponent } from './documents/expenses/svod_spravok/svod_spravok_select/svod-spravok-select.component';
 
 @NgModule({
   imports: [
@@ -175,7 +176,8 @@ import { PogashenieFKRListComponent } from './directory/pogashenie/pogashenie-fk
     SvodSpravokDetailComponent,
     report_8_10_Component,
     PogashenieKpListComponent,
-    PogashenieFKRListComponent],
+    PogashenieFKRListComponent,
+    SvodSelectComponent],
   bootstrap: [AppComponent],
   providers: [
     {

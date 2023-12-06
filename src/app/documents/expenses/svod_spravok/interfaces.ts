@@ -1,10 +1,16 @@
+import { type_izm_doc } from "../../income/izm_inc_doc/interfaces"
 
 export interface svod_expenses_doc {
     id: number,
     nom: string,
     _date: string,
     deleted: boolean,
+    tipdoc: string,
     _organization: {
+        id: number,
+        name_rus: string
+    }
+    _type_izm_doc: {
         id: number,
         name_rus: string
     }
@@ -56,5 +62,23 @@ export interface svod_expenses_detail {
     doc: svod_expenses_doc,
     payments: [svod_expenses_tbl],
     obligats: [svod_expenses_tbl],
-    docs_izm: [doc_izm_detail]
+    docs_izm: [doc_izm_detail],
+    typesdoc: [type_izm_doc]
+}
+
+export interface svod_select_list {
+    count?: number,
+    results: [svod_select_doc]
+}
+
+export interface svod_select_doc {
+    id: number,
+    nom: string,
+    tipdoc: string,
+    _date: string,
+    deleted: boolean,
+    _organization: {
+        id: number,
+        name_rus: string
+    }
 }

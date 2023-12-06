@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable, Subject } from 'rxjs';
 import { MainComponent } from 'src/app/main/main.component/main.component'
@@ -29,6 +29,46 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
     this.roles = this.MainComponent.roles
   }
 
+  buildMenuItems(izmList: any): void {
+    this.menuItems = [];
+
+    // Кнопка редактирования всегда присутствует
+    this.menuItems.push({
+      label: '<span class="text-xl font-bold">Редактировать</span>',
+      escape: false,
+      icon: 'pi pi-pencil',
+      command: () => this.onRowEdit(izmList),
+    });
+
+    // Кнопка "Вернуть из рассмотрения" отображается только при условии
+    if (izmList.status === 'send') {
+      this.menuItems.push({
+        label: '<span class="text-xl font-bold">Вернуть с рассмотрения</span>',
+        escape: false,
+        icon: 'pi pi-times',
+        command: () => this.onSendDoc(izmList, 'new'),
+      });
+    }
+
+    // Кнопка "Отправить на рассмотрение" отображается только при условии
+    if (izmList.status === 'new') {
+      this.menuItems.push({
+        label: '<span class="text-xl font-bold">Отправить на рассмотрение</span>',
+        escape: false,
+        icon: 'pi pi-upload',
+        command: () => this.onSendDoc(izmList, 'send'),
+      });
+    }
+
+    // Кнопка удаления всегда присутствует
+    this.menuItems.push({
+      label: '<span class="text-xl font-bold">Удалить</span>',
+      escape: false,
+      icon: 'pi pi-trash',
+      command: () => this.onDelete(izmList),
+    });
+  }
+
   @Input() List = false
   @Input() tabcount = 0;
 
@@ -47,6 +87,7 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
     }
   }
 
+  menuItems: MenuItem[]
   roles: string[] = []
   searchizmList = ''
   izmplatList$: Observable<izm_plateji_doc_list>
@@ -54,6 +95,7 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
   selectedDocs: any
   type = ''
   old_tabcount = 0
+  type_str = ''
 
   ngOnInit(): void {
     this.type = this.izm_plat_config.data?.type || ''
@@ -81,6 +123,18 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
     }
 
     this.izmplatList$ = this.izmplatListService.fetch(params)
+  }
+
+  getValue(status: string): string {
+    if (status == 'new') {
+      return 'Новый'
+    }
+    else if (status == 'send') {
+      return 'Отправлен'
+    }
+    else {
+      return 'Отказан'
+    }
   }
 
   massDelete(shift: boolean) {
@@ -171,6 +225,50 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
     else {
       this.izmplatListref.close(izm_plateji)
     }
+  }
+
+  onSendDoc(izm: izm_plateji_doc, status: string) {
+
+    let body = {
+      doc_id: izm.id,
+      status: status
+    }
+    this.izmplatListconfirm.confirm({
+      message: 'Отправить документ ' + izm.nom + ' на рассмотрение?',
+      header: 'Отрпавка на рассмотрение',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.izmplatListService
+          .sendIzm(body)
+          .subscribe(
+            (data) => {
+              this.izmplatListmessage.add
+                (
+                  {
+                    severity: 'success',
+                    summary: 'Успешно',
+                    detail: 'Документ успешно отправлен'
+                  }
+                )
+              this.fetchIzmPlatList()
+              this.izmplatListconfirm.close()
+            },
+            (error) => (
+              this.izmplatListmessage.add
+                (
+                  {
+                    severity: 'error',
+                    summary: 'Ошибка',
+                    detail: error.error.status
+                  }
+                )
+            )
+          )
+      },
+      reject: () => {
+        this.izmplatListconfirm.close()
+      }
+    })
   }
 
   onRowEdit(izm_plateji: izm_plateji_doc) {

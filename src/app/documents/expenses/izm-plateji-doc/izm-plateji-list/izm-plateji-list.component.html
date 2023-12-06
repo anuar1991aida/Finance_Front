@@ -30,7 +30,8 @@
             <tr>
                 <th style="width:10%; text-align:center">Номер</th>
                 <th style="width:10%; text-align:center">Дата</th>
-                <th style="width:75%; text-align:center">Организация</th>
+                <th style="width:65%; text-align:center">Организация</th>
+                <th style="width:10%; text-align:center">Статус</th>
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
@@ -46,12 +47,32 @@
                 <td>
                     <span [ngClass]="setClass(izmList.deleted)">{{izmList._organization.name_rus}}</span>
                 </td>
+                <td style="text-align:center">
+                    <span [ngClass]="setClass(izmList.deleted)">{{getValue(izmList.status)}}</span>
+                </td>
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
-                        <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
+
+                        <p-splitButton appendTo="body" [model]="menuItems" (onDropdownClick)="buildMenuItems(izmList)"
+                            styleClass="p-button-text mr-2 mb-2">
+                        </p-splitButton>
+
+                        <!-- <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                             (click)="onRowEdit(izmList)"></button>
+
+                        <div *ngIf="izmList.status == 'send'">
+                            <button pButton pRipple type="button" icon="pi pi pi-times"
+                                class="p-button-rounded p-button-text" (click)="onSendDoc(izmList, 'new')"
+                                pTooltip="Вернуть из рассмотрения"></button>
+                        </div>
+
+                        <div *ngIf="izmList.status == 'new'">
+                            <button pButton pRipple type="button" icon="pi pi-upload"
+                                class="p-button-rounded p-button-text" (click)="onSendDoc(izmList, 'send')"
+                                pTooltip="Отправить на рассмотрение"></button>
+                        </div>
                         <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"
-                            (click)="onDelete(izmList)"></button>
+                            (click)="onDelete(izmList)"></button> -->
                     </div>
                 </td>
             </tr>

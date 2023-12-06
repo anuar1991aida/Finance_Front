@@ -51,7 +51,10 @@ export class SpecificationExpSelectComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.exclude = this.specSelect_config.data.exclude || []
+
+    console.log(this.exclude);
 
     this.fetchSpec(),
       this.updateWindowSize()

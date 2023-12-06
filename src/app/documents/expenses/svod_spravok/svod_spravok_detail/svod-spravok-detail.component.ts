@@ -9,8 +9,9 @@ import { OrganizationSelectComponent } from 'src/app/directory/organization/orga
 import { profileuser } from 'src/app/login/interfaces';
 import { MainComponent } from 'src/app/main/main.component/main.component';
 import { IzmPlatejiListComponent } from '../../izm-plateji-doc/izm-plateji-list/izm-plateji-list.component';
-import { doc_izm_detail, svod_expenses_detail } from '../interfaces';
+import { doc_izm_detail, svod_expenses_detail, svod_expenses_doc, svod_select_doc } from '../interfaces';
 import { svodExpensesService } from '../svod_expenses.service';
+import { SvodSelectComponent } from '../svod_spravok_select/svod-spravok-select.component';
 
 @Component({
   selector: 'app-svod-spravok-detail',
@@ -37,7 +38,8 @@ export class SvodSpravokDetailComponent implements OnInit {
   profileuser: profileuser
   form: FormGroup
   svodDetail: svod_expenses_detail
-
+  spravkatypes: any = []
+  loading = false
   fkr_array_payments = [
     {
       _id: 0,
@@ -86,7 +88,8 @@ export class SvodSpravokDetailComponent implements OnInit {
     this.form = new FormGroup({
       number_doc: new FormControl(null),
       date_doc: new FormControl(null, [Validators.required]),
-      org_name: new FormControl(null, [Validators.required])
+      org_name: new FormControl(null, [Validators.required]),
+      type_name: new FormControl(null, [Validators.required])
     })
 
     if (this.svod_exp_id == '') {
@@ -96,6 +99,7 @@ export class SvodSpravokDetailComponent implements OnInit {
       .fetch_detail(parseInt(this.svod_exp_id))
       .subscribe(
         (detail) => {
+          this.loading = true
           this.svodDetail = detail
           this.main()
         },
@@ -292,24 +296,31 @@ export class SvodSpravokDetailComponent implements OnInit {
       return
     }
 
-    this.svodDetailref = this.svodDetaildialog.open(IzmPlatejiListComponent,
+    this.svodDetailref = this.svodDetaildialog.open(SvodSelectComponent,
       {
         header: 'Добавление документа',
         width: '80%',
         height: '80%',
-        data: { type: 'select' }
+        data: {
+          id_org: this.svodDetail.doc._organization.id,
+          _type_izm_doc_id: this.svodDetail.doc._type_izm_doc.id,
+          _date: this.svodDetail.doc._date
+        }
       })
 
-    this.svodDetailref.onClose.subscribe((docs_izm: any) => {
+    this.svodDetailref.onClose.subscribe((docs_izm: svod_select_doc) => {
       if (docs_izm) {
 
         let docs = {
-          doc_id: docs_izm.id
+          doc_id: docs_izm.id,
+          tipdoc: docs_izm.tipdoc
         }
+        this.loading = false
         this.svodDetailService
           .add_docs(this.svodDetail.doc.id, docs)
           .subscribe(
             (detail) => {
+              this.loading = true
               this.svodDetail = detail
               this.main()
             },
@@ -323,6 +334,15 @@ export class SvodSpravokDetailComponent implements OnInit {
     })
   }
 
+  getValue(svod: svod_expenses_doc): string {
+    if (svod.tipdoc == 'izm') {
+      return 'Изменение по расходам ' + svod.nom
+    }
+    else {
+      return 'Свод по расходам ' + svod.nom
+    }
+  }
+
   onDelete(id_doc: number, nomer: string) {
 
     let docs = {
@@ -334,10 +354,12 @@ export class SvodSpravokDetailComponent implements OnInit {
       header: 'Удаление документа',
       icon: 'pi pi-exclamation-triangle',
       accept: () => (
+        this.loading = false,
         this.svodDetailService
           .delete_docs(this.svodDetail.doc.id, docs)
           .subscribe(
             (detail) => {
+              this.loading = true
               this.svodDetail = detail
               this.main()
               this.svodDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно удален!' })
@@ -357,10 +379,12 @@ export class SvodSpravokDetailComponent implements OnInit {
 
   saveDoc(close: boolean) {
     let responce: any
+    this.loading = false
     this.svodDetailService
       .saveSvod(this.svodDetail.doc)
       .subscribe(
         (data) => (
+          this.loading = true,
           responce = data,
           this.svodDetail.doc.id = responce.doc_id,
           this.svodDetail.doc.nom = responce.nom,

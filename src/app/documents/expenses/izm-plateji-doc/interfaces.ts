@@ -10,6 +10,7 @@ export interface izm_plateji_doc {
     _date: string,
     deleted: boolean,
     doc_hash: string,
+    status: string,
     _organization: organization_detail,
     _type_izm_doc: type_izm_doc
 }

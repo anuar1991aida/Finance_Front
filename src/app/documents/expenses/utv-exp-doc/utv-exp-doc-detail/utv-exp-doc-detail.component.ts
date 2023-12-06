@@ -254,26 +254,37 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
     this.utvDetailref.onClose.subscribe((fkr_detail: fkr_detail) => {
       if (fkr_detail) {
-        this.addSpec(fkr_detail),
-          this.fkr_array.push({
-            id: fkr_detail.id,
-            code: fkr_detail.code,
-            name_kaz: fkr_detail.name_kaz,
-            name_rus: fkr_detail.name_rus
-          })
+        // this.addSpec(fkr_detail),
+        this.fkr_array.push({
+          id: fkr_detail.id,
+          code: fkr_detail.code,
+          name_kaz: fkr_detail.name_kaz,
+          name_rus: fkr_detail.name_rus
+        })
       }
     }
     )
   }
 
   addSpec(fkr_detail: fkr_detail) {
+
     if (fkr_detail !== undefined) {
+
+      let exclude = []
+      for (let i = 0; i < this.payments.length; i++) {
+        exclude.push(this.payments[i]._spec.id)
+      }
+
       this.utvDetailref = this.utvDetaildialog.open(SpecificationExpSelectComponent,
         {
           header: 'Выбор спецификации',
           width: '60%',
-          height: '80%'
+          height: '80%',
+          data: {
+            exclude: exclude
+          }
         })
+
       this.utvDetailref.onClose.subscribe((spec_detail: specification_income_detail) => {
         if (spec_detail) {
           this.pushArray(fkr_detail, spec_detail)
@@ -389,10 +400,21 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   saveDoc(close: boolean) {
+    let responce: any
+
     this.utvDetailService
       .saveUtv(this.utvDetail)
       .subscribe(
-        (data) => (this.utvDetailmsg.add({ severity: 'success', summary: 'Успешно', detail: 'Документ успешно записан!' }),
+        (data) => (
+          this.utvDetailmsg.add(
+            {
+              severity: 'success',
+              summary: 'Успешно',
+              detail: 'Документ успешно записан!'
+            }
+          ),
+          this.utvDetail.doc.id = responce.id_doc,
+          this.utvDetail.doc.nom = responce.nom,
           this.closeaftersave(close)
         ),
         (error) => (

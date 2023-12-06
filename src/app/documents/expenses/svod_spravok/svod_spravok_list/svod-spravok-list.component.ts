@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { svod_expenses_doc, svod_expenses_list } from '../interfaces';
@@ -40,6 +40,7 @@ export class SvodSpravokListComponent implements OnInit, OnChanges {
     }
   }
 
+  menuItems: MenuItem[]
   svodList$: Observable<svod_expenses_list>
   searchutvList = ''
   first = 0
@@ -91,6 +92,90 @@ export class SvodSpravokListComponent implements OnInit, OnChanges {
     this.first = event.first
     this.rows = event.rows
     this.fetchSvodList()
+  }
+
+  buildMenuItems(svodList: any): void {
+    this.menuItems = [];
+
+    // Кнопка редактирования всегда присутствует
+    this.menuItems.push({
+      label: '<span class="text-xl font-bold">Редактировать</span>',
+      escape: false,
+      icon: 'pi pi-pencil',
+      command: () => this.onRowEdit(svodList),
+    });
+
+    // Кнопка "Вернуть из рассмотрения" отображается только при условии
+    if (svodList.status === 'send') {
+      this.menuItems.push({
+        label: '<span class="text-xl font-bold">Вернуть с рассмотрения</span>',
+        escape: false,
+        icon: 'pi pi-times',
+        command: () => this.onSendDoc(svodList, 'new'),
+      });
+    }
+
+    // Кнопка "Отправить на рассмотрение" отображается только при условии
+    if (svodList.status === 'new') {
+      this.menuItems.push({
+        label: '<span class="text-xl font-bold">Отправить на рассмотрение</span>',
+        escape: false,
+        icon: 'pi pi-upload',
+        command: () => this.onSendDoc(svodList, 'send'),
+      });
+    }
+
+    // Кнопка удаления всегда присутствует
+    this.menuItems.push({
+      label: '<span class="text-xl font-bold">Удалить</span>',
+      escape: false,
+      icon: 'pi pi-trash',
+      command: () => this.onDelete(svodList),
+    });
+  }
+
+  onSendDoc(izm: svod_expenses_doc, status: string) {
+
+    let body = {
+      doc_id: izm.id,
+      status: status
+    }
+    this.svodListconfirm.confirm({
+      message: 'Отправить документ ' + izm.nom + ' на рассмотрение?',
+      header: 'Отрпавка на рассмотрение',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.svodListService
+          .sendSvod(body)
+          .subscribe(
+            (data) => {
+              this.svodListmessage.add
+                (
+                  {
+                    severity: 'success',
+                    summary: 'Успешно',
+                    detail: 'Документ успешно отправлен'
+                  }
+                )
+              this.fetchSvodList()
+              this.svodListconfirm.close()
+            },
+            (error) => (
+              this.svodListmessage.add
+                (
+                  {
+                    severity: 'error',
+                    summary: 'Ошибка',
+                    detail: error.error.status
+                  }
+                )
+            )
+          )
+      },
+      reject: () => {
+        this.svodListconfirm.close()
+      }
+    })
   }
 
 
