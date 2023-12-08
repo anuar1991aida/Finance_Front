@@ -27,6 +27,11 @@ export class OrganizationsService {
         return this.http.get<organization_detail>(this.host + `dirs/organizationitem/${org_id}`)
     }
 
+    regionlist() {
+        return this.http.get(this.host + 'dirs/regionlist')
+    }
+
+
     add(param: organization_detail) {
         return this.http.post(this.host + 'dirs/organizationsave', param)
     }

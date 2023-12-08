@@ -44,6 +44,10 @@ export class OrganizationDetailComponent implements OnInit {
     codeorg: '',
     is_abp: false,
     deleted: false,
+    _region: '',
+    regions: [{
+      name: ''
+    }],
     _budjet: {
       id: 0,
       code: '',
@@ -69,6 +73,7 @@ export class OrganizationDetailComponent implements OnInit {
   }
   is_abp = true
   abp_full_name = ''
+  regiontypes: any = []
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
@@ -81,6 +86,7 @@ export class OrganizationDetailComponent implements OnInit {
       bin: new FormControl(null, [Validators.required]),
       codeorg: new FormControl(null, [Validators.required]),
       budjet_name: new FormControl(null, [Validators.required]),
+      _region: new FormControl(null, [Validators.required]),
       abp_name: new FormControl(null, [Validators.required]),
       is_abp: new FormControl(null),
       name_kaz: new FormControl(null, [Validators.required]),
@@ -187,6 +193,7 @@ export class OrganizationDetailComponent implements OnInit {
               this.org_message.add({ severity: 'success', summary: 'Ошибка', detail: resp.status })),
             (error) => (this.org_message.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
           )
+        this.org_confirm.close()
       },
       reject: () => {
         this.org_confirm.close();

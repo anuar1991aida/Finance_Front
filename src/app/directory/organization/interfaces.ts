@@ -11,8 +11,14 @@ export interface organization_detail {
     is_abp: boolean,
     deleted: boolean
     codeorg: string
-    _abp: abp_detail
-    parent_organizations: [parent_detail]
+    _abp: abp_detail,
+    _region: string,
+    parent_organizations: [parent_detail],
+    regions: [
+        {
+            name: string
+        }
+    ]
 }
 
 export interface parent_detail {

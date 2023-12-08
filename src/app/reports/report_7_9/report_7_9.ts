@@ -5,7 +5,7 @@ import { ConfirmationService, MessageService } from "primeng/api";
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from "primeng/dynamicdialog";
 import { MainComponent } from 'src/app/main/main.component/main.component';
 import { profileuser } from "../../login/interfaces";
-import { report_1_4_Service } from "./report_1_4.service";
+import { report_7_9_Service } from "./report_7_9.service";
 import { reportComponent } from '../report';
 import { organization_detail } from "src/app/directory/organization/interfaces";
 import { OrganizationDetailComponent } from "src/app/directory/organization/organization-detail/organization-detail.component";
@@ -16,21 +16,21 @@ import { OrganizationSelectComponent } from "src/app/directory/organization/orga
 })
 
 @Component({
-    selector: 'report_1_4',
-    templateUrl: './report_1_4.html'
+    selector: 'report_7_9',
+    templateUrl: './report_7_9.html'
 })
 
-export class report_1_4_Component {
+export class report_7_9_Component {
     constructor(
         private MainComponent: MainComponent,
         private reportComponent: reportComponent,
-        private Report_1_4_config: DynamicDialogConfig,
-        private Report_1_4_Service: report_1_4_Service,
+        private Report_7_9_config: DynamicDialogConfig,
+        private Report_7_9_Service: report_7_9_Service,
         private sanitizer: DomSanitizer,
-        private Report_1_4_msg: MessageService,
-        private Report_1_4_ref: DynamicDialogRef,
-        private Report_1_4_dialog: DialogService,
-        private Report_1_4_confirm: ConfirmationService
+        private Report_7_9_msg: MessageService,
+        private Report_7_9_ref: DynamicDialogRef,
+        private Report_7_9_dialog: DialogService,
+        private Report_7_9_confirm: ConfirmationService
     ) {
         this.profileuser = this.MainComponent.profileuser
         this._organization = {
@@ -50,8 +50,8 @@ export class report_1_4_Component {
     type_report = ''
     prilozhenieValue = 'pay'
     prilozhenieType = [
-        { label: 'Приложение 1', value: 'pay' },
-        { label: 'Приложение 4', value: 'obl' }
+        { label: 'Приложение 7', value: 'pay' },
+        { label: 'Приложение 9', value: 'obl' }
     ]
     _organization = {
         'id': 0,
@@ -68,7 +68,7 @@ export class report_1_4_Component {
     }
 
     viewOrg() {
-        this.Report_1_4_ref = this.Report_1_4_dialog.open(OrganizationDetailComponent,
+        this.Report_7_9_ref = this.Report_7_9_dialog.open(OrganizationDetailComponent,
             {
                 header: 'Редактирование организации',
                 width: '60%',
@@ -76,7 +76,7 @@ export class report_1_4_Component {
                 data: { org_id: this._organization.id }
             })
 
-        this.Report_1_4_ref.onClose.subscribe((org: organization_detail) => {
+        this.Report_7_9_ref.onClose.subscribe((org: organization_detail) => {
             if (org) {
                 this._organization.name = org.name_rus
             }
@@ -84,14 +84,14 @@ export class report_1_4_Component {
     }
 
     selectOrg() {
-        this.Report_1_4_ref = this.Report_1_4_dialog.open(OrganizationSelectComponent,
+        this.Report_7_9_ref = this.Report_7_9_dialog.open(OrganizationSelectComponent,
             {
                 header: 'Выбор организации',
                 width: '60%',
                 height: '80%'
             })
 
-        this.Report_1_4_ref.onClose.subscribe((org: organization_detail) => {
+        this.Report_7_9_ref.onClose.subscribe((org: organization_detail) => {
             if (org) {
                 this._organization.id = org.id,
                     this._organization.name = org.name_rus
@@ -103,14 +103,7 @@ export class report_1_4_Component {
         // console.log(this.type_report);
 
         if (this._organization.id == 0) {
-            this.Report_1_4_msg.add
-                (
-                    {
-                        severity: 'error',
-                        summary: 'Ошибка',
-                        detail: 'Выберите организацию'
-                    }
-                )
+            this.Report_7_9_msg.add({ severity: 'error', summary: 'Ошибка', detail: 'Выберите организацию' })
             return
         }
 
@@ -121,8 +114,8 @@ export class report_1_4_Component {
             lang: this.language
         }
 
-        this.Report_1_4_Service
-            .getReport1_4(params)
+        this.Report_7_9_Service
+            .getReport7_9(params)
             .subscribe
             (data => {
                 let blob: Blob = new Blob([data], { type: 'application/pdf' });
@@ -138,4 +131,5 @@ export class report_1_4_Component {
     closeform() {
         this.closeEvent.emit()
     }
+
 }

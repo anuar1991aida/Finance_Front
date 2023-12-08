@@ -245,6 +245,7 @@ export class SvodSpravokDetailComponent implements OnInit {
           'id': this.svodDetail.doc.id,
           'nom': this.svodDetail.doc.nom,
           'name': 'Свод справок ' + this.svodDetail.doc.nom,
+          'type_doc': 'svod'
         },
       },
       contentStyle: { overflow: 'auto' },

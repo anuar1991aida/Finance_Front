@@ -93,6 +93,7 @@ import { report_29_30_Component } from './reports/report_29_30/report_29_30';
 import { report_27_28_Component } from './reports/report_27_28/report_27_28';
 import { report_37_39_Component } from './reports/report_37_39/report_37_39';
 import { report_1_4_Component } from './reports/report_1_4/report_1_4';
+import { report_7_9_Component } from './reports/report_7_9/report_7_9';
 
 @NgModule({
   imports: [
@@ -180,6 +181,7 @@ import { report_1_4_Component } from './reports/report_1_4/report_1_4';
     SvodSpravokListComponent,
     SvodSpravokDetailComponent,
     report_1_4_Component,
+    report_7_9_Component,
     report_8_10_Component,
     report_33_35_Component,
     report_29_30_Component,

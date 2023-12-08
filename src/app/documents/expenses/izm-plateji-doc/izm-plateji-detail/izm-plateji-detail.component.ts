@@ -202,7 +202,8 @@ export class IzmPlatejiDetailComponent implements OnInit {
         'doc': {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,
-          'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom
+          'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm'
         },
       },
       contentStyle: { overflow: 'auto' },
@@ -221,6 +222,7 @@ export class IzmPlatejiDetailComponent implements OnInit {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,
           'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm'
         },
       },
       contentStyle: { overflow: 'auto' },

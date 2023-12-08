@@ -6,7 +6,7 @@ import { AuthService } from "src/app/login/auth.service"
     providedIn: 'root'
 })
 
-export class report_8_10_Service {
+export class report_7_9_Service {
     host = ""
 
     constructor(
@@ -15,7 +15,7 @@ export class report_8_10_Service {
         this.host = this.authservice.host;
     }
 
-    getReport8_10(param: any) {
-        return this.http.post(this.host + "reps/report_8_10", param, { responseType: 'blob' })
+    getReport7_9(param: any) {
+        return this.http.post(this.host + "reps/report_7_9", param, { responseType: 'blob' })
     }
 }

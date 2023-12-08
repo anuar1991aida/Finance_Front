@@ -17,7 +17,7 @@ export class ReportService {
     }
 
     getReport2_5(param: any) {
-        return this.http.post(this.host + "reps/report2_5", param, { responseType: 'blob' })
+        return this.http.post(this.host + "reps/report_2_5", param, { responseType: 'blob' })
     }
 
     getReport14(param: any) {
@@ -29,14 +29,14 @@ export class ReportService {
     }
 
     getReport27_28(param: any) {
-        return this.http.post(this.host + "reps/report2728", param, { responseType: 'blob' })
+        return this.http.post(this.host + "reps/report_27_28", param, { responseType: 'blob' })
     }
 
     getReport29_30(param: any) {
-        return this.http.post(this.host + "reps/report2930", param, { responseType: 'blob' })
+        return this.http.post(this.host + "reps/report_29_30", param, { responseType: 'blob' })
     }
 
     getReport33_35(param: any) {
-        return this.http.post(this.host + "reps/report3335", param, { responseType: 'blob' })
+        return this.http.post(this.host + "reps/report_33_35", param, { responseType: 'blob' })
     }
 }

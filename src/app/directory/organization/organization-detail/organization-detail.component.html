@@ -40,6 +40,18 @@
         </span>
       </div>
 
+      <div class="p-field" style="padding-bottom: 10px; width: 100%;">
+        <label for="_region">Регион<span style="color: red;">*</span></label>
+        <div>
+          <p-dropdown id="_region" [options]="org_detail.regions" placeholder="Выберите регион" optionLabel="name"
+            optionValue="name" appendTo="body" [(ngModel)]="org_detail._region" formControlName="_region">
+          </p-dropdown>
+        </div>
+        <span class="p-invalid" *ngIf="form.controls['_region'].invalid && form.controls['_region'].touched">
+          <span *ngIf="form.controls['_region'].errors?.required">Регион не должен быть пустым</span>
+        </span>
+      </div>
+
       <div style="display: flex; padding-bottom: 10px; width: 100%;">
         <div class="p-field" style="padding-right: 10px; width: 90%;">
           <label for="abp_name">АБП<span style="color: red;">*</span></label>
