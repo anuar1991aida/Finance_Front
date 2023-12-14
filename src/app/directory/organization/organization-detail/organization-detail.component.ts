@@ -96,19 +96,19 @@ export class OrganizationDetailComponent implements OnInit {
 
     this.org_id = this.org_dialog_config.data.org_id
 
-    if (this.org_id !== 0) {
-      this.orgService.fetchOrg(this.org_id)
-        .subscribe(
-          (data) => (
-            this.org_detail = data,
-            this.updateWindowSize(),
-            this.abp_full_name = this.org_detail._abp.code + ' ' + this.org_detail._abp.name_rus
-          )
+    // if (this.org_id !== 0) {
+    this.orgService.fetchOrg(this.org_id)
+      .subscribe(
+        (data) => (
+          this.org_detail = data,
+          this.updateWindowSize(),
+          this.abp_full_name = this.org_detail._abp.code + ' ' + this.org_detail._abp.name_rus
         )
-    }
-    else {
+      )
+    // }
+    // else {
 
-    }
+    // }
 
 
   }

@@ -22,7 +22,7 @@ export class AuthService {
     // host = "https://tstfinsrv.qazna24.kz/"
 
     login(user: User): Observable<{ auth_token: string }> {
-
+        sessionStorage.clear()
         return this.http.post<{ auth_token: string }>
             (this.host + 'api/auth/token/login', user)
             .pipe(

@@ -19,6 +19,7 @@ import { reportComponent } from '../../../../reports/report';
 import { report_33_35_Component } from 'src/app/reports/report_33_35/report_33_35';
 import { report_29_30_Component } from 'src/app/reports/report_29_30/report_29_30';
 import { report_27_28_Component } from 'src/app/reports/report_27_28/report_27_28';
+import { report_export_Component } from 'src/app/reports/report_export_K2/report_export';
 
 @Component({
   selector: 'app-izm-plateji-detail',
@@ -54,6 +55,13 @@ export class IzmPlatejiDetailComponent implements OnInit {
         icon: 'pi pi-file-pdf',
         command: () => {
           this.showReport3335();
+        }
+      },
+      {
+        label: 'Экспорт в казначейство',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReportExport();
         }
       }
     ]
@@ -240,7 +248,26 @@ export class IzmPlatejiDetailComponent implements OnInit {
         'doc': {
           'id': this.izmPlatezhiDetail.doc.id,
           'nom': this.izmPlatezhiDetail.doc.nom,
-          'name': 'Свод документов ' + this.izmPlatezhiDetail.doc.nom,
+          'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom,
+          'type_doc': 'izm'
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
+  showReportExport() {
+    this.izmPlatezhiDetailref = this.izmPlatezhiDetaildialog.open(report_export_Component, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.izmPlatezhiDetail.doc.id,
+          'nom': this.izmPlatezhiDetail.doc.nom,
+          'name': 'Изменения плана по расходам ' + this.izmPlatezhiDetail.doc.nom,
           'type_doc': 'izm'
         },
       },

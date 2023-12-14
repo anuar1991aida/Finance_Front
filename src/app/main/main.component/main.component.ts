@@ -251,7 +251,7 @@ export class MainComponent implements OnInit {
         ]
       },
       {
-        label: 'Отчеты',
+        label: 'Приложения',
         icon: 'pi pi-fw pi-file-excel',
         items: [
           [
@@ -275,10 +275,47 @@ export class MainComponent implements OnInit {
               {
                 label: 'Приложение 14',
                 command: () => this.openTab('report-detail', 'Приложение 14', 'prilozhenie14')
-              }]
+              },
+              {
+                label: 'Приложение 4-20',
+                command: () => this.openTab('report_420', 'Приложение 4-20', '')
+              }
+
+              ]
             }
           ]]
       },
+      {
+        label: 'Отчеты',
+        icon: 'pi pi-fw pi-file-excel',
+        items: [
+          [
+            {
+              items: [{
+                label: 'Кассовое исполнение 4-20',
+                command: () => this.openTab('report_420', 'Кассовое исполнение 4-20', '')
+              },
+              {
+                label: 'Кассовое исполнение 2-19',
+                command: () => this.openTab('report_219', 'Кассовое исполнение 2-19', '')
+              },
+              {
+                label: 'Превышение платежей над обязательствами',
+                command: () => this.openTab('report_diff_pay_obl', 'Превышение платежей над обязательствами', '')
+              },
+              {
+                label: 'Расхождения годовых сумм',
+                command: () => this.openTab('report_diff_god_summ', 'Расхождения годовых сумм', '')
+              },
+              {
+                label: 'Экспорт в казначейство',
+                command: () => this.openTab('report_export', 'Экспорт в казначейство', 'plan')
+              }
+
+              ]
+            }
+          ]]
+      }
       // {
       //   label: 'Quit',
       //   icon: 'pi pi-fw pi-power-off',

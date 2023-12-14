@@ -168,6 +168,22 @@
                 <report_7_9 *ngIf="context.selector=='report_7_9'" (closeEvent)="removetab()">
                 </report_7_9>
 
+                <report_420 *ngIf="context.selector=='report_420'" (closeEvent)="removetab()">
+                </report_420>
+
+                <report_219 *ngIf="context.selector=='report_219'" (closeEvent)="removetab()">
+                </report_219>
+
+                <report_diff_pay_obl *ngIf="context.selector=='report_diff_pay_obl'" (closeEvent)="removetab()">
+                </report_diff_pay_obl>
+
+                <report_diff_god_summ *ngIf="context.selector=='report_diff_god_summ'" (closeEvent)="removetab()">
+                </report_diff_god_summ>
+
+                <report_export *ngIf="context.selector=='report_export'" (closeEvent)="removetab()"
+                    [type_report]="number">
+                </report_export>
+
                 <app-pogashenie-kp-list *ngIf="context.selector=='app-pogashenie-kp-list'" (closeEvent)="removetab()">
                 </app-pogashenie-kp-list>
 

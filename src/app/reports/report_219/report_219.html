@@ -1,0 +1,43 @@
+<div style="width: 100%; height: 100%;">
+    <div style="display: flex;">
+        <div style="padding: 10px 0; display: flex; height: calc(25vh- 150px); width: 98%;">
+            <div class="p-field" style="padding-right: 10px;">
+                <button pButton pRipple label="Сформировать" styleClass="p-button-sm" class="p-button-warning"
+                    (click)="form()">
+                </button>
+            </div>
+
+            <div class="p-field" style="padding-right: 10px; min-width: 40rem;">
+                <!-- <label for="org_name">Наименование организации</label> -->
+                <div class="p-inputgroup">
+                    <input id="org_name" type="text" pInputText [(ngModel)]="_budjet.name" />
+                    <span class="p-inputgroup-addon cursor-pointer" (click)="selectBudjet()">...</span>
+                </div>
+            </div>
+
+            <div class="p-field" style="padding-right: 10px;">
+                <p-calendar appendTo="body" placeholder="Дата" [(ngModel)]="_date" dateFormat="dd.mm.yy"
+                    [readonlyInput]="true" [showIcon]="true" inputId="calendar"></p-calendar>
+            </div>
+
+            <div class="p-field" style="padding-right: 10px;">
+                <div class="card flex justify-content-center" style="width: 100%;">
+                    <p-dropdown [options]="langOptions" id="lang_city" placeholder="Выберите язык" optionLabel="label"
+                        optionValue="value" appendTo="body" [(ngModel)]="language">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding: 10px 0;">
+            <button pButton pRipple type="button" icon="pi pi-times" class="p-button-outlined p-button-plain p-mr-2"
+                styleClass="p-button-sm" (click)="closeform()"></button>
+        </div>
+    </div>
+
+    <div *ngIf="url != ''" style="width: 100%; height: calc(110vh - 150px);">
+        <div style="width: 100%; height: 100%;">
+            <iframe [src]="url" [allowFullscreen]="true" style="width: 100%; height: 100%; border: none;"></iframe>
+        </div>
+    </div>
+</div>

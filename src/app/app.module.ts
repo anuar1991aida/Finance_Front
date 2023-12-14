@@ -94,6 +94,11 @@ import { report_27_28_Component } from './reports/report_27_28/report_27_28';
 import { report_37_39_Component } from './reports/report_37_39/report_37_39';
 import { report_1_4_Component } from './reports/report_1_4/report_1_4';
 import { report_7_9_Component } from './reports/report_7_9/report_7_9';
+import { report_420_Component } from './reports/report_420/report_420';
+import { report_219_Component } from './reports/report_219/report_219';
+import { report_pay_obl_Component } from './reports/report_diff_pay_obl/report_diff_pay_obl';
+import { report_god_summ_Component } from './reports/report_diff_god_summ/report_diff_god_summ';
+import { report_export_Component } from './reports/report_export_K2/report_export';
 
 @NgModule({
   imports: [
@@ -187,8 +192,13 @@ import { report_7_9_Component } from './reports/report_7_9/report_7_9';
     report_29_30_Component,
     report_27_28_Component,
     report_37_39_Component,
+    report_pay_obl_Component,
+    report_god_summ_Component,
+    report_export_Component,
     PogashenieKpListComponent,
     PogashenieFKRListComponent,
+    report_420_Component,
+    report_219_Component,
     SvodSelectComponent],
   bootstrap: [AppComponent],
   providers: [

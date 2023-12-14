@@ -11,6 +11,7 @@ import { MainComponent } from 'src/app/main/main.component/main.component';
 import { report_29_30_Component } from 'src/app/reports/report_29_30/report_29_30';
 import { report_33_35_Component } from 'src/app/reports/report_33_35/report_33_35';
 import { report_37_39_Component } from 'src/app/reports/report_37_39/report_37_39';
+import { report_export_Component } from 'src/app/reports/report_export_K2/report_export';
 import { doc_izm_detail, svod_expenses_detail, svod_expenses_doc, svod_select_doc } from '../interfaces';
 import { svodExpensesService } from '../svod_expenses.service';
 import { SvodSelectComponent } from '../svod_spravok_select/svod-spravok-select.component';
@@ -52,6 +53,13 @@ export class SvodSpravokDetailComponent implements OnInit {
         icon: 'pi pi-file-pdf',
         command: () => {
           this.showReport3739();
+        }
+      },
+      {
+        label: 'Экспорт в казначейство',
+        icon: 'pi pi-file-pdf',
+        command: () => {
+          this.showReportExport();
         }
       }
     ]
@@ -275,6 +283,25 @@ export class SvodSpravokDetailComponent implements OnInit {
 
   showReport3739() {
     this.svodDetailref = this.svodDetaildialog.open(report_37_39_Component, {
+      header: 'Отчеты',
+      width: '95%',
+      height: '95%',
+      data: {
+        'doc': {
+          'id': this.svodDetail.doc.id,
+          'nom': this.svodDetail.doc.nom,
+          'name': 'Свод справок ' + this.svodDetail.doc.nom,
+          'type_doc': 'svod'
+        },
+      },
+      contentStyle: { overflow: 'auto' },
+      baseZIndex: 10000,
+      maximizable: true
+    });
+  }
+
+  showReportExport() {
+    this.svodDetailref = this.svodDetaildialog.open(report_export_Component, {
       header: 'Отчеты',
       width: '95%',
       height: '95%',
