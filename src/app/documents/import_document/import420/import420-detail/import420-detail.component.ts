@@ -16,6 +16,8 @@ export class Import420DetailComponent implements OnInit {
   uploadedFiles: any[] = [];
   windowHeight: number
   imports: import420_detail
+  first = 0
+  rows = 25
 
   @HostListener('window:resize', ['$event'])
   @Input() imp_420_id = ''
@@ -44,8 +46,13 @@ export class Import420DetailComponent implements OnInit {
   }
 
   fetchDetail() {
+    let params = {
+      limit: this.rows.toString(),
+      offset: this.first.toString()
+    }
+
     this.import420_service
-      .fetch_detail(this.imp_420_id)
+      .fetch_detail(this.imp_420_id, params)
       .subscribe(
         (data) => (this.imports = data),
         (error) => (this.import420_message.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status }))
@@ -67,6 +74,12 @@ export class Import420DetailComponent implements OnInit {
           this.imports.doc._organization.name_rus = org.name_rus
       }
     })
+  }
+
+  onPageChange(event: any) {
+    this.first = event.first
+    this.rows = event.rows
+    this.fetchDetail()
   }
 
   closeform() {

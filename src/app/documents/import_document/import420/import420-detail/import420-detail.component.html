@@ -43,8 +43,8 @@
 
 <div class="card" *ngIf="imports; else loader">
     <div class="card">
-        <p-table *ngIf="imports.table.length > 0; else empty" [value]="imports.table" [scrollable]="true"
-            scrollHeight="calc({{windowHeight}}px - 230px)" selectionMode="single"
+        <p-table *ngIf="imports.results.length > 0; else empty" [value]="imports.results" [scrollable]="true"
+            scrollHeight="calc(150vh - 230px)" selectionMode="single"
             styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
 
             <ng-template pTemplate="header">
@@ -111,12 +111,35 @@
                     </td>
                 </tr>
             </ng-template>
+            <ng-template pTemplate="footer">
+                <tr>
+                    <td colspan="3" style="text-align:right; font-weight: 700;">Итого</td>
+                    <td>{{imports.itog.sm1}}</td>
+                    <td>{{imports.itog.sm2}}</td>
+                    <td>{{imports.itog.sm3}}</td>
+                    <td>{{imports.itog.sm4}}</td>
+                    <td>{{imports.itog.sm5}}</td>
+                    <td>{{imports.itog.sm6}}</td>
+                    <td>{{imports.itog.sm7}}</td>
+                    <td>{{imports.itog.sm8}}</td>
+                    <td>{{imports.itog.sm9}}</td>
+                    <td>{{imports.itog.sm10}}</td>
+                </tr>
+            </ng-template>
         </p-table>
         <ng-template #empty>
             <div class="center">
                 Нет ни одной записи
             </div>
         </ng-template>
+        <div *ngIf="imports.count !== 0" class="flex align-items-center justify-content-center"
+            style="padding-top: 10px;">
+            <span class="mx-1 text-color">Указано</span>
+            <p-paginator [first]="first" [rows]="rows" [totalRecords]="imports.count || 0"
+                (onPageChange)="onPageChange($event)" [showCurrentPageReport]="true"
+                currentPageReportTemplate="{{first+1}} - {{(first + rows) > (imports.count || 0)  ? imports.count : first + rows }} из {{imports.count}} элементов"
+                [showPageLinks]="true" [showFirstLastIcon]="true"></p-paginator>
+        </div>
     </div>
 </div>
 

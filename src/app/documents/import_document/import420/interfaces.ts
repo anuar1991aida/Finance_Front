@@ -1,6 +1,10 @@
 export interface import420_detail {
+  count?: number,
+  next: string,
+  previous?: string,
   doc: import420_doc,
-  table: [import420_tab]
+  results: [import420_tab],
+  itog: itogsumm
 }
 
 
@@ -47,4 +51,17 @@ export interface import420_tab {
   sm8: number,
   sm9: number,
   sm10: number,
+}
+
+export interface itogsumm {
+  sm1: number,
+  sm2: number,
+  sm3: number,
+  sm4: number,
+  sm5: number,
+  sm6: number,
+  sm7: number,
+  sm8: number,
+  sm9: number,
+  sm10: number
 }

@@ -22,8 +22,8 @@ export class import420Servise {
     return this.http.get<import420_list>(this.host + 'docs/import420list', { params })
   }
 
-  fetch_detail(imp_420_id: string): Observable<import420_detail> {
-    return this.http.get<import420_detail>(this.host + `docs/import420item/${imp_420_id}`)
+  fetch_detail(imp_420_id: string, params: any): Observable<import420_detail> {
+    return this.http.get<import420_detail>(this.host + `docs/import420item/${imp_420_id}`, { params })
   }
 
   delete_import420(imp_420: any) {

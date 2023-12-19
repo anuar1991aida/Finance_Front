@@ -99,6 +99,7 @@ import { report_219_Component } from './reports/report_219/report_219';
 import { report_pay_obl_Component } from './reports/report_diff_pay_obl/report_diff_pay_obl';
 import { report_god_summ_Component } from './reports/report_diff_god_summ/report_diff_god_summ';
 import { report_export_Component } from './reports/report_export_K2/report_export';
+import { report_16_18_Component } from './reports/report_16_18/report_16_18';
 
 @NgModule({
   imports: [
@@ -199,6 +200,7 @@ import { report_export_Component } from './reports/report_export_K2/report_expor
     PogashenieFKRListComponent,
     report_420_Component,
     report_219_Component,
+    report_16_18_Component,
     SvodSelectComponent],
   bootstrap: [AppComponent],
   providers: [
