@@ -76,7 +76,7 @@ export class MainComponent implements OnInit {
   first = 0
   rows = 25
   history = []
-  roles = []
+  roles: any = []
 
   updateIzm = false
 
@@ -120,28 +120,6 @@ export class MainComponent implements OnInit {
         label: 'Справочники',
         icon: 'pi pi-fw pi-folder',
         items: [
-          [
-            {
-              label: 'Администрирование',
-              items: [{
-                label: 'Организации',
-                command: () => this.openTab('app-organization', 'Организации', '')
-              },
-              {
-                label: 'Пользователи',
-                command: () => this.openTab('app-user-list', 'Пользователи', '')
-              },
-              {
-                label: 'Погашение КП',
-                command: () => this.openTab('app-pogashenie-kp-list', 'Погашение КП', '')
-              },
-              {
-                label: 'Погашение ФКР',
-                command: () => this.openTab('app-pogashenie-fkr-list', 'Погашение ФКР', '')
-              }
-              ]
-            }
-          ],
           [
             {
               label: 'Расходы',
@@ -245,7 +223,12 @@ export class MainComponent implements OnInit {
               {
                 label: 'Импорт формы 4-20',
                 command: () => this.openTab('app-import420-list', 'Импорт формы 4-20', '')
-              }]
+              },
+              {
+                label: 'Импорт формы 5-52',
+                command: () => this.openTab('app-import552-list', 'Импорт формы 5-52', '')
+              }
+              ]
             }
           ]
         ]
@@ -299,6 +282,10 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('report_219', 'Кассовое исполнение 2-19', '')
               },
               {
+                label: 'Кассовое исполнение 5-52',
+                command: () => this.openTab('report_552', 'Кассовое исполнение 5-52', '')
+              },
+              {
                 label: 'Превышение платежей над обязательствами',
                 command: () => this.openTab('report_diff_pay_obl', 'Превышение платежей над обязательствами', '')
               },
@@ -321,6 +308,38 @@ export class MainComponent implements OnInit {
       //   command: () => this.logout()
       // }
     ]
+
+    if (this.roles.includes('admins')) {
+      this.items.unshift(
+        {
+          label: 'Администрирование',
+          icon: 'pi pi-fw pi-folder',
+          items: [
+            [
+              {
+                items: [
+                  {
+                    label: 'Организации',
+                    command: () => this.openTab('app-organization', 'Организации', '')
+                  },
+                  {
+                    label: 'Пользователи',
+                    command: () => this.openTab('app-user-list', 'Пользователи', '')
+                  },
+                  {
+                    label: 'Погашение КП',
+                    command: () => this.openTab('app-pogashenie-kp-list', 'Погашение КП', '')
+                  },
+                  {
+                    label: 'Погашение ФКР',
+                    command: () => this.openTab('app-pogashenie-fkr-list', 'Погашение ФКР', '')
+                  }
+                ]
+              }
+            ]]
+        }
+      )
+    }
   }
 
   openTab(nameselector: string, nametitle: string, id: string, data?: any) {

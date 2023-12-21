@@ -29,4 +29,8 @@ export class uploadServise {
         return this.http.post(this.host + "docs/import219", JSON.stringify(body))
     }
 
+    send_file_552(body: any) {
+        return this.http.post(this.host + "docs/import552", JSON.stringify(body))
+    }
+
 }

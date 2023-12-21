@@ -100,6 +100,9 @@ import { report_pay_obl_Component } from './reports/report_diff_pay_obl/report_d
 import { report_god_summ_Component } from './reports/report_diff_god_summ/report_diff_god_summ';
 import { report_export_Component } from './reports/report_export_K2/report_export';
 import { report_16_18_Component } from './reports/report_16_18/report_16_18';
+import { Import552ListComponent } from './documents/import_document/import552/import552-list/import552-list.component';
+import { Import552ElementComponent } from './documents/import_document/import552/import552-element/import552-element.component';
+import { report_552_Component } from './reports/report_552/report_552';
 
 @NgModule({
   imports: [
@@ -201,6 +204,9 @@ import { report_16_18_Component } from './reports/report_16_18/report_16_18';
     report_420_Component,
     report_219_Component,
     report_16_18_Component,
+    Import552ListComponent,
+    Import552ElementComponent,
+    report_552_Component,
     SvodSelectComponent],
   bootstrap: [AppComponent],
   providers: [

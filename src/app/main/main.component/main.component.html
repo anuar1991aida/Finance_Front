@@ -84,9 +84,17 @@
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
                 </app-import420-list>
 
+                <app-import552-list *ngIf="context.selector=='app-import552-list'" (closeEvent)="removetab()"
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
+                </app-import552-list>
+
                 <app-import420-detail *ngIf="context.selector=='app-import420-detail'" (closeEvent)="removetab()"
                     [imp_420_id]="number">
                 </app-import420-detail>
+
+                <app-import552-element *ngIf="context.selector=='app-import552-element'" (closeEvent)="removetab()"
+                    [imp_552_id]="number">
+                </app-import552-element>
 
                 <app-import219-list *ngIf="context.selector=='app-import219-list'" (closeEvent)="removetab()"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
@@ -186,6 +194,9 @@
                 <report_export *ngIf="context.selector=='report_export'" (closeEvent)="removetab()"
                     [type_report]="number">
                 </report_export>
+
+                <report_552 *ngIf="context.selector=='report_552'" (closeEvent)="removetab()">
+                </report_552>
 
                 <app-pogashenie-kp-list *ngIf="context.selector=='app-pogashenie-kp-list'" (closeEvent)="removetab()">
                 </app-pogashenie-kp-list>
