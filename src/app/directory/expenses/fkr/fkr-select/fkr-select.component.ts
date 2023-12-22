@@ -59,7 +59,8 @@ export class FkrSelectComponent implements OnInit {
   fetchPr() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchfkr
     }
 
     let body = {

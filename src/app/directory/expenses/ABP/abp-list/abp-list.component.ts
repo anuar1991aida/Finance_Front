@@ -25,7 +25,7 @@ export class ABPListComponent implements OnInit {
   @Input() data = false
   
   abp_list$: Observable<abp_list>
-  searchfuncGr = ''
+  searchAbp = ''
   first = 0
   rows = 25
   windowHeight: number
@@ -47,7 +47,8 @@ export class ABPListComponent implements OnInit {
   fetchABP() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(), 
+      search: this.searchAbp
     }
 
     this.abp_list$ = this.abpListService.fetch(params)
@@ -72,11 +73,6 @@ export class ABPListComponent implements OnInit {
         data: { abp_list: abp_detail }
       });
   }
-
-  search() {
-
-  }
-
 
 
 }

@@ -7,6 +7,7 @@ import { OrganizationDetailComponent } from '../organization-detail/organization
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MainComponent } from 'src/app/main/main.component/main.component';
 import { profileuser } from 'src/app/login/interfaces';
+import { Tree } from 'primeng/tree';
 
 @Component({
   selector: 'app-organization',
@@ -40,6 +41,7 @@ export class OrganizationComponent implements OnInit {
   selected: any
   windowHeight: number
   old_tabcount = 0
+  node:Node
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
