@@ -152,7 +152,7 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
   }
 
   NewDoc() {
-    this.newItemEvent.emit({ params: { selector: 'app-utv-exp-doc-detail', nomer: 'Утвержденный план по расходам ', id: 0 } });
+    this.newItemEvent.emit({ params: { selector: 'app-utv-exp-doc-detail', nomer: 'Утвержденный план по расходам (создание)', id: 0 } });
   }
 
   setClass(deleted: boolean) {

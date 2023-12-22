@@ -282,7 +282,7 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
   }
 
   NewDoc() {
-    this.newItemEvent.emit({ params: { selector: 'app-izm-plateji-detail', nomer: 'Изменения плана по расходам ', id: '' } });
+    this.newItemEvent.emit({ params: { selector: 'app-izm-plateji-detail', nomer: 'Изменения плана по расходам (создание)', id: '' } });
   }
 
   onResize(event: Event) {

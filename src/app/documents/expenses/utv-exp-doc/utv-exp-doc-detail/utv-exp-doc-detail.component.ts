@@ -5,7 +5,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FkrSelectComponent } from 'src/app/directory/expenses/fkr/fkr-select/fkr-select.component';
 import { fkr_detail } from 'src/app/directory/expenses/fkr/interfaces';
 import { specification_income_detail } from 'src/app/directory/income/specification-income/interfaces';
-import { utv_expenses_detail } from '../interfaces';
+import { utv_expenses_detail, utv_expenses_payments } from '../interfaces';
 import { UtvExpensesService } from '../utv_expenses.service';
 import { SHA256 } from 'crypto-js';
 import { SpecificationExpSelectComponent } from 'src/app/directory/expenses/specification-exp/specification-exp-select/specification-exp-select.component';
@@ -301,16 +301,32 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     }
   }
 
+  onDelete(utv: utv_expenses_payments) {
+    this.utvDetailconfirm.confirm({
+      message: 'Вы действительно хотите удалить ' + utv._spec.name_rus + '?',
+      header: 'Удаление классификации',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.delSpec(utv)
+        this.utvDetailconfirm.close()
+      },
+      reject: () => {
+        this.utvDetailconfirm.close()
+      }
+    })
+  }
+
   delSpec(utv: any) {
 
     for (let i = this.utvDetail.obligats.length - 1; i >= 0; i--) {
-      let index = this.utvDetail.obligats.findIndex(item => utv.id === item.id)
+      let index = this.utvDetail.obligats.findIndex(item => utv._spec.id === item._spec.id)
       if (index !== -1) {
         this.utvDetail.obligats.splice(index, 1)
       }
     }
+
     for (let i = this.utvDetail.payments.length - 1; i >= 0; i--) {
-      let index = this.utvDetail.payments.findIndex(item => utv.id === item.id)
+      let index = this.utvDetail.payments.findIndex(item => utv._spec.id === item._spec.id)
       if (index !== -1) {
         this.utvDetail.payments.splice(index, 1)
       }
