@@ -1,7 +1,7 @@
 <div class="card" style="position: relative;">
     <div style="position: relative;">
         <p-fileUpload name="myfile[]" (uploadHandler)="onUpload($event)" [multiple]="true" [customUpload]="true"
-            accept=".pdf" chooseLabel="Выбрать файл" uploadLabel="Загрузить" cancelLabel="Отмена">
+            accept=".pdf, .xlsx" chooseLabel="Выбрать файл" uploadLabel="Загрузить" cancelLabel="Отмена">
         </p-fileUpload>
     </div>
 

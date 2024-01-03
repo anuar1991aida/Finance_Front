@@ -71,6 +71,13 @@ export class UploadComponent implements OnInit {
           (data) => (responce = data, this.spinner = false, this.messageServiceUpload.add({ severity: 'success', summary: 'Успешно', detail: responce.status })),
           (error) => (this.spinner = false, this.messageServiceUpload.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
     }
+    else if (this.type_import == '1_27') {
+      this.uploadServise
+        .send_file_127({ "file": this.mass_file, "type": this.upload_config.data })
+        .subscribe(
+          (data) => (responce = data, this.spinner = false, this.messageServiceUpload.add({ severity: 'success', summary: 'Успешно', detail: responce.status })),
+          (error) => (this.spinner = false, this.messageServiceUpload.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })))
+    }
   }
 
 }

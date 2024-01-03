@@ -441,6 +441,35 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
 
   }
 
+
+  importDoc() {
+    let responce: any
+
+    this.utvDetailService
+      .importUtv(this.utvDetail)
+      .subscribe(
+        (data) => (
+          this.utvDetailmsg.add(
+            {
+              severity: 'success',
+              summary: 'Успешно',
+              detail: 'Документ успешно записан!'
+            }
+          ),
+          responce = data,
+          this.utvDetail = responce,
+          this.obligats = this.utvDetail.obligats,
+          this.payments = this.utvDetail.payments,
+          this.addFKRtoArray()
+        ),
+        (error) => (
+          this.utvDetailmsg.add({ severity: 'error', summary: 'Ошибка', detail: error.error.status })
+        )
+      )
+
+  }
+
+
   filterFKR(_fkr: fkr_detail) {
 
     if (this.firstclick) {

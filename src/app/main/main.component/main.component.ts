@@ -9,6 +9,7 @@ import { MainService } from './main.service'
 import { UserhistoryDetailComponent } from '../userhistory/userhistory-detail/userhistory-detail.component';
 import { ChangepassComponent } from 'src/app/services/changepass/changepass.component';
 import { UploadComponent } from 'src/app/services/upload/upload.component';
+import { CallcenterComponent } from 'src/app/services/callcenter/callcenter.component';
 
 @Component({
   selector: 'app-main',
@@ -24,6 +25,7 @@ export class MainComponent implements OnInit {
     private mainmsg: MessageService,
     private dialog_form: DialogService,
     private ref: DynamicDialogRef,
+    private tech_ref: DynamicDialogRef,
     private router: Router) {
   }
 
@@ -216,18 +218,23 @@ export class MainComponent implements OnInit {
         items: [
           [
             {
-              items: [{
-                label: 'Импорт формы 2-19',
-                command: () => this.openTab('app-import219-list', 'Импорт формы 2-19', '')
-              },
-              {
-                label: 'Импорт формы 4-20',
-                command: () => this.openTab('app-import420-list', 'Импорт формы 4-20', '')
-              },
-              {
-                label: 'Импорт формы 5-52',
-                command: () => this.openTab('app-import552-list', 'Импорт формы 5-52', '')
-              }
+              items: [
+                {
+                  label: 'Импорт формы 1-27',
+                  command: () => this.openTab('app-import127-list', 'Импорт формы 1-27', '')
+                },
+                {
+                  label: 'Импорт формы 2-19',
+                  command: () => this.openTab('app-import219-list', 'Импорт формы 2-19', '')
+                },
+                {
+                  label: 'Импорт формы 4-20',
+                  command: () => this.openTab('app-import420-list', 'Импорт формы 4-20', '')
+                },
+                {
+                  label: 'Импорт формы 5-52',
+                  command: () => this.openTab('app-import552-list', 'Импорт формы 5-52', '')
+                }
               ]
             }
           ]
@@ -286,6 +293,10 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('report_552', 'Кассовое исполнение 5-52', '')
               },
               {
+                label: 'Сверка данных с импортом 1-27',
+                command: () => this.openTab('report_sverka_1_27', 'Сверка данных с импортом 1-27', '')
+              },
+              {
                 label: 'Превышение платежей над обязательствами',
                 command: () => this.openTab('report_diff_pay_obl', 'Превышение платежей над обязательствами', '')
               },
@@ -298,6 +309,19 @@ export class MainComponent implements OnInit {
                 command: () => this.openTab('report_export', 'Экспорт в казначейство', 'plan')
               }
 
+              ]
+            }
+          ]]
+      },
+      {
+        label: 'Помощь',
+        items: [
+          [
+            {
+              items: [{
+                label: 'Техническая поддержка',
+                command: () => this.callcenter()
+                }
               ]
             }
           ]]
@@ -393,6 +417,16 @@ export class MainComponent implements OnInit {
           }, 1500)
         }
       })
+  }
+
+
+  callcenter() {
+    this.tech_ref = this.dialog_form.open(CallcenterComponent, {
+      header: 'Техническая поддержка',
+      width: 'calc(40%)',
+      height: 'calc(40%)',
+      closable: true
+    })
   }
 
   userHistory() {

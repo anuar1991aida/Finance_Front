@@ -110,7 +110,14 @@ export class OrganizationSelectComponent implements OnInit {
   }
 
   search() {
+    let params = {
+      limit: this.rows.toString(),
+      offset: this.first.toString(),
+      search: this.searchorg,
+      list: false
+    }
 
+    this.organizations$ = this.orgService.fetch(params)
   }
 
   openNew() {

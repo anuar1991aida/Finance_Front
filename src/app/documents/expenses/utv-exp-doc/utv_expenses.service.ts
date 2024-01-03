@@ -30,6 +30,10 @@ export class UtvExpensesService {
         return this.http.post(this.host + 'docs/utvexpsave', utv_inc)
     }
 
+    importUtv(utv_inc: utv_expenses_detail): Observable<utv_expenses_detail> {
+        return this.http.post<utv_expenses_detail>(this.host + 'docs/utv_exp_qazna', utv_inc)
+    }
+
     deleteUtv(utv_inc_id: number = 0) {
         return this.http.delete(this.host + `docs/utvexpdelete/${utv_inc_id}`)
     }

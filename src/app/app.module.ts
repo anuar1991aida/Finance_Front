@@ -57,6 +57,8 @@ import { SpecificationIncomeListComponent } from './directory/income/specificati
 import { SpecificationIncomeDetailComponent } from './directory/income/specification-income/specification-income-detail/specification-income-detail.component';
 import { UtvExpDocListComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-list/utv-exp-doc-list.component';
 import { UtvExpDocDetailComponent } from './documents/expenses/utv-exp-doc/utv-exp-doc-detail/utv-exp-doc-detail.component';
+import { Import127ListComponent } from './documents/import_document/import127/import127-list/import127-list.component';
+import { Import127DetailComponent } from './documents/import_document/import127/import127-detail/import127-detail.component';
 import { Import219ListComponent } from './documents/import_document/import219/import219-list/import219-list.component';
 import { Import219DetailComponent } from './documents/import_document/import219/import219-detail/import219-detail.component';
 import { UploadComponent } from './services/upload/upload.component';
@@ -103,6 +105,8 @@ import { report_16_18_Component } from './reports/report_16_18/report_16_18';
 import { Import552ListComponent } from './documents/import_document/import552/import552-list/import552-list.component';
 import { Import552ElementComponent } from './documents/import_document/import552/import552-element/import552-element.component';
 import { report_552_Component } from './reports/report_552/report_552';
+import { report_sverka_1_27_Component } from './reports/report_sverka_1_27/report_sverka_1_27';
+import { CallcenterComponent } from './services/callcenter/callcenter.component';
 
 @NgModule({
   imports: [
@@ -205,9 +209,13 @@ import { report_552_Component } from './reports/report_552/report_552';
     report_219_Component,
     report_16_18_Component,
     Import552ListComponent,
+    Import127ListComponent,
+    Import127DetailComponent,
+    report_sverka_1_27_Component,
     Import552ElementComponent,
     report_552_Component,
-    SvodSelectComponent],
+    SvodSelectComponent,
+    CallcenterComponent],
   bootstrap: [AppComponent],
   providers: [
     {

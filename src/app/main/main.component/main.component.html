@@ -40,7 +40,6 @@
                     (closeEvent)="removetab()">
                 </app-izm-plateji-list>
 
-
                 <app-organization *ngIf="context.selector=='app-organization'" [list]="true" (closeEvent)="removetab()"
                     [tabcount]="this.tabcount">
                 </app-organization>
@@ -79,6 +78,14 @@
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)"
                     (closeEvent)="removetab()" [tabcount]="this.tabcount">
                 </app-izm-inc-doc-list>
+
+                <app-import127-list *ngIf="context.selector=='app-import127-list'" (closeEvent)="removetab()"
+                    (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
+                </app-import127-list>
+
+                <app-import127-detail *ngIf="context.selector=='app-import127-detail'" (closeEvent)="removetab()"
+                    [imp_127_id]="number">
+                </app-import127-detail>
 
                 <app-import420-list *ngIf="context.selector=='app-import420-list'" (closeEvent)="removetab()"
                     (newItemEvent)="openTab($event.params.selector, $event.params.nomer, $event.params.id)">
@@ -185,6 +192,9 @@
                 <report_16_18 *ngIf="context.selector=='report_16_18'" (closeEvent)="removetab()">
                 </report_16_18>
 
+                <report_sverka_1_27 *ngIf="context.selector=='report_sverka_1_27'" (closeEvent)="removetab()">
+                </report_sverka_1_27>
+
                 <report_diff_pay_obl *ngIf="context.selector=='report_diff_pay_obl'" (closeEvent)="removetab()">
                 </report_diff_pay_obl>
 
@@ -222,6 +232,7 @@
         </div>
     </ng-template>
 </p-overlayPanel>
+
 
 <div #viewContainerRef>
 </div>
