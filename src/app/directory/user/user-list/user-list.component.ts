@@ -120,6 +120,19 @@ export class UserListComponent implements OnInit {
     this.fetch()
   }
 
+
+  userdelete(id: number) {
+    this.userService.deleteUser(id).subscribe(
+      (data) => {
+        this.fetch()
+      },
+      (error) => {
+        alert("Ошибка удаления")
+      }
+    )
+  }
+
+
   closeform() {
     this.closeEvent.emit()
   }

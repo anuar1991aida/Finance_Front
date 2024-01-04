@@ -31,6 +31,10 @@ export class UsersService {
         return this.http.post(this.host + 'dirs/usersave', user_detail)
     }
 
+    deleteUser(user_id: number) {
+        return this.http.delete(this.host + `dirs/userdel/${user_id}`)
+    }
+
     // parent_organization_add(params: params_org) {
     //     return this.http.post(this.host + 'dirs/parent_organization_add', params)
     // }

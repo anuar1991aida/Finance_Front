@@ -36,7 +36,7 @@
                 <th style="width:5%; text-align:center">Номер</th>
                 <th style="width:20%; text-align:center">Логин</th>
                 <th style="width:50%; text-align:center">ФИО пользователя</th>
-                <th style="width:10%; text-align:center">Активный</th>
+                <!-- <th style="width:10%; text-align:center">Активный</th> -->
                 <th style="width:5%; text-align:center">Действия</th>
             </tr>
         </ng-template>
@@ -50,16 +50,17 @@
                 <td style="padding-left: 10px;">
                     {{user.first_name + ' ' + user.last_name}}
                 </td>
-                <td style="text-align:center">
+                <!-- <td style="text-align:center">
                     <input type="checkbox" [readonly]="true" [ngModel]="user.is_active">
 
-                </td>
+                </td> -->
                 <td style="padding: 0; margin:0;">
                     <div class="flex align-items-center justify-content-center gap-2">
                         <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"
                             (click)="onRowEdit(user)"></button>
                         <button pButton pRipple type="button" icon="pi pi-trash"
-                            class="p-button-rounded p-button-text"></button>
+                            class="p-button-rounded p-button-text"
+                            (click)="userdelete(user.id)"></button>
                     </div>
                 </td>
             </tr>

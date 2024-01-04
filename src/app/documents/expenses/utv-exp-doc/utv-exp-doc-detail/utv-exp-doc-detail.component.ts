@@ -85,6 +85,8 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
   }
 
   utvDetail: utv_expenses_detail
+  itog_pay:any = []
+  itog_obl:any = []
 
 
 
@@ -92,6 +94,57 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
     this.windowHeight = window.innerHeight
     this.windowWidht = window.innerWidth
   }
+
+
+  calc_itog_pay(_fkr_id:any) {
+    if (_fkr_id==0) {
+            let sm = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+            this.utvDetail.payments.forEach(item => {
+              for (let i = 1; i <= 12; i++) {
+                sm[i] = sm[i] + (item as any)[`sm${i}`]
+              }
+              sm[0] = sm[1] + sm[2] + sm[3] + sm[4] + sm[5] + sm[6] + sm[7] + sm[8] + sm[9] + sm[10] + sm[11] + sm[12]
+            });
+            this.itog_pay = sm
+
+            sm = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+            this.utvDetail.obligats.forEach(item => {
+              for (let i = 1; i <= 12; i++) {
+                sm[i] = sm[i] + (item as any)[`sm${i}`]
+              }
+              sm[0] = sm[1] + sm[2] + sm[3] + sm[4] + sm[5] + sm[6] + sm[7] + sm[8] + sm[9] + sm[10] + sm[11] + sm[12]
+            });
+            this.itog_obl = sm
+    } 
+    else {
+          let sm = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+          this.utvDetail.payments.forEach(item => {
+            if (item._fkr.id == _fkr_id) {
+                  for (let i = 1; i <= 12; i++) {
+                    sm[i] = sm[i] + (item as any)[`sm${i}`]
+                  }
+                  sm[0] = sm[1] + sm[2] + sm[3] + sm[4] + sm[5] + sm[6] + sm[7] + sm[8] + sm[9] + sm[10] + sm[11] + sm[12]
+            }
+            });
+            this.itog_pay = sm
+            
+
+            
+
+          sm = [0,0,0,0,0,0,0,0,0,0,0,0,0]
+          this.utvDetail.obligats.forEach(item => {
+            if (item._fkr.id == _fkr_id) {
+              for (let i = 1; i <= 12; i++) {
+                sm[i] = sm[i] + (item as any)[`sm${i}`]
+              }
+              sm[0] = sm[1] + sm[2] + sm[3] + sm[4] + sm[5] + sm[6] + sm[7] + sm[8] + sm[9] + sm[10] + sm[11] + sm[12]
+            }
+          });
+          this.itog_obl = sm
+    }
+    
+  }
+
 
   viewOrg() {
     this.utvDetailref = this.utvDetaildialog.open(OrganizationDetailComponent,
@@ -148,6 +201,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
             this.obligats = this.utvDetail.obligats
             this.payments = this.utvDetail.payments
             this.addFKRtoArray()
+            this.calc_itog_pay(0)
           },
           (error) => {
             this.utvDetailmsg.add({
@@ -492,7 +546,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
       this.fkr.code = _fkr.code
       this.fkr.name_kaz = _fkr.name_kaz
       this.fkr.name_rus = _fkr.name_rus
-
+      this.calc_itog_pay(_fkr.id)
     }
     else {
       this.obligats = this.utvDetail.obligats
@@ -502,6 +556,7 @@ export class UtvExpDocDetailComponent implements OnInit, DoCheck {
       this.fkr.code = ''
       this.fkr.name_kaz = ''
       this.fkr.name_rus = ''
+      this.calc_itog_pay(0)
     }
 
     this._lastfkr = _fkr.id

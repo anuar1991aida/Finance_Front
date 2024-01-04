@@ -98,7 +98,7 @@
     </ng-template>
 </div>
 
-<div *ngIf="utvDetail">
+<!-- <div *ngIf="utvDetail"> -->
     <p-splitter [panelSizes]="[12, 88]" styleClass="mb-5">
         <ng-template pTemplate>
             <div style="width: 100%;">
@@ -201,6 +201,13 @@
                                     </td>
                                 </tr>
                             </ng-template>
+
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td colspan="2" style="text-align:right; font-weight: 700;">Итого</td>
+                                    <td class="itogclass" *ngFor="let itm of itog_pay">{{itm}}</td>
+                                </tr>
+                            </ng-template>
                         </p-table>
                     </p-tabPanel>
                     <p-tabPanel header="Обязательства">
@@ -274,13 +281,20 @@
                                     </td>
                                 </tr>
                             </ng-template>
+
+                            <ng-template pTemplate="footer">
+                                <tr>
+                                    <td colspan="2" style="text-align:right; font-weight: 700;">Итого</td>
+                                    <td class="itogclass" *ngFor="let itm of itog_obl">{{itm}}</td>
+                                </tr>
+                            </ng-template>
                         </p-table>
                     </p-tabPanel>
                 </p-tabView>
             </div>
         </ng-template>
     </p-splitter>
-</div>
+<!-- </div> -->
 
 
 <p-confirmDialog [closeOnEscape]="true" acceptLabel="Да" rejectLabel="Нет" [style]="{width: '450px'}">

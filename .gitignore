@@ -1,6 +1,7 @@
 #Ignore all text files
 *.txt
 
+
 #Ignore catalog .angular/cache
 /.angular
-/.dist
+/dist

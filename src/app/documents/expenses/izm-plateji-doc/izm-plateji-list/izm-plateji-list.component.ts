@@ -90,6 +90,7 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
   menuItems: MenuItem[]
   roles: string[] = []
   searchizmList = ''
+  periods: any
   izmplatList$: Observable<izm_plateji_doc_list>
   windowHeight = 0
   selectedDocs: any
@@ -102,6 +103,30 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
     this.old_tabcount = this.tabcount
     this.fetchIzmPlatList()
     this.updateWindowSize()
+  }
+
+  selectPeriod() {
+    if (this.periods!=null) {
+      if (this.periods[0]!=null && this.periods[1]!=null) {
+        let date_start = this.periods[0].toLocaleDateString()
+        let date_stop = this.periods[1].toLocaleDateString()
+        
+
+        let params = {
+          limit: this.rows.toString(),
+          offset: this.first.toString(),
+          search: this.searchizmList,
+          type: this.type,
+          date_start: date_start,
+          date_stop: date_stop
+        }
+    
+        this.izmplatList$ = this.izmplatListService.fetch(params)
+
+      }
+    } else {
+      this.fetchIzmPlatList()
+    }
   }
 
   ngOnChanges(): void {
@@ -119,7 +144,9 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
       limit: this.rows.toString(),
       offset: this.first.toString(),
       search: this.searchizmList,
-      type: this.type
+      type: this.type,
+      date_start: '01.01.2000',
+      date_stop: '01.01.2050'
     }
 
     this.izmplatList$ = this.izmplatListService.fetch(params)

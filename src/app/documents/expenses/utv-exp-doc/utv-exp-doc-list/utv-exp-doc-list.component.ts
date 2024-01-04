@@ -42,6 +42,7 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
 
   utvList$: Observable<utv_expenses_list>
   searchutvList = ''
+  periods: any
   first = 0
   rows = 25
   selectedDocs: any
@@ -92,7 +93,7 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     if (this.tabcount == this.old_tabcount) {
-      this.fetchUtvList()
+      this.selectPeriod()
     }
   }
 
@@ -105,10 +106,36 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
     this.closeEvent.emit()
   }
 
+
+
+  selectPeriod() {
+    if (this.periods!=null) {
+      if (this.periods[0]!=null && this.periods[1]!=null) {
+        let date_start = this.periods[0].toLocaleDateString()
+        let date_stop = this.periods[1].toLocaleDateString()
+        
+        let params = {
+          limit: this.rows.toString(),
+          offset: this.first.toString(),
+          search: this.searchutvList,
+          date_start: date_start,
+          date_stop: date_stop
+        }
+    
+        this.utvList$ = this.utvListService.fetch(params)
+      }
+    } else {
+      this.fetchUtvList()
+    }
+  }
+
+
+
   fetchUtvList() {
     let params = {
       limit: this.rows.toString(),
-      offset: this.first.toString()
+      offset: this.first.toString(),
+      search: this.searchutvList
     }
 
     this.utvList$ = this.utvListService.fetch(params)
