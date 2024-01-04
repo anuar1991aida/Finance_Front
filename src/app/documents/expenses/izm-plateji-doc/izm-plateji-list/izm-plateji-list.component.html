@@ -11,11 +11,11 @@
                         appendTo="body"
                         [showIcon]="!periods"
                         [readonlyInput]="true" 
-                        (ngModelChange)="selectPeriod()"
+                        (ngModelChange)="fetchIzmPlatList()"
                         [showClear]="!!periods"
                         ></p-calendar>
         </span>
-        
+
         <span class="p-input-icon-left" style="margin-right: 10px;">
             <i class="pi pi-search"></i>
             <input pInputText type="text" [(ngModel)]="searchizmList" (change)="fetchIzmPlatList()"

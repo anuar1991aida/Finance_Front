@@ -105,13 +105,22 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
     this.updateWindowSize()
   }
 
-  selectPeriod() {
+
+  ngOnChanges(): void {
+    if (this.tabcount == this.old_tabcount) {
+      this.fetchIzmPlatList()
+    }
+  }
+
+  isAdmin() {
+    return this.roles.includes('fulldata')
+  }
+
+  fetchIzmPlatList() {
     if (this.periods!=null) {
       if (this.periods[0]!=null && this.periods[1]!=null) {
         let date_start = this.periods[0].toLocaleDateString()
         let date_stop = this.periods[1].toLocaleDateString()
-        
-
         let params = {
           limit: this.rows.toString(),
           offset: this.first.toString(),
@@ -125,31 +134,17 @@ export class IzmPlatejiListComponent implements OnInit, OnChanges {
 
       }
     } else {
-      this.fetchIzmPlatList()
+      let params = {
+        limit: this.rows.toString(),
+        offset: this.first.toString(),
+        search: this.searchizmList,
+        type: this.type,
+        date_start: '01.01.2000',
+        date_stop: '01.01.2050'
+      }
+  
+      this.izmplatList$ = this.izmplatListService.fetch(params)
     }
-  }
-
-  ngOnChanges(): void {
-    if (this.tabcount == this.old_tabcount) {
-      this.fetchIzmPlatList()
-    }
-  }
-
-  isAdmin() {
-    return this.roles.includes('fulldata')
-  }
-
-  fetchIzmPlatList() {
-    let params = {
-      limit: this.rows.toString(),
-      offset: this.first.toString(),
-      search: this.searchizmList,
-      type: this.type,
-      date_start: '01.01.2000',
-      date_stop: '01.01.2050'
-    }
-
-    this.izmplatList$ = this.izmplatListService.fetch(params)
   }
 
   getValue(status: string): string {

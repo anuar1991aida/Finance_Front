@@ -43,6 +43,7 @@ export class SvodSpravokListComponent implements OnInit, OnChanges {
   menuItems: MenuItem[]
   svodList$: Observable<svod_expenses_list>
   searchutvList = ''
+  periods: any
   first = 0
   rows = 25
   roles: string[] = []
@@ -80,12 +81,31 @@ export class SvodSpravokListComponent implements OnInit, OnChanges {
   }
 
   fetchSvodList() {
-    let params = {
-      limit: this.rows.toString(),
-      offset: this.first.toString()
-    }
+    if (this.periods!=null) {
+      if (this.periods[0]!=null && this.periods[1]!=null) {
+        let date_start = this.periods[0].toLocaleDateString()
+        let date_stop = this.periods[1].toLocaleDateString()
+        let params = {
+          limit: this.rows.toString(),
+          offset: this.first.toString(),
+          search: this.searchutvList,
+          date_start: date_start,
+          date_stop: date_stop
+        }
+    
+        this.svodList$ = this.svodListService.fetch(params)
 
-    this.svodList$ = this.svodListService.fetch(params)
+      }
+    } else {
+      let params = {
+        limit: this.rows.toString(),
+        offset: this.first.toString(),
+        search: this.searchutvList,
+        date_start: '01.01.2000',
+        date_stop: '01.01.2050'
+      }
+      this.svodList$ = this.svodListService.fetch(params)
+    }
   }
 
   onPageChange(event: any) {

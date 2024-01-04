@@ -11,7 +11,7 @@
                         appendTo="body"
                         [showIcon]="!periods"
                         [readonlyInput]="true" 
-                        (ngModelChange)="selectPeriod()"
+                        (ngModelChange)="fetchUtvList()"
                         [showClear]="!!periods"
                         ></p-calendar>
         </span>

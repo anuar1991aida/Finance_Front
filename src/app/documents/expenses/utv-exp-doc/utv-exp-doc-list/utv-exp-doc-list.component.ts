@@ -93,7 +93,7 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     if (this.tabcount == this.old_tabcount) {
-      this.selectPeriod()
+      this.fetchUtvList()
     }
   }
 
@@ -107,8 +107,7 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
   }
 
 
-
-  selectPeriod() {
+  fetchUtvList() {
     if (this.periods!=null) {
       if (this.periods[0]!=null && this.periods[1]!=null) {
         let date_start = this.periods[0].toLocaleDateString()
@@ -121,24 +120,16 @@ export class UtvExpDocListComponent implements OnInit, OnChanges {
           date_start: date_start,
           date_stop: date_stop
         }
-    
         this.utvList$ = this.utvListService.fetch(params)
       }
     } else {
-      this.fetchUtvList()
+      let params = {
+        limit: this.rows.toString(),
+        offset: this.first.toString(),
+        search: this.searchutvList
+      }
+      this.utvList$ = this.utvListService.fetch(params)
     }
-  }
-
-
-
-  fetchUtvList() {
-    let params = {
-      limit: this.rows.toString(),
-      offset: this.first.toString(),
-      search: this.searchutvList
-    }
-
-    this.utvList$ = this.utvListService.fetch(params)
   }
 
   onPageChange(event: any) {
